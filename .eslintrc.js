@@ -1,13 +1,13 @@
 module.exports = {
-  parser: '@typescript-eslint/parser',
+  // parser: '@typescript-eslint/parser',
   extends: [
-    'plugin:@typescript-eslint/recommended',
+    // 'plugin:@typescript-eslint/recommended',
     'react-app',
     'plugin:prettier/recommended',
     'prettier',
     'airbnb',
   ],
-  plugins: ['@typescript-eslint', 'react'],
+  // plugins: ['@typescript-eslint', 'react'],
   rules: {
     '@typescript-eslint/indent': ['error', 2],
     '@typescript-eslint/explicit-function-return-type': 0,
@@ -25,5 +25,6 @@ module.exports = {
     'no-empty-function': 0,
     'no-useless-constructor': 0,
     'import/no-unresolved': 0,
+    'no-underscore-dangle': 0,
   },
 };
