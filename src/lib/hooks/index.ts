@@ -1,0 +1,1 @@
+export { useInputs } from './useInputs';
