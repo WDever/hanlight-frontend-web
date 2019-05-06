@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
-import SignUpImgSrc from 'lib/svg/signUp.svg';
 import { useInputs } from 'lib/hooks';
 
 const { useEffect } = React;
@@ -132,7 +131,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
   return (
     <RegisterWrapper>
       <GreetingDiv>
-        <Img src={SignUpImgSrc} alt="" />
+        <Img src={''} alt="" />
         계정 생성
       </GreetingDiv>
       <Form onSubmit={registerSubmit}>

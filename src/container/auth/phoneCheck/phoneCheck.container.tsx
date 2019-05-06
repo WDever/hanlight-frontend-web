@@ -12,7 +12,6 @@ import {
 } from 'store';
 
 export interface PhoneCheckProps {
-  signKey: string;
   getStateStatus: 'none' | 'pending' | 'success' | 'failure';
   state: string;
   verifyStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -27,7 +26,6 @@ const PhoneCheckContainer: React.SFC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
   getState,
-  signKey,
   getStateStatus,
   state,
   verifyPhone,
@@ -38,7 +36,6 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 }) => (
   <PhoneCheckComponent
     getState={getState}
-    signKey={signKey}
     getStateStatus={getStateStatus}
     state={state}
     history={history}
@@ -46,13 +43,10 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     location={location}
     verifyPhone={verifyPhone}
     verifyStatus={verifyStatus}
-    // code={code}
-    // getCodeStatus={getCodeStatus}
   />
 );
 
 const mapStateToProps = ({ register }: AppState) => ({
-  // signKey: register.signKey,
   getStateStatus: register.getStateStatus,
   state: register.state,
   verifyStatus: register.verifyStatus,

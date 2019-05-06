@@ -5,9 +5,9 @@ import AccoutKit from 'react-facebook-account-kit';
 import { transitions } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
-import { PhoneCheckResType } from '../../../store';
+import { PhoneCheckResType } from 'store';
 
-const { useState, useEffect } = React;
+const { useState, useEffect, useRef } = React;
 
 interface PhoneCheckInputs {
   signKey: string;
@@ -133,7 +133,6 @@ const TermSpan = styled.span`
 const PhoneCheckComponent: React.FC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  // signKey,
   state,
   verifyPhone,
   getState,
@@ -145,20 +144,44 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     phoneNum: '',
     signKey: '',
   });
-  const [code, setCode] = useState<string>('');
-  const [getCodeStatus, setGetCodeStatus] = useState<GetCodeStatus>('none');
+  // const [code, setCode] = useState<string>('');
+  // const [getCodeStatus, setGetCodeStatus] = useState<GetCodeStatus>('none');
+  const codeRef = useRef<string>('');
+  const getCodeStatus = useRef<GetCodeStatus>('none');
+
+  const setCode = (resCode: string) => {
+    codeRef.current = resCode;
+  };
+
+  const setGetCodeStatus = (resStatus: GetCodeStatus) => {
+    getCodeStatus.current = resStatus;
+  };
 
   const { phoneNum, signKey } = inputs;
 
-  const verifyPhoneNum = () => {
-    if (getCodeStatus === 'PARTIALLY_AUTHENTICATED') {
+  const verifyPhoneNum = async () => {
+    if (getCodeStatus.current === 'PARTIALLY_AUTHENTICATED') {
       console.log(state);
-      console.log(code);
+      console.log(codeRef.current);
       console.log(signKey);
+      const code = codeRef.current;
       verifyPhone({ code, state, signKey });
     } else {
+      console.log(state);
+      console.log(getCodeStatus);
+      console.log(signKey);
       alert('핸드폰 인증 실패');
     }
+  };
+
+  const asyncSetCode = async (resCode: string) => {
+    setCode(resCode);
+    console.log(codeRef.current);
+  };
+
+  const asyncSetGetCodeStatus = async (resStatus: GetCodeStatus) => {
+    setGetCodeStatus(resStatus);
+    console.log(getCodeStatus);
   };
 
   const handleResponse = async (res: PhoneCheckResType) => {
@@ -169,18 +192,37 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     //   }),
     //   () => this.verifyPhone(),
     // );
+    // const t = asyncSetCode(res.code);
+    // const tt = asyncSetGetCodeStatus(res.status);
+    // const ttt = test(res);
 
-    await setCode(res.code);
-    await setGetCodeStatus(res.status);
-    await verifyPhoneNum();
+    // console.log(t);
+    // console.log(tt);
+    // console.log(ttt);
 
+    await asyncSetCode(res.code);
+    await asyncSetGetCodeStatus(res.status);
+    // setGetCodeStatus(res.status);
+    verifyPhoneNum();
+    // await verifyPhoneNum();
+    // if (res.status === 'PARTIALLY_AUTHENTICATED') {
+    //   console.log(state);
+    //   console.log(code);
+    //   console.log(signKey);
+    //   verifyPhone({ code, state, signKey });
+    // } else {
+    //   console.log(state);
+    //   console.log(getCodeStatus);
+    //   console.log(signKey);
+    //   alert('핸드폰 인증 실패');
+    // }
     console.log(res);
   };
 
   useEffect(() => {
     if (verifyStatus === 'success') {
       console.log(verifyStatus);
-      history.push('/auth/register');
+      history.push('/register');
     } else if (verifyStatus === 'failure') {
       console.log(verifyStatus);
       alert('실패!');
@@ -190,7 +232,7 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   return (
     <PhoneCheckWrapper>
       <GreetingDiv>
-        <Img src={SignUpImgSrc} alt="" />
+        <Img src="" alt="" />
         회원 가입
       </GreetingDiv>
       <Form
@@ -230,6 +272,7 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
               phoneNumber={phoneNum}
               onResponse={handleResponse}
               language="ko_KR"
+              optionalFunc={() => console.log('test2')}
             >
               {(p: Function) => (
                 <NextBtn active {...p}>

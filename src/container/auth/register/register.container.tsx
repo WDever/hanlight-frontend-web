@@ -36,6 +36,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
 );
 
 const mapStateToProps = ({ register }: AppState) => ({
+  signKey: register.signKey,
   registerStatus: register.registerStatus,
 });
 
