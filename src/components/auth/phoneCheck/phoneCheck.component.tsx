@@ -2,12 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import AccoutKit from 'react-facebook-account-kit';
-import { transitions } from 'lib/styles';
+import { transitions, Inputs, Buttons } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import { PhoneCheckResType } from 'store';
 
-const { useState, useEffect, useRef } = React;
+const { useEffect, useRef } = React;
 
 interface PhoneCheckInputs {
   signKey: string;
@@ -19,15 +19,23 @@ type GetCodeStatus = | 'none'
 | 'NOT_AUTHENTICATED'
 | 'BAD_PARAMS';
 
+const FirstStep = styled.span`
+  font-size: 3rem;
+  font-family: 'Noto Sans KR';
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #bfbfbf;
+`;
+
 const PhoneCheckWrapper = styled.div`
-  width: 70%;
+  width: 38.125rem;
+  height: 31.875rem;
   margin-top: 1rem;
-  height: 95%;
   display: inline-flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  position: relative;
-  left: 30%;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   animation: ${transitions.fadeIn} 2.5s;
 `;
@@ -35,14 +43,13 @@ const PhoneCheckWrapper = styled.div`
 const GreetingDiv = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  justify-content: space-around;
-  font-size: 2.25rem;
-  font-family: 'NanumSquare';
+  justify-content: center;
+  font-size: 1.5rem;
+  font-family: 'Noto Sans', 'Noto Sans KR';
   font-weight: bold;
-  font-family: 'NanumSquare';
-  margin-bottom: 2rem;
+  /* margin-bottom: 2rem; */
 `;
 
 const Img = styled.img`
@@ -53,7 +60,7 @@ const Img = styled.img`
 
 const InputWrapper = styled.div`
   width: 100%;
-  height: 40%;
+  height: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,31 +73,7 @@ const Form = styled.form`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 60%;
-`;
-
-const Inputs = styled.input`
-  color: #6c63ff;
-  font-family: 'NanumSquare';
-  font-size: 1.125rem;
-  text-indent: 1.5rem;
-  width: 28.125rem;
-  height: 3.125rem;
-  background-color: rgba(108, 99, 255, 0.15);
-
-  outline: none;
-  border: none;
-
-  &::placeholder {
-    font-family: 'NanumSquare';
-    color: #6c63ff;
-    text-indent: 1.5rem;
-  }
-
-  &:focus {
-    background-color: white;
-    border: solid 0.8px #6c63ff;
-  }
+  height: 70%;
 `;
 
 const NextBtn = styled.button<{ active: boolean }>`
@@ -121,6 +104,11 @@ const TermsBtnWrapper = styled.div`
   align-items: center;
 `;
 
+const ColoredSpan = styled.span`
+  color: #4470ff;
+  font-size: 1.5rem;
+`;
+
 const TermsWrapper = styled.p`
   font-size: 1rem;
   font-family: 'NanumSquare';
@@ -149,11 +137,11 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
 
-  const setCode = (resCode: string) => {
+  const setCode = async (resCode: string) => {
     codeRef.current = resCode;
   };
 
-  const setGetCodeStatus = (resStatus: GetCodeStatus) => {
+  const setGetCodeStatus = async (resStatus: GetCodeStatus) => {
     getCodeStatus.current = resStatus;
   };
 
@@ -174,55 +162,17 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     }
   };
 
-  const asyncSetCode = async (resCode: string) => {
-    setCode(resCode);
-    console.log(codeRef.current);
-  };
-
-  const asyncSetGetCodeStatus = async (resStatus: GetCodeStatus) => {
-    setGetCodeStatus(resStatus);
-    console.log(getCodeStatus);
-  };
-
   const handleResponse = async (res: PhoneCheckResType) => {
-    // await this.setState(
-    //   () => ({
-    //     code: res.code,
-    //     getCodeStatus: res.status,
-    //   }),
-    //   () => this.verifyPhone(),
-    // );
-    // const t = asyncSetCode(res.code);
-    // const tt = asyncSetGetCodeStatus(res.status);
-    // const ttt = test(res);
-
-    // console.log(t);
-    // console.log(tt);
-    // console.log(ttt);
-
-    await asyncSetCode(res.code);
-    await asyncSetGetCodeStatus(res.status);
-    // setGetCodeStatus(res.status);
-    verifyPhoneNum();
-    // await verifyPhoneNum();
-    // if (res.status === 'PARTIALLY_AUTHENTICATED') {
-    //   console.log(state);
-    //   console.log(code);
-    //   console.log(signKey);
-    //   verifyPhone({ code, state, signKey });
-    // } else {
-    //   console.log(state);
-    //   console.log(getCodeStatus);
-    //   console.log(signKey);
-    //   alert('핸드폰 인증 실패');
-    // }
+    await setCode(res.code);
+    await setGetCodeStatus(res.status);
+    await verifyPhoneNum();
     console.log(res);
   };
 
   useEffect(() => {
     if (verifyStatus === 'success') {
       console.log(verifyStatus);
-      history.push('/register');
+      history.push('/auth/register/create');
     } else if (verifyStatus === 'failure') {
       console.log(verifyStatus);
       alert('실패!');
@@ -230,69 +180,77 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   }, [history, verifyStatus]);
 
   return (
-    <PhoneCheckWrapper>
-      <GreetingDiv>
-        <Img src="" alt="" />
-        회원 가입
-      </GreetingDiv>
-      <Form
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
-      >
-        <InputWrapper>
-          <Inputs
-            type="text"
-            placeholder="제공된 핀 번호를 입력해주세요"
-            name="signKey"
-            autoComplete="off"
-            onChange={inputsChange}
-            onBlur={() => getState(signKey)}
-          />
-          <Inputs
-            type="tel"
-            name="phoneNum"
-            autoComplete="off"
-            placeholder="휴대폰 번호를 - 빼고 입력해주세요."
-            onChange={inputsChange}
-          />
-        </InputWrapper>
-        <TermsBtnWrapper>
-          <TermsWrapper>
-            회원가입 시
-            <TermSpan>&nbsp;이용약관</TermSpan>
-과
-            <TermSpan>&nbsp;개인정보 이용 약관</TermSpan>
-에 동의하게 됩니다.
-          </TermsWrapper>
-          {getStateStatus === 'success' && !!phoneNum ? (
-            <AccoutKit
-              appId="265056484381541"
-              csrf={state}
-              debug
-              version="v1.1"
-              phoneNumber={phoneNum}
-              onResponse={handleResponse}
-              language="ko_KR"
-              optionalFunc={() => console.log('test2')}
-            >
-              {(p: Function) => (
-                <NextBtn active {...p}>
-                  다음
-                </NextBtn>
-              )}
-            </AccoutKit>
-          ) : (
-            <NextBtn
-              active={!!(phoneNum && signKey)}
-              style={getStateStatus === 'failure' ? { letterSpacing: '0' } : {}}
-            >
-              {getStateStatus === 'failure'
-                ? '존재하지 않는 PIN 번호 입니다.'
-                : '다음'}
-            </NextBtn>
-          )}
-        </TermsBtnWrapper>
-      </Form>
-    </PhoneCheckWrapper>
+    <>
+      {/* <FirstStep>STEP .1</FirstStep> */}
+      <PhoneCheckWrapper>
+        <GreetingDiv>
+          <ColoredSpan>등록키</ColoredSpan>
+          와&nbsp;
+          <ColoredSpan>전화번호</ColoredSpan>
+          를&nbsp; 입력해주세요
+        </GreetingDiv>
+        <Form
+          onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
+        >
+          <InputWrapper>
+            <Inputs
+              width="28.75rem"
+              height="4.375rem"
+              active={!signKey}
+              value={signKey}
+              type="text"
+              placeholder="제공된 핀 번호를 입력해주세요"
+              name="signKey"
+              autoComplete="off"
+              onChange={inputsChange}
+              onBlur={() => getState(signKey)}
+            />
+            <Inputs
+              width="28.75rem"
+              height="4.375rem"
+              active={!phoneNum}
+              value={phoneNum}
+              type="tel"
+              name="phoneNum"
+              autoComplete="off"
+              placeholder="휴대폰 번호를 - 빼고 입력해주세요."
+              onChange={inputsChange}
+            />
+          </InputWrapper>
+          <TermsBtnWrapper>
+            {getStateStatus === 'success' && !!phoneNum ? (
+              <AccoutKit
+                appId="265056484381541"
+                csrf={state}
+                debug
+                version="v1.1"
+                phoneNumber={phoneNum}
+                onResponse={handleResponse}
+                language="ko_KR"
+                optionalFunc={() => console.log('test2')}
+              >
+                {(p: Function) => (
+                  <Buttons width="28.75rem" height="4.375rem" active {...p}>
+                    인증
+                  </Buttons>
+                )}
+              </AccoutKit>
+            ) : (
+              <Buttons
+                width="28.75rem"
+                height="4.375rem"
+                active={!!(phoneNum && signKey)}
+                style={getStateStatus === 'failure' ? { letterSpacing: '0' } : {}}
+              >
+                {getStateStatus === 'failure'
+                  ? '존재하지 않는 PIN 번호 입니다.'
+                  : '인증'}
+              </Buttons>
+            )}
+          </TermsBtnWrapper>
+        </Form>
+      </PhoneCheckWrapper>
+    </>
   );
 };
 

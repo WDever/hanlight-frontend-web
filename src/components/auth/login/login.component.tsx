@@ -1,8 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { transitions } from 'lib/styles';
+import { transitions, Inputs, Buttons } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
-import LoginImgSrc from 'lib/svg/login.svg';
+import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
 import { RouteComponentProps } from 'react-router-dom';
 
@@ -14,11 +14,15 @@ interface LoginState {
 }
 
 const LoginWrapper = styled.div`
-  width: 70%;
-  height: 90%;
+  position: relative;
+  left: 50%;
+  width: 38.125rem;
+  height: 43.75rem;
   display: inline-flex;
+  align-items: center;
   flex-direction: column;
-  margin: 4rem 0 0 0;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
 
   animation: ${transitions.fadeIn} 2.5s;
 `;
@@ -59,61 +63,24 @@ const LoginForm = styled.form`
   height: 50%;
 `;
 
-const LoginBtn = styled.button<{ active: boolean }>`
-  font-family: 'NanumSquare';
-  font-size: 1.5rem;
-  font-weight: 800;
-  width: 28.125rem;
-  height: 3.375rem;
-  background-color: ${props => (props.active ? '#6c63ff' : 'rgba(108, 99, 255, 0.25)')};
-  color: white;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  letter-spacing: 0.5rem;
-`;
-
 const FindBtnsWrapper = styled.div`
   font-family: 'NanumSquare';
-  width: 28.125rem;
+  width: 70%;
   color: #6c63ff;
   font-size: 1.25rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-around;
 `;
 
-const FindBtns = styled.button`
-  font-family: 'NanumSquare';
+const FindBtns = styled.button<{ colored?: boolean }>`
+  font-family: 'Noto Sans KR';
   font-size: 1.25rem;
-  color: #6c63ff;
+  color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
+  font-weight: 500;
   background-color: transparent;
   outline: none;
   border: none;
   cursor: pointer;
-`;
-
-const Inputs = styled.input`
-  color: #6c63ff;
-  font-family: 'NanumSquare';
-  font-size: 1.125rem;
-  text-indent: 1.5rem;
-  width: 28.125rem;
-  height: 3.125rem;
-  background-color: rgba(108, 99, 255, 0.15);
-
-  outline: none;
-  border: none;
-
-  &::placeholder {
-    font-family: 'NanumSquare';
-    color: #6c63ff;
-    text-indent: 1.5rem;
-  }
-
-  &:focus {
-    background-color: white;
-    border: solid 0.8px #6c63ff;
-  }
 `;
 
 const LoginComponent: React.FC<
@@ -144,12 +111,14 @@ LoginProps & LoginMethod & RouteComponentProps
   return (
     <LoginWrapper>
       <GreetingDiv>
-        <LoginImg src={LoginImgSrc} alt="" />
-        한빛에 오신 것을 환영합니다
+        <LoginImg src={Logo} alt="" />
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
           <Inputs
+            width="28.75rem"
+            height="4.375rem"
+            active={!id}
             type="id"
             placeholder="아이디"
             onChange={inputsChange}
@@ -157,6 +126,9 @@ LoginProps & LoginMethod & RouteComponentProps
             value={id}
           />
           <Inputs
+            width="28.75rem"
+            height="4.375rem"
+            active={!password}
             type="password"
             placeholder="비밀번호"
             onChange={inputsChange}
@@ -164,13 +136,14 @@ LoginProps & LoginMethod & RouteComponentProps
             value={password}
           />
         </LoginInputWrapper>
-        <LoginBtn active={!!(id && password)}>로그인</LoginBtn>
-        <FindBtnsWrapper>
-          <FindBtns>아이디 찾기</FindBtns>
-|
-          <FindBtns>비밀번호 찾기</FindBtns>
-        </FindBtnsWrapper>
+        <Buttons width="28.75rem" height="4.375rem" active={!!(id && password)}>
+          로그인
+        </Buttons>
       </LoginForm>
+      <FindBtnsWrapper>
+        <FindBtns>ID / 비밀번호 찾기</FindBtns>
+        <FindBtns colored onClick={() => history.push('/auth/register')}>회원가입</FindBtns>
+      </FindBtnsWrapper>
     </LoginWrapper>
   );
 };

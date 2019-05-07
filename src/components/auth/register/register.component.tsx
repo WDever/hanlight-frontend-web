@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { Inputs, Buttons } from 'lib/styles';
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
 import { useInputs } from 'lib/hooks';
@@ -12,27 +13,37 @@ interface RegisterState {
   rePassword: string;
 }
 
+const SecondStep = styled.span`
+  font-size: 2rem;
+  font-family: 'Noto Sans KR';
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #bfbfbf;
+`;
+
 const RegisterWrapper = styled.div`
-  width: 100%;
+  width: 38.125rem;
+  height: 38rem;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
   margin-top: 1rem;
-  height: 95%;
   display: inline-flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
 `;
 
 const GreetingDiv = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  justify-content: space-around;
-  font-size: 2.25rem;
-  font-family: 'NanumSquare';
+  justify-content: center;
+  font-size: 1.5rem;
+  font-family: 'Noto Sans', 'Noto Sans KR';
   font-weight: bold;
-  font-family: 'NanumSquare';
-  margin-bottom: 2rem;
-  /* margin-bottom: 1rem; */
+  color: #4470ff;
+  margin-top: 3rem;
+  /* margin-bottom: 2rem; */
 `;
 
 const Img = styled.img`
@@ -43,7 +54,7 @@ const Img = styled.img`
 
 const InputWrapper = styled.div`
   width: 100%;
-  height: 55%;
+  height: 65%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,31 +67,7 @@ const Form = styled.form`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 65%;
-`;
-
-const Inputs = styled.input`
-  color: #6c63ff;
-  font-family: 'NanumSquare';
-  font-size: 1.125rem;
-  text-indent: 1.5rem;
-  width: 28.125rem;
-  height: 3.125rem;
-  background-color: rgba(108, 99, 255, 0.15);
-
-  outline: none;
-  border: none;
-
-  &::placeholder {
-    font-family: 'NanumSquare';
-    color: #6c63ff;
-    text-indent: 1.5rem;
-  }
-
-  &:focus {
-    background-color: white;
-    border: solid 0.8px #6c63ff;
-  }
+  height: 80%;
 `;
 
 const Btn = styled.button<{ active: boolean }>`
@@ -129,38 +116,50 @@ RegisterProps & RegisterMethod & RouteComponentProps
   }, [registerStatus, history]);
 
   return (
-    <RegisterWrapper>
-      <GreetingDiv>
-        <Img src={''} alt="" />
-        계정 생성
-      </GreetingDiv>
-      <Form onSubmit={registerSubmit}>
-        <InputWrapper>
-          <Inputs
-            type="text"
-            placeholder="아이디"
-            name="id"
-            autoComplete="off"
-            onChange={inputsChange}
-          />
-          <Inputs
-            type="password"
-            name="password"
-            autoComplete="off"
-            placeholder="비밀번호"
-            onChange={inputsChange}
-          />
-          <Inputs
-            name="rePassword"
-            autoComplete="off"
-            placeholder="비밀번호 재입력"
-            type="password"
-            onChange={inputsChange}
-          />
-        </InputWrapper>
-        <Btn active={!!(id && password && rePassword)}>회원가입</Btn>
-      </Form>
-    </RegisterWrapper>
+    <>
+      <RegisterWrapper>
+        {/* <SecondStep>STEP .2</SecondStep> */}
+        <GreetingDiv>회원가입</GreetingDiv>
+        <Form onSubmit={registerSubmit}>
+          <InputWrapper>
+            <Inputs
+              width="28.75rem"
+              height="4.375rem"
+              active={!id}
+              value={id}
+              type="text"
+              placeholder="아이디"
+              name="id"
+              autoComplete="off"
+              onChange={inputsChange}
+            />
+            <Inputs
+              width="28.75rem"
+              height="4.375rem"
+              active={!password}
+              value={password}
+              type="password"
+              name="password"
+              autoComplete="off"
+              placeholder="비밀번호"
+              onChange={inputsChange}
+            />
+            <Inputs
+              width="28.75rem"
+              height="4.375rem"
+              active={!rePassword}
+              value={rePassword}
+              name="rePassword"
+              autoComplete="off"
+              placeholder="비밀번호 재입력"
+              type="password"
+              onChange={inputsChange}
+            />
+          </InputWrapper>
+          <Buttons width="28.75rem" height="4.375rem" active={!!(id && password && rePassword)}>회원가입</Buttons>
+        </Form>
+      </RegisterWrapper>
+    </>
   );
 };
 
