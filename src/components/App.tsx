@@ -8,9 +8,9 @@ import RegisterPage from 'pages/auth/register';
 const App: React.FC = () => (
   <div id="app">
     <Switch>
-      <Route exact path="/phone" component={PhoneCheckPage} />
-      <Route exact path="/login" component={LoginPage} />
-      <Route exact path="/register" component={RegisterPage} />
+      <Route exact path="/auth/register/create" component={RegisterPage} />
+      <Route exact path="/auth/register" component={PhoneCheckPage} />
+      <Route exact path="/auth" component={LoginPage} />
       <Route exact path="/" component={() => <div>home</div>} />
       <Redirect to="/" />
     </Switch>
