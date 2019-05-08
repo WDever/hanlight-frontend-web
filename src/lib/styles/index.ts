@@ -1,3 +1,4 @@
 export { transitions } from './transitions';
-export { Inputs } from './Inputs';
+export { Inputs, InputsGroup } from './Inputs';
 export { Buttons } from './Buttons';
+export { WrongLabel } from './labels';

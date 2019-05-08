@@ -3,7 +3,7 @@ import styled from 'styled-components';
 interface InputsSize {
   width: string | number;
   height: string | number;
-  active: boolean
+  active?: boolean
 }
 
 export const Inputs = styled.input<InputsSize>`
@@ -23,8 +23,12 @@ export const Inputs = styled.input<InputsSize>`
     color: #bebebe;
     font-weight: 500;
   }
-/* 
-  &:focus {
-    border: solid 1px #4470ff;
-  } */
+`;
+
+export const InputsGroup = styled.div<InputsSize>`
+  width: ${props => props.width};
+  height: ${props => props.height};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
