@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
 import AccoutKit from 'react-facebook-account-kit';
+import uuid from 'uuid';
 import {
   transitions,
   Inputs,
@@ -10,6 +11,7 @@ import {
   InputsGroup,
 } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
+import { TP_EXIST, SIGN_KEY_EXIST } from 'store/action';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import { PhoneCheckResType } from 'store';
 
@@ -93,12 +95,14 @@ const ColoredSpan = styled.span`
 const PhoneCheckComponent: React.FC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  state,
+  exist,
+  existStatus,
+  tpExistStatus,
+  signKeyExistStatus,
   verifyPhone,
-  getState,
-  getStateStatus,
   verifyStatus,
   history,
+  setSignKey,
 }) => {
   const [inputs, inputsChange] = useInputs<PhoneCheckInputs>({
     phoneNum: '',
@@ -121,18 +125,15 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 
   const verifyPhoneNum = async () => {
     if (getCodeStatus.current === 'PARTIALLY_AUTHENTICATED') {
-      console.log(state);
       console.log(codeRef.current);
       console.log(signKey);
       const code = codeRef.current;
-      verifyPhone({ code, state, signKey });
+      verifyPhone({ code, signKey });
     } else if (getCodeStatus.current === 'BAD_PARAMS') {
-      console.log(state);
       console.log(getCodeStatus);
       console.log(signKey);
       alert('핸드폰 인증 실패 (BAD_PARAMS)');
     } else if (getCodeStatus.current === 'NOT_AUTHENTICATED') {
-      console.log(state);
       console.log(getCodeStatus);
       console.log(signKey);
       alert('핸드폰 인증 실패');
@@ -146,13 +147,19 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     console.log(res);
   };
 
-  const signKeyCheck = (str: string): boolean => str.length === 6 && /^[a-zA-Z0-9]{6,6}$/.test(str);
+  const signKeyCheck = (str: string): boolean => /^[a-zA-Z0-9]{6,6}$/.test(str);
 
-  const phoneNumCheck = (str: string): boolean => str.length === 11 && /^[0-9]{10,11}$/.test(str);
+  const phoneNumCheck = (str: string): boolean => /^[0-9]{10,11}$/.test(str);
 
   const signKeyFunc = () => {
     setSignKeyValidation(signKeyCheck(signKey));
-    getState(signKey);
+    exist({ key: 'signKey', value: signKey, type: SIGN_KEY_EXIST });
+    setSignKey(signKey);
+  };
+
+  const phoneNumFunc = () => {
+    setPhoneNumValidation(phoneNumCheck(phoneNum));
+    exist({ key: 'tp', value: phoneNum, type: TP_EXIST });
   };
 
   useEffect(() => {
@@ -178,7 +185,9 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
       >
         <InputWrapper>
           <InputsGroup width="28.75rem" height="6rem">
-            {!signKeyValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+            {!signKeyValidation && (
+              <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
+            )}
             <Inputs
               wrong={!signKeyValidation}
               width="28.75rem"
@@ -194,7 +203,9 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
             />
           </InputsGroup>
           <InputsGroup width="28.75rem" height="6rem">
-            {!phoneNumValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+            {!phoneNumValidation && (
+              <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
+            )}
             <Inputs
               wrong={!phoneNumValidation}
               width="28.75rem"
@@ -206,15 +217,15 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
               autoComplete="off"
               placeholder="휴대폰 번호를 - 빼고 입력해주세요."
               onChange={inputsChange}
-              onBlur={() => { setPhoneNumValidation(phoneNumCheck(phoneNum)); }}
+              onBlur={phoneNumFunc}
             />
           </InputsGroup>
         </InputWrapper>
         <TermsBtnWrapper>
-          {getStateStatus === 'success' && !!phoneNum ? (
+          {tpExistStatus && signKeyExistStatus && !!phoneNum ? (
             <AccoutKit
               appId="265056484381541"
-              csrf={state}
+              csrf={uuid.v4()}
               debug
               version="v1.1"
               phoneNumber={phoneNum}
@@ -233,10 +244,12 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
               width="28.75rem"
               height="4.375rem"
               active={!!(phoneNum && signKey)}
-              style={getStateStatus === 'failure' ? { letterSpacing: '0' } : {}}
+              style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
             >
-              {getStateStatus === 'failure'
-                ? '존재하지 않는 PIN 번호 입니다'
+              {existStatus === 'success' || 'failure'
+                ? signKeyExistStatus
+                  ? '인증'
+                  : '존재하지 않거나 중복되는 PIN 입니다'
                 : '인증'}
             </Buttons>
           )}
