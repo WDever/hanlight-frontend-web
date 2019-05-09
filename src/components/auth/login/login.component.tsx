@@ -53,7 +53,7 @@ const LoginImg = styled.img`
 
 const LoginInputWrapper = styled.div`
   width: 100%;
-  height: 60%;
+  height: 55%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -66,7 +66,7 @@ const LoginForm = styled.form`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: 55%;
 `;
 
 const FindBtnsWrapper = styled.div`
@@ -154,32 +154,21 @@ LoginProps & LoginMethod & RouteComponentProps
       <GreetingDiv>
         <LoginImg src={Logo} alt="" />
       </GreetingDiv>
-      {!(pwValidation && idValidation) && (
-        <WrongLabel>
-          <span>
-            아이디 또는 비밀번호를 다시 확인하세요
-            <br />
-          </span>
-          <span>
-            한빛에 등록되지 않은 아이디이거나,
-            <br />
-            아이디 또는 비밀번호를 잘못 입력하셨습니다.
-          </span>
-        </WrongLabel>
-      )}
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
-          <Inputs
-            wrong={!idValidation}
-            width="28.75rem"
-            height="4.375rem"
-            active={!!id}
-            type="id"
-            placeholder="아이디"
-            onChange={inputsChange}
-            name="id"
-            value={id}
-          />
+          <InputsGroup width="28.75rem" height="6rem" where>
+            <Inputs
+              wrong={!idValidation}
+              width="28.75rem"
+              height="4.375rem"
+              active={!!id}
+              type="id"
+              placeholder="아이디"
+              onChange={inputsChange}
+              name="id"
+              value={id}
+            />
+          </InputsGroup>
           <InputsGroup width="28.75rem" height="6rem" where>
             <Inputs
               wrong={!pwValidation}
@@ -194,6 +183,15 @@ LoginProps & LoginMethod & RouteComponentProps
             />
           </InputsGroup>
         </LoginInputWrapper>
+        {!(pwValidation && idValidation) && (
+          <WrongLabel>
+            <span>
+              한빛에 등록되지 않은 아이디이거나,
+              <br />
+              아이디 또는 비밀번호를 잘못 입력하셨습니다.
+            </span>
+          </WrongLabel>
+        )}
         <Buttons width="28.75rem" height="4.375rem" active={!!(id && password)}>
           로그인
         </Buttons>

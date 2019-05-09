@@ -21,4 +21,5 @@ export const Buttons = styled.button<ButtonsProps>`
   color: white;
   font-family: 'Noto Sans', 'Noto Sans KR';
   outline: none;
+  cursor: pointer;
 `;
