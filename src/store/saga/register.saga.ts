@@ -6,42 +6,16 @@ import {
   REGISTER_FAILURE,
   RegisterParams,
   Register,
-  PinType,
-  GetState,
-  GET_STATE_SUCCESS,
-  GET_STATE_FAILURE,
   VerifyPhoneParams,
   VerifyPhone,
   VERIFY_PHONE_SUCCESS,
   VERIFY_PHONE_FAILURE,
   VERIFY_PHONE,
-  GET_STATE,
 } from '../action';
 
-const getStateApi = (value: PinType) => axios
-  .post('http://54.180.114.156:3000/api/verify/phone/state', {
-    signKey: value,
-  })
-  .then(res => res.data);
-
-function* getStateSaga(action: GetState) {
-  if (action.type) {
-    try {
-      const response = yield call(getStateApi, action.payload);
-      console.log(response);
-      yield put({ type: GET_STATE_SUCCESS, payload: response.data });
-    } catch (e) {
-      console.log(e.response);
-      console.log(e);
-      yield put({ type: GET_STATE_FAILURE, payload: e.response });
-    }
-  }
-}
-
 const verifyPhoneApi = (data: VerifyPhoneParams) => axios
-  .post('http://54.180.114.156:3000/api/verify/phone', {
+  .post('http://54.180.114.156:3000/api/user/phone', {
     code: data.code,
-    state: data.state,
     signKey: data.signKey,
   })
   .then(res => res.data);
@@ -60,7 +34,7 @@ function* verifyPhoneSaga(action: VerifyPhone) {
 }
 
 const registerApi = (data: RegisterParams) => axios
-  .post('http://54.180.114.156:3000/api/verify/register', {
+  .post('http://54.180.114.156:3000/api/user/register', {
     id: data.id,
     password: data.password,
     signKey: data.signKey,
@@ -82,7 +56,6 @@ function* joinSaga(action: Register) {
 
 function* registerSaga() {
   yield takeEvery(REGISTER, joinSaga);
-  yield takeEvery(GET_STATE, getStateSaga);
   yield takeEvery(VERIFY_PHONE, verifyPhoneSaga);
 }
 

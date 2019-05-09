@@ -5,56 +5,66 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppState,
-  PinType,
+  ExistParamsType,
   VerifyPhoneParams,
   registerReducerActions,
   registerActions,
+  existReducerActions,
+  existActions,
 } from 'store';
 
 export interface PhoneCheckProps {
-  getStateStatus: 'none' | 'pending' | 'success' | 'failure';
-  state: string;
   verifyStatus: 'none' | 'pending' | 'success' | 'failure';
+  existStatus: 'none' | 'pending' | 'success' | 'failure';
+  signKeyExistStatus: boolean;
+  tpExistStatus: boolean;
 }
 
 export interface PhoneCheckMethod {
-  getState(pin: PinType): void;
+  exist(data: ExistParamsType): void;
   verifyPhone(data: VerifyPhoneParams): void;
+  setSignKey(data: string): void;
 }
 
 const PhoneCheckContainer: React.SFC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  getState,
-  getStateStatus,
-  state,
+  exist,
   verifyPhone,
   verifyStatus,
   history,
   match,
   location,
+  existStatus,
+  tpExistStatus,
+  signKeyExistStatus,
+  setSignKey,
 }) => (
   <PhoneCheckComponent
-    getState={getState}
-    getStateStatus={getStateStatus}
-    state={state}
+    exist={exist}
     history={history}
     match={match}
     location={location}
     verifyPhone={verifyPhone}
     verifyStatus={verifyStatus}
+    existStatus={existStatus}
+    signKeyExistStatus={signKeyExistStatus}
+    tpExistStatus={tpExistStatus}
+    setSignKey={setSignKey}
   />
 );
 
-const mapStateToProps = ({ register }: AppState) => ({
-  getStateStatus: register.getStateStatus,
-  state: register.state,
+const mapStateToProps = ({ register, exist }: AppState) => ({
   verifyStatus: register.verifyStatus,
+  existStatus: exist.existStatus,
+  tpExistStatus: exist.tpExistStatus,
+  signKeyExistStatus: exist.signKeyExistStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<registerReducerActions>) => ({
-  getState: bindActionCreators(registerActions.getState, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<registerReducerActions & existReducerActions>) => ({
+  exist: bindActionCreators(existActions.exist, dispatch),
   verifyPhone: bindActionCreators(registerActions.verifyPhone, dispatch),
+  setSignKey: bindActionCreators(registerActions.setSignKey, dispatch),
 });
 
 export default withRouter(
