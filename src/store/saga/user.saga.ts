@@ -10,7 +10,7 @@ import {
 } from '../action';
 
 const loginApi = (data: LoginParams) => axios
-  .post('http://54.180.114.156:3000/api/verify/login', {
+  .post('http://54.180.114.156:3000/api/user/login', {
     id: data.id,
     password: data.password,
   })

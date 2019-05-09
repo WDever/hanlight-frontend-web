@@ -1,11 +1,13 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { Inputs, Buttons } from 'lib/styles';
+import {
+  Inputs, Buttons, WrongLabel, InputsGroup,
+} from 'lib/styles';
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
 import { useInputs } from 'lib/hooks';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 interface RegisterState {
   id: string;
@@ -70,23 +72,6 @@ const Form = styled.form`
   height: 80%;
 `;
 
-const Btn = styled.button<{ active: boolean }>`
-  font-family: 'NanumSquare';
-  font-size: 1.5rem;
-  font-weight: bold;
-  width: 28.125rem;
-  height: 3.375rem;
-  background-color: ${props => (props.active ? '#6c63ff' : 'rgba(108, 99, 255, 0.25)')};
-  color: white;
-  outline: none;
-  border: none;
-  cursor: pointer;
-  letter-spacing: 0.5rem;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const RegisterComponent: React.FC<
 RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
@@ -97,6 +82,9 @@ RegisterProps & RegisterMethod & RouteComponentProps
     password: '',
     rePassword: '',
   });
+  const [idValidation, setIdValidation] = useState<boolean>(true);
+  const [pwValidation, setPwValidation] = useState<boolean>(true);
+  const [rpwValidation, setRpwValidation] = useState<boolean>(true);
 
   const { id, password, rePassword } = inputs;
 
@@ -105,6 +93,12 @@ RegisterProps & RegisterMethod & RouteComponentProps
 
     register({ id, password, signKey });
   };
+
+  const idCheck = (str: string): boolean => /[a-z0-9-_]{5,20}$/.test(str);
+
+  const pwCheck = (str: string): boolean => /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/.test(str);
+
+  const rpwCheck = (str: string): boolean => (str === password) || str === '';
 
   useEffect(() => {
     if (registerStatus === 'success') {
@@ -118,45 +112,68 @@ RegisterProps & RegisterMethod & RouteComponentProps
   return (
     <>
       <RegisterWrapper>
-        {/* <SecondStep>STEP .2</SecondStep> */}
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>
           <InputWrapper>
-            <Inputs
-              width="28.75rem"
-              height="4.375rem"
-              active={!id}
-              value={id}
-              type="text"
-              placeholder="아이디"
-              name="id"
-              autoComplete="off"
-              onChange={inputsChange}
-            />
-            <Inputs
-              width="28.75rem"
-              height="4.375rem"
-              active={!password}
-              value={password}
-              type="password"
-              name="password"
-              autoComplete="off"
-              placeholder="비밀번호"
-              onChange={inputsChange}
-            />
-            <Inputs
-              width="28.75rem"
-              height="4.375rem"
-              active={!rePassword}
-              value={rePassword}
-              name="rePassword"
-              autoComplete="off"
-              placeholder="비밀번호 재입력"
-              type="password"
-              onChange={inputsChange}
-            />
+            <InputsGroup width="28.75rem" height="6.5rem" where={false}>
+              {!idValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+              <Inputs
+                wrong={!idValidation}
+                width="28.75rem"
+                height="4.375rem"
+                active={!!id}
+                value={id}
+                type="text"
+                placeholder="아이디"
+                name="id"
+                autoComplete="off"
+                onChange={inputsChange}
+                onBlur={() => setIdValidation(idCheck(id))}
+              />
+            </InputsGroup>
+            <InputsGroup width="28.75rem" height="6.5rem" where={false}>
+              {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+              <Inputs
+                wrong={!pwValidation}
+                width="28.75rem"
+                height="4.375rem"
+                active={!!password}
+                value={password}
+                type="password"
+                name="password"
+                autoComplete="off"
+                placeholder="비밀번호"
+                onChange={inputsChange}
+                onBlur={() => {
+                  setPwValidation(pwCheck(password));
+                  setRpwValidation(rpwCheck(rePassword));
+                }}
+              />
+            </InputsGroup>
+            <InputsGroup width="28.75rem" height="6.5rem" where={false}>
+              {!rpwValidation && <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>}
+              <Inputs
+                wrong={!rpwValidation}
+                width="28.75rem"
+                height="4.375rem"
+                active={!!rePassword}
+                value={rePassword}
+                name="rePassword"
+                autoComplete="off"
+                placeholder="비밀번호 재입력"
+                type="password"
+                onChange={inputsChange}
+                onBlur={() => setRpwValidation(rpwCheck(rePassword))}
+              />
+            </InputsGroup>
           </InputWrapper>
-          <Buttons width="28.75rem" height="4.375rem" active={!!(id && password && rePassword)}>회원가입</Buttons>
+          <Buttons
+            width="28.75rem"
+            height="4.375rem"
+            active={!!(id && password && rePassword)}
+          >
+            회원가입
+          </Buttons>
         </Form>
       </RegisterWrapper>
     </>
