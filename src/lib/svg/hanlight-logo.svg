@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="154" height="90" viewBox="0 0 154 90">
+    <defs>
+        <style>
+            .cls-1{fill:#f5d63c}.cls-2{fill:#1c2234;font-size:56px;font-family:MalgunGothic,Malgun Gothic}.cls-3{fill:#303657}.cls-4{fill:#40475a;font-size:8px;font-family:SegoeUI,Segoe UI;letter-spacing:.45em}
+        </style>
+    </defs>
+    <g id="한빛" transform="translate(0 .26)">
+        <g id="레이어_1" data-name="레이어 1" transform="translate(0 -.26)">
+            <path id="사각형_6" d="M0 0h2.333v17.785H0z" class="cls-1" data-name="사각형 6" transform="scale(-1) rotate(70 -55.004 -107.532)"/>
+            <text id="한빛-2" class="cls-2" data-name="한빛" transform="translate(0 61)">
+                <tspan x="0" y="0">한빛</tspan>
+            </text>
+            <path id="사각형_7" d="M0 0h3.028v17.785H0z" class="cls-3" data-name="사각형 7" transform="rotate(-70 69.528 -79.048)"/>
+            <path id="사각형_8" d="M0 0h2.447v17.785H0z" class="cls-3" data-name="사각형 8" transform="rotate(144.99 69.214 39.028)"/>
+            <path id="사각형_9" d="M0 0h2.84v17.785H0z" class="cls-3" data-name="사각형 9" transform="rotate(-144.99 69.5 -3.78)"/>
+            <path id="사각형_10" d="M0 0h2.251v17.785H0z" class="cls-3" data-name="사각형 10" transform="rotate(180 69.234 8.999)"/>
+            <text id="Han_Light" class="cls-4" data-name="Han Light" transform="translate(10.55 88)">
+                <tspan x="0" y="0">Han Light</tspan>
+            </text>
+        </g>
+    </g>
+</svg>

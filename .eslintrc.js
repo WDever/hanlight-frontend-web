@@ -26,5 +26,7 @@ module.exports = {
     'no-useless-constructor': 0,
     'import/no-unresolved': 0,
     'no-underscore-dangle': 0,
+    'no-console': 0,
+    'no-alert': 0,
   },
 };
