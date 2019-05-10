@@ -21,6 +21,15 @@ function* loginSaga(action: Login) {
     try {
       const response = yield call(loginApi, action.payload);
       console.log(response);
+      localStorage.setItem('loginStatus', 'sucess');
+      localStorage.setItem('accessToken', response.data.accessToken);
+      localStorage.setItem('type', response.data.user.type);
+      localStorage.setItem('admin', response.data.user.admin);
+      localStorage.setItem('name', response.data.user.name);
+      localStorage.setItem('major', response.data.user.major);
+      localStorage.setItem('grade', response.data.user.grade);
+      localStorage.setItem('classNum', response.data.user.classNum);
+      localStorage.setItem('studentNum', response.data.user.studentNum);
       yield put({ type: LOGIN_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);

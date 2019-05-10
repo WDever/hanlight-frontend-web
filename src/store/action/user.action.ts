@@ -20,7 +20,7 @@ export interface LoginResType {
       name: string;
       major: string;
       grade: string;
-      className: string;
+      classNum: string;
       studentNum: string;
     };
   };
