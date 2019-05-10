@@ -119,7 +119,7 @@ LoginProps & LoginMethod & RouteComponentProps
     pwValidationRef.current = pwCheck(password);
   };
 
-  const test = async () => {
+  const loginFunc = async () => {
     console.log(idValidation, pwValidation);
     if (idValidationRef.current && pwValidationRef.current) {
       console.log(idValidation, pwValidation);
@@ -135,7 +135,7 @@ LoginProps & LoginMethod & RouteComponentProps
     await asyncSetPwVal(pwCheck(password));
     await setIdValidationRef();
     await setPwValidationRef();
-    await test();
+    await loginFunc();
 
     console.log(idValidation, pwValidation);
   };

@@ -12,7 +12,7 @@ const initialState: UserModel = {
       name: '',
       major: '',
       grade: '',
-      className: '',
+      classNum: '',
       studentNum: '',
     },
   },
