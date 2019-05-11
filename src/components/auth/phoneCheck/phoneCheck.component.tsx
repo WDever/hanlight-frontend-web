@@ -4,7 +4,6 @@ import { RouteComponentProps } from 'react-router-dom';
 import AccoutKit from 'react-facebook-account-kit';
 import uuid from 'uuid';
 import {
-  transitions,
   Inputs,
   Buttons,
   WrongLabel,
@@ -22,7 +21,7 @@ interface PhoneCheckInputs {
   phoneNum: string;
 }
 
-type GetCodeStatus = | 'none'
+export type GetCodeStatus = | 'none'
 | 'PARTIALLY_AUTHENTICATED'
 | 'NOT_AUTHENTICATED'
 | 'BAD_PARAMS';
@@ -44,8 +43,6 @@ const PhoneCheckWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
-
-  animation: ${transitions.fadeIn} 2.5s;
 `;
 
 const GreetingDiv = styled.div`

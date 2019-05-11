@@ -5,7 +5,7 @@ import { Dispatch, bindActionCreators } from 'redux';
 import LoginComponent from 'components/auth/login';
 import {
   AppState,
-  userAcions,
+  userActions,
   userReducerActions,
   LoginParams,
 } from 'store';
@@ -37,7 +37,7 @@ const mapStateToProps = ({ user }: AppState) => ({
 });
 
 const mapDispathToProps = (dispatch: Dispatch<userReducerActions>) => ({
-  login: bindActionCreators(userAcions.login, dispatch),
+  login: bindActionCreators(userActions.login, dispatch),
 });
 
 export default withRouter(
