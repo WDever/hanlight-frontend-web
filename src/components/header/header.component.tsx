@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 import Logo from 'lib/svg/hanlight-logo.svg';
 
 interface HeaderProps {
-  name: string;
+  name: string | null;
 }
 
 const HeaderWrapper = styled.div`
