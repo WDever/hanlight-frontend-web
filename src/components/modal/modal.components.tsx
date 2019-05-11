@@ -13,6 +13,7 @@ interface ModalProps extends ModalSize {
   kind: 'certification' | 'check' | 'fail';
   name?: string;
   id?: string;
+  click(): void;
 }
 
 const Modal = styled.div`
@@ -59,34 +60,33 @@ const ModalComponent: React.FC<ModalProps> = ({
   kind,
   name,
   id,
-}) => {
-  return (
-    <Modal>
-      <ModalWrapper width={width} height={height}>
-        <img
-          src={kind === 'certification' ? certificationSuccess : null}
-          alt="modal"
-        />
-        {kind === 'certification' ? (
-          <ModalText>인증 성공</ModalText>
-        ) : kind === 'check' ? (
-          <ModalText>
-            <ColoredText>{name}</ColoredText>
-            님의 아이디는
-            {' '}
-            <ColoredText>{id}</ColoredText>
-            {' '}
+  click,
+}) => (
+  <Modal>
+    <ModalWrapper width={width} height={height}>
+      <img
+        src={kind === 'certification' ? certificationSuccess : null}
+        alt="modal"
+      />
+      {kind === 'certification' ? (
+        <ModalText>인증 성공</ModalText>
+      ) : kind === 'check' ? (
+        <ModalText>
+          <ColoredText>{name}</ColoredText>
+          님의 아이디는
+          {' '}
+          <ColoredText>{id}</ColoredText>
+          {' '}
 입니다
-          </ModalText>
-        ) : (
-          ''
-        )}
-        <Buttons width="28.75rem" height="4.375rem" active>
-          확인
-        </Buttons>
-      </ModalWrapper>
-    </Modal>
-  );
-};
+        </ModalText>
+      ) : (
+        ''
+      )}
+      <Buttons width="28.75rem" height="4.375rem" active onClick={click}>
+        확인
+      </Buttons>
+    </ModalWrapper>
+  </Modal>
+);
 
 export default ModalComponent;

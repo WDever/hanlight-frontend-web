@@ -10,7 +10,7 @@ import {
 import { useInputs } from 'lib/hooks';
 import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, NavLink } from 'react-router-dom';
 
 const { useState, useEffect, useRef } = React;
 
@@ -78,7 +78,7 @@ const FindBtnsWrapper = styled.div`
   justify-content: space-around;
 `;
 
-const FindBtns = styled.button<{ colored?: boolean }>`
+const FindBtns = styled(NavLink)<{ colored?: boolean }>`
   font-family: 'Noto Sans KR';
   font-size: 1.25rem;
   color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
@@ -87,6 +87,7 @@ const FindBtns = styled.button<{ colored?: boolean }>`
   outline: none;
   border: none;
   cursor: pointer;
+  text-decoration: none;
 `;
 
 const LoginComponent: React.FC<
@@ -197,8 +198,9 @@ LoginProps & LoginMethod & RouteComponentProps
         </Buttons>
       </LoginForm>
       <FindBtnsWrapper>
-        <FindBtns>ID / 비밀번호 찾기</FindBtns>
-        <FindBtns colored onClick={() => history.push('/auth/register')}>
+        <FindBtns to="/auth/idFind">ID 찾기</FindBtns>
+        <FindBtns to="/auth/pwFind">비밀번호 찾기</FindBtns>
+        <FindBtns colored to="/auth/register">
           회원가입
         </FindBtns>
       </FindBtnsWrapper>
