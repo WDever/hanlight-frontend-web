@@ -98,7 +98,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
 
   const pwCheck = (str: string): boolean => /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/.test(str);
 
-  const rpwCheck = (str: string): boolean => (str === password) || str === '';
+  const rPwCheck = (str: string): boolean => (str === password) || str === '';
 
   useEffect(() => {
     if (registerStatus === 'success') {
@@ -146,7 +146,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
                 onChange={inputsChange}
                 onBlur={() => {
                   setPwValidation(pwCheck(password));
-                  setRpwValidation(rpwCheck(rePassword));
+                  setRpwValidation(rPwCheck(rePassword));
                 }}
               />
             </InputsGroup>
@@ -163,7 +163,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
                 placeholder="비밀번호 재입력"
                 type="password"
                 onChange={inputsChange}
-                onBlur={() => setRpwValidation(rpwCheck(rePassword))}
+                onBlur={() => setRpwValidation(rPwCheck(rePassword))}
               />
             </InputsGroup>
           </InputWrapper>

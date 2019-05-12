@@ -16,7 +16,7 @@ const loginApi = (data: LoginParams) => axios
   })
   .then(res => res.data);
 
-function* loginSaga(action: Login) {
+function* loginApiSaga(action: Login) {
   if (action.type) {
     try {
       const response = yield call(loginApi, action.payload);
@@ -39,7 +39,7 @@ function* loginSaga(action: Login) {
 }
 
 function* userSaga() {
-  yield takeEvery(LOGIN, loginSaga);
+  yield takeEvery(LOGIN, loginApiSaga);
 }
 
 export { userSaga };

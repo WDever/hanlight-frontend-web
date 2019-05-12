@@ -31,7 +31,7 @@ const existApi = (value: ExistParamsType) => axios
   })
   .then(res => res.data);
 
-function* existSaga(action: Exist) {
+function* existApiSaga(action: Exist) {
   if (action.type) {
     try {
       const response = yield call(existApi, action.payload);
@@ -78,7 +78,7 @@ function* signKeyExistSaga(action: SignKeyExist) {
 }
 
 function* existSagas() {
-  yield takeEvery(EXIST, existSaga);
+  yield takeEvery(EXIST, existApiSaga);
   yield takeEvery(ID_EXIST, idExistSaga);
   yield takeEvery(TP_EXIST, tpExistSaga);
   yield takeEvery(SIGN_KEY_EXIST, signKeyExistSaga);
