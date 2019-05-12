@@ -6,6 +6,7 @@ import {
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
 import { useInputs } from 'lib/hooks';
+import { id as idRegExp, password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 
 const { useEffect, useState } = React;
 
@@ -94,9 +95,9 @@ RegisterProps & RegisterMethod & RouteComponentProps
     register({ id, password, signKey });
   };
 
-  const idCheck = (str: string): boolean => /[a-z0-9-_]{5,20}$/.test(str);
+  const idCheck = (str: string): boolean => new RegExp(idRegExp).test(str);
 
-  const pwCheck = (str: string): boolean => /^[a-zA-Z0-9!@#$%^&*()]{8,16}$/.test(str);
+  const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
 
   const rPwCheck = (str: string): boolean => (str === password) || str === '';
 
