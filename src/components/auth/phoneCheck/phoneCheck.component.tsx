@@ -14,7 +14,7 @@ import { useInputs } from 'lib/hooks';
 import { TP_EXIST, SIGN_KEY_EXIST } from 'store/action';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import { PhoneCheckResType } from 'store';
-import { phoneNumCheck, signKeyCheck } from 'lib/RegExp';
+import { signKey as signKeyRegExp, tp } from 'lib/RegExp/RegExp.json';
 
 const { useState, useEffect, useRef } = React;
 
@@ -147,6 +147,10 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     await verifyPhoneNum();
     console.log(res);
   };
+
+  const signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
+
+  const phoneNumCheck = (str: string) => new RegExp(tp).test(str);
 
   const signKeyFunc = () => {
     setSignKeyValidation(signKeyCheck(signKey));

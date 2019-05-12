@@ -11,7 +11,7 @@ import { useInputs } from 'lib/hooks';
 import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
 import { RouteComponentProps } from 'react-router-dom';
-import { idCheck, pwCheck } from 'lib/RegExp';
+import { id as idRegExp, password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 
 const { useState, useEffect, useRef } = React;
 
@@ -107,6 +107,10 @@ LoginProps & LoginMethod & RouteComponentProps
   const asyncSetIdVal = async (bool: boolean) => setIdValidation(bool);
 
   const asyncSetPwVal = async (bool: boolean) => setPwValidation(bool);
+
+  const idCheck = (str: string) => new RegExp(idRegExp).test(str);
+
+  const pwCheck = (str: string) => new RegExp(passwordRegExp).test(str);
 
   const setIdValidationRef = async () => {
     idValidationRef.current = idCheck(id);
