@@ -10,7 +10,7 @@ import {
 import { useInputs } from 'lib/hooks';
 import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, NavLink } from 'react-router-dom';
 import { idCheck, pwCheck } from 'lib/RegExp';
 
 const { useState, useEffect, useRef } = React;
