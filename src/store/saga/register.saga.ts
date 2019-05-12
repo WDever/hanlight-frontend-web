@@ -20,7 +20,7 @@ const verifyPhoneApi = (data: VerifyPhoneParams) => axios
   })
   .then(res => res.data);
 
-function* verifyPhoneSaga(action: VerifyPhone) {
+function* verifyPhoneApiSaga(action: VerifyPhone) {
   if (action.type) {
     try {
       const response = yield call(verifyPhoneApi, action.payload);
@@ -41,7 +41,7 @@ const registerApi = (data: RegisterParams) => axios
   })
   .then(res => res.data);
 
-function* joinSaga(action: Register) {
+function* registerApiSaga(action: Register) {
   if (action.type) {
     try {
       const response = yield call(registerApi, action.payload);
@@ -55,8 +55,8 @@ function* joinSaga(action: Register) {
 }
 
 function* registerSaga() {
-  yield takeEvery(REGISTER, joinSaga);
-  yield takeEvery(VERIFY_PHONE, verifyPhoneSaga);
+  yield takeEvery(REGISTER, registerApiSaga);
+  yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
 }
 
 export { registerSaga };
