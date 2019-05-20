@@ -8418,7 +8418,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.5.0, prop-types@^15.5.4, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.4, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8638,13 +8638,6 @@ react-error-overlay@^5.1.6:
   version "5.1.6"
   resolved "https://registry.yarnpkg.com/react-error-overlay/-/react-error-overlay-5.1.6.tgz#0cd73407c5d141f9638ae1e0c63e7b2bf7e9929d"
   integrity sha512-X1Y+0jR47ImDVr54Ab6V9eGk0Hnu7fVWGeHQSOXHf/C2pF9c6uy3gef8QUeuUiWlNb0i08InPSE5a/KJzNzw1Q==
-
-react-facebook-account-kit@^0.1.5:
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/react-facebook-account-kit/-/react-facebook-account-kit-0.1.5.tgz#b3f5e4bbb70e85f2b76e6528e3fce2b2bd655356"
-  integrity sha512-T9tEXfOs/Sy1cZ/ppr1yIALSeDwSa19BWg+M5d+iqsEiuOTT4nqgvOw4MndDNhN4cou7URvBP4OCpv9PaZIIGg==
-  dependencies:
-    prop-types "^15.5.0"
 
 react-is@^16.6.0, react-is@^16.7.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.8.6"
@@ -10211,10 +10204,10 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typesafe-actions@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/typesafe-actions/-/typesafe-actions-4.2.0.tgz#96f26d644803790f4b93f0d82ed2d4187bbd8b92"
-  integrity sha512-UuND9OTYOoK47QFwXRpF+ax9r2+bnJ+M//13mBFU7+EB2NN/5ki6ocmYi4jtTjFTr+gRCOTRy6Sr1z6X1MhTOg==
+typesafe-actions@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/typesafe-actions/-/typesafe-actions-4.3.0.tgz#2283870c442b393a37e0f091eb42ff8590419019"
+  integrity sha512-b2mPc5qAUWcThq/CNRTp8IbTr6duG0T2k36gVtIRsndR+16XEGjizaFBuA9+C2+gHUfeJ/IKEgneClW5egj9bA==
 
 typescript-compare@^0.0.2:
   version "0.0.2"
