@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const { useState, useEffect } = React;
+const { useState, useEffect, useCallback } = React;
 
 interface initialFuncProps {
   appId: string;
@@ -109,7 +109,7 @@ const FacebookAccountKitComponent = ({
     }
 
     window.AccountKit.login(loginType, options, (res: FbAccountKitResType) => onResponse(res));
-  });
+  }, [countryCode, disabled, emailAddress, loginType, onResponse, phoneNumber]);
 
   useEffect(() => {
     if (!initialized) {
@@ -133,17 +133,21 @@ const FacebookAccountKitComponent = ({
     if (validation) {
       signIn();
     }
-  }, [signIn, validation]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validation]);
 
   return children({
     onClick: async () => {
       if (optionalFunc && (validation === true || validation === false)) {
         await optionalFunc();
+        console.log(1);
       } else if (optionalFunc) {
         await optionalFunc();
         await signIn();
+        console.log(2);
       } else {
         await signIn();
+        console.log(3);
       }
     },
     disabled,
