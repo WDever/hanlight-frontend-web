@@ -22,6 +22,8 @@ export interface IdFindProps {
 export interface IdFindMethod {
   idFind(code: string): void;
   exist(data: ExistParamsType): void;
+  resetUser(): void;
+  resetExist(): void;
 }
 
 const IdFindContainer: React.FC<
@@ -32,6 +34,8 @@ IdFindProps & IdFindMethod & RouteComponentProps
   existStatus,
   tpExistStatus,
   exist,
+  resetUser,
+  resetExist,
   id,
   history,
   match,
@@ -46,6 +50,8 @@ IdFindProps & IdFindMethod & RouteComponentProps
     existStatus={existStatus}
     tpExistStatus={tpExistStatus}
     exist={exist}
+    resetUser={resetUser}
+    resetExist={resetExist}
     id={id}
   />
 );
@@ -60,6 +66,8 @@ const mapStateToProps = ({ user, exist }: AppState) => ({
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions & existReducerActions>) => ({
   idFind: bindActionCreators(userActions.idFind, dispatch),
   exist: bindActionCreators(existActions.exist, dispatch),
+  resetUser: bindActionCreators(userActions.reset, dispatch),
+  resetExist: bindActionCreators(existActions.reset, dispatch),
 });
 
 export default withRouter(

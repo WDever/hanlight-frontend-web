@@ -6,7 +6,10 @@ import {
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
 import { useInputs } from 'lib/hooks';
-import { id as idRegExp, password as passwordRegExp } from 'lib/RegExp/RegExp.json';
+import {
+  id as idRegExp,
+  password as passwordRegExp,
+} from 'lib/RegExp/RegExp.json';
 
 const { useEffect, useState } = React;
 
@@ -15,14 +18,6 @@ interface RegisterState {
   password: string;
   rePassword: string;
 }
-
-const SecondStep = styled.span`
-  font-size: 2rem;
-  font-family: 'Noto Sans KR';
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #bfbfbf;
-`;
 
 const RegisterWrapper = styled.div`
   width: 38.125rem;
@@ -49,12 +44,6 @@ const GreetingDiv = styled.div`
   /* margin-bottom: 2rem; */
 `;
 
-const Img = styled.img`
-  width: 7rem;
-  height: 9rem;
-  margin-bottom: 1rem;
-`;
-
 const InputWrapper = styled.div`
   width: 100%;
   height: 65%;
@@ -76,7 +65,7 @@ const Form = styled.form`
 const RegisterComponent: React.FC<
 RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
-  registerStatus, signKey, register, history,
+  registerStatus, resetRegister, signKey, register, history,
 }) => {
   const [inputs, inputsChange] = useInputs<RegisterState>({
     id: '',
@@ -92,14 +81,17 @@ RegisterProps & RegisterMethod & RouteComponentProps
   const registerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    register({ id, password, signKey });
+    idValidation
+      && pwValidation
+      && rpwValidation
+      && register({ id, password, signKey });
   };
 
   const idCheck = (str: string): boolean => new RegExp(idRegExp).test(str);
 
   const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
 
-  const rPwCheck = (str: string): boolean => (str === password) || str === '';
+  const rPwCheck = (str: string): boolean => str === password || str === '';
 
   useEffect(() => {
     if (registerStatus === 'success') {
@@ -110,8 +102,10 @@ RegisterProps & RegisterMethod & RouteComponentProps
     }
   }, [registerStatus, history]);
 
+  useEffect(() => () => resetRegister(), [resetRegister]);
+
   return (
-    <>
+    <React.Fragment>
       <RegisterWrapper>
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>
@@ -152,7 +146,9 @@ RegisterProps & RegisterMethod & RouteComponentProps
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem" where={false}>
-              {!rpwValidation && <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>}
+              {!rpwValidation && (
+                <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>
+              )}
               <Inputs
                 wrong={!rpwValidation}
                 width="28.75rem"
@@ -177,7 +173,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
           </Buttons>
         </Form>
       </RegisterWrapper>
-    </>
+    </React.Fragment>
   );
 };
 

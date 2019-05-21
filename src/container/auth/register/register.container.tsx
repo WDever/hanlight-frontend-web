@@ -18,17 +18,20 @@ export interface RegisterProps {
 
 export interface RegisterMethod {
   register(data: RegisterParams): void;
+  // resetExist(): void;
+  resetRegister(): void;
 }
 
 const RegisterContainer: React.SFC<
 RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
-  registerStatus, signKey, register, history, match, location,
+  registerStatus, signKey, register, resetRegister, history, match, location,
 }) => (
   <RegisterComponent
     signKey={signKey}
     register={register}
     registerStatus={registerStatus}
+    resetRegister={resetRegister}
     history={history}
     match={match}
     location={location}
@@ -42,6 +45,7 @@ const mapStateToProps = ({ register }: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<registerReducerActions>) => ({
   register: bindActionCreators(registerActions.register, dispatch),
+  resetRegister: bindActionCreators(registerActions.reset, dispatch),
 });
 
 export default withRouter(

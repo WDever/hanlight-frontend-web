@@ -1,24 +1,27 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import AccoutKit from 'react-facebook-account-kit';
+import AccountKit, { ChildrenParams } from 'components/facebook-account-kit';
 import uuid from 'uuid';
 import { RouteComponentProps, NavLink } from 'react-router-dom';
-import { Inputs, Buttons } from 'lib/styles';
+import {
+  Inputs, Buttons, WrongLabel, InputsGroup,
+} from 'lib/styles';
 import { useInput } from 'lib/hooks';
 import { PhoneCheckResType, TP_EXIST } from 'store/action';
 import { GetCodeStatus } from 'components/auth/phoneCheck';
 import Modal from 'components/modal';
 import { IdFindProps, IdFindMethod } from 'container/auth/idFind';
+import { tp as tpRegExp } from 'lib/RegExp/RegExp.json';
 
-const { useRef, useState } = React;
+const { useRef, useState, useEffect } = React;
 
 const IdFindWrapper = styled.div`
-  width: 38.125rem;
-  height: 31.875rem;
+  width: 38.1875rem;
+  height: 24.5625rem;
   margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 `;
@@ -84,11 +87,13 @@ IdFindProps & IdFindMethod & RouteComponentProps
   exist,
   id,
   history,
+  resetUser,
+  resetExist,
   match,
   location,
 }) => {
   const [tp, setTp] = useInput('');
-  const [tpValidation, setTpValidation] = useState<boolean>(false);
+  const [tpValidation, setTpValidation] = useState<boolean>(true);
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
 
@@ -100,9 +105,9 @@ IdFindProps & IdFindMethod & RouteComponentProps
     getCodeStatus.current = resStatus;
   };
 
-  const tpCheck = (str: string): boolean => /^[0-9]{10,11}$/.test(str);
+  const tpCheck = (str: string): boolean => new RegExp(tpRegExp).test(str);
 
-  const tpFunc = () => {
+  const tpFunc = async () => {
     setTpValidation(tpCheck(tp));
     exist({ key: 'tp', value: tp, type: TP_EXIST });
   };
@@ -126,27 +131,52 @@ IdFindProps & IdFindMethod & RouteComponentProps
     await verifyTp();
   };
 
+  useEffect(
+    () => () => {
+      resetUser();
+      resetExist();
+      setTpValidation(true);
+    },
+    [resetExist, resetUser],
+  );
+
   return (
-    <>
-      {idFindStatus === 'success' && <Modal width="50.25rem" height="24.625rem" kind="check" name="???" id={id} click={() => history.push('/auth')} />}
+    <React.Fragment>
+      {idFindStatus === 'success' && (
+        <Modal
+          width="50.25rem"
+          height="24.625rem"
+          kind="check"
+          id={id}
+          click={() => history.push('/auth')}
+        />
+      )}
       <IdFindWrapper>
         <GreetingDiv>전화번호 인증</GreetingDiv>
         <Form
           onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
         >
           <InputWrapper>
-            <Inputs
-              wrong={tpValidation}
-              width="28.75rem"
-              height="4.375rem"
-              value={tp}
-              name="tp"
-              onChange={setTp}
-              onBlur={tpFunc}
-            />
+            <InputsGroup width="28.75rem" height="6.5rem" where={false}>
+              {!tpValidation && !tpExistStatus && (
+                <WrongLabel>
+                  형식이 잘못되었거나 등록되지 않은 전화번호 입니다!
+                </WrongLabel>
+              )}
+              <Inputs
+                wrong={!tpValidation}
+                width="28.75rem"
+                height="4.375rem"
+                value={tp}
+                name="tp"
+                onChange={setTp}
+                placeholder="전화번호"
+                active={!!tp}
+              />
+            </InputsGroup>
           </InputWrapper>
-          {existStatus && tpExistStatus && tpValidation ? (
-            <AccoutKit
+          {tp ? (
+            <AccountKit
               appId="265056484381541"
               csrf={uuid.v4()}
               debug
@@ -154,22 +184,23 @@ IdFindProps & IdFindMethod & RouteComponentProps
               phoneNumber={tp}
               onResponse={handleResponse}
               language="ko_KR"
-              optionalFunc={() => console.log('test2')}
+              optionalFunc={tpFunc}
+              validation={tpExistStatus && tpValidation}
             >
-              {(p: Function) => (
+              {(p: ChildrenParams) => (
                 <Buttons width="28.75rem" height="4.375rem" active {...p}>
                   인증
                 </Buttons>
               )}
-            </AccoutKit>
+            </AccountKit>
           ) : (
-            <Buttons width="28.75rem" height="4.375rem" active={tpValidation}>
+            <Buttons width="28.75rem" height="4.375rem" active={!tpValidation}>
               인증
             </Buttons>
           )}
         </Form>
       </IdFindWrapper>
-    </>
+    </React.Fragment>
   );
 };
 

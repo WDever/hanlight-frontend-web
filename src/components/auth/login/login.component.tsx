@@ -1,17 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import {
-  transitions,
-  Inputs,
-  Buttons,
-  InputsGroup,
-  WrongLabel,
-} from 'lib/styles';
+import { transitions, Inputs, Buttons } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
 import { RouteComponentProps, NavLink } from 'react-router-dom';
-import { id as idRegExp, password as passwordRegExp } from 'lib/RegExp/RegExp.json';
+import {
+  id as idRegExp,
+  password as passwordRegExp,
+} from 'lib/RegExp/RegExp.json';
 
 const { useState, useEffect, useRef } = React;
 
@@ -67,7 +64,7 @@ const LoginForm = styled.form`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 55%;
+  height: 50%;
 `;
 
 const FindBtnsWrapper = styled.div`
@@ -77,6 +74,15 @@ const FindBtnsWrapper = styled.div`
   font-size: 1.25rem;
   display: flex;
   justify-content: space-around;
+  margin-top: 1rem;
+`;
+
+const WrongLabel = styled.label`
+  width: 27rem;
+  height: 3.125rem;
+  color: #ff0000;
+  font-family: 'Noto Sans KR';
+  font-size: 1rem;
 `;
 
 const FindBtns = styled(NavLink)<{ colored?: boolean }>`
@@ -158,42 +164,38 @@ LoginProps & LoginMethod & RouteComponentProps
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
-          <InputsGroup width="28.75rem" height="6rem" where>
-            <Inputs
-              wrong={!idValidation}
-              width="28.75rem"
-              height="4.375rem"
-              active={!!id}
-              type="id"
-              placeholder="아이디"
-              onChange={inputsChange}
-              name="id"
-              value={id}
-            />
-          </InputsGroup>
-          <InputsGroup width="28.75rem" height="6rem" where>
-            <Inputs
-              wrong={!pwValidation}
-              width="28.75rem"
-              height="4.375rem"
-              active={!!password}
-              type="password"
-              placeholder="비밀번호"
-              onChange={inputsChange}
-              name="password"
-              value={password}
-            />
-          </InputsGroup>
+          <Inputs
+            wrong={!idValidation}
+            width="28.75rem"
+            height="4.375rem"
+            active={!!id}
+            type="id"
+            placeholder="아이디"
+            onChange={inputsChange}
+            name="id"
+            value={id}
+          />
+          <Inputs
+            wrong={!pwValidation}
+            width="28.75rem"
+            height="4.375rem"
+            active={!!password}
+            type="password"
+            placeholder="비밀번호"
+            onChange={inputsChange}
+            name="password"
+            value={password}
+          />
         </LoginInputWrapper>
-        {!(pwValidation && idValidation) && (
-          <WrongLabel>
+        <WrongLabel>
+          {!(pwValidation && idValidation) && (
             <span>
               한빛에 등록되지 않은 아이디이거나,
               <br />
               아이디 또는 비밀번호를 잘못 입력하셨습니다.
             </span>
-          </WrongLabel>
-        )}
+          )}
+        </WrongLabel>
         <Buttons width="28.75rem" height="4.375rem" active={!!(id && password)}>
           로그인
         </Buttons>
