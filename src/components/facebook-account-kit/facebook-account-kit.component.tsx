@@ -88,7 +88,7 @@ const FacebookAccountKitComponent = ({
 }: PropsType): any => {
   const [initialized, setInitialized] = useState(!!window.AccountKit);
 
-  const signIn = async () => {
+  const signIn = useCallback(async () => {
     if (disabled) return;
 
     const options: OptionsType = {};
@@ -109,7 +109,7 @@ const FacebookAccountKitComponent = ({
     }
 
     window.AccountKit.login(loginType, options, (res: FbAccountKitResType) => onResponse(res));
-  };
+  });
 
   useEffect(() => {
     if (!initialized) {
@@ -129,13 +129,19 @@ const FacebookAccountKitComponent = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (validation) {
+      signIn();
+    }
+  }, [signIn, validation]);
+
   return children({
     onClick: async () => {
-      if (optionalFunc) {
+      if (optionalFunc && (validation === true || validation === false)) {
         await optionalFunc();
-        if (validation) {
-          await signIn();
-        }
+      } else if (optionalFunc) {
+        await optionalFunc();
+        await signIn();
       } else {
         await signIn();
       }
