@@ -9,6 +9,7 @@ export const REGISTER = 'REGISTER';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 export const SET_SIGN_KEY = 'SET_SIGN_KEY';
+export const RESET_REGISTER = 'RESET_REGISTER';
 
 export interface PhoneCheckResType {
   code: string;
@@ -73,17 +74,22 @@ export class SetSignKey implements Action {
   public constructor(public payload: string) {}
 }
 
+export class Reset implements Action {
+  public readonly type = RESET_REGISTER;
+}
+
 export const registerActions = {
   verifyPhone: createStandardAction(VERIFY_PHONE)<VerifyPhoneParams>(),
   register: createStandardAction(REGISTER)<RegisterParams>(),
   setSignKey: createStandardAction(SET_SIGN_KEY)<string>(),
+  reset: createStandardAction(RESET_REGISTER)(),
 };
 
-export type registerReducerActions =
-| VerifyPhone
+export type registerReducerActions = | VerifyPhone
 | VerifyPhoneSuccess
 | VerifyPhoneFailure
 | Register
 | RegisterSuccess
 | RegisterFailure
-| SetSignKey;
+| SetSignKey
+| Reset;

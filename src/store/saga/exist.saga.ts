@@ -49,7 +49,7 @@ function* existApiSaga(action: Exist) {
 
 function* idExistSaga(action: IdExist) {
   if (action.type) {
-    if (action.payload.success) {
+    if (action.payload.data.exist) {
       yield put({ type: ID_EXIST_SUCCESS, payload: action.payload });
     } else {
       yield put({ type: ID_EXIST_FAILURE, payload: action.payload });
@@ -59,7 +59,8 @@ function* idExistSaga(action: IdExist) {
 
 function* tpExistSaga(action: TpExist) {
   if (action.type) {
-    if (action.payload.success) {
+    console.log(action.payload.data.exist);
+    if (action.payload.data.exist) {
       yield put({ type: TP_EXIST_SUCCESS, payload: action.payload });
     } else {
       yield put({ type: TP_EXIST_FAILURE, payload: action.payload });
@@ -69,7 +70,7 @@ function* tpExistSaga(action: TpExist) {
 
 function* signKeyExistSaga(action: SignKeyExist) {
   if (action.type) {
-    if (action.payload.success) {
+    if (action.payload.data.exist) {
       yield put({ type: SIGN_KEY_EXIST_SUCCESS, payload: action.payload });
     } else {
       yield put({ type: SIGN_KEY_EXIST_FAILURE, payload: action.payload });

@@ -41,6 +41,9 @@ export const registerReducer = (
       draft.signKey = action.payload;
       break;
 
+    case 'RESET_REGISTER':
+      return initialState;
+
     default:
       break;
   }

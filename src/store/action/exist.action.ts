@@ -13,14 +13,12 @@ export const TP_EXIST_FAILURE = 'TP_EXISIT_FAILURE';
 export const SIGN_KEY_EXIST = 'SIGN_KEY_EXIST';
 export const SIGN_KEY_EXIST_SUCCESS = 'SIGN_KEY_EXISIT_SUCCESS';
 export const SIGN_KEY_EXIST_FAILURE = 'SIGN_KEY_EXISIT_FAILURE';
+export const RESET_EXIST = 'RESET_EXIST';
 
 export interface ExistParamsType {
   key: string;
   value: string;
-  type:
-  | 'ID_EXIST'
-  | 'TP_EXIST'
-  | 'SIGN_KEY_EXIST'
+  type: 'ID_EXIST' | 'TP_EXIST' | 'SIGN_KEY_EXIST';
 }
 
 export interface ExistResType {
@@ -55,7 +53,7 @@ export class ExistFailure implements Action {
 export class IdExist implements Action {
   public readonly type = ID_EXIST;
 
-  public constructor(public payload: ExistResType | ErrorResType) {}
+  public constructor(public payload: ExistResType) {}
 }
 
 export class IdExistSuccess implements Action {
@@ -71,7 +69,7 @@ export class IdExistFailure implements Action {
 export class TpExist implements Action {
   public readonly type = ID_EXIST;
 
-  public constructor(public payload: ExistResType | ErrorResType) {}
+  public constructor(public payload: ExistResType) {}
 }
 
 export class TpExistSuccess implements Action {
@@ -87,7 +85,7 @@ export class TpExistFailure implements Action {
 export class SignKeyExist implements Action {
   public readonly type = SIGN_KEY_EXIST;
 
-  public constructor(public payload: ExistResType | ErrorResType) {}
+  public constructor(public payload: ExistResType) {}
 }
 
 export class SingKeyExistSuccess implements Action {
@@ -100,12 +98,16 @@ export class SignKeyExistFailure implements Action {
   public readonly type = SIGN_KEY_EXIST_FAILURE;
 }
 
+export class ResetExist implements Action {
+  public readonly type = RESET_EXIST;
+}
+
 export const existActions = {
   exist: createStandardAction(EXIST)<ExistParamsType>(),
+  reset: createStandardAction(RESET_EXIST)(),
 };
 
-export type existReducerActions =
-| Exist
+export type existReducerActions = | Exist
 | ExistSuccess
 | ExistFailure
 | IdExistSuccess
@@ -113,4 +115,5 @@ export type existReducerActions =
 | TpExistSuccess
 | TpExistFailure
 | SingKeyExistSuccess
-| SignKeyExistFailure;
+| SignKeyExistFailure
+| ResetExist;

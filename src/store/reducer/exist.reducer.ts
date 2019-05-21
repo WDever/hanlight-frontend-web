@@ -50,6 +50,9 @@ export const existReducer = (
       draft.signKeyExistStatus = false;
       break;
 
+    case 'RESET_EXIST':
+      return initialState;
+
     default:
       break;
   }

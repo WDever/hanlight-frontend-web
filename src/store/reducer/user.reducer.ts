@@ -10,7 +10,7 @@ const initialState: UserModel = {
   userData: {
     accessToken: '',
     user: {
-      type: '',
+      type: 'none',
       admin: false,
       name: '',
       major: '',
@@ -63,6 +63,11 @@ export const userReducer = (
 
     case 'PW_RECOVERY_FAILURE':
       draft.pwRecoveryStatus = 'failure';
+      break;
+
+    case 'RESET_USER':
+      draft.idFindStatus = 'none';
+      draft.pwRecoveryStatus = 'none';
       break;
 
     default:

@@ -10,26 +10,29 @@ export const ID_FIND_FAILURE = 'ID_FIND_FAILURE';
 export const PW_RECOVERY = 'PW_RECOVERY';
 export const PW_RECOVERY_SUCCESS = 'PW_RECOVERY_SUCCESS';
 export const PW_RECOVERY_FAILURE = 'PW_RECOVERY_FAILURE';
+export const RESET_USER = 'RESET_USER';
 
 export interface LoginParams {
   id: string;
   password: string;
 }
 
+export interface UserDataType {
+  accessToken: string;
+  user: {
+    type: 'none' | 'student' | 'teacher' | 'graduatedStudent' | 'parent';
+    admin: boolean;
+    name: string;
+    major: string;
+    grade: string;
+    classNum: string;
+    studentNum: string;
+  };
+}
+
 export interface LoginResType {
   success: boolean;
-  data: {
-    accessToken: string;
-    user: {
-      type: string;
-      admin: boolean;
-      name: string;
-      major: string;
-      grade: string;
-      classNum: string;
-      studentNum: string;
-    };
-  };
+  data: UserDataType;
 }
 
 export interface PwRecoveryParams {
@@ -90,15 +93,19 @@ export class PwRecoverySuccess implements Action {
   public constructor(public payload: PwRecoveryResType) {}
 }
 
-
 export class PwRecoveryFailure implements Action {
   public readonly type = PW_RECOVERY_FAILURE;
+}
+
+export class ResetUser implements Action {
+  public readonly type = RESET_USER;
 }
 
 export const userActions = {
   login: createStandardAction(LOGIN)<LoginParams>(),
   idFind: createStandardAction(ID_FIND)<string>(),
   pwRecovery: createStandardAction(PW_RECOVERY)<PwRecoveryParams>(),
+  reset: createStandardAction(RESET_USER)(),
 };
 
 export type userReducerActions = | Login
@@ -109,4 +116,5 @@ export type userReducerActions = | Login
 | IdFindFailure
 | PwRecovery
 | PwRecoverySuccess
-| PwRecoveryFailure;
+| PwRecoveryFailure
+| ResetUser;
