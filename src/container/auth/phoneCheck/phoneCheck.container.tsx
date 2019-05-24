@@ -15,56 +15,60 @@ import {
 
 export interface PhoneCheckProps {
   verifyStatus: 'none' | 'pending' | 'success' | 'failure';
-  existStatus: 'none' | 'pending' | 'success' | 'failure';
-  signKeyExistStatus: boolean;
-  tpExistStatus: boolean;
+  signKeyExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  tpExistStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface PhoneCheckMethod {
-  exist(data: ExistParamsType): void;
+  tpExist(data: string): void;
+  signKeyExist(data: string): void;
   verifyPhone(data: VerifyPhoneParams): void;
   setSignKey(data: string): void;
+  resetExist(): void;
 }
 
 const PhoneCheckContainer: React.SFC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  exist,
+  tpExist,
+  signKeyExist,
   verifyPhone,
   verifyStatus,
   history,
   match,
   location,
-  existStatus,
   tpExistStatus,
   signKeyExistStatus,
   setSignKey,
+  resetExist,
 }) => (
   <PhoneCheckComponent
-    exist={exist}
+    tpExist={tpExist}
+    signKeyExist={signKeyExist}
     history={history}
     match={match}
     location={location}
     verifyPhone={verifyPhone}
     verifyStatus={verifyStatus}
-    existStatus={existStatus}
     signKeyExistStatus={signKeyExistStatus}
     tpExistStatus={tpExistStatus}
     setSignKey={setSignKey}
+    resetExist={resetExist}
   />
 );
 
 const mapStateToProps = ({ register, exist }: AppState) => ({
   verifyStatus: register.verifyStatus,
-  existStatus: exist.existStatus,
   tpExistStatus: exist.tpExistStatus,
   signKeyExistStatus: exist.signKeyExistStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<registerReducerActions & existReducerActions>) => ({
-  exist: bindActionCreators(existActions.exist, dispatch),
+  tpExist: bindActionCreators(existActions.tpExist, dispatch),
+  signKeyExist: bindActionCreators(existActions.signKeyExist, dispatch),
   verifyPhone: bindActionCreators(registerActions.verifyPhone, dispatch),
   setSignKey: bindActionCreators(registerActions.setSignKey, dispatch),
+  resetExist: bindActionCreators(existActions.reset, dispatch),
 });
 
 export default withRouter(

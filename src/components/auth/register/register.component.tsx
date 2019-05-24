@@ -6,7 +6,11 @@ import {
 import { RouteComponentProps } from 'react-router-dom';
 import { RegisterProps, RegisterMethod } from 'container/auth/register';
 import { useInputs } from 'lib/hooks';
-import { id as idRegExp, password as passwordRegExp } from 'lib/RegExp/RegExp.json';
+import {
+  id as idRegExp,
+  password as passwordRegExp,
+} from 'lib/RegExp/RegExp.json';
+import { ID_EXIST } from 'store';
 
 const { useEffect, useState } = React;
 
@@ -15,14 +19,6 @@ interface RegisterState {
   password: string;
   rePassword: string;
 }
-
-const SecondStep = styled.span`
-  font-size: 2rem;
-  font-family: 'Noto Sans KR';
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #bfbfbf;
-`;
 
 const RegisterWrapper = styled.div`
   width: 38.125rem;
@@ -49,12 +45,6 @@ const GreetingDiv = styled.div`
   /* margin-bottom: 2rem; */
 `;
 
-const Img = styled.img`
-  width: 7rem;
-  height: 9rem;
-  margin-bottom: 1rem;
-`;
-
 const InputWrapper = styled.div`
   width: 100%;
   height: 65%;
@@ -76,7 +66,14 @@ const Form = styled.form`
 const RegisterComponent: React.FC<
 RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
-  registerStatus, signKey, register, history,
+  registerStatus,
+  resetRegister,
+  signKey,
+  register,
+  history,
+  resetExist,
+  idExist,
+  idExistStatus,
 }) => {
   const [inputs, inputsChange] = useInputs<RegisterState>({
     id: '',
@@ -89,17 +86,39 @@ RegisterProps & RegisterMethod & RouteComponentProps
 
   const { id, password, rePassword } = inputs;
 
-  const registerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    register({ id, password, signKey });
-  };
-
   const idCheck = (str: string): boolean => new RegExp(idRegExp).test(str);
 
   const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
 
-  const rPwCheck = (str: string): boolean => (str === password) || str === '';
+  const rPwCheck = (str: string): boolean => str === password || str === '';
+
+  const idFunc = async () => {
+    setIdValidation(idCheck(id));
+    idExist(id);
+  };
+
+  const pwFunc = async () => {
+    setPwValidation(pwCheck(password));
+    setRpwValidation(rPwCheck(rePassword));
+  };
+
+  const registerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    await idFunc();
+    await pwFunc();
+  };
+
+  useEffect(() => {
+    if (
+      idExistStatus === 'failure'
+      && pwValidation
+      && rpwValidation
+      && idValidation
+    ) {
+      register({ id, password, signKey });
+    }
+  }, [idExistStatus]);
 
   useEffect(() => {
     if (registerStatus === 'success') {
@@ -110,16 +129,29 @@ RegisterProps & RegisterMethod & RouteComponentProps
     }
   }, [registerStatus, history]);
 
+  useEffect(
+    () => () => {
+      resetRegister();
+      resetExist();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   return (
-    <>
+    <React.Fragment>
       <RegisterWrapper>
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>
           <InputWrapper>
             <InputsGroup width="28.75rem" height="6.5rem" where={false}>
-              {!idValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+              {(!idValidation || idExistStatus === 'success') && (
+                <WrongLabel>
+                  형식이 잘못되었거나 중복되는 아이디 입니다!
+                </WrongLabel>
+              )}
               <Inputs
-                wrong={!idValidation}
+                wrong={!idValidation || idExistStatus === 'success'}
                 width="28.75rem"
                 height="4.375rem"
                 active={!!id}
@@ -129,7 +161,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
                 name="id"
                 autoComplete="off"
                 onChange={inputsChange}
-                onBlur={() => setIdValidation(idCheck(id))}
+                // onBlur={() => setIdValidation(idCheck(id))}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem" where={false}>
@@ -145,14 +177,16 @@ RegisterProps & RegisterMethod & RouteComponentProps
                 autoComplete="off"
                 placeholder="비밀번호"
                 onChange={inputsChange}
-                onBlur={() => {
-                  setPwValidation(pwCheck(password));
-                  setRpwValidation(rPwCheck(rePassword));
-                }}
+                // onBlur={() => {
+                //   setPwValidation(pwCheck(password));
+                //   setRpwValidation(rPwCheck(rePassword));
+                // }}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem" where={false}>
-              {!rpwValidation && <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>}
+              {!rpwValidation && (
+                <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>
+              )}
               <Inputs
                 wrong={!rpwValidation}
                 width="28.75rem"
@@ -164,7 +198,6 @@ RegisterProps & RegisterMethod & RouteComponentProps
                 placeholder="비밀번호 재입력"
                 type="password"
                 onChange={inputsChange}
-                onBlur={() => setRpwValidation(rPwCheck(rePassword))}
               />
             </InputsGroup>
           </InputWrapper>
@@ -177,7 +210,7 @@ RegisterProps & RegisterMethod & RouteComponentProps
           </Buttons>
         </Form>
       </RegisterWrapper>
-    </>
+    </React.Fragment>
   );
 };
 

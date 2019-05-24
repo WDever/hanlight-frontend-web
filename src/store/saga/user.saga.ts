@@ -1,15 +1,23 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import { instance } from 'lib/baseUrl';
 import {
   LOGIN,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
   Login,
   LoginParams,
-  LoginResType,
+  ID_FIND,
+  ID_FIND_SUCCESS,
+  ID_FIND_FAILURE,
+  PW_RECOVERY,
+  PW_RECOVERY_SUCCESS,
+  PW_RECOVERY_FAILURE,
+  PwRecovery,
+  PwRecoveryParams,
+  IdFind,
 } from '../action';
 
-const loginApi = (data: LoginParams) => axios
+const loginApi = (data: LoginParams) => instance
   .post('http://54.180.114.156:3000/api/user/login', {
     id: data.id,
     password: data.password,
@@ -38,7 +46,49 @@ function* loginApiSaga(action: Login) {
   }
 }
 
+const idFindApi = (code: string) => instance
+  .post('http://54.180.114.156:3000/api/user/recovery/id', {
+    code,
+  })
+  .then(res => res.data);
+
+function* idFindSaga(action: IdFind) {
+  if (action.type) {
+    try {
+      const response = yield call(idFindApi, action.payload);
+      console.log(response);
+      yield put({ type: ID_FIND_SUCCESS, payload: response.data });
+    } catch (e) {
+      console.log(e.response);
+      yield put({ type: ID_FIND_FAILURE, payload: e.response });
+    }
+  }
+}
+
+const pwRecoveryApi = (data: PwRecoveryParams) => instance
+  .post('http://54.180.114.156:3000/api/user/recovery/password', {
+    code: data.code,
+    id: data.id,
+    password: data.password,
+  })
+  .then(res => res.data);
+
+function* pwRecoverySaga(action: PwRecovery) {
+  if (action.type) {
+    try {
+      const response = yield call(pwRecoveryApi, action.payload);
+      console.log(response);
+      yield put({ type: PW_RECOVERY_SUCCESS, payload: response.data });
+    } catch (e) {
+      console.log(e.response);
+      yield put({ type: PW_RECOVERY_FAILURE, payload: e.response });
+    }
+  }
+}
+
 function* userSaga() {
+  yield takeEvery(ID_FIND, idFindSaga);
+  yield takeEvery(PW_RECOVERY, pwRecoverySaga);
   yield takeEvery(LOGIN, loginApiSaga);
 }
 

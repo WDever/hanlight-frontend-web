@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import { instance } from 'lib/baseUrl';
 import {
   REGISTER,
   REGISTER_SUCCESS,
@@ -13,7 +13,7 @@ import {
   VERIFY_PHONE,
 } from '../action';
 
-const verifyPhoneApi = (data: VerifyPhoneParams) => axios
+const verifyPhoneApi = (data: VerifyPhoneParams) => instance
   .post('http://54.180.114.156:3000/api/user/phone', {
     code: data.code,
     signKey: data.signKey,
@@ -33,7 +33,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
   }
 }
 
-const registerApi = (data: RegisterParams) => axios
+const registerApi = (data: RegisterParams) => instance
   .post('http://54.180.114.156:3000/api/user/register', {
     id: data.id,
     password: data.password,

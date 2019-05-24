@@ -1,6 +1,5 @@
 export interface ExistModel {
-  existStatus: 'none' | 'pending' | 'success' | 'failure';
-  idExistStatus: boolean;
-  tpExistStatus: boolean;
-  signKeyExistStatus: boolean;
+  idExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  tpExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  signKeyExistStatus: 'none' | 'pending' | 'success' | 'failure';
 }

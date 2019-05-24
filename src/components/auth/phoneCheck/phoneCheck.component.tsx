@@ -1,40 +1,30 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
-import AccoutKit from 'react-facebook-account-kit';
+import AccountKit, { ChildrenParams } from 'components/facebook-account-kit';
 import uuid from 'uuid';
 import {
-  transitions,
-  Inputs,
-  Buttons,
-  WrongLabel,
-  InputsGroup,
+  Inputs, Buttons, WrongLabel, InputsGroup,
 } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
-import { TP_EXIST, SIGN_KEY_EXIST } from 'store/action';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import { PhoneCheckResType } from 'store';
-import { signKey as signKeyRegExp, tp } from 'lib/RegExp/RegExp.json';
+import {
+  signKey as signKeyRegExp,
+  tp as tpRegExp,
+} from 'lib/RegExp/RegExp.json';
 
-const { useState, useEffect, useRef } = React;
+const { useRef, useState, useEffect } = React;
 
 interface PhoneCheckInputs {
   signKey: string;
-  phoneNum: string;
+  tp: string;
 }
 
-type GetCodeStatus = | 'none'
+export type GetCodeStatus = | 'none'
 | 'PARTIALLY_AUTHENTICATED'
 | 'NOT_AUTHENTICATED'
 | 'BAD_PARAMS';
-
-const FirstStep = styled.span`
-  font-size: 3rem;
-  font-family: 'Noto Sans KR';
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #bfbfbf;
-`;
 
 const PhoneCheckWrapper = styled.div`
   width: 38.125rem;
@@ -45,8 +35,6 @@ const PhoneCheckWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
-
-  animation: ${transitions.fadeIn} 2.5s;
 `;
 
 const GreetingDiv = styled.div`
@@ -96,40 +84,40 @@ const ColoredSpan = styled.span`
 const PhoneCheckComponent: React.FC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  exist,
-  existStatus,
+  tpExist,
+  signKeyExist,
   tpExistStatus,
   signKeyExistStatus,
   verifyPhone,
   verifyStatus,
   history,
   setSignKey,
+  resetExist,
 }) => {
   const [inputs, inputsChange] = useInputs<PhoneCheckInputs>({
-    phoneNum: '',
+    tp: '',
     signKey: '',
   });
   const [signKeyValidation, setSignKeyValidation] = useState<boolean>(true);
-  const [phoneNumValidation, setPhoneNumValidation] = useState<boolean>(true);
+  const [tpValidation, setTpValidation] = useState<boolean>(true);
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
 
-  const setCode = async (resCode: string) => {
-    codeRef.current = resCode;
-  };
-
-  const setGetCodeStatus = async (resStatus: GetCodeStatus) => {
+  const setGetCodeStatus = async (resStatus:GetCodeStatus) => {
     getCodeStatus.current = resStatus;
   };
 
-  const { phoneNum, signKey } = inputs;
+  const setCodeRef = async (resCode: string) => {
+    codeRef.current = resCode;
+  };
+
+  const { tp, signKey } = inputs;
 
   const verifyPhoneNum = async () => {
     if (getCodeStatus.current === 'PARTIALLY_AUTHENTICATED') {
-      console.log(codeRef.current);
+      console.log(codeRef);
       console.log(signKey);
-      const code = codeRef.current;
-      verifyPhone({ code, signKey });
+      verifyPhone({ code: codeRef.current, signKey });
     } else if (getCodeStatus.current === 'BAD_PARAMS') {
       console.log(getCodeStatus);
       console.log(signKey);
@@ -142,7 +130,7 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   };
 
   const handleResponse = async (res: PhoneCheckResType) => {
-    await setCode(res.code);
+    await setCodeRef(res.code);
     await setGetCodeStatus(res.status);
     await verifyPhoneNum();
     console.log(res);
@@ -150,17 +138,17 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 
   const signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
 
-  const phoneNumCheck = (str: string) => new RegExp(tp).test(str);
+  const tpCheck = (str: string) => new RegExp(tpRegExp).test(str);
 
-  const signKeyFunc = () => {
+  const signKeyFunc = async () => {
     setSignKeyValidation(signKeyCheck(signKey));
-    exist({ key: 'signKey', value: signKey, type: SIGN_KEY_EXIST });
+    signKeyExist(signKey);
     setSignKey(signKey);
   };
 
-  const phoneNumFunc = () => {
-    setPhoneNumValidation(phoneNumCheck(phoneNum));
-    exist({ key: 'tp', value: phoneNum, type: TP_EXIST });
+  const tpFunc = async () => {
+    setTpValidation(tpCheck(tp));
+    tpExist(tp);
   };
 
   useEffect(() => {
@@ -172,6 +160,14 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
       alert('실패!');
     }
   }, [history, verifyStatus]);
+
+  useEffect(
+    () => () => {
+      resetExist();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <PhoneCheckWrapper>
@@ -185,12 +181,15 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
         onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
       >
         <InputWrapper>
-          <InputsGroup width="28.75rem" height="6rem">
-            {!signKeyValidation && (
-              <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
+          <InputsGroup width="28.75rem" height="6.5rem">
+            {(!signKeyValidation
+              || (signKeyExistStatus === 'failure')) && (
+              <WrongLabel>
+                형식이 잘못되었거나 없는 회원가입 키 입니다!
+              </WrongLabel>
             )}
             <Inputs
-              wrong={!signKeyValidation}
+              wrong={!signKeyValidation || (signKeyExistStatus === 'failure')}
               width="28.75rem"
               height="4.375rem"
               active={!!signKey}
@@ -200,58 +199,67 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
               name="signKey"
               autoComplete="off"
               onChange={inputsChange}
-              onBlur={signKeyFunc}
             />
           </InputsGroup>
-          <InputsGroup width="28.75rem" height="6rem">
-            {!phoneNumValidation && (
-              <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
+          <InputsGroup width="28.75rem" height="6.5rem">
+            {(!tpValidation || (tpExistStatus === 'success')) && (
+              <WrongLabel>
+                형식이 잘못되었거나 이미 등록된 전화번호 입니다!
+              </WrongLabel>
             )}
             <Inputs
-              wrong={!phoneNumValidation}
+              wrong={!tpValidation || tpExistStatus === 'success'}
               width="28.75rem"
               height="4.375rem"
-              active={!!phoneNum}
-              value={phoneNum}
+              active={!!tp}
+              value={tp}
               type="tel"
-              name="phoneNum"
+              name="tp"
               autoComplete="off"
               placeholder="휴대폰 번호를 - 빼고 입력해주세요."
               onChange={inputsChange}
-              onBlur={phoneNumFunc}
             />
           </InputsGroup>
         </InputWrapper>
         <TermsBtnWrapper>
-          {tpExistStatus && signKeyExistStatus && !!phoneNum ? (
-            <AccoutKit
+          {!!tp && !!signKey ? (
+            <AccountKit
               appId="265056484381541"
               csrf={uuid.v4()}
               debug
               version="v1.1"
-              phoneNumber={phoneNum}
+              phoneNumber={tp}
               onResponse={handleResponse}
               language="ko_KR"
-              optionalFunc={() => console.log('test2')}
+              optionalFunc={async () => {
+                await signKeyFunc();
+                await tpFunc();
+              }}
+              validation={
+                tpExistStatus === 'failure'
+                && tpValidation
+                && signKeyExistStatus === 'success'
+                && signKeyValidation
+              }
             >
-              {(p: Function) => (
+              {(p: ChildrenParams) => (
                 <Buttons width="28.75rem" height="4.375rem" active {...p}>
                   인증
                 </Buttons>
               )}
-            </AccoutKit>
+            </AccountKit>
           ) : (
             <Buttons
               width="28.75rem"
               height="4.375rem"
-              active={!!(phoneNum && signKey)}
+              active={
+                !!(tp && signKey)
+                && signKeyExistStatus === 'success'
+                && tpExistStatus === 'success'
+              }
               style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
             >
-              {existStatus === 'success' || 'failure'
-                ? signKeyExistStatus
-                  ? '인증'
-                  : '존재하지 않거나 중복되는 PIN 입니다'
-                : '인증'}
+              인증
             </Buttons>
           )}
         </TermsBtnWrapper>
