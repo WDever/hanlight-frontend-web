@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import { instance } from 'lib/baseUrl';
 import {
   TIMETABLE,
   TIMETABLE_SUCCESS,
@@ -31,12 +31,13 @@ import {
   MealOrder,
 } from '../action';
 
-const timetableApi = (data: string) => axios
+const timetableApi = (data: string) => instance
   .get('http://54.180.114.156:3000/api/timetable', {
     headers: {
       access_token: data,
     },
-  }).then(res => res.data);
+  })
+  .then(res => res.data);
 
 function* timetableApiSaga(action: Timetable) {
   if (action.type) {
@@ -51,7 +52,7 @@ function* timetableApiSaga(action: Timetable) {
   }
 }
 
-const calendarApi = (data: CalendarParams) => axios
+const calendarApi = (data: CalendarParams) => instance
   .get('http://54.180.114.156:3000/api/calendar', {
     headers: {
       access_token: data.access_token,
@@ -59,7 +60,8 @@ const calendarApi = (data: CalendarParams) => axios
     params: {
       month: data.month,
     },
-  }).then(res => res.data);
+  })
+  .then(res => res.data);
 
 function* calendarApiSaga(action: Calendar) {
   if (action.type) {
@@ -74,7 +76,7 @@ function* calendarApiSaga(action: Calendar) {
   }
 }
 
-const noticeApi = (data: NoticeParams) => axios
+const noticeApi = (data: NoticeParams) => instance
   .get('http://54.180.114.156:3000/api/notice', {
     headers: {
       access_token: data.access_token,
@@ -100,7 +102,7 @@ function* noticeApiSaga(action: Notice) {
   }
 }
 
-const noticePostApi = (data: NoticePostParams) => axios
+const noticePostApi = (data: NoticePostParams) => instance
   .get('http://54.180.114.156:3000/api/notice', {
     headers: {
       access_token: data.access_token,
@@ -109,7 +111,8 @@ const noticePostApi = (data: NoticePostParams) => axios
       type: 'post',
       id: data.id,
     },
-  }).then(res => res.data);
+  })
+  .then(res => res.data);
 
 function* noticePostApiSaga(action: NoticePost) {
   if (action.type) {
@@ -124,14 +127,16 @@ function* noticePostApiSaga(action: NoticePost) {
   }
 }
 
-const mealApi = (data: MealParams) => axios.get('http://54.180.114.156:3000/api/meal', {
-  headers: {
-    access_token: data.access_token,
-  },
-  params: {
-    sort: data.sort,
-  },
-}).then(res => res.data);
+const mealApi = (data: MealParams) => instance
+  .get('http://54.180.114.156:3000/api/meal', {
+    headers: {
+      access_token: data.access_token,
+    },
+    params: {
+      sort: data.sort,
+    },
+  })
+  .then(res => res.data);
 
 function* mealApiSaga(action: Meal) {
   if (action.type) {
@@ -146,11 +151,13 @@ function* mealApiSaga(action: Meal) {
   }
 }
 
-const mealOrderApi = (data: string) => axios.get('http://54.180.114.156:3000/api/meal/order', {
-  headers: {
-    access_token: data,
-  },
-}).then(res => res);
+const mealOrderApi = (data: string) => instance
+  .get('http://54.180.114.156:3000/api/meal/order', {
+    headers: {
+      access_token: data,
+    },
+  })
+  .then(res => res);
 
 function* mealOrderApiSaga(action: MealOrder) {
   if (action.type) {

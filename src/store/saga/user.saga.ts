@@ -1,5 +1,5 @@
 import { put, call, takeEvery } from 'redux-saga/effects';
-import axios from 'axios';
+import { instance } from 'lib/baseUrl';
 import {
   LOGIN,
   LOGIN_FAILURE,
@@ -17,7 +17,7 @@ import {
   IdFind,
 } from '../action';
 
-const loginApi = (data: LoginParams) => axios
+const loginApi = (data: LoginParams) => instance
   .post('http://54.180.114.156:3000/api/user/login', {
     id: data.id,
     password: data.password,
@@ -46,7 +46,7 @@ function* loginApiSaga(action: Login) {
   }
 }
 
-const idFindApi = (code: string) => axios
+const idFindApi = (code: string) => instance
   .post('http://54.180.114.156:3000/api/user/recovery/id', {
     code,
   })
@@ -65,7 +65,7 @@ function* idFindSaga(action: IdFind) {
   }
 }
 
-const pwRecoveryApi = (data: PwRecoveryParams) => axios
+const pwRecoveryApi = (data: PwRecoveryParams) => instance
   .post('http://54.180.114.156:3000/api/user/recovery/password', {
     code: data.code,
     id: data.id,

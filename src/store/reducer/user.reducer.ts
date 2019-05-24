@@ -66,6 +66,7 @@ export const userReducer = (
       break;
 
     case 'RESET_USER':
+      draft.loginStatus = 'none';
       draft.idFindStatus = 'none';
       draft.pwRecoveryStatus = 'none';
       break;
