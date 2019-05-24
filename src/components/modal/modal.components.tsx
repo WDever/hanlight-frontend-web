@@ -3,6 +3,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { Buttons } from 'lib/styles';
 import certificationSuccess from 'lib/svg/certification-success.svg';
+import checkImg from 'lib/svg/checkbox.svg';
 
 interface ModalSize {
   width: string;
@@ -11,7 +12,6 @@ interface ModalSize {
 
 interface ModalProps extends ModalSize {
   kind: 'certification' | 'check' | 'fail';
-  name?: string;
   id?: string;
   click(): void;
 }
@@ -39,6 +39,7 @@ const ModalWrapper = styled.div<ModalSize>`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 `;
 
 const ModalText = styled.span`
@@ -58,25 +59,22 @@ const ModalComponent: React.FC<ModalProps> = ({
   width,
   height,
   kind,
-  name,
   id,
   click,
 }) => (
   <Modal>
     <ModalWrapper width={width} height={height}>
       <img
-        src={kind === 'certification' ? certificationSuccess : null}
+        src={kind === 'certification' ? certificationSuccess : checkImg}
         alt="modal"
       />
       {kind === 'certification' ? (
         <ModalText>인증 성공</ModalText>
       ) : kind === 'check' ? (
         <ModalText>
-          <ColoredText>{name}</ColoredText>
-          님의 아이디는
-          {' '}
+          아이디는&nbsp;
           <ColoredText>{id}</ColoredText>
-          {' '}
+          &nbsp;
 입니다
         </ModalText>
       ) : (
