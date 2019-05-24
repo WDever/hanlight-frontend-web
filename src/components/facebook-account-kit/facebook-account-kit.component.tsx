@@ -1,6 +1,8 @@
 import * as React from 'react';
 
-const { useState, useEffect, useCallback } = React;
+const {
+  useState, useEffect, useCallback, useRef,
+} = React;
 
 interface initialFuncProps {
   appId: string;
@@ -32,9 +34,9 @@ export interface FbAccountKitResType {
 
 interface PropsType extends initialFuncProps, OptionsType {
   children(params: ChildrenParams): React.ReactNode;
-  onResponse(params: FbAccountKitResType): Promise<void> | void;
+  onResponse(params: FbAccountKitResType): Promise<void>;
   disabled?: boolean;
-  optionalFunc?(): Promise<void> | void;
+  optionalFunc?(): Promise<void>;
   validation?: boolean;
 }
 
@@ -50,7 +52,7 @@ const initializeAccountKit = (props: initialFuncProps, callback: Function) => {
     tag.onload = cb;
     document.head.appendChild(tag);
   })(() => {
-    window.AccountKit_OnInteractive = function () {
+    window.AccountKit_OnInteractive = () => {
       const {
         appId, csrf, version, debug, display, redirect,
       } = props;
@@ -87,6 +89,7 @@ const FacebookAccountKitComponent = ({
   validation,
 }: PropsType): any => {
   const [initialized, setInitialized] = useState(!!window.AccountKit);
+  const [mount, setMount] = useState(false);
 
   const signIn = useCallback(async () => {
     if (disabled) return;
@@ -126,28 +129,27 @@ const FacebookAccountKitComponent = ({
         () => setInitialized(true),
       );
     }
+    return () => setMount(false);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    if (validation) {
+    if (validation && mount) {
       signIn();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validation]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [validation]); // validation 값이 바뀌기 전에 count가 바뀌어서
 
   return children({
     onClick: async () => {
-      if (optionalFunc && (validation === true || validation === false)) {
+      if (optionalFunc && typeof validation === 'boolean') {
         await optionalFunc();
-        console.log(1);
+        setMount(true);
       } else if (optionalFunc) {
         await optionalFunc();
         await signIn();
-        console.log(2);
       } else {
         await signIn();
-        console.log(3);
       }
     },
     disabled,
