@@ -14,14 +14,15 @@ import IdFindComponent from 'components/auth/idFind';
 
 export interface IdFindProps {
   idFindStatus: 'none' | 'pending' | 'success' | 'failure';
-  existStatus: 'none' | 'pending' | 'success' | 'failure';
-  tpExistStatus: boolean;
+  tpExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  idExistStatus: 'none' | 'pending' | 'success' | 'failure';
   id: string;
 }
 
 export interface IdFindMethod {
   idFind(code: string): void;
-  exist(data: ExistParamsType): void;
+  idExist(data: string): void;
+  tpExist(data: string): void;
   resetUser(): void;
   resetExist(): void;
 }
@@ -31,9 +32,10 @@ IdFindProps & IdFindMethod & RouteComponentProps
 > = ({
   idFind,
   idFindStatus,
-  existStatus,
   tpExistStatus,
-  exist,
+  idExistStatus,
+  idExist,
+  tpExist,
   resetUser,
   resetExist,
   id,
@@ -47,9 +49,10 @@ IdFindProps & IdFindMethod & RouteComponentProps
     history={history}
     match={match}
     location={location}
-    existStatus={existStatus}
     tpExistStatus={tpExistStatus}
-    exist={exist}
+    idExistStatus={idExistStatus}
+    idExist={idExist}
+    tpExist={tpExist}
     resetUser={resetUser}
     resetExist={resetExist}
     id={id}
@@ -59,13 +62,14 @@ IdFindProps & IdFindMethod & RouteComponentProps
 const mapStateToProps = ({ user, exist }: AppState) => ({
   idFindStatus: user.idFindStatus,
   tpExistStatus: exist.tpExistStatus,
-  existStatus: exist.existStatus,
+  idExistStatus: exist.idExistStatus,
   id: user.id,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions & existReducerActions>) => ({
   idFind: bindActionCreators(userActions.idFind, dispatch),
-  exist: bindActionCreators(existActions.exist, dispatch),
+  idExist: bindActionCreators(existActions.idExist, dispatch),
+  tpExist: bindActionCreators(existActions.tpExist, dispatch),
   resetUser: bindActionCreators(userActions.reset, dispatch),
   resetExist: bindActionCreators(existActions.reset, dispatch),
 });

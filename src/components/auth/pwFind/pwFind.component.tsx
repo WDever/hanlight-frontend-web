@@ -7,7 +7,7 @@ import {
   Inputs, Buttons, WrongLabel, InputsGroup,
 } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
-import { PhoneCheckResType, TP_EXIST, ID_EXIST } from 'store/action';
+import { PhoneCheckResType } from 'store/action';
 import { GetCodeStatus } from 'components/auth/phoneCheck';
 import Modal from 'components/modal';
 import { PwFindProps, PwFindMethod } from 'container/auth/pwFind';
@@ -17,7 +17,9 @@ import {
   id as idRegExp,
 } from 'lib/RegExp/RegExp.json';
 
-const { useRef, useState, useEffect } = React;
+const {
+  useRef, useState, useEffect, useCallback,
+} = React;
 
 const PwFindWrapper = styled.div`
   width: 38.125rem;
@@ -68,10 +70,10 @@ const Form = styled.form`
 const PwFindComponent: React.FC<
 PwFindProps & PwFindMethod & RouteComponentProps
 > = ({
-  existStatus,
   tpExistStatus,
   idExistStatus,
-  exist,
+  tpExist,
+  idExist,
   pwRecovery,
   pwRecoveryStatus,
   history,
@@ -90,22 +92,22 @@ PwFindProps & PwFindMethod & RouteComponentProps
   const [tpValidation, setTpValidation] = useState<boolean>(true);
   const [modalValidation, setModalValidation] = useState<boolean>(false);
   const [viewReset, setViewReset] = useState<boolean>(false);
-  const [pwValidation, setPwValidation] = useState<boolean>(false);
-  const [rpwValidation, setRpwValidation] = useState<boolean>(false);
+  const [pwValidation, setPwValidation] = useState<boolean>(true);
+  const [rpwValidation, setRpwValidation] = useState<boolean>(true);
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
-
-  const {
-    tp, id, password, rePassword,
-  } = inputs;
-
-  const setCode = async (resCode: string) => {
-    codeRef.current = resCode;
-  };
 
   const setGetCodeStatus = async (resStatus: GetCodeStatus) => {
     getCodeStatus.current = resStatus;
   };
+
+  const setCodeRef = async (resCode: string) => {
+    codeRef.current = resCode;
+  };
+
+  const {
+    tp, id, password, rePassword,
+  } = inputs;
 
   const idCheck = (str: string): boolean => new RegExp(idRegExp).test(str);
 
@@ -113,16 +115,24 @@ PwFindProps & PwFindMethod & RouteComponentProps
 
   const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
 
-  const rpwCheck = (str: string): boolean => str === password || str === '';
+  const rpwCheck = useCallback(
+    (str: string): boolean => str === password || str === '',
+    [password],
+  );
 
   const tpFunc = async () => {
     setTpValidation(tpCheck(tp));
-    exist({ key: 'tp', value: tp, type: TP_EXIST });
+    tpExist(tp);
   };
 
   const idFunc = async () => {
     setIdValidation(idCheck(id));
-    exist({ key: 'id', value: id, type: ID_EXIST });
+    idExist(id);
+  };
+
+  const pwFunc = async () => {
+    await setRpwValidation(rpwCheck(rePassword));
+    await setPwValidation(pwCheck(password));
   };
 
   const verifyTp = async () => {
@@ -140,16 +150,19 @@ PwFindProps & PwFindMethod & RouteComponentProps
   };
 
   const handleResponse = async (res: PhoneCheckResType) => {
-    await setCode(res.code);
+    await setCodeRef(res.code);
     await setGetCodeStatus(res.status);
     await verifyTp();
   };
 
-  const recoverySubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const recoverySubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    rpwValidation
-      && pwValidation
-      && pwRecovery({ code: codeRef.current, id, password });
+
+    await pwFunc();
+
+    if (rpwCheck(rePassword) && pwCheck(password)) {
+      await pwRecovery({ code: codeRef.current, id, password });
+    }
   };
 
   useEffect(() => {
@@ -165,7 +178,8 @@ PwFindProps & PwFindMethod & RouteComponentProps
       resetUser();
       resetExist();
     },
-    [resetExist, resetUser],
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
   );
 
   return (
@@ -189,35 +203,33 @@ PwFindProps & PwFindMethod & RouteComponentProps
           <Form onSubmit={recoverySubmit}>
             <InputWrapper>
               <InputsGroup width="28.75rem" height="6.5rem">
-                {pwValidation && (
+                {!pwValidation && (
                   <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
                 )}
                 <Inputs
                   type="password"
-                  wrong={pwValidation}
+                  wrong={!pwValidation}
                   width="28.75rem"
                   height="4.375rem"
                   value={password}
                   name="password"
                   onChange={setInputs}
-                  onBlur={() => setPwValidation(pwCheck(password))}
                   placeholder="새 비밀번호"
                   active={!!password}
                 />
               </InputsGroup>
               <InputsGroup width="28.75rem" height="6.5rem">
-                {rpwValidation && (
+                {!rpwValidation && (
                   <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
                 )}
                 <Inputs
                   type="password"
-                  wrong={rpwValidation}
+                  wrong={!rpwValidation}
                   width="28.75rem"
                   height="4.375rem"
                   value={rePassword}
                   name="rePassword"
                   onChange={setInputs}
-                  onBlur={() => setRpwValidation(rpwCheck(rePassword))}
                   placeholder="확인"
                   active={!!rePassword}
                 />
@@ -246,13 +258,13 @@ PwFindProps & PwFindMethod & RouteComponentProps
           >
             <InputWrapper>
               <InputsGroup width="28.75rem" height="6.5rem">
-                {!tpValidation && !tpExistStatus && (
+                {(!idValidation || idExistStatus === 'failure') && (
                   <WrongLabel>
                     형식이 잘못되었거나 없는 아이디 입니다!
                   </WrongLabel>
                 )}
                 <Inputs
-                  wrong={!idValidation && !idExistStatus}
+                  wrong={!idValidation || idExistStatus === 'failure'}
                   width="28.75rem"
                   height="4.375rem"
                   value={id}
@@ -263,13 +275,13 @@ PwFindProps & PwFindMethod & RouteComponentProps
                 />
               </InputsGroup>
               <InputsGroup width="28.75rem" height="6.5rem">
-                {!tpValidation && !tpExistStatus && (
+                {(!tpValidation || tpExistStatus === 'failure') && (
                   <WrongLabel>
                     형식이 잘못되었거나 가입되지 않은 전화번호 입니다!
                   </WrongLabel>
                 )}
                 <Inputs
-                  wrong={!tpExistStatus && !tpValidation}
+                  wrong={!tpValidation || tpExistStatus === 'failure'}
                   width="28.75rem"
                   height="4.375rem"
                   value={tp}
@@ -294,7 +306,10 @@ PwFindProps & PwFindMethod & RouteComponentProps
                   await tpFunc();
                 }}
                 validation={
-                  tpExistStatus && tpValidation && idExistStatus && idValidation
+                  tpExistStatus === 'success'
+                  && tpValidation
+                  && idExistStatus === 'success'
+                  && idValidation
                 }
               >
                 {(p: ChildrenParams) => (

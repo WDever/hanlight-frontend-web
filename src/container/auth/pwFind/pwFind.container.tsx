@@ -15,13 +15,13 @@ import PwFindComponent from 'components/auth/pwFind';
 
 export interface PwFindProps {
   pwRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';
-  existStatus: 'none' | 'pending' | 'success' | 'failure';
-  tpExistStatus: boolean;
-  idExistStatus: boolean;
+  tpExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  idExistStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface PwFindMethod {
-  exist(data: ExistParamsType): void;
+  idExist(data: string): void;
+  tpExist(data: string): void;
   pwRecovery(data: PwRecoveryParams): void;
   resetExist(): void;
   resetUser(): void;
@@ -32,10 +32,10 @@ PwFindProps & PwFindMethod & RouteComponentProps
 > = ({
   pwRecoveryStatus,
   tpExistStatus,
-  existStatus,
   idExistStatus,
+  idExist,
+  tpExist,
   pwRecovery,
-  exist,
   resetExist,
   resetUser,
   match,
@@ -44,11 +44,11 @@ PwFindProps & PwFindMethod & RouteComponentProps
 }) => (
   <PwFindComponent
     pwRecoveryStatus={pwRecoveryStatus}
-    existStatus={existStatus}
     tpExistStatus={tpExistStatus}
     idExistStatus={idExistStatus}
+    idExist={idExist}
+    tpExist={tpExist}
     pwRecovery={pwRecovery}
-    exist={exist}
     resetExist={resetExist}
     resetUser={resetUser}
     match={match}
@@ -60,14 +60,14 @@ PwFindProps & PwFindMethod & RouteComponentProps
 const mapStateToProps = ({ user, exist }: AppState) => ({
   pwRecoveryStatus: user.pwRecoveryStatus,
   tpExistStatus: exist.tpExistStatus,
-  existStatus: exist.existStatus,
   idExistStatus: exist.idExistStatus,
 });
 
 const maptDispatchToProps = (
   dispatch: Dispatch<userReducerActions & existReducerActions>,
 ) => ({
-  exist: bindActionCreators(existActions.exist, dispatch),
+  idExist: bindActionCreators(existActions.idExist, dispatch),
+  tpExist: bindActionCreators(existActions.tpExist, dispatch),
   pwRecovery: bindActionCreators(userActions.pwRecovery, dispatch),
   resetExist: bindActionCreators(existActions.reset, dispatch),
   resetUser: bindActionCreators(userActions.reset, dispatch),

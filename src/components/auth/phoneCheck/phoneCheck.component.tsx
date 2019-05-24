@@ -7,7 +7,6 @@ import {
   Inputs, Buttons, WrongLabel, InputsGroup,
 } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
-import { TP_EXIST, SIGN_KEY_EXIST } from 'store/action';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import { PhoneCheckResType } from 'store';
 import {
@@ -15,7 +14,7 @@ import {
   tp as tpRegExp,
 } from 'lib/RegExp/RegExp.json';
 
-const { useState, useEffect, useRef } = React;
+const { useRef, useState, useEffect } = React;
 
 interface PhoneCheckInputs {
   signKey: string;
@@ -85,14 +84,15 @@ const ColoredSpan = styled.span`
 const PhoneCheckComponent: React.FC<
 PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
-  exist,
-  existStatus,
+  tpExist,
+  signKeyExist,
   tpExistStatus,
   signKeyExistStatus,
   verifyPhone,
   verifyStatus,
   history,
   setSignKey,
+  resetExist,
 }) => {
   const [inputs, inputsChange] = useInputs<PhoneCheckInputs>({
     tp: '',
@@ -103,22 +103,21 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
 
-  const setCode = async (resCode: string) => {
-    codeRef.current = resCode;
+  const setGetCodeStatus = async (resStatus:GetCodeStatus) => {
+    getCodeStatus.current = resStatus;
   };
 
-  const setGetCodeStatus = async (resStatus: GetCodeStatus) => {
-    getCodeStatus.current = resStatus;
+  const setCodeRef = async (resCode: string) => {
+    codeRef.current = resCode;
   };
 
   const { tp, signKey } = inputs;
 
   const verifyPhoneNum = async () => {
     if (getCodeStatus.current === 'PARTIALLY_AUTHENTICATED') {
-      console.log(codeRef.current);
+      console.log(codeRef);
       console.log(signKey);
-      const code = codeRef.current;
-      verifyPhone({ code, signKey });
+      verifyPhone({ code: codeRef.current, signKey });
     } else if (getCodeStatus.current === 'BAD_PARAMS') {
       console.log(getCodeStatus);
       console.log(signKey);
@@ -131,7 +130,7 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   };
 
   const handleResponse = async (res: PhoneCheckResType) => {
-    await setCode(res.code);
+    await setCodeRef(res.code);
     await setGetCodeStatus(res.status);
     await verifyPhoneNum();
     console.log(res);
@@ -143,13 +142,13 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 
   const signKeyFunc = async () => {
     setSignKeyValidation(signKeyCheck(signKey));
-    exist({ key: 'signKey', value: signKey, type: SIGN_KEY_EXIST });
+    signKeyExist(signKey);
     setSignKey(signKey);
   };
 
   const tpFunc = async () => {
     setTpValidation(tpCheck(tp));
-    exist({ key: 'tp', value: tp, type: TP_EXIST });
+    tpExist(tp);
   };
 
   useEffect(() => {
@@ -161,6 +160,14 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
       alert('실패!');
     }
   }, [history, verifyStatus]);
+
+  useEffect(
+    () => () => {
+      resetExist();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   return (
     <PhoneCheckWrapper>
@@ -175,11 +182,14 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
       >
         <InputWrapper>
           <InputsGroup width="28.75rem" height="6.5rem">
-            {!signKeyValidation && !signKeyExistStatus && (
-              <WrongLabel>형식이 잘못되었습니다!</WrongLabel>
+            {(!signKeyValidation
+              || (signKeyExistStatus === 'failure')) && (
+              <WrongLabel>
+                형식이 잘못되었거나 없는 회원가입 키 입니다!
+              </WrongLabel>
             )}
             <Inputs
-              wrong={!signKeyValidation}
+              wrong={!signKeyValidation || (signKeyExistStatus === 'failure')}
               width="28.75rem"
               height="4.375rem"
               active={!!signKey}
@@ -192,9 +202,13 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
             />
           </InputsGroup>
           <InputsGroup width="28.75rem" height="6.5rem">
-            {!tpValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
+            {(!tpValidation || (tpExistStatus === 'success')) && (
+              <WrongLabel>
+                형식이 잘못되었거나 이미 등록된 전화번호 입니다!
+              </WrongLabel>
+            )}
             <Inputs
-              wrong={!tpValidation}
+              wrong={!tpValidation || tpExistStatus === 'success'}
               width="28.75rem"
               height="4.375rem"
               active={!!tp}
@@ -212,7 +226,6 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
             <AccountKit
               appId="265056484381541"
               csrf={uuid.v4()}
-              display="modal"
               debug
               version="v1.1"
               phoneNumber={tp}
@@ -223,9 +236,9 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
                 await tpFunc();
               }}
               validation={
-                tpExistStatus
+                tpExistStatus === 'failure'
                 && tpValidation
-                && signKeyExistStatus
+                && signKeyExistStatus === 'success'
                 && signKeyValidation
               }
             >
@@ -241,9 +254,8 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
               height="4.375rem"
               active={
                 !!(tp && signKey)
-                && signKeyExistStatus
-                && existStatus === 'success'
-                && tpExistStatus
+                && signKeyExistStatus === 'success'
+                && tpExistStatus === 'success'
               }
               style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
             >
