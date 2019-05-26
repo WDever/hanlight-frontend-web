@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import * as React from 'react';
 import styled from 'styled-components';
 import {
@@ -5,6 +6,7 @@ import {
   NoticeListMethod,
 } from 'container/main/notice/noticeList';
 import { RouteComponentProps } from 'react-router-dom';
+import moment from 'moment';
 import NoticeItem from '../noticeItem';
 
 const { useEffect } = React;
@@ -13,15 +15,13 @@ const NoticeListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 30rem;
+  /* height: 30rem; */
   margin-bottom: 5rem;
 `;
 
-const InnerWrapper = styled.div<{length: number}>`
+const InnerWrapper = styled.div<{ length: number }>`
   width: 100%;
-  height: ${props => (
-    `${props.length * 6}rem`
-  )};
+  height: ${props => `${props.length * 6}rem`};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,32 +31,35 @@ const InnerWrapper = styled.div<{length: number}>`
 const NoticeListComponent: React.FC<
 NoticeListProps & NoticeListMethod & RouteComponentProps
 > = ({
-  notice, noticeList, history,
+  notice, noticeList, history, noticeStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
 
-  const NoticeList = noticeList.map((item) => {
-    console.log(item);
-    return (
-      <NoticeItem title={item.title} date={item.updatedAt} key={item.pk} />
-    );
+  const NoticeList = noticeStatus === 'success' && noticeList.map((item) => {
+    const date = () => {
+      if (
+        moment(item.updatedAt).format('YYYY.MM.DD')
+        === moment().format('YYYY.MM.DD')
+      ) {
+        if (moment(item.updatedAt).format('H') === moment().format('H')) {
+          return `${Number(moment().format('m'))
+            - Number(moment(item.updatedAt).format('m'))}분전`;
+        }
+        return `${Number(moment().format('H'))
+          - Number(moment(item.updatedAt).format('H'))}시간전`;
+      }
+      return moment(item.updatedAt).format('YYYY.MM.DD');
+    };
+    return <NoticeItem title={item.title} date={date()} key={item.pk} />;
   });
 
-  // let NoticeList: JSX.Element[];
-
-  useEffect(() => notice({ access_token }), [access_token, notice]);
-
-  // useEffect(() => {
-  //   NoticeList = noticeList.map((item, idx, arr) => (
-  //     <NoticeItem title={item.title} date={item.updateAt} />
-  //   ));
-  // }, [noticeList]);
+  useEffect(() => {
+    notice({ access_token });
+  }, [access_token, notice]);
 
   return (
     <NoticeListWrapper>
-      <InnerWrapper length={noticeList.length}>
-        {NoticeList}
-      </InnerWrapper>
+      <InnerWrapper length={noticeList.length}>{NoticeList}</InnerWrapper>
     </NoticeListWrapper>
   );
 };

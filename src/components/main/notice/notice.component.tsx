@@ -7,7 +7,7 @@ const NoticeWrapper = styled.div`
   /* flex-direction: column; */
   justify-content: space-around;
   align-items: center;
-  height: 88%;
+  /* height: 88%; */
   width: 100%;
 `;
 
@@ -22,6 +22,10 @@ const Separator = styled.div`
   height: 100%;
   display: inline-flex;
   flex-direction: column;
+`;
+
+const BtnWrapper = styled.div`
+
 `;
 
 const MoreBtn = styled.div`

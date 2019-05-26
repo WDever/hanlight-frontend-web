@@ -13,6 +13,7 @@ import {
 
 export interface NoticeListProps {
   noticeList: NoticeListItem[];
+  noticeStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface NoticeListMethod {
@@ -22,7 +23,7 @@ export interface NoticeListMethod {
 const NoticeListContainer: React.FC<
 NoticeListProps & NoticeListMethod & RouteComponentProps
 > = ({
-  notice, noticeList, location, match, history,
+  notice, noticeList, location, match, history, noticeStatus
 }) => (
   <NoticeListComponent
     notice={notice}
@@ -30,11 +31,13 @@ NoticeListProps & NoticeListMethod & RouteComponentProps
     location={location}
     match={match}
     history={history}
+    noticeStatus={noticeStatus}
   />
 );
 
 const mapStateToProps = ({ utils }: AppState) => ({
   noticeList: utils.noticeList,
+  noticeStatus: utils.noticeStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
