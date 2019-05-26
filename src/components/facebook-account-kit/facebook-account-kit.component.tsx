@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 const {
-  useState, useEffect, useCallback, useRef,
+  useState, useEffect, useCallback,
 } = React;
 
 interface initialFuncProps {
@@ -52,11 +52,11 @@ const initializeAccountKit = (props: initialFuncProps, callback: Function) => {
     tag.onload = cb;
     document.head.appendChild(tag);
   })(() => {
-    window.AccountKit_OnInteractive = () => {
+    (window as any).AccountKit_OnInteractive = () => {
       const {
         appId, csrf, version, debug, display, redirect,
       } = props;
-      window.AccountKit.init({
+      (window as any).AccountKit.init({
         appId,
         state: csrf,
         version,
@@ -88,7 +88,7 @@ const FacebookAccountKitComponent = ({
   optionalFunc,
   validation,
 }: PropsType): any => {
-  const [initialized, setInitialized] = useState(!!window.AccountKit);
+  const [initialized, setInitialized] = useState(!!(window as any).AccountKit);
   const [mount, setMount] = useState(false);
 
   const signIn = useCallback(async () => {
@@ -111,7 +111,8 @@ const FacebookAccountKitComponent = ({
       options.phoneNumber = '';
     }
 
-    window.AccountKit.login(loginType, options, (res: FbAccountKitResType) => onResponse(res));
+    // eslint-disable-next-line max-len
+    (window as any).AccountKit.login(loginType, options, (res: FbAccountKitResType) => onResponse(res));
   }, [countryCode, disabled, emailAddress, loginType, onResponse, phoneNumber]);
 
   useEffect(() => {

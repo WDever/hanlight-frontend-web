@@ -51,7 +51,7 @@ export interface CalendarResType {
 }
 
 export interface NoticeParams {
-  access_token: string;
+  access_token: string | null;
   page?: string;
   title?: string;
 }
@@ -64,7 +64,7 @@ export interface NoticePostParams {
 export interface NoticeListItem {
   pk: number;
   title: string;
-  updateAt: string;
+  updatedAt: string;
   read: boolean;
 }
 
@@ -86,7 +86,7 @@ export interface NoticePostResType {
 }
 
 export interface MealParams {
-  access_token: string;
+  access_token: string | null;
   sort: string;
 }
 
@@ -112,7 +112,7 @@ export interface MealOrderResType {
 export class Timetable implements Action {
   public readonly type = TIMETABLE;
 
-  public constructor(public payload: string) {}
+  public constructor(public payload: string | null) {}
 }
 
 export class TimetableSuccess implements Action {

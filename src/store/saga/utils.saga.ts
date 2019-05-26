@@ -31,8 +31,8 @@ import {
   MealOrder,
 } from '../action';
 
-const timetableApi = (data: string) => instance
-  .get('http://54.180.114.156:3000/api/timetable', {
+const timetableApi = (data: string | null) => instance
+  .get('/api/timetable', {
     headers: {
       access_token: data,
     },
@@ -77,7 +77,7 @@ function* calendarApiSaga(action: Calendar) {
 }
 
 const noticeApi = (data: NoticeParams) => instance
-  .get('http://54.180.114.156:3000/api/notice', {
+  .get('/api/notice', {
     headers: {
       access_token: data.access_token,
     },
@@ -103,7 +103,7 @@ function* noticeApiSaga(action: Notice) {
 }
 
 const noticePostApi = (data: NoticePostParams) => instance
-  .get('http://54.180.114.156:3000/api/notice', {
+  .get('/api/notice', {
     headers: {
       access_token: data.access_token,
     },
@@ -128,7 +128,7 @@ function* noticePostApiSaga(action: NoticePost) {
 }
 
 const mealApi = (data: MealParams) => instance
-  .get('http://54.180.114.156:3000/api/meal', {
+  .get('/api/meal', {
     headers: {
       access_token: data.access_token,
     },
@@ -152,7 +152,7 @@ function* mealApiSaga(action: Meal) {
 }
 
 const mealOrderApi = (data: string) => instance
-  .get('http://54.180.114.156:3000/api/meal/order', {
+  .get('/api/meal/order', {
     headers: {
       access_token: data,
     },

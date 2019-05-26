@@ -7,13 +7,13 @@ export interface UtilsModel {
   noticePostStatus: 'none' | 'pending' | 'success' | 'failure';
   mealStatus: 'none' | 'pending' | 'success' | 'failure';
   mealOrderStatus: 'none' | 'pending' | 'success' | 'failure';
-  timetable: {
-    월: string[];
-    화: string[];
-    수: string[];
-    목: string[];
-    금: string[];
-  };
+  timetable: [
+    string[],
+    string[],
+    string[],
+    string[],
+    string[],
+  ];
   calendar: CalendarItem[];
   noticeList: NoticeListItem[];
   noticePost: {
