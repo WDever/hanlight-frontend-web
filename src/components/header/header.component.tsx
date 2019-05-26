@@ -1,11 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
 import Logo from 'lib/svg/hanlight-logo.svg';
-
-interface HeaderProps {
-  name: string | null;
-}
+import { HeaderProps, HeaderMethod } from 'container/header';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -64,61 +61,71 @@ const NameSpan = styled.span`
   font-weight: bold;
 `;
 
-const HeaderComponent: React.FC<HeaderProps> = ({ name }) => (
-  <HeaderWrapper>
-    <InnerBox>
-      <LogoImg src={Logo} alt="Hanlight Logo" />
-      <BtnsWrapper>
-        <StyledNavLink
-          to="/"
-          activeStyle={{
-            color: '#4470ff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          }}
-        >
-          메인
-        </StyledNavLink>
-        <StyledNavLink
-          to="/timeTable"
-          activeStyle={{
-            color: '#4470ff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          }}
-        >
-          시간표
-        </StyledNavLink>
-        <StyledNavLink
-          to="/schedule"
-          activeStyle={{
-            color: '#4460ff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          }}
-        >
-          학사일정
-        </StyledNavLink>
-        <StyledNavLink
-          to="/board"
-          activeStyle={{
-            color: '#4460ff',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-          }}
-        >
-          대나무숲
-        </StyledNavLink>
-        <Provider>|</Provider>
-        <Buttons>
-          <NameSpan>{name}</NameSpan>
-          &nbsp;님
-        </Buttons>
-        <Buttons>정보 수정</Buttons>
-        <Buttons>로그아웃</Buttons>
-      </BtnsWrapper>
-    </InnerBox>
-  </HeaderWrapper>
-);
+const HeaderComponent: React.FC<
+HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
+> = ({ name, history, resetUser }) => {
+  const logout = () => {
+    resetUser();
+    localStorage.clear();
+    history.push('/auth');
+  };
+
+  return (
+    <HeaderWrapper>
+      <InnerBox>
+        <LogoImg src={Logo} alt="Hanlight Logo" />
+        <BtnsWrapper>
+          <StyledNavLink
+            to="/"
+            activeStyle={{
+              color: '#4470ff',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            메인
+          </StyledNavLink>
+          <StyledNavLink
+            to="/timeTable"
+            activeStyle={{
+              color: '#4470ff',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            시간표
+          </StyledNavLink>
+          <StyledNavLink
+            to="/schedule"
+            activeStyle={{
+              color: '#4460ff',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            학사일정
+          </StyledNavLink>
+          <StyledNavLink
+            to="/board"
+            activeStyle={{
+              color: '#4460ff',
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            대나무숲
+          </StyledNavLink>
+          <Provider>|</Provider>
+          <Buttons>
+            <NameSpan>{name}</NameSpan>
+            &nbsp;님
+          </Buttons>
+          <Buttons>정보 수정</Buttons>
+          <Buttons onClick={logout}>로그아웃</Buttons>
+        </BtnsWrapper>
+      </InnerBox>
+    </HeaderWrapper>
+  );
+};
 
 export default HeaderComponent;

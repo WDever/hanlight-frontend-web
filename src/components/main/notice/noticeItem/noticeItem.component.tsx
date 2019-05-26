@@ -36,6 +36,7 @@ const Date = styled.span`
   font-size: 1.25rem;
   font-weight: 300;
   margin-right: 1rem;
+  width: 5rem;
 `;
 
 const NoticeItem: React.FC<NoticeItemProps> = ({ title, date }) => {

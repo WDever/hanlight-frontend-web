@@ -2,13 +2,12 @@ import * as React from 'react';
 import styled from 'styled-components';
 import MainContainer from 'container/main';
 import FooterComponent from 'components/footer';
-import HeaderComponent from 'components/header';
+import HeaderContainer from 'container/header';
 
 const MainPage: React.FC = () => {
-  const name = localStorage.getItem('name');
   return (
     <>
-      <HeaderComponent name={name} />
+      <HeaderContainer />
       <MainContainer />
       <FooterComponent />
     </>

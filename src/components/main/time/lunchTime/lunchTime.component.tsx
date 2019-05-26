@@ -1,6 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import * as moment from 'moment';
+import moment from 'moment';
+
+const { useState, useEffect } = React;
 
 const TimeBox = styled.div`
   /* display: flex; */
@@ -41,17 +43,55 @@ const Unit = styled.span`
 `;
 
 const LunchTimeComponent: React.FC = () => {
+  const [remainHour, setRemainHour] = useState<number>(0);
+  const [remainMin, setRemainMin] = useState<number>(0);
+  const [remainSec, setRemainSec] = useState<number>(0);
+
+  const computeTime = () => {
+    const hour = Number(moment().format('H')) * 3600;
+    const min = Number(moment().format('m')) * 60;
+    const sec = Number(moment().format('s'));
+
+    const sum = hour + min + sec;
+
+    const remainSum = sum >= 45000 ? 131400 - sum : 45000 - sum;
+
+    const computedHour = ((Math.floor(remainSum / 3600)));
+    const computedMin = (Math.floor((remainSum - (computedHour * 3600)) / 60));
+    const computedSec = (Math.floor(remainSum - (computedHour * 3600) - (computedMin * 60)));
+
+    setRemainHour(computedHour);
+    setRemainMin(computedMin);
+    setRemainSec(computedSec);
+  };
+
+  const startTime = () => {
+    setInterval(() => computeTime(), 1000);
+  };
+
+  useEffect(() => {
+    startTime();
+  }, []);
+
   return (
     <TimeBox>
-      <TitleWrapper>
-        점심시간까지 남은시간
-      </TitleWrapper>
+      <TitleWrapper>점심시간까지 남은시간</TitleWrapper>
       <TimeWrapper>
         {/* <InnerWrapper>
           {hour}<Unit>시</Unit> {min}<Unit>분</Unit> {sec}<Unit>초</Unit>
         </InnerWrapper> */}
         <InnerWrapper>
-          04 <Unit> 시&nbsp;</Unit> 16 <Unit> 분&nbsp;</Unit> 53 <Unit> 초</Unit>
+          {remainHour}
+          {' '}
+          <Unit> 시&nbsp;</Unit>
+&nbsp;
+          {remainMin}
+          {' '}
+          <Unit> 분&nbsp;</Unit>
+&nbsp;
+          {remainSec}
+          {' '}
+          <Unit> 초</Unit>
         </InnerWrapper>
       </TimeWrapper>
     </TimeBox>

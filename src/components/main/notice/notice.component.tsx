@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import NoticeList from './noticeList';
+import NoticeList from 'container/main/notice/noticeList';
 
 const NoticeWrapper = styled.div`
   display: flex;
