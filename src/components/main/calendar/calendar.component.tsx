@@ -12,6 +12,7 @@ const ScheduleWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 1;
 `;
 
 const Schedule: React.FC<
@@ -27,6 +28,7 @@ CalendarProps & CalendarMethod & RouteComponentProps
   const access_token = localStorage.getItem('accessToken');
   const Month = moment().format('M');
   const Today = moment().format('D');
+  let key = 0;
   const CalendarList = calendarStatus === 'success'
     && calendarList.map((item, idx) => {
       if (idx <= 2) {
@@ -37,6 +39,7 @@ CalendarProps & CalendarMethod & RouteComponentProps
             } 일`}
             contents={item.detail}
             active={Today === item.date}
+            key={key++}
           />
         );
       }

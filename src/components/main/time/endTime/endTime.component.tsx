@@ -7,6 +7,7 @@ const { useState, useEffect } = React;
 const TimeBox = styled.div`
   height: 23.375rem;
   width: 40rem;
+  z-index: 1;
 `;
 
 const TitleWrapper = styled.div`

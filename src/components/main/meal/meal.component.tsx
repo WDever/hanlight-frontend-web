@@ -12,6 +12,7 @@ const ListWrapper = styled.div`
   justify-content: space-around;
   width: 100%;
   height: 28rem;
+  z-index: 1;
 `;
 
 const NoBox = styled.div`
@@ -38,6 +39,8 @@ const MoreBox = styled.div`
   height: 27.5rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
+  background-color: #ffffff;
+  z-index: 1;
 `;
 
 const MoreBtn = styled.div`
@@ -50,6 +53,7 @@ const MoreBtn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
 `;
 
 const MealComponent: React.FC<MealProps & MealMethod & RouteComponentProps> = ({

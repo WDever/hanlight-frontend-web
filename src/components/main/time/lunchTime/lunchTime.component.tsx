@@ -8,6 +8,7 @@ const TimeBox = styled.div`
   /* display: flex; */
   height: 23.375rem;
   width: 40rem;
+  z-index: 1;
 `;
 
 const TitleWrapper = styled.div`

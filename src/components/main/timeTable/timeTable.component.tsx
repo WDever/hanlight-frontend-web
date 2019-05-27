@@ -20,7 +20,7 @@ const NoBox = styled.div`
   border-radius: 32px;
   border: solid 1px #b1b1b1;
   background-color: #ffffff;
-  box-shdow: none;
+  /* box-shdow: none; */
   color: black;
   font-family: 'Spoqa Han Sans';
   display: inline-flex;
@@ -43,7 +43,7 @@ TimeTableProps & TimeTableMethod & RouteComponentProps
 }) => {
   const access_token = localStorage.getItem('accessToken');
   const Today: number = Number(moment().format('d')) - 1;
-  console.log(Today);
+  let key = 0;
   const TimeTableList = timetableStatus === 'success'
     // && Today <= 5
     && timeTableList[Today].map((item, idx) => {
@@ -54,29 +54,29 @@ TimeTableProps & TimeTableMethod & RouteComponentProps
         if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
           return Number(0);
         }
-        if (sum >= 9 * 3600 + 2400 && sum <= 10 * 3600 + 1800) {
+        if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
           return Number(1);
         }
-        if (sum >= 10 * 3600 + 2400 && sum <= 11 * 3600 + 1800) {
+        if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
           return Number(2);
         }
-        if (sum >= 11 * 3600 + 2400 && sum <= 12 * 3600 + 1800) {
+        if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
           return Number(3);
         }
         if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
           return Number(4);
         }
-        if (sum >= 14 * 3600 + 1200 && sum <= 15 * 3600 + 600) {
+        if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
           return Number(5);
         }
-        if (sum >= 15 * 3600 + 1200 && sum <= 16 * 3600 + 600) {
+        if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
           return Number(6);
         }
         return Number(7);
       };
 
       return (
-        <TimeTableItem index={idx + 1} sub={item} active={idx === period()} />
+        <TimeTableItem index={idx + 1} sub={item} active={idx === period()} key={key++} />
       );
     });
 
@@ -93,7 +93,7 @@ TimeTableProps & TimeTableMethod & RouteComponentProps
           <Texts>6교시야</Texts>
         </NoBox>
       )}
-      {Today >= 5 && Today === 0 && (
+      {Today >= 5 && Today === 0 && timetableStatus !== 'none' && (
         <NoBox>
           <Texts>주말</Texts>
           <Texts>이야</Texts>

@@ -19,6 +19,7 @@ const ItemBox = styled.div`
   font-size: 1.5rem;
   color: white;
   box-shadow: 0 30px 80px 0 rgba(255, 0, 0, 0.25);
+  z-index: 1;
 `;
 
 const ContentWrapper = styled.div`

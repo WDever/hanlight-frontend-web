@@ -8,7 +8,7 @@ const NoticeTemplate = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  margin-bottom: 5rem;
+  margin-bottom: 7rem;
 `;
 
 const Empty = styled.div`
