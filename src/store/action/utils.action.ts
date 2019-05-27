@@ -34,7 +34,7 @@ export interface TimetableResType {
 }
 
 export interface CalendarParams {
-  access_token: string;
+  access_token: string | null;
   month: string;
 }
 

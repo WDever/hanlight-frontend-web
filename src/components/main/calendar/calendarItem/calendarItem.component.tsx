@@ -52,7 +52,7 @@ const DateWrapper = styled.div`
   align-items: center;
 `;
 
-const ScheduleItem: React.FC<ItemProps> = ({
+const CalendarItem: React.FC<ItemProps> = ({
   active = false,
   date,
   contents,
@@ -71,4 +71,4 @@ const ScheduleItem: React.FC<ItemProps> = ({
   </Box>
 );
 
-export default ScheduleItem;
+export default CalendarItem;

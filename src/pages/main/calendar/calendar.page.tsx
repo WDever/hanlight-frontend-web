@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import ScheduleComponent from 'components/main/schedule';
+import CalendarContainer from 'container/main/calendar';
 
 const Template = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ const Title = styled.div`
 const SchedulePage: React.FC = () => (
   <Template>
     <Title>학사일정</Title>
-    <ScheduleComponent />
+    <CalendarContainer />
   </Template>
 );
 
