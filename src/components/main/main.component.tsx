@@ -3,10 +3,8 @@ import styled from 'styled-components';
 import NoticePage from 'pages/main/notice';
 import MealPage from 'pages/main/meal';
 import TimeTable from 'pages/main/timeTable';
-import Schedule from 'pages/main/schedule';
+import Calendar from 'pages/main/calendar';
 import TimeComponent from 'pages/main/time';
-
-const { useEffect } = React;
 
 const MainComponent: React.FC = () => {
   return (
@@ -15,7 +13,7 @@ const MainComponent: React.FC = () => {
       <TimeComponent />
       <MealPage />
       <TimeTable />
-      <Schedule />
+      <Calendar />
     </>
   );
 };
