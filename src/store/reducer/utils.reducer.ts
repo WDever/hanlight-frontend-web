@@ -5,6 +5,7 @@ import { UtilsModel } from '../model/utils.model';
 const initialState: UtilsModel = {
   timetableStatus: 'none',
   calendarStatus: 'none',
+  calendarRecentStatus: 'none',
   noticeStatus: 'none',
   noticePostStatus: 'none',
   mealStatus: 'none',
@@ -17,6 +18,7 @@ const initialState: UtilsModel = {
     [],
   ],
   calendar: [],
+  calendarRecent: [],
   noticeList: [],
   noticePost: {
     pk: 0,
@@ -60,6 +62,19 @@ export const utilsReducer = (
       break;
 
     case 'CALENDAR_FAILURE':
+      draft.calendarRecentStatus = 'failure';
+      break;
+
+    case 'CALENDAR_RECENT':
+      draft.calendarRecentStatus = 'pending';
+      break;
+
+    case 'CALENDAR_RECENT_SUCCESS':
+      draft.calendarRecentStatus = 'success';
+      draft.calendarRecent = action.payload.data.calendar;
+      break;
+
+    case 'CALENDAR_RECENT_FAILURE':
       draft.calendarStatus = 'failure';
       break;
 

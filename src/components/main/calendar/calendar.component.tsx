@@ -18,9 +18,9 @@ const ScheduleWrapper = styled.div`
 const Schedule: React.FC<
 CalendarProps & CalendarMethod & RouteComponentProps
 > = ({
-  calendarApi,
+  calendarRecentApi,
   calendarList,
-  calendarStatus,
+  calendarRecentStatus,
   history,
   match,
   location,
@@ -29,12 +29,12 @@ CalendarProps & CalendarMethod & RouteComponentProps
   const Month = moment().format('M');
   const Today = moment().format('D');
   let key = 0;
-  const CalendarList = calendarStatus === 'success'
+  const CalendarList = calendarRecentStatus === 'success'
     && calendarList.map((item, idx) => {
       if (idx <= 2) {
         return (
           <CalendarItem
-            date={`${moment().format('Y')}년 ${moment().format('M')} 월 ${
+            date={`${moment().format('Y')}년 ${Month !== item.month ? String(Number(Month) + 1) : Month} 월 ${
               item.date
             } 일`}
             contents={item.detail}
@@ -46,8 +46,8 @@ CalendarProps & CalendarMethod & RouteComponentProps
     });
 
   useEffect(() => {
-    calendarApi({ access_token, month: moment().format('M') });
-  }, [access_token, calendarApi]);
+    calendarRecentApi(access_token);
+  }, [access_token, calendarRecentApi]);
 
   return <ScheduleWrapper>{CalendarList}</ScheduleWrapper>;
 };

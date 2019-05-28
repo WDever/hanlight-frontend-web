@@ -29,6 +29,10 @@ import {
   Meal,
   MealParams,
   MealOrder,
+  CalendarRecent,
+  CALENDAR_RECENT,
+  CALENDAR_RECENT_SUCCESS,
+  CALENDAR_RECENT_FAILURE,
 } from '../action';
 
 const timetableApi = (data: string | null) => instance
@@ -53,12 +57,21 @@ function* timetableApiSaga(action: Timetable) {
 }
 
 const calendarApi = (data: CalendarParams) => instance
-  .get('http://54.180.114.156:3000/api/calendar', {
+  .get(`http://54.180.114.156:3000/api/calendar/${data.recent ? 'recent' : ''}`, {
     headers: {
       access_token: data.access_token,
     },
     params: {
       month: data.month,
+      year: data.year,
+    },
+  })
+  .then(res => res.data);
+
+const calendarRecentApi = (data: string | null) => instance
+  .get('http://54.180.114.156:3000/api/calendar/recent', {
+    headers: {
+      access_token: data,
     },
   })
   .then(res => res.data);
@@ -72,6 +85,19 @@ function* calendarApiSaga(action: Calendar) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: CALENDAR_FAILURE, payload: e.response });
+    }
+  }
+}
+
+function* calendarRecentApiSaga(action: CalendarRecent) {
+  if (action.type) {
+    try {
+      const response = yield call(calendarRecentApi, action.payload);
+      console.log(response);
+      yield put({ type: CALENDAR_RECENT_SUCCESS, payload: response });
+    } catch (e) {
+      console.log(e.response);
+      yield put({ type: CALENDAR_RECENT_FAILURE, payload: e.response });
     }
   }
 }
@@ -175,6 +201,7 @@ function* mealOrderApiSaga(action: MealOrder) {
 function* utilsSaga() {
   yield takeEvery(TIMETABLE, timetableApiSaga);
   yield takeEvery(CALENDAR, calendarApiSaga);
+  yield takeEvery(CALENDAR_RECENT, calendarRecentApiSaga);
   yield takeEvery(NOTICE, noticeApiSaga);
   yield takeEvery(NOTICE_POST, noticePostApiSaga);
   yield takeEvery(MEAL, mealApiSaga);

@@ -7,6 +7,9 @@ export const TIMETABLE_FAILURE = 'TIMETABLE_FAILURE';
 export const CALENDAR = 'CALENDAR';
 export const CALENDAR_SUCCESS = 'CALENDAR_SUCCESS';
 export const CALENDAR_FAILURE = 'CALENDAR_FAILURE';
+export const CALENDAR_RECENT = 'CALENDAR_RECENT';
+export const CALENDAR_RECENT_SUCCESS = 'CALENDAR_RECENT_SUCCESS';
+export const CALENDAR_RECENT_FAILURE = 'CALENDAR_RECENT_FAILURE';
 export const NOTICE = 'NOTICE';
 export const NOTICE_SUCCESS = 'NOTICE_SUCCESS';
 export const NOTICE_FAILURE = 'NOTICE_FAILURE';
@@ -36,9 +39,18 @@ export interface TimetableResType {
 export interface CalendarParams {
   access_token: string | null;
   month: string;
+  year: string;
+  recent: boolean;
 }
 
 export interface CalendarItem {
+  date: string;
+  detail: string;
+}
+
+export interface CalendarRecentItem {
+  month: string;
+  year: string;
   date: string;
   detail: string;
 }
@@ -47,6 +59,13 @@ export interface CalendarResType {
   success: boolean;
   data: {
     calendar: CalendarItem[];
+  };
+}
+
+export interface CalendarRecentResType {
+  success: boolean;
+  data: {
+    calendar: CalendarRecentItem[];
   };
 }
 
@@ -141,6 +160,22 @@ export class CalendarFailure implements Action {
   public readonly type = CALENDAR_FAILURE;
 }
 
+export class CalendarRecent implements Action {
+  public readonly type = CALENDAR_RECENT;
+
+  public constructor(public payload: string | null) {}
+}
+
+export class CalendarRecentSuccess implements Action {
+  public readonly type = CALENDAR_RECENT_SUCCESS;
+
+  public constructor(public payload: CalendarRecentResType) {}
+}
+
+export class CalendarRecentFailure implements Action {
+  public readonly type = CALENDAR_RECENT_FAILURE;
+}
+
 export class Notice implements Action {
   public readonly type = NOTICE;
 
@@ -208,6 +243,7 @@ export class MealOrderFailure implements Action {
 export const utilsActions = {
   timetable: createStandardAction(TIMETABLE)<string>(),
   calendar: createStandardAction(CALENDAR)<CalendarParams>(),
+  calendarRecent: createStandardAction(CALENDAR_RECENT)<string | null>(),
   notice: createStandardAction(NOTICE)<NoticeParams>(),
   noticePost: createStandardAction(NOTICE_POST)<NoticePostParams>(),
   meal: createStandardAction(MEAL)<MealParams>(),
@@ -220,6 +256,9 @@ export type utilsReducerActions = | Timetable
 | Calendar
 | CalendarSuccess
 | CalendarFailure
+| CalendarRecent
+| CalendarRecentSuccess
+| CalendarRecentFailure
 | Notice
 | NoticeSuccess
 | NoticeFailure

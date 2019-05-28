@@ -1,8 +1,9 @@
-import { CalendarItem, NoticeListItem, MealItem } from '../action';
+import { CalendarItem, CalendarRecentItem, NoticeListItem, MealItem } from '../action';
 
 export interface UtilsModel {
   timetableStatus: 'none' | 'pending' | 'success' | 'failure';
   calendarStatus: 'none' | 'pending' | 'success' | 'failure';
+  calendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
   noticeStatus: 'none' | 'pending' | 'success' | 'failure';
   noticePostStatus: 'none' | 'pending' | 'success' | 'failure';
   mealStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -15,6 +16,7 @@ export interface UtilsModel {
     string[],
   ];
   calendar: CalendarItem[];
+  calendarRecent: CalendarRecentItem[];
   noticeList: NoticeListItem[];
   noticePost: {
     pk: number;
