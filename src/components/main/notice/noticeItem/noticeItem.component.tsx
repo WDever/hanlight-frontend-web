@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 interface NoticeItemProps {
   title: string;
-  date: string;
+  date: string | number;
 }
 
 const ItemBox = styled.div`
@@ -26,30 +26,27 @@ const Flag = styled.div`
 `;
 
 const TitleBox = styled.span`
-  width: 85%;
+  width: 79%;
   font-family: 'Spoqa Han Sans';
   font-size: 1.5rem;
 `;
 
 const Date = styled.span`
+  display: flex;
+  justify-content: flex-end;
   font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
   font-weight: 300;
   margin-right: 1rem;
+  width: 8rem;
 `;
 
-const NoticeItem: React.FC<NoticeItemProps> = ({ title, date }) => {
-  return (
-    <ItemBox>
-      <Flag />
-      <TitleBox>
-        {title}
-      </TitleBox>
-      <Date>
-        {date}
-      </Date>
-    </ItemBox>
-  );
-};
+const NoticeItem: React.FC<NoticeItemProps> = ({ title, date }) => (
+  <ItemBox>
+    <Flag />
+    <TitleBox>{title}</TitleBox>
+    <Date>{date}</Date>
+  </ItemBox>
+);
 
 export default NoticeItem;

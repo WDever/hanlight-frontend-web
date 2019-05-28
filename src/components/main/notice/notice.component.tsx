@@ -1,13 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
-import NoticeList from './noticeList';
+import NoticeIllust from 'lib/svg/notice-illust.svg';
+import NoticeList from 'container/main/notice/noticeList';
 
 const NoticeWrapper = styled.div`
   display: flex;
   /* flex-direction: column; */
   justify-content: space-around;
   align-items: center;
-  height: 88%;
+  /* height: 88%; */
   width: 100%;
 `;
 
@@ -24,6 +25,19 @@ const Separator = styled.div`
   flex-direction: column;
 `;
 
+const BtnWrapper = styled.div`
+  width: 24rem;
+  display: inline-flex;
+  justify-content: center;
+`;
+
+const BtnBackGroundImg = styled.img`
+  width: 24rem;
+  height: 19.375rem;
+  z-index: 0;
+  position: absolute;
+`;
+
 const MoreBtn = styled.div`
   width: 20rem;
   height: 5rem;
@@ -37,6 +51,7 @@ const MoreBtn = styled.div`
   font-family: 'Spoqa Han Sans';
   color: #ef3c5b;
   cursor: pointer;
+  z-index: 1;
 `;
 
 const NoticeComponent: React.FC = () => (
@@ -45,7 +60,10 @@ const NoticeComponent: React.FC = () => (
       <Title>공지사항</Title>
       <NoticeList />
     </Separator>
-    <MoreBtn>공지사항 전체보기</MoreBtn>
+    <BtnWrapper>
+      <BtnBackGroundImg src={NoticeIllust} alt="Notice Background Img" />
+      <MoreBtn>공지사항 전체보기</MoreBtn>
+    </BtnWrapper>
   </NoticeWrapper>
 );
 

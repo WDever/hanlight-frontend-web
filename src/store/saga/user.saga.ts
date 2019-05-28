@@ -29,7 +29,7 @@ function* loginApiSaga(action: Login) {
     try {
       const response = yield call(loginApi, action.payload);
       console.log(response);
-      localStorage.setItem('loginStatus', 'sucess');
+      localStorage.setItem('loginStatus', 'success');
       localStorage.setItem('accessToken', response.data.accessToken);
       localStorage.setItem('type', response.data.user.type);
       localStorage.setItem('admin', response.data.user.admin);

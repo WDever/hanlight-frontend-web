@@ -5,18 +5,20 @@ import { UtilsModel } from '../model/utils.model';
 const initialState: UtilsModel = {
   timetableStatus: 'none',
   calendarStatus: 'none',
+  calendarRecentStatus: 'none',
   noticeStatus: 'none',
   noticePostStatus: 'none',
   mealStatus: 'none',
   mealOrderStatus: 'none',
-  timetable: {
-    월: [],
-    화: [],
-    수: [],
-    목: [],
-    금: [],
-  },
+  timetable: [
+    [],
+    [],
+    [],
+    [],
+    [],
+  ],
   calendar: [],
+  calendarRecent: [],
   noticeList: [],
   noticePost: {
     pk: 0,
@@ -39,11 +41,11 @@ export const utilsReducer = (
 
     case 'TIMETABLE_SUCCESS':
       draft.timetableStatus = 'success';
-      draft.timetable.월 = action.payload.data.timetable.월;
-      draft.timetable.화 = action.payload.data.timetable.화;
-      draft.timetable.수 = action.payload.data.timetable.수;
-      draft.timetable.목 = action.payload.data.timetable.목;
-      draft.timetable.금 = action.payload.data.timetable.금;
+      draft.timetable[0] = action.payload.data.timetable.월;
+      draft.timetable[1] = action.payload.data.timetable.화;
+      draft.timetable[2] = action.payload.data.timetable.수;
+      draft.timetable[3] = action.payload.data.timetable.목;
+      draft.timetable[4] = action.payload.data.timetable.금;
       break;
 
     case 'TIMETABLE_FAILURE':
@@ -60,6 +62,19 @@ export const utilsReducer = (
       break;
 
     case 'CALENDAR_FAILURE':
+      draft.calendarRecentStatus = 'failure';
+      break;
+
+    case 'CALENDAR_RECENT':
+      draft.calendarRecentStatus = 'pending';
+      break;
+
+    case 'CALENDAR_RECENT_SUCCESS':
+      draft.calendarRecentStatus = 'success';
+      draft.calendarRecent = action.payload.data.calendar;
+      break;
+
+    case 'CALENDAR_RECENT_FAILURE':
       draft.calendarStatus = 'failure';
       break;
 
