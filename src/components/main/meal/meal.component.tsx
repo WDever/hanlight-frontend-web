@@ -54,6 +54,7 @@ const MoreBtn = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 1;
+  cursor: pointer;
 `;
 
 const MealComponent: React.FC<MealProps & MealMethod & RouteComponentProps> = ({
@@ -63,7 +64,6 @@ const MealComponent: React.FC<MealProps & MealMethod & RouteComponentProps> = ({
   mealStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
-
   const MealList = mealStatus === 'success' && mealList.map((item, idx) => {
     if (idx <= 2) {
       const mealArr = item.detail.split(',');

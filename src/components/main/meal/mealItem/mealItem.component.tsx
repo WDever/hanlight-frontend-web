@@ -24,7 +24,7 @@ const ItemBox = styled.div`
 
 const ContentWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   height: 80%;
 `;
@@ -33,7 +33,7 @@ const MealWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  width: 40%;
+  width: 50%;
   height: 100%;
   font-family: 'Spoqa Han Sans';
   font-size: 1.5rem;
@@ -41,7 +41,7 @@ const MealWrapper = styled.div`
 `;
 
 const Weather = styled.img`
-  margin-top: 2rem;
+  margin: 2rem 1rem 0 1rem;
   width: 4.5rem;
   height: 4.5rem;
 `;
@@ -53,7 +53,7 @@ const Lunch = styled.div`
 
 const ListBox = styled.div`
   width: 100%;
-  height: 60%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;

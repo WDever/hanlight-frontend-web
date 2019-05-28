@@ -87,7 +87,7 @@ TimeTableProps & TimeTableMethod & RouteComponentProps
   return (
     <TimeTableWrapper>
       {TimeTableList}
-      {timeTableList[0].length <= 6 && (
+      {timeTableList[Today].length <= 6 && (
         <NoBox>
           <Texts>오늘</Texts>
           <Texts>6교시야</Texts>
