@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { MealProps, MealMethod } from 'container/main/meal';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import MealItem from './mealItem';
 
@@ -16,6 +16,7 @@ const ListWrapper = styled.div`
 `;
 
 const NoBox = styled.div`
+  /* font-family: 'Sandoll Okwon'; */
   font-size: 3rem;
   display: flex;
   justify-content: center;
@@ -24,7 +25,9 @@ const NoBox = styled.div`
   width: 20.75rem;
   height: 27.5rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
+  background-color: #ffffff;
   border-radius: 16px;
+  z-index: 1;
 `;
 
 const MoreBox = styled.div`
@@ -43,7 +46,8 @@ const MoreBox = styled.div`
   z-index: 1;
 `;
 
-const MoreBtn = styled.div`
+const MoreBtn = styled(Link)`
+  text-decoration: none;
   width: 11.875rem;
   height: 3.625rem;
   border-radius: 35px;
@@ -57,27 +61,31 @@ const MoreBtn = styled.div`
   cursor: pointer;
 `;
 
-const MealComponent: React.FC<MealProps & MealMethod & RouteComponentProps> = ({
+const MealComponent: React.FC<MealProps & MealMethod> = ({
   meal,
   mealList,
-  history,
   mealStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
-  const MealList = mealStatus === 'success' && mealList.map((item, idx) => {
-    if (idx <= 2) {
-      const mealArr = item.detail.split(',');
-      return (
-        <MealItem
-          mealList={mealArr}
-          date={`${moment().format('YYYY')}년 ${moment().format('M')}월 ${
-            item.date
-          }일`}
-          key={item.date}
-        />
-      );
-    }
-  });
+  const MealList = mealStatus === 'success'
+    && mealList.map((item, idx) => {
+      if (idx <= 2) {
+        const mealArr = item.detail.split(',');
+        if (item.detail === '주말') {
+          return <NoBox>주말이다</NoBox>;
+        }
+        if (item.detail === 'X') {
+          return <NoBox>밥이 없다</NoBox>;
+        }
+        return (
+          <MealItem
+            mealList={mealArr}
+            date={`${moment().format('YYYY')}년 ${moment().format('M')}월 ${item.date}일`}
+            key={item.date}
+          />
+        );
+      }
+    });
 
   useEffect(() => {
     meal({ access_token, sort: 'week' });
@@ -89,7 +97,7 @@ const MealComponent: React.FC<MealProps & MealMethod & RouteComponentProps> = ({
       <MoreBox>
         <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>
-        <MoreBtn>더보기</MoreBtn>
+        <MoreBtn to="/meal">더보기</MoreBtn>
       </MoreBox>
     </ListWrapper>
   );
