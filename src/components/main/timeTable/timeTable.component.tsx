@@ -1,7 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { TimeTableMethod, TimeTableProps } from 'container/main/timeTable';
-import { RouteComponentProps } from 'react-router-dom';
 import moment from 'moment';
 import TimeTableItem from './timeTableItem';
 
@@ -36,10 +35,10 @@ const Texts = styled.span`
   font-size: 2.25rem;
 `;
 
-const TimeTableComponent: React.FC<
-TimeTableProps & TimeTableMethod & RouteComponentProps
-> = ({
-  timeTableList, timetableApi, timetableStatus, history,
+const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
+  timeTableList,
+  timetableApi,
+  timetableStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
   const Today: number = Number(moment().format('d')) - 1;
@@ -76,7 +75,12 @@ TimeTableProps & TimeTableMethod & RouteComponentProps
       };
 
       return (
-        <TimeTableItem index={idx + 1} sub={item} active={idx === period()} key={key++} />
+        <TimeTableItem
+          index={idx + 1}
+          sub={item}
+          active={idx === period()}
+          key={key++}
+        />
       );
     });
 
