@@ -76,14 +76,14 @@ export interface NoticeParams {
 }
 
 export interface NoticePostParams {
-  access_token: string;
-  id: string;
+  access_token: string | null;
+  postPk: string;
 }
 
 export interface NoticeListItem {
   pk: number;
   title: string;
-  updatedAt: string;
+  createdAt: string;
   read: boolean;
 }
 
@@ -100,7 +100,7 @@ export interface NoticePostResType {
     pk: number;
     title: string;
     content: string;
-    updateAt: string;
+    createdAt: string;
   };
 }
 

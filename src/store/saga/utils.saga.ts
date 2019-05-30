@@ -135,7 +135,7 @@ const noticePostApi = (data: NoticePostParams) => instance
     },
     params: {
       type: 'post',
-      id: data.id,
+      post_pk: data.postPk,
     },
   })
   .then(res => res.data);

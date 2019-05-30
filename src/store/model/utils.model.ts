@@ -1,4 +1,4 @@
-import { CalendarItem, CalendarRecentItem, NoticeListItem, MealItem } from '../action';
+import { CalendarItem, CalendarRecentItem, NoticeListItem, NoticePostResType, MealItem } from '../action';
 
 export interface UtilsModel {
   timetableStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -22,7 +22,7 @@ export interface UtilsModel {
     pk: number;
     title: string;
     content: string;
-    updateAt: string;
+    createdAt: string;
   };
   mealList: MealItem[];
   mealOrder: string;

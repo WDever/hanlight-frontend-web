@@ -24,7 +24,7 @@ const initialState: UtilsModel = {
     pk: 0,
     title: '',
     content: '',
-    updateAt: '',
+    createdAt: '',
   },
   mealList: [],
   mealOrder: '',
