@@ -46,34 +46,33 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
   const Today: number = Number(moment().format('d')) - 1;
   let key = 0;
   const TimeTableList = timetableStatus === 'success'
-    // && Today <= 5
     && timeTableList[Today].map((item, idx) => {
       const sum = Number(moment().format('H')) * 3600
         + Number(moment().format('m')) * 60
         + Number(moment().format('s'));
       const period = (): number => {
         if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
-          return Number(0);
+          return 0;
         }
         if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
-          return Number(1);
+          return 1;
         }
         if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
-          return Number(2);
+          return 2;
         }
         if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
-          return Number(3);
+          return 3;
         }
         if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
-          return Number(4);
+          return 4;
         }
         if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
-          return Number(5);
+          return 5;
         }
         if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
-          return Number(6);
+          return 6;
         }
-        return Number(7);
+        return 7;
       };
 
       return (

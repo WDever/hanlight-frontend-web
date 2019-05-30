@@ -23,7 +23,6 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
 }) => {
   const access_token = localStorage.getItem('accessToken');
   const Month = moment().format('M');
-  const Today = moment().format('D');
   let key = 0;
   const CalendarList = calendarRecentStatus === 'success'
     && calendarList.map((item, idx) => {
@@ -34,7 +33,7 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
               Month !== item.month ? String(Number(Month) + 1) : Month
             } 월 ${item.date} 일`}
             contents={item.detail}
-            active={Today === item.date}
+            active={moment().format('D') === item.date}
             key={key++}
           />
         );
