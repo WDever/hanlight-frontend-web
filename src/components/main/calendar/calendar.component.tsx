@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import moment from 'moment';
 import { CalendarProps, CalendarMethod } from 'container/main/calendar';
-import { RouteComponentProps } from 'react-router-dom';
 import CalendarItem from './calendarItem';
 
 const { useEffect } = React;
@@ -15,15 +14,10 @@ const ScheduleWrapper = styled.div`
   z-index: 1;
 `;
 
-const Schedule: React.FC<
-CalendarProps & CalendarMethod & RouteComponentProps
-> = ({
+const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
-  history,
-  match,
-  location,
 }) => {
   const access_token = localStorage.getItem('accessToken');
   const Month = moment().format('M');
@@ -34,9 +28,9 @@ CalendarProps & CalendarMethod & RouteComponentProps
       if (idx <= 2) {
         return (
           <CalendarItem
-            date={`${moment().format('Y')}년 ${Month !== item.month ? String(Number(Month) + 1) : Month} 월 ${
-              item.date
-            } 일`}
+            date={`${moment().format('Y')}년 ${
+              Month !== item.month ? String(Number(Month) + 1) : Month
+            } 월 ${item.date} 일`}
             contents={item.detail}
             active={Today === item.date}
             key={key++}
@@ -52,4 +46,4 @@ CalendarProps & CalendarMethod & RouteComponentProps
   return <ScheduleWrapper>{CalendarList}</ScheduleWrapper>;
 };
 
-export default Schedule;
+export default CalendarComponent;

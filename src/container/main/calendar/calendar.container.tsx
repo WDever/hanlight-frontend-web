@@ -2,8 +2,12 @@ import * as React from 'react';
 import CalendarComponent from 'components/main/calendar';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, utilsActions, utilsReducerActions, CalendarParams, CalendarRecentItem } from 'store';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+import {
+  AppState,
+  utilsActions,
+  utilsReducerActions,
+  CalendarRecentItem,
+} from 'store';
 
 export interface CalendarProps {
   calendarList: CalendarRecentItem[];
@@ -14,25 +18,17 @@ export interface CalendarMethod {
   calendarRecentApi(params: string | null): void;
 }
 
-const ScheduleContainer: React.FC<CalendarProps & CalendarMethod & RouteComponentProps> = ({
+const ScheduleContainer: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
-  history,
-  match,
-  location,
-}) => {
-  return (
-    <CalendarComponent
-      calendarRecentApi={calendarRecentApi}
-      calendarList={calendarList}
-      calendarRecentStatus={calendarRecentStatus}
-      history={history}
-      match={match}
-      location={location}
-    />
-  );
-};
+}) => (
+  <CalendarComponent
+    calendarRecentApi={calendarRecentApi}
+    calendarList={calendarList}
+    calendarRecentStatus={calendarRecentStatus}
+  />
+);
 
 const mapStateToProps = ({ utils }: AppState) => ({
   calendarList: utils.calendarRecent,
@@ -43,9 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
   calendarRecentApi: bindActionCreators(utilsActions.calendarRecent, dispatch),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(ScheduleContainer),
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ScheduleContainer);
