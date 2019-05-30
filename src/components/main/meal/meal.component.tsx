@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { ErrorImg } from 'lib/styles';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { MealProps, MealMethod } from 'container/main/meal';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
@@ -94,6 +96,7 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
   return (
     <ListWrapper>
       {MealList}
+      {mealStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       <MoreBox>
         <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>

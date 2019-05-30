@@ -1,6 +1,8 @@
 /* eslint-disable camelcase */
 import * as React from 'react';
 import styled from 'styled-components';
+import { ErrorImg } from 'lib/styles';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import {
   NoticeListProps,
   NoticeListMethod,
@@ -67,6 +69,7 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
   return (
     <NoticeListWrapper>
       <InnerWrapper length={noticeList.length}>{NoticeList}</InnerWrapper>
+      {noticeStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
     </NoticeListWrapper>
   );
 };

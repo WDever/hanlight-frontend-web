@@ -38,7 +38,7 @@ import {
 const timetableApi = (data: string | null) => instance
   .get('/api/timetable', {
     headers: {
-      access_token: data,
+      // access_token: data,
     },
   })
   .then(res => res.data);
@@ -59,7 +59,7 @@ function* timetableApiSaga(action: Timetable) {
 const calendarApi = (data: CalendarParams) => instance
   .get(`http://54.180.114.156:3000/api/calendar/${data.recent ? 'recent' : ''}`, {
     headers: {
-      access_token: data.access_token,
+      // access_token: data.access_token,
     },
     params: {
       month: data.month,
@@ -71,7 +71,7 @@ const calendarApi = (data: CalendarParams) => instance
 const calendarRecentApi = (data: string | null) => instance
   .get('http://54.180.114.156:3000/api/calendar/recent', {
     headers: {
-      access_token: data,
+      // access_token: data,
     },
   })
   .then(res => res.data);
@@ -105,7 +105,7 @@ function* calendarRecentApiSaga(action: CalendarRecent) {
 const noticeApi = (data: NoticeParams) => instance
   .get('/api/notice', {
     headers: {
-      access_token: data.access_token,
+      // access_token: data.access_token,
     },
     params: {
       type: 'list',
@@ -131,7 +131,7 @@ function* noticeApiSaga(action: Notice) {
 const noticePostApi = (data: NoticePostParams) => instance
   .get('/api/notice', {
     headers: {
-      access_token: data.access_token,
+      // access_token: data.access_token,
     },
     params: {
       type: 'post',
@@ -156,7 +156,7 @@ function* noticePostApiSaga(action: NoticePost) {
 const mealApi = (data: MealParams) => instance
   .get('/api/meal', {
     headers: {
-      access_token: data.access_token,
+      // access_token: data.access_token,
     },
     params: {
       sort: data.sort,
@@ -180,7 +180,7 @@ function* mealApiSaga(action: Meal) {
 const mealOrderApi = (data: string) => instance
   .get('/api/meal/order', {
     headers: {
-      access_token: data,
+      // access_token: data,
     },
   })
   .then(res => res);

@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { ErrorImg } from 'lib/styles';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { TimeTableMethod, TimeTableProps } from 'container/main/timeTable';
 import moment from 'moment';
 import TimeTableItem from './timeTableItem';
@@ -91,6 +93,7 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
   return (
     <TimeTableWrapper>
       {TimeTableList}
+      {timetableStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       {timeTableList[Today].length <= 6 && (
         <NoBox>
           <Texts>오늘</Texts>

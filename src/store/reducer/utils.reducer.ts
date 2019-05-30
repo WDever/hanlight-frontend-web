@@ -75,7 +75,7 @@ export const utilsReducer = (
       break;
 
     case 'CALENDAR_RECENT_FAILURE':
-      draft.calendarStatus = 'failure';
+      draft.calendarRecentStatus = 'failure';
       break;
 
     case 'NOTICE':

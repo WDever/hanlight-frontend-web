@@ -1,5 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { ErrorImg } from 'lib/styles';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import moment from 'moment';
 import { CalendarProps, CalendarMethod } from 'container/main/calendar';
 import CalendarItem from './calendarItem';
@@ -43,7 +45,12 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
     calendarRecentApi(access_token);
   }, [access_token, calendarRecentApi]);
 
-  return <ScheduleWrapper>{CalendarList}</ScheduleWrapper>;
+  return (
+    <ScheduleWrapper>
+      {CalendarList}
+      {calendarRecentStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
+    </ScheduleWrapper>
+  );
 };
 
 export default CalendarComponent;
