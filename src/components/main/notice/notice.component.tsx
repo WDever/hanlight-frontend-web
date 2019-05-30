@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import NoticeIllust from 'lib/svg/notice-illust.svg';
 import NoticeList from 'container/main/notice/noticeList';
+import { Link } from 'react-router-dom';
 
 const NoticeWrapper = styled.div`
   display: flex;
@@ -15,7 +16,7 @@ const NoticeWrapper = styled.div`
 const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 2.5rem;
-  margin: 3rem 0 1rem 0;
+  margin: 3rem 0 1rem 2.5rem;
 `;
 
 const Separator = styled.div`
@@ -38,7 +39,7 @@ const BtnBackGroundImg = styled.img`
   position: absolute;
 `;
 
-const MoreBtn = styled.div`
+const MoreBtn = styled(Link)`
   width: 20rem;
   height: 5rem;
   border-radius: 40px;
@@ -52,6 +53,7 @@ const MoreBtn = styled.div`
   color: #ef3c5b;
   cursor: pointer;
   z-index: 1;
+  text-decoration: none;
 `;
 
 const NoticeComponent: React.FC = () => (
@@ -62,7 +64,7 @@ const NoticeComponent: React.FC = () => (
     </Separator>
     <BtnWrapper>
       <BtnBackGroundImg src={NoticeIllust} alt="Notice Background Img" />
-      <MoreBtn>공지사항 전체보기</MoreBtn>
+      <MoreBtn to="/notice">공지사항 전체보기</MoreBtn>
     </BtnWrapper>
   </NoticeWrapper>
 );

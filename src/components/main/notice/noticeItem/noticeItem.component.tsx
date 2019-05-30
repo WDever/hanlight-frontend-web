@@ -4,6 +4,7 @@ import styled from 'styled-components';
 interface NoticeItemProps {
   title: string;
   date: string | number;
+  read: boolean;
 }
 
 const ItemBox = styled.div`
@@ -17,12 +18,12 @@ const ItemBox = styled.div`
   cursor: pointer;
 `;
 
-const Flag = styled.div`
+const Flag = styled.div<{ read: boolean }>`
   display: inline-flex;
   width: 0.75rem;
   height: 100%;
   border-radius: 16px 0 0 16px;
-  background-color: #4470ff;
+  background-color: ${props => (props.read ? '#ff5677' : '#4470ff')};
 `;
 
 const TitleBox = styled.span`
@@ -41,9 +42,9 @@ const Date = styled.span`
   width: 8rem;
 `;
 
-const NoticeItem: React.FC<NoticeItemProps> = ({ title, date }) => (
+const NoticeItem: React.FC<NoticeItemProps> = ({ title, date, read }) => (
   <ItemBox>
-    <Flag />
+    <Flag read={read} />
     <TitleBox>{title}</TitleBox>
     <Date>{date}</Date>
   </ItemBox>

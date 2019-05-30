@@ -1,7 +1,6 @@
 import * as React from 'react';
 import NoticeListComponent from 'components/main/notice/noticeList';
 import { bindActionCreators, Dispatch } from 'redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppState,
@@ -20,17 +19,14 @@ export interface NoticeListMethod {
   notice(params: NoticeParams): void;
 }
 
-const NoticeListContainer: React.FC<
-NoticeListProps & NoticeListMethod & RouteComponentProps
-> = ({
-  notice, noticeList, location, match, history, noticeStatus
+const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
+  notice,
+  noticeList,
+  noticeStatus,
 }) => (
   <NoticeListComponent
     notice={notice}
     noticeList={noticeList}
-    location={location}
-    match={match}
-    history={history}
     noticeStatus={noticeStatus}
   />
 );
@@ -44,9 +40,7 @@ const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
   notice: bindActionCreators(utilsActions.notice, dispatch),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(NoticeListContainer),
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NoticeListContainer);

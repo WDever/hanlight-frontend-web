@@ -5,7 +5,6 @@ import {
   NoticeListProps,
   NoticeListMethod,
 } from 'container/main/notice/noticeList';
-import { RouteComponentProps } from 'react-router-dom';
 import moment from 'moment';
 import NoticeItem from '../noticeItem';
 
@@ -28,30 +27,38 @@ const InnerWrapper = styled.div<{ length: number }>`
   justify-content: space-around;
 `;
 
-const NoticeListComponent: React.FC<
-NoticeListProps & NoticeListMethod & RouteComponentProps
-> = ({
-  notice, noticeList, history, noticeStatus,
+const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
+  notice,
+  noticeList,
+  noticeStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
 
-  const NoticeList = noticeStatus === 'success' && noticeList.map((item) => {
-    const date = () => {
-      if (
-        moment(item.updatedAt).format('YYYY.MM.DD')
-        === moment().format('YYYY.MM.DD')
-      ) {
-        if (moment(item.updatedAt).format('H') === moment().format('H')) {
-          return `${Number(moment().format('m'))
-            - Number(moment(item.updatedAt).format('m'))}분전`;
+  const NoticeList = noticeStatus === 'success'
+    && noticeList.map((item) => {
+      const date = () => {
+        if (
+          moment(item.createdAt).format('YYYY.MM.DD')
+          === moment().format('YYYY.MM.DD')
+        ) {
+          if (moment(item.createdAt).format('H') === moment().format('H')) {
+            return `${Number(moment().format('m'))
+              - Number(moment(item.createdAt).format('m'))}분전`;
+          }
+          return `${Number(moment().format('H'))
+            - Number(moment(item.createdAt).format('H'))}시간전`;
         }
-        return `${Number(moment().format('H'))
-          - Number(moment(item.updatedAt).format('H'))}시간전`;
-      }
-      return moment(item.updatedAt).format('YYYY.MM.DD');
-    };
-    return <NoticeItem title={item.title} date={date()} key={item.pk} />;
-  });
+        return moment(item.createdAt).format('YYYY.MM.DD');
+      };
+      return (
+        <NoticeItem
+          title={item.title}
+          date={date()}
+          read={item.read}
+          key={item.pk}
+        />
+      );
+    });
 
   useEffect(() => {
     notice({ access_token });
