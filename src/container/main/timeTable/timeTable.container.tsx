@@ -2,7 +2,7 @@ import * as React from 'react';
 import TimeTableComponent from 'components/main/timeTable';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, utilsActions, utilsReducerActions } from 'store';
+import { AppState, timeTableActions, timeTableReducerActions } from 'store';
 
 export interface TimeTableProps {
   timeTableList: [string[], string[], string[], string[], string[]];
@@ -25,13 +25,13 @@ const TimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
   />
 );
 
-const mapStateToProps = ({ utils }: AppState) => ({
-  timeTableList: utils.timetable,
-  timetableStatus: utils.timetableStatus,
+const mapStateToProps = ({ timeTable }: AppState) => ({
+  timeTableList: timeTable.timetable,
+  timetableStatus: timeTable.timetableStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
-  timetableApi: bindActionCreators(utilsActions.timetable, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({
+  timetableApi: bindActionCreators(timeTableActions.timeTable, dispatch),
 });
 
 export default connect(

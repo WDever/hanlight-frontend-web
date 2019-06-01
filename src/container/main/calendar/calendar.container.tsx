@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
-  utilsActions,
-  utilsReducerActions,
+  calendarActions,
+  calendarReducerActions,
   CalendarRecentItem,
 } from 'store';
 
@@ -30,13 +30,13 @@ const ScheduleContainer: React.FC<CalendarProps & CalendarMethod> = ({
   />
 );
 
-const mapStateToProps = ({ utils }: AppState) => ({
-  calendarList: utils.calendarRecent,
-  calendarRecentStatus: utils.calendarRecentStatus,
+const mapStateToProps = ({ calendar }: AppState) => ({
+  calendarList: calendar.calendarRecent,
+  calendarRecentStatus: calendar.calendarRecentStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
-  calendarRecentApi: bindActionCreators(utilsActions.calendarRecent, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<calendarReducerActions>) => ({
+  calendarRecentApi: bindActionCreators(calendarActions.calendarRecent, dispatch),
 });
 
 export default connect(

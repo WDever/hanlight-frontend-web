@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import {
   AppState,
   NoticeParams,
-  utilsReducerActions,
-  utilsActions,
+  noticeActions,
+  noticeReducerActions,
   NoticeListItem,
 } from 'store';
 
@@ -31,13 +31,13 @@ const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
   />
 );
 
-const mapStateToProps = ({ utils }: AppState) => ({
-  noticeList: utils.noticeList,
-  noticeStatus: utils.noticeStatus,
+const mapStateToProps = ({ notice }: AppState) => ({
+  noticeList: notice.noticeList,
+  noticeStatus: notice.noticeStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
-  notice: bindActionCreators(utilsActions.notice, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
+  notice: bindActionCreators(noticeActions.notice, dispatch),
 });
 
 export default connect(

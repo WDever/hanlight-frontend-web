@@ -3,8 +3,8 @@ import MealComponent from 'components/main/meal';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
-  utilsActions,
-  utilsReducerActions,
+  mealActions,
+  mealReducerActions,
   MealParams,
   MealItem,
   AppState,
@@ -27,13 +27,13 @@ const MealContainer: React.FC<MealProps & MealMethod> = ({
   <MealComponent meal={meal} mealList={mealList} mealStatus={mealStatus} />
 );
 
-const mapStateToProsp = ({ utils }: AppState) => ({
-  mealList: utils.mealList,
-  mealStatus: utils.mealStatus,
+const mapStateToProsp = ({ meal }: AppState) => ({
+  mealList: meal.mealList,
+  mealStatus: meal.mealStatus,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<utilsReducerActions>) => ({
-  meal: bindActionCreators(utilsActions.meal, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
+  meal: bindActionCreators(mealActions.meal, dispatch),
 });
 
 export default connect(
