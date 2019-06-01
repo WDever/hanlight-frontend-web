@@ -3,7 +3,7 @@ import { TimeTableModel, timeTableReducerActions } from 'store';
 
 const initialState: TimeTableModel = {
   timetableStatus: 'none',
-  timetable: [[], [], [], [], []],
+  timetable: [[], [], [], [], [], [], []],
 };
 
 export const timeTableReducer = (

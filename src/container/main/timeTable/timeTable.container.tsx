@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { AppState, timeTableActions, timeTableReducerActions } from 'store';
 
 export interface TimeTableProps {
-  timeTableList: [string[], string[], string[], string[], string[]];
+  timeTableList: [string[], string[], string[], string[], string[], string[], string[]];
   timetableStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
