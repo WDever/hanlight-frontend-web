@@ -22,16 +22,13 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentStatus,
 }) => {
   const access_token = localStorage.getItem('accessToken');
-  const Month = moment().format('M');
   let key = 0;
   const CalendarList = calendarRecentStatus === 'success'
     && calendarList.map((item, idx) => {
       if (idx <= 2) {
         return (
           <CalendarItem
-            date={`${moment().format('Y')}년 ${
-              Month !== item.month ? String(Number(Month) + 1) : Month
-            } 월 ${item.date} 일`}
+            date={`${moment().format('Y')}년 ${item.month} 월 ${item.date} 일`}
             contents={item.detail}
             active={moment().format('D') === item.date}
             key={key++}
@@ -47,7 +44,9 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   return (
     <ScheduleWrapper>
       {CalendarList}
-      {calendarRecentStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
+      {calendarRecentStatus === 'failure' && (
+        <ErrorImg src={ErrorPng} alt="Error" />
+      )}
     </ScheduleWrapper>
   );
 };

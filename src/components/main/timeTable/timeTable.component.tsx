@@ -99,7 +99,7 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
           <Texts>6교시야</Texts>
         </NoBox>
       )}
-      {(Today >= 5 || Today === 0) && timetableStatus !== 'none' && (
+      {Today >= 5 && timetableStatus !== 'none' && (
         <NoBox>
           <Texts>주말</Texts>
           <Texts>이야</Texts>
