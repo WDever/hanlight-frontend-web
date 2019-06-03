@@ -1,6 +1,6 @@
+import LoginContainer from 'container/auth/login';
 import * as React from 'react';
 import styled from 'styled-components';
-import LoginContainer from 'container/auth/login';
 
 const Template = styled.div`
   width: 100%;

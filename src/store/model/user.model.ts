@@ -18,7 +18,23 @@ export interface UserModel {
   loginStatus: 'none' | 'pending' | 'success' | 'failure';
   idRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';
   pwRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';
-  idExistStatus: 'none' | 'pending' | 'success-true' | 'success-false' | 'failure';
-  tpExistStatus: 'none' | 'pending' | 'success-true' | 'success-false' | 'failure';
-  signKeyExistStatus: 'none' | 'pending' | 'success-true' | 'success-false' | 'failure';
+  idExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  tpExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  signKeyExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  getUserStatus: 'none' | 'pending' | 'success' | 'failure';
 }

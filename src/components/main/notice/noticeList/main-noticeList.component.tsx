@@ -1,13 +1,13 @@
 /* eslint-disable camelcase */
+import {
+  NoticeListMethod,
+  NoticeListProps,
+} from 'container/main/notice/noticeList';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
+import { ErrorImg } from 'lib/styles';
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { ErrorImg } from 'lib/styles';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import {
-  NoticeListProps,
-  NoticeListMethod,
-} from 'container/main/notice/noticeList';
-import moment from 'moment';
 import NoticeItem from '../noticeItem';
 
 const { useEffect } = React;
@@ -33,22 +33,22 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
   notice,
   noticeList,
   noticeStatus,
+  token,
 }) => {
-  const access_token = localStorage.getItem('accessToken');
-
-  const NoticeList = noticeStatus === 'success'
-    && noticeList.map((item) => {
+  const NoticeList =
+    noticeStatus === 'success' &&
+    noticeList.map(item => {
       const date = () => {
         if (
-          moment(item.createdAt).format('YYYY.MM.DD')
-          === moment().format('YYYY.MM.DD')
+          moment(item.createdAt).format('YYYY.MM.DD') ===
+          moment().format('YYYY.MM.DD')
         ) {
           if (moment(item.createdAt).format('H') === moment().format('H')) {
-            return `${Number(moment().format('m'))
-              - Number(moment(item.createdAt).format('m'))}분전`;
+            return `${Number(moment().format('m')) -
+              Number(moment(item.createdAt).format('m'))}분전`;
           }
-          return `${Number(moment().format('H'))
-            - Number(moment(item.createdAt).format('H'))}시간전`;
+          return `${Number(moment().format('H')) -
+            Number(moment(item.createdAt).format('H'))}시간전`;
         }
         return moment(item.createdAt).format('YYYY.MM.DD');
       };
@@ -63,8 +63,8 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
     });
 
   useEffect(() => {
-    notice({ access_token });
-  }, [access_token, notice]);
+    notice({ access_token: token });
+  }, [token, notice]);
 
   return (
     <NoticeListWrapper>

@@ -1,18 +1,20 @@
-import * as React from 'react';
 import NoticeListComponent from 'components/main/notice/noticeList';
-import { bindActionCreators, Dispatch } from 'redux';
+import * as React from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
-  NoticeParams,
   noticeActions,
-  noticeReducerActions,
   NoticeListItem,
+  NoticeParams,
+  noticeReducerActions,
 } from 'store';
 
 export interface NoticeListProps {
+  name: string;
   noticeList: NoticeListItem[];
   noticeStatus: 'none' | 'pending' | 'success' | 'failure';
+  token: string;
 }
 
 export interface NoticeListMethod {
@@ -20,20 +22,26 @@ export interface NoticeListMethod {
 }
 
 const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
+  name,
   notice,
   noticeList,
   noticeStatus,
+  token,
 }) => (
   <NoticeListComponent
+    name={name}
     notice={notice}
     noticeList={noticeList}
     noticeStatus={noticeStatus}
+    token={token}
   />
 );
 
-const mapStateToProps = ({ notice }: AppState) => ({
+const mapStateToProps = ({ user, notice }: AppState) => ({
+  name: user.data.name,
   noticeList: notice.noticeList,
   noticeStatus: notice.noticeStatus,
+  token: user.token,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({

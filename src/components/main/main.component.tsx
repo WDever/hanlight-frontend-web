@@ -1,30 +1,42 @@
-import * as React from 'react';
-import NoticePage from 'pages/main/notice';
-import MealPage from 'pages/main/meal';
-import TimeTable from 'pages/main/timeTable';
+import FooterComponent from 'components/footer';
+import HeaderContainer from 'container/header';
+import { MainMethod, MainProps } from 'container/main';
 import Calendar from 'pages/main/calendar';
-import TimeComponent from 'pages/main/time';
-import { MainProps } from 'container/main';
+import MealPage from 'pages/main/meal';
+import NoticePage from 'pages/main/notice';
+import TimePage from 'pages/main/time';
+import TimeTablePage from 'pages/main/timeTable';
+import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 
 const { useEffect } = React;
 
-const MainComponent: React.FC<MainProps & RouteComponentProps> = ({ loginStatus, history }) => {
-  const localLoginStatus = localStorage.getItem('loginStatus');
+const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
+  loginStatus,
+  history,
+  reset,
+}) => {
   useEffect(() => {
-    if (localLoginStatus !== 'success') {
+    if (loginStatus === 'failure') {
       history.push('/auth');
+      reset();
     }
-  }, []);
+  }, [loginStatus]);
 
-  return (
+  return loginStatus === 'success' ? (
     <>
-      <NoticePage />
-      <TimeComponent />
-      <MealPage />
-      <TimeTable />
-      <Calendar />
+      <HeaderContainer />
+      <>
+        <NoticePage />
+        <TimePage />
+        <MealPage />
+        <TimeTablePage />
+        <Calendar />
+      </>
+      <FooterComponent />
     </>
+  ) : (
+    <></>
   );
 };
 

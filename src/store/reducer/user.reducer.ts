@@ -25,6 +25,7 @@ const initialState: UserModel = {
   idExistStatus: 'none',
   tpExistStatus: 'none',
   signKeyExistStatus: 'none',
+  getUserStatus: 'none',
 };
 
 export const userReducer = (
@@ -39,12 +40,13 @@ export const userReducer = (
 
       case 'LOGIN_SUCCESS':
         draft.loginStatus = 'success';
-        draft.token = action.payload.token;
+        draft.token = action.payload.accessToken;
         draft.data = {
-          ...action.payload,
+          ...action.payload.user,
         };
 
-        localStorage.setItem('token', action.payload.token);
+        console.log(action.payload);
+        localStorage.setItem('access_token', action.payload.accessToken);
         break;
 
       case 'LOGIN_FAILURE':
@@ -151,8 +153,8 @@ export const userReducer = (
         break;
 
       case 'RESET':
+        localStorage.clear();
         return initialState;
-        break;
 
       case 'SET_FB_CODE':
         draft.fbCode = action.payload;
@@ -160,6 +162,22 @@ export const userReducer = (
 
       case 'SET_ID':
         draft.id = action.payload;
+        break;
+
+      case 'GET_USER':
+        draft.getUserStatus = 'pending';
+        draft.loginStatus = 'pending';
+        break;
+      case 'GET_USER_SUCCESS':
+        draft.getUserStatus = 'success';
+        draft.loginStatus = 'success';
+        draft.data = action.payload.user;
+        draft.token = action.payload.token;
+        break;
+      case 'GET_USER_FAILURE':
+        draft.getUserStatus = 'failure';
+        draft.loginStatus = 'failure';
+        localStorage.clear();
         break;
 
       default:

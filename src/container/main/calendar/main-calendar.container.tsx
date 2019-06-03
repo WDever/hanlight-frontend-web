@@ -1,17 +1,18 @@
-import * as React from 'react';
 import CalendarComponent from 'components/main/calendar';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
   calendarActions,
-  calendarReducerActions,
   CalendarRecentItem,
+  calendarReducerActions,
 } from 'store';
 
 export interface CalendarProps {
   calendarList: CalendarRecentItem[];
   calendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
+  token: string;
 }
 
 export interface CalendarMethod {
@@ -22,21 +23,27 @@ const ScheduleContainer: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
+  token,
 }) => (
   <CalendarComponent
     calendarRecentApi={calendarRecentApi}
     calendarList={calendarList}
     calendarRecentStatus={calendarRecentStatus}
+    token={token}
   />
 );
 
-const mapStateToProps = ({ calendar }: AppState) => ({
+const mapStateToProps = ({ user, calendar }: AppState) => ({
   calendarList: calendar.calendarRecent,
   calendarRecentStatus: calendar.calendarRecentStatus,
+  token: user.token,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<calendarReducerActions>) => ({
-  calendarRecentApi: bindActionCreators(calendarActions.calendarRecent, dispatch),
+  calendarRecentApi: bindActionCreators(
+    calendarActions.calendarRecent,
+    dispatch,
+  ),
 });
 
 export default connect(
