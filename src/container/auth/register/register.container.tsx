@@ -4,40 +4,40 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppState,
-  registerActions,
-  registerReducerActions,
-  RegisterParams,
-  existReducerActions,
-  existActions,
-  ExistParamsType,
+  RegisterParam,
+  userReducerActions,
+  userActions,
 } from 'store';
 import RegisterComponent from 'components/auth/register';
 
 export interface RegisterProps {
   registerStatus: 'none' | 'pending' | 'success' | 'failure';
-  idExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  idExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
   signKey: string;
 }
 
 export interface RegisterMethod {
-  register(data: RegisterParams): void;
-  resetExist(): void;
-  resetRegister(): void;
-  idExist(data: string): void;
+  register(data: RegisterParam): void;
+  reset(): void;
+  idExist({ id }: { id: string }): void;
 }
 
 const RegisterContainer: React.SFC<
-RegisterProps & RegisterMethod & RouteComponentProps
+  RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
   registerStatus,
   idExist,
   signKey,
   register,
-  resetRegister,
   history,
   match,
   location,
-  resetExist,
+  reset,
   idExistStatus,
 }) => (
   <RegisterComponent
@@ -45,28 +45,24 @@ RegisterProps & RegisterMethod & RouteComponentProps
     register={register}
     idExist={idExist}
     registerStatus={registerStatus}
-    resetRegister={resetRegister}
     history={history}
     match={match}
     location={location}
-    resetExist={resetExist}
+    reset={reset}
     idExistStatus={idExistStatus}
   />
 );
 
-const mapStateToProps = ({ register, exist }: AppState) => ({
-  signKey: register.signKey,
-  registerStatus: register.registerStatus,
-  idExistStatus: exist.idExistStatus,
+const mapStateToProps = ({ user }: AppState) => ({
+  signKey: user.signKey,
+  registerStatus: user.registerStatus,
+  idExistStatus: user.idExistStatus,
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<registerReducerActions & existReducerActions>,
-) => ({
-  register: bindActionCreators(registerActions.register, dispatch),
-  resetRegister: bindActionCreators(registerActions.reset, dispatch),
-  resetExist: bindActionCreators(existActions.reset, dispatch),
-  idExist: bindActionCreators(existActions.idExist, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
+  register: bindActionCreators(userActions.register, dispatch),
+  reset: bindActionCreators(userActions.reset, dispatch),
+  idExist: bindActionCreators(userActions.idExist, dispatch),
 });
 
 export default withRouter(

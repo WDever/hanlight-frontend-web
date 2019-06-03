@@ -34,9 +34,9 @@ export interface FbAccountKitResType {
 
 interface PropsType extends initialFuncProps, OptionsType {
   children(params: ChildrenParams): React.ReactNode;
-  onResponse(params: FbAccountKitResType): Promise<void>;
+  onResponse(params: FbAccountKitResType): void;
   disabled?: boolean;
-  optionalFunc?(): Promise<void>;
+  optionalFunc?(): void;
   validation?: boolean;
 }
 
@@ -91,7 +91,7 @@ const FacebookAccountKitComponent = ({
   const [initialized, setInitialized] = useState(!!(window as any).AccountKit);
   const [mount, setMount] = useState(false);
 
-  const signIn = useCallback(async () => {
+  const signIn = useCallback(() => {
     if (disabled) return;
 
     const options: OptionsType = {};
@@ -142,15 +142,15 @@ const FacebookAccountKitComponent = ({
   }, [validation]); // validation 값이 바뀌기 전에 count가 바뀌어서
 
   return children({
-    onClick: async () => {
+    onClick: () => {
       if (optionalFunc && typeof validation === 'boolean') {
-        await optionalFunc();
+        optionalFunc();
         setMount(true);
       } else if (optionalFunc) {
-        await optionalFunc();
-        await signIn();
+        optionalFunc();
+        signIn();
       } else {
-        await signIn();
+        signIn();
       }
     },
     disabled,

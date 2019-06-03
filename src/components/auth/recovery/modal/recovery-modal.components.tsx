@@ -2,7 +2,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { Buttons } from 'lib/styles';
-import certificationSuccess from 'lib/svg/certification-success.svg';
+import phoneCheckSuccess from 'lib/svg/phoneCheck-success.svg';
 import checkImg from 'lib/svg/checkbox.svg';
 
 interface ModalSize {
@@ -11,7 +11,7 @@ interface ModalSize {
 }
 
 interface ModalProps extends ModalSize {
-  kind: 'certification' | 'check' | 'fail';
+  type: 'phoneCheck' | 'recovery';
   id?: string;
   click(): void;
 }
@@ -55,36 +55,32 @@ const ColoredText = styled.span`
   color: #4470ff;
 `;
 
-const ModalComponent: React.FC<ModalProps> = ({
+const RecoveryModalComponent: React.FC<ModalProps> = ({
   width,
   height,
-  kind,
+  type,
   id,
   click,
 }) => (
   <Modal>
     <ModalWrapper width={width} height={height}>
       <img
-        src={kind === 'certification' ? certificationSuccess : checkImg}
-        alt="modal"
+        src={type === 'phoneCheck' ? phoneCheckSuccess : checkImg}
+        alt='modal'
       />
-      {kind === 'certification' ? (
-        <ModalText>인증 성공</ModalText>
-      ) : kind === 'check' ? (
+      {type === 'phoneCheck' && <ModalText>인증 성공</ModalText>}{' '}
+      {type === 'recovery' && (
         <ModalText>
           아이디는&nbsp;
           <ColoredText>{id}</ColoredText>
-          &nbsp;
-입니다
+          &nbsp; 입니다
         </ModalText>
-      ) : (
-        ''
       )}
-      <Buttons width="28.75rem" height="4.375rem" active onClick={click}>
+      <Buttons width='28.75rem' height='4.375rem' active onClick={click}>
         확인
       </Buttons>
     </ModalWrapper>
   </Modal>
 );
 
-export default ModalComponent;
+export default RecoveryModalComponent;

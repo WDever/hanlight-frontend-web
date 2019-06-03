@@ -4,13 +4,13 @@ import { transitions, Inputs, Buttons } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import Logo from 'lib/svg/hanlight-logo.svg';
 import { LoginProps, LoginMethod } from 'container/auth/login';
-import { RouteComponentProps, NavLink } from 'react-router-dom';
+import { RouteComponentProps, NavLink, NavLinkProps } from 'react-router-dom';
 import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
 
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect } = React;
 
 interface LoginState {
   id: string;
@@ -85,7 +85,9 @@ const WrongLabel = styled.label`
   font-size: 1rem;
 `;
 
-const FindBtns = styled(NavLink)<{ colored?: boolean }>`
+const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
+
+const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
   font-family: 'Noto Sans KR';
   font-size: 1.25rem;
   color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
@@ -98,62 +100,33 @@ const FindBtns = styled(NavLink)<{ colored?: boolean }>`
 `;
 
 const LoginComponent: React.FC<
-LoginProps & LoginMethod & RouteComponentProps
+  LoginProps & LoginMethod & RouteComponentProps
 > = ({ login, history, loginStatus }) => {
   const [inputs, inputsChange] = useInputs<LoginState>({
     id: '',
     password: '',
   });
-  const [idValidation, setIdValidation] = useState<boolean>(true);
-  const [pwValidation, setPwValidation] = useState<boolean>(true);
-  const idValidationRef = useRef<boolean>(true);
-  const pwValidationRef = useRef<boolean>(true);
+  const [validation, setValidation] = useState(true);
 
   const { id, password } = inputs;
 
-  const asyncSetIdVal = async (bool: boolean) => setIdValidation(bool);
-
-  const asyncSetPwVal = async (bool: boolean) => setPwValidation(bool);
-
   const idCheck = (str: string) => new RegExp(idRegExp).test(str);
-
   const pwCheck = (str: string) => new RegExp(passwordRegExp).test(str);
 
-  const setIdValidationRef = async () => {
-    idValidationRef.current = idCheck(id);
-  };
-
-  const setPwValidationRef = async () => {
-    pwValidationRef.current = pwCheck(password);
-  };
-
-  const loginFunc = async () => {
-    console.log(idValidation, pwValidation);
-    if (idValidationRef.current && pwValidationRef.current) {
-      console.log(idValidation, pwValidation);
-      console.log(idValidation && pwValidation);
-      login({ id, password });
-    }
-  };
-
-  const submitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await asyncSetIdVal(idCheck(id));
-    await asyncSetPwVal(pwCheck(password));
-    await setIdValidationRef();
-    await setPwValidationRef();
-    await loginFunc();
-
-    console.log(idValidation, pwValidation);
+    if (idCheck(id) && pwCheck(password)) {
+      login({ id, password });
+    } else {
+      setValidation(false);
+    }
   };
 
   useEffect(() => {
     // after try to login
     if (loginStatus === 'success') {
       history.push('/');
-    } else if (loginStatus === 'failure') {
-      alert('로그인 실패');
     }
   }, [loginStatus, history]);
 
@@ -165,7 +138,6 @@ LoginProps & LoginMethod & RouteComponentProps
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
           <Inputs
-            wrong={!idValidation}
             width="28.75rem"
             height="4.375rem"
             active={!!id}
@@ -176,7 +148,6 @@ LoginProps & LoginMethod & RouteComponentProps
             value={id}
           />
           <Inputs
-            wrong={!pwValidation}
             width="28.75rem"
             height="4.375rem"
             active={!!password}
@@ -188,7 +159,7 @@ LoginProps & LoginMethod & RouteComponentProps
           />
         </LoginInputWrapper>
         <WrongLabel>
-          {!(pwValidation && idValidation) && (
+          {(loginStatus === 'failure' || !validation) && (
             <span>
               한빛에 등록되지 않은 아이디이거나,
               <br />
@@ -196,14 +167,18 @@ LoginProps & LoginMethod & RouteComponentProps
             </span>
           )}
         </WrongLabel>
-        <Buttons width="28.75rem" height="4.375rem" active={!!(id && password)}>
+        <Buttons
+          width="28.75rem"
+          height="4.375rem"
+          active={!!(id && password && loginStatus !== 'pending')}
+        >
           로그인
         </Buttons>
       </LoginForm>
       <FindBtnsWrapper>
-        <FindBtns to="/auth/idFind">ID 찾기</FindBtns>
-        <FindBtns to="/auth/pwFind">비밀번호 찾기</FindBtns>
-        <FindBtns colored to="/auth/register">
+        <FindBtns to="/user/phone?type=recovery&key=id">ID 찾기</FindBtns>
+        <FindBtns to="/user/phone?type=recovery&key=password">비밀번호 찾기</FindBtns>
+        <FindBtns colored to="/user/phone?type=register">
           회원가입
         </FindBtns>
       </FindBtnsWrapper>

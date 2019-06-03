@@ -10,7 +10,7 @@ export const Inputs = styled.input<InputsSize & { wrong?: boolean }>`
   width: ${props => props.width};
   height: ${props => props.height};
   border-radius: 16px;
-  border: ${(props) => {
+  border: ${props => {
     if (props.active) {
       if (props.active && props.wrong) {
         return 'solid 1px #ff0000';
@@ -33,11 +33,11 @@ export const Inputs = styled.input<InputsSize & { wrong?: boolean }>`
   }
 `;
 
-export const InputsGroup = styled.div<InputsSize & { where?: boolean }>`
+export const InputsGroup = styled.div<InputsSize>`
   width: ${props => props.width};
   height: ${props => props.height};
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${props => (props.where ? 'flex-start' : 'flex-end')};
+  justify-content: flex-end;
 `;
