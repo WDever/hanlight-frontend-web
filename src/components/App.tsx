@@ -8,15 +8,14 @@ import MainPage from 'pages/main';
 import RecoveryPage from 'pages/auth/recovery';
 
 const App: React.FC = () => (
-  <div id='app'>
+  <div id="app">
     <Switch>
-      <Route path='/user/recovery' component={RecoveryPage} />
-      <Route exact path='/user/phone' component={PhoneCheckPage} />
-      <Route exact path='/user/register' component={RegisterPage} />
-      <Route exact path='/auth' component={LoginPage} />
-      <Route exact path='/' component={MainPage} />
-      {/* <PrivateRoute exact path="/" enter={!!localStorage.getItem('accessToken')} redirectLocation="/auth" component={MainPage} /> */}
-      <Redirect to='/' />
+      <Route path="/user/recovery" component={RecoveryPage} />
+      <Route exact path="/user/phone" component={PhoneCheckPage} />
+      <Route exact path="/user/register" component={RegisterPage} />
+      <Route exact path="/auth" component={LoginPage} />
+      <Route exact path="/" component={MainPage} />
+      <Redirect to="/" />
     </Switch>
   </div>
 );

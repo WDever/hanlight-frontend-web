@@ -1,1 +1,1 @@
-export { default } from './noticeList.component';
+export { default } from './main-noticeList.component';

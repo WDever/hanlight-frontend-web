@@ -1,2 +1,2 @@
-export { default } from './timeTable.container';
-export * from './timeTable.container';
+export { default } from './main-timeTable.container';
+export * from './main-timeTable.container';

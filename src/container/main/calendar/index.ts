@@ -1,2 +1,2 @@
-export { default } from './calendar.container';
-export * from './calendar.container';
+export { default } from './main-calendar.container';
+export * from './main-calendar.container';

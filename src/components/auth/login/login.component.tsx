@@ -100,7 +100,7 @@ const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
 `;
 
 const LoginComponent: React.FC<
-  LoginProps & LoginMethod & RouteComponentProps
+LoginProps & LoginMethod & RouteComponentProps
 > = ({ login, history, loginStatus }) => {
   const [inputs, inputsChange] = useInputs<LoginState>({
     id: '',
@@ -177,7 +177,9 @@ const LoginComponent: React.FC<
       </LoginForm>
       <FindBtnsWrapper>
         <FindBtns to="/user/phone?type=recovery&key=id">ID 찾기</FindBtns>
-        <FindBtns to="/user/phone?type=recovery&key=password">비밀번호 찾기</FindBtns>
+        <FindBtns to="/user/phone?type=recovery&key=password">
+          비밀번호 찾기
+        </FindBtns>
         <FindBtns colored to="/user/phone?type=register">
           회원가입
         </FindBtns>

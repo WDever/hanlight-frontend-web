@@ -1,8 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import { ErrorImg } from 'lib/styles';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import moment from 'moment';
 import { CalendarProps, CalendarMethod } from 'container/main/calendar';
-import { RouteComponentProps } from 'react-router-dom';
 import CalendarItem from './calendarItem';
 
 const { useEffect } = React;
@@ -15,30 +16,21 @@ const ScheduleWrapper = styled.div`
   z-index: 1;
 `;
 
-const Schedule: React.FC<
-CalendarProps & CalendarMethod & RouteComponentProps
-> = ({
+const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
-  history,
-  match,
-  location,
 }) => {
   const access_token = localStorage.getItem('accessToken');
-  const Month = moment().format('M');
-  const Today = moment().format('D');
   let key = 0;
   const CalendarList = calendarRecentStatus === 'success'
     && calendarList.map((item, idx) => {
       if (idx <= 2) {
         return (
           <CalendarItem
-            date={`${moment().format('Y')}년 ${Month !== item.month ? String(Number(Month) + 1) : Month} 월 ${
-              item.date
-            } 일`}
+            date={`${moment().format('Y')}년 ${item.month} 월 ${item.date} 일`}
             contents={item.detail}
-            active={Today === item.date}
+            active={moment().format('D') === item.date}
             key={key++}
           />
         );
@@ -49,7 +41,14 @@ CalendarProps & CalendarMethod & RouteComponentProps
     calendarRecentApi(access_token);
   }, [access_token, calendarRecentApi]);
 
-  return <ScheduleWrapper>{CalendarList}</ScheduleWrapper>;
+  return (
+    <ScheduleWrapper>
+      {CalendarList}
+      {calendarRecentStatus === 'failure' && (
+        <ErrorImg src={ErrorPng} alt="Error" />
+      )}
+    </ScheduleWrapper>
+  );
 };
 
-export default Schedule;
+export default CalendarComponent;

@@ -1,16 +1,20 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
-import { Inputs, Buttons, WrongLabel, InputsGroup } from 'lib/styles';
+import {
+  Inputs, Buttons, WrongLabel, InputsGroup,
+} from 'lib/styles';
 import { useInputs } from 'lib/hooks';
-import Modal from 'components/auth/recovery/recoveryModal';
+import Modal from 'components/auth/recovery/modal';
 import {
   PwRecoveryProps,
   PwRecoveryMethod,
 } from 'container/auth/recovery/pwRecovery';
 import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 
-const { useRef, useState, useEffect, useCallback } = React;
+const {
+  useState, useEffect,
+} = React;
 
 const PwRecoveryWrapper = styled.div`
   width: 38.125rem;
@@ -59,7 +63,7 @@ const Form = styled.form`
 `;
 
 const PwRecoveryComponent: React.FC<
-  PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
+PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 > = ({
   pwRecovery,
   pwRecoveryStatus,
@@ -79,15 +83,14 @@ const PwRecoveryComponent: React.FC<
 
   const { password, rePassword } = inputs;
 
-  const pwCheck = (str: string): boolean =>
-    new RegExp(passwordRegExp).test(str);
+  const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
 
   const rpwCheck = (str: string): boolean => str === password;
 
   const recoverySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!!(password.length && rePassword.length)) {
+    if (password.length && rePassword.length) {
       const pwCheckResult = pwCheck(password);
       const rpwCheckResult = rpwCheck(rePassword);
 
@@ -104,22 +107,22 @@ const PwRecoveryComponent: React.FC<
     if (!fbCode.length || !id.length) {
       history.push('/auth');
     }
-  }, []);
+  }, [fbCode.length, history, id.length]);
 
   useEffect(
     () => () => {
       reset();
     },
-    [],
+    [reset],
   );
 
   return fbCode.length && id.length ? (
     <React.Fragment>
       {pwRecoveryStatus === 'success' && (
         <Modal
-          width='50.25rem'
-          height='24.625rem'
-          type='phoneCheck'
+          width="50.25rem"
+          height="24.625rem"
+          type="phoneCheck"
           click={() => history.push('/auth')}
         />
       )}
@@ -128,44 +131,45 @@ const PwRecoveryComponent: React.FC<
         <GreetingDiv>
           <ColoredSpan>재설정</ColoredSpan>
           할&nbsp;
-          <ColoredSpan>비밀번호</ColoredSpan>를 입력해주세요
+          <ColoredSpan>비밀번호</ColoredSpan>
+를 입력해주세요
         </GreetingDiv>
         <Form onSubmit={recoverySubmit}>
           <InputWrapper>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
               <Inputs
-                type='password'
+                type="password"
                 wrong={!pwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 value={password}
-                name='password'
+                name="password"
                 onChange={setInputs}
-                placeholder='새 비밀번호'
+                placeholder="새 비밀번호"
                 active={!!password}
               />
             </InputsGroup>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호가 일치하지 않습니다.</WrongLabel>
               )}
               <Inputs
-                type='password'
+                type="password"
                 wrong={!rpwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 value={rePassword}
-                name='rePassword'
+                name="rePassword"
                 onChange={setInputs}
-                placeholder='확인'
+                placeholder="확인"
                 active={!!rePassword}
               />
             </InputsGroup>
           </InputWrapper>
           <Buttons
-            width='28.75rem'
-            height='4.375rem'
+            width="28.75rem"
+            height="4.375rem"
             active={!!(password.length && rePassword.length)}
           >
             설정

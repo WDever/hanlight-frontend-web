@@ -1,1 +1,1 @@
-export { default } from './meal.page';
+export { default } from './main-meal.page';
