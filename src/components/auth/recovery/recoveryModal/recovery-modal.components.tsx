@@ -66,9 +66,10 @@ const RecoveryModalComponent: React.FC<ModalProps> = ({
     <ModalWrapper width={width} height={height}>
       <img
         src={type === 'phoneCheck' ? phoneCheckSuccess : checkImg}
-        alt='modal'
+        alt="modal"
       />
-      {type === 'phoneCheck' && <ModalText>인증 성공</ModalText>}{' '}
+      {type === 'phoneCheck' && <ModalText>인증 성공</ModalText>}
+      {' '}
       {type === 'recovery' && (
         <ModalText>
           아이디는&nbsp;
@@ -76,7 +77,7 @@ const RecoveryModalComponent: React.FC<ModalProps> = ({
           &nbsp; 입니다
         </ModalText>
       )}
-      <Buttons width='28.75rem' height='4.375rem' active onClick={click}>
+      <Buttons width="28.75rem" height="4.375rem" active onClick={click}>
         확인
       </Buttons>
     </ModalWrapper>

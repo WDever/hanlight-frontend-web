@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/indent */
 import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
@@ -6,7 +7,9 @@ import AccountKit, {
   FbAccountKitResType,
 } from 'components/facebook-account-kit';
 import uuid from 'uuid';
-import { Inputs, Buttons, WrongLabel, InputsGroup } from 'lib/styles';
+import {
+  Inputs, Buttons, WrongLabel, InputsGroup,
+} from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
 import queryString from 'query-string';
@@ -20,24 +23,21 @@ import RecoveryModalComponent from '../recovery/modal';
 
 const { useRef, useState, useEffect } = React;
 
-export type GetCodeStatus =
-  | 'none'
+export type GetCodeStatus = | 'none'
   | 'PARTIALLY_AUTHENTICATED'
   | 'NOT_AUTHENTICATED'
   | 'BAD_PARAMS';
 
 const PhoneCheckWrapper = styled.div<{
-  component_type: 'register' | 'recovery' | '';
-  component_key: 'id' | 'password' | '';
+component_type: 'register' | 'recovery' | '';
+component_key: 'id' | 'password' | '';
 }>`
-  width: ${props =>
-    props.component_type === 'recovery' && props.component_key === 'id'
-      ? 38.1875
-      : 38.125}rem;
-  height: ${props =>
-    props.component_type === 'recovery' && props.component_key === 'id'
-      ? 24.5625
-      : 31.875}rem;
+  width: ${props => (props.component_type === 'recovery' && props.component_key === 'id'
+    ? 38.1875
+    : 38.125)}rem;
+  height: ${props => (props.component_type === 'recovery' && props.component_key === 'id'
+    ? 24.5625
+    : 31.875)}rem;
   margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
@@ -67,19 +67,18 @@ const InputWrapper = styled.div`
 `;
 
 const Form = styled.form<{
-  component_type: '' | 'register' | 'recovery';
-  component_key: '' | 'id' | 'password';
+component_type: '' | 'register' | 'recovery';
+component_key: '' | 'id' | 'password';
 }>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${props =>
-    props.component_type === 'register' ||
-    (props.component_type === 'recovery' && props.component_key === 'password')
-      ? 76
-      : 70}%;
+  height: ${props => (props.component_type === 'register'
+    || (props.component_type === 'recovery' && props.component_key === 'password')
+    ? 76
+    : 70)}%;
 `;
 
 const TermsBtnWrapper = styled.div`
@@ -100,7 +99,7 @@ const ColoredSpan = styled.span`
 `;
 
 const PhoneCheckComponent: React.FC<
-  PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
+PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
   tpExist,
   signKeyExist,
@@ -191,13 +190,14 @@ const PhoneCheckComponent: React.FC<
   const typingCheck = (): boolean => {
     if (type === 'register') {
       return !!tp.length && !!signKey.length;
-    } else if (type === 'recovery' && key === 'id') {
-      return !!tp.length;
-    } else if (type === 'recovery' && key === 'password') {
-      return !!id.length && !!tp.length;
-    } else {
-      return false;
     }
+    if (type === 'recovery' && key === 'id') {
+      return !!tp.length;
+    }
+    if (type === 'recovery' && key === 'password') {
+      return !!id.length && !!tp.length;
+    }
+    return false;
   };
 
   useEffect(() => {
@@ -215,26 +215,26 @@ const PhoneCheckComponent: React.FC<
       setQueryValidation(false);
       history.push('/auth');
     }
-  }, [history]);
+  }, [history, location.search, setSignKey, signKey]);
 
   useEffect(() => {
     if (verifyStatus === 'success') {
       history.push('/user/register');
     }
-  }, [verifyStatus]);
+  }, [history, verifyStatus]);
 
   useEffect(() => {
     // getCodeStatus.current = 'none';
     reset();
-  }, []);
+  }, [reset]);
 
   return (
-    <>
+    <React.Fragment>
       {idRecoveryStatus === 'success' && (
         <RecoveryModalComponent
-          width='50.25rem'
-          height='24.625rem'
-          type='recovery'
+          width="50.25rem"
+          height="24.625rem"
+          type="recovery"
           id={recoveryId}
           click={() => history.push('/auth')}
         />
@@ -243,14 +243,16 @@ const PhoneCheckComponent: React.FC<
         <PhoneCheckWrapper component_type={type} component_key={key}>
           <GreetingDiv>
             {type === 'register' && (
-              <>
-                <ColoredSpan>등록키</ColoredSpan>와&nbsp;
-              </>
+              <React.Fragment>
+                <ColoredSpan>등록키</ColoredSpan>
+                와&nbsp;
+              </React.Fragment>
             )}
             {type === 'recovery' && key === 'password' && (
-              <>
-                <ColoredSpan>아이디</ColoredSpan>와&nbsp;
-              </>
+              <React.Fragment>
+                <ColoredSpan>아이디</ColoredSpan>
+                와&nbsp;
+              </React.Fragment>
             )}
             <ColoredSpan>전화번호</ColoredSpan>
             를&nbsp; 입력해주세요
@@ -258,40 +260,39 @@ const PhoneCheckComponent: React.FC<
           <Form
             component_type={type}
             component_key={key}
-            onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-              e.preventDefault()
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()
             }
           >
             <InputWrapper>
               {type === 'register' ? (
-                <InputsGroup width='28.75rem' height='6.5rem'>
-                  {(!signKeyValidation ||
-                    signKeyExistStatus === 'success-false') && (
+                <InputsGroup width="28.75rem" height="6.5rem">
+                  {(!signKeyValidation
+                    || signKeyExistStatus === 'success-false') && (
                     <WrongLabel>
                       형식이 잘못되었거나 존재하지 않는 회원가입 키 입니다!
                     </WrongLabel>
                   )}
                   <Inputs
                     wrong={
-                      !signKeyValidation ||
-                      signKeyExistStatus === 'success-false'
+                      !signKeyValidation
+                      || signKeyExistStatus === 'success-false'
                     }
-                    width='28.75rem'
-                    height='4.375rem'
+                    width="28.75rem"
+                    height="4.375rem"
                     active={!!signKey}
                     value={signKey}
-                    type='text'
-                    placeholder='제공된 핀 번호를 입력해주세요'
-                    name='signKey'
-                    autoComplete='off'
+                    type="text"
+                    placeholder="제공된 핀 번호를 입력해주세요"
+                    name="signKey"
+                    autoComplete="off"
                     onChange={inputsChange}
                   />
                 </InputsGroup>
               ) : (
-                <></>
+                <React.Fragment />
               )}
               {type === 'recovery' && key === 'password' ? (
-                <InputsGroup width='28.75rem' height='6.5rem'>
+                <InputsGroup width="28.75rem" height="6.5rem">
                   {(!idValidation || idExistStatus === 'failure') && (
                     <WrongLabel>
                       형식이 잘못되었거나 존재하지 않는 아이디 입니다!
@@ -299,50 +300,50 @@ const PhoneCheckComponent: React.FC<
                   )}
                   <Inputs
                     wrong={
-                      !idValidation ||
-                      idExistStatus === 'success-false' ||
-                      idExistStatus === 'failure'
+                      !idValidation
+                      || idExistStatus === 'success-false'
+                      || idExistStatus === 'failure'
                     }
-                    width='28.75rem'
-                    height='4.375rem'
+                    width="28.75rem"
+                    height="4.375rem"
                     value={id}
-                    name='id'
+                    name="id"
                     onChange={inputsChange}
-                    placeholder='아이디'
+                    placeholder="아이디"
                     active={!!id}
                   />
                 </InputsGroup>
               ) : (
-                <></>
+                <React.Fragment />
               )}
-              <InputsGroup width='28.75rem' height='6.5rem'>
-                {(!tpValidation ||
-                  (type === 'recovery'
+              <InputsGroup width="28.75rem" height="6.5rem">
+                {(!tpValidation
+                  || (type === 'recovery'
                     ? tpExistStatus === 'success-false'
-                    : false) ||
-                  (type === 'register'
+                    : false)
+                  || (type === 'register'
                     ? tpExistStatus === 'success-true'
                     : false)) && (
-                  <WrongLabel>
+                    <WrongLabel>
                     형식이 잘못되었거나 존재하지 않는 전화번호 입니다!
-                  </WrongLabel>
+                    </WrongLabel>
                 )}
                 <Inputs
                   wrong={
-                    !tpValidation ||
-                    tpExistStatus === 'failure' ||
-                    (type === 'register'
+                    !tpValidation
+                    || tpExistStatus === 'failure'
+                    || (type === 'register'
                       ? tpExistStatus === 'success-true'
                       : tpExistStatus === 'success-false')
                   }
-                  width='28.75rem'
-                  height='4.375rem'
+                  width="28.75rem"
+                  height="4.375rem"
                   active={!!tp}
                   value={tp}
-                  type='tel'
-                  name='tp'
-                  autoComplete='off'
-                  placeholder='휴대폰 번호를 - 빼고 입력해주세요.'
+                  type="tel"
+                  name="tp"
+                  autoComplete="off"
+                  placeholder="휴대폰 번호를 - 빼고 입력해주세요."
                   onChange={inputsChange}
                 />
               </InputsGroup>
@@ -350,13 +351,13 @@ const PhoneCheckComponent: React.FC<
             <TermsBtnWrapper>
               {typingCheck() ? (
                 <AccountKit
-                  appId='265056484381541'
+                  appId="265056484381541"
                   csrf={uuid.v4()}
                   debug
-                  version='v1.1'
+                  version="v1.1"
                   phoneNumber={tp}
                   onResponse={handleResponse}
-                  language='ko_KR'
+                  language="ko_KR"
                   optionalFunc={() => {
                     if (type === 'register') {
                       signKeyValidate();
@@ -369,33 +370,33 @@ const PhoneCheckComponent: React.FC<
                     }
                   }}
                   validation={
-                    queryValidation &&
-                    idValidation &&
-                    tpValidation &&
-                    signKeyValidation &&
-                    (type === 'register'
-                      ? tpExistStatus === 'success-false' &&
-                        signKeyExistStatus === 'success-true'
-                      : true) &&
-                    (type === 'recovery' && key === 'id'
+                    queryValidation
+                    && idValidation
+                    && tpValidation
+                    && signKeyValidation
+                    && (type === 'register'
+                      ? tpExistStatus === 'success-false'
+                        && signKeyExistStatus === 'success-true'
+                      : true)
+                    && (type === 'recovery' && key === 'id'
                       ? tpExistStatus === 'success-true'
-                      : true) &&
-                    (type === 'recovery' && key === 'password'
-                      ? idExistStatus === 'success-true' &&
-                        tpExistStatus === 'success-true'
+                      : true)
+                    && (type === 'recovery' && key === 'password'
+                      ? idExistStatus === 'success-true'
+                        && tpExistStatus === 'success-true'
                       : true)
                   }
                 >
                   {(p: ChildrenParams) => (
-                    <Buttons width='28.75rem' height='4.375rem' active {...p}>
+                    <Buttons width="28.75rem" height="4.375rem" active {...p}>
                       인증
                     </Buttons>
                   )}
                 </AccountKit>
               ) : (
                 <Buttons
-                  width='28.75rem'
-                  height='4.375rem'
+                  width="28.75rem"
+                  height="4.375rem"
                   active={false}
                   style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
                 >
@@ -406,9 +407,9 @@ const PhoneCheckComponent: React.FC<
           </Form>
         </PhoneCheckWrapper>
       ) : (
-        <></>
+        <React.Fragment />
       )}
-    </>
+    </React.Fragment>
   );
 };
 
