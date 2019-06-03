@@ -1,38 +1,47 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { RouteComponentProps } from 'react-router-dom';
-import AccountKit, { ChildrenParams } from 'components/facebook-account-kit';
+import AccountKit, {
+  ChildrenParams,
+  FbAccountKitResType,
+} from 'components/facebook-account-kit';
 import uuid from 'uuid';
-import {
-  Inputs, Buttons, WrongLabel, InputsGroup,
-} from 'lib/styles';
+import { Inputs, Buttons, WrongLabel, InputsGroup } from 'lib/styles';
 import { useInputs } from 'lib/hooks';
 import { PhoneCheckProps, PhoneCheckMethod } from 'container/auth/phoneCheck';
-import { PhoneCheckResType } from 'store';
+import queryString from 'query-string';
+
 import {
   signKey as signKeyRegExp,
   tp as tpRegExp,
+  id as idRegExp,
 } from 'lib/RegExp/RegExp.json';
+import RecoveryModalComponent from '../recovery/recoveryModal';
 
 const { useRef, useState, useEffect } = React;
 
-interface PhoneCheckInputs {
-  signKey: string;
-  tp: string;
-}
+export type GetCodeStatus =
+  | 'none'
+  | 'PARTIALLY_AUTHENTICATED'
+  | 'NOT_AUTHENTICATED'
+  | 'BAD_PARAMS';
 
-export type GetCodeStatus = | 'none'
-| 'PARTIALLY_AUTHENTICATED'
-| 'NOT_AUTHENTICATED'
-| 'BAD_PARAMS';
-
-const PhoneCheckWrapper = styled.div`
-  width: 38.125rem;
-  height: 31.875rem;
+const PhoneCheckWrapper = styled.div<{
+  component_type: 'register' | 'recovery' | '';
+  component_key: 'id' | 'password' | '';
+}>`
+  width: ${props =>
+    props.component_type === 'recovery' && props.component_key === 'id'
+      ? 38.1875
+      : 38.125}rem;
+  height: ${props =>
+    props.component_type === 'recovery' && props.component_key === 'id'
+      ? 24.5625
+      : 31.875}rem;
   margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 `;
@@ -45,6 +54,7 @@ const GreetingDiv = styled.div`
   font-size: 1.5rem;
   font-family: 'Noto Sans', 'Noto Sans KR';
   font-weight: bold;
+  margin-top: 3rem;
 `;
 
 const InputWrapper = styled.div`
@@ -53,16 +63,23 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
 `;
 
-const Form = styled.form`
+const Form = styled.form<{
+  component_type: '' | 'register' | 'recovery';
+  component_key: '' | 'id' | 'password';
+}>`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 70%;
+  height: ${props =>
+    props.component_type === 'register' ||
+    (props.component_type === 'recovery' && props.component_key === 'password')
+      ? 76
+      : 70}%;
 `;
 
 const TermsBtnWrapper = styled.div`
@@ -74,6 +91,7 @@ const TermsBtnWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3rem;
 `;
 
 const ColoredSpan = styled.span`
@@ -82,189 +100,315 @@ const ColoredSpan = styled.span`
 `;
 
 const PhoneCheckComponent: React.FC<
-PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
+  PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
   tpExist,
   signKeyExist,
-  tpExistStatus,
-  signKeyExistStatus,
   verifyPhone,
   verifyStatus,
   history,
+  match,
+  location,
+  tpExistStatus,
+  signKeyExistStatus,
   setSignKey,
-  resetExist,
+  reset,
+  idExistStatus,
+  idExist,
+  setFbCode,
+  idRecovery,
+  idRecoveryStatus,
+  recoveryId,
+  setId,
 }) => {
-  const [inputs, inputsChange] = useInputs<PhoneCheckInputs>({
+  const [inputs, inputsChange] = useInputs({
     tp: '',
     signKey: '',
+    id: '',
   });
   const [signKeyValidation, setSignKeyValidation] = useState<boolean>(true);
   const [tpValidation, setTpValidation] = useState<boolean>(true);
+  const [idValidation, setIdValidation] = useState<boolean>(true);
+  const [type, setType] = useState<'register' | 'recovery' | ''>('');
+  const [key, setKey] = useState<'id' | 'password' | ''>('');
+  const [queryValidation, setQueryValidation] = useState<boolean>(false);
   const codeRef = useRef<string>('');
   const getCodeStatus = useRef<GetCodeStatus>('none');
 
-  const setGetCodeStatus = async (resStatus:GetCodeStatus) => {
-    getCodeStatus.current = resStatus;
-  };
+  const { tp, signKey, id } = inputs;
 
-  const setCodeRef = async (resCode: string) => {
-    codeRef.current = resCode;
-  };
+  const handleResponse = (res: FbAccountKitResType) => {
+    codeRef.current = res.code;
+    getCodeStatus.current = res.status;
+    console.log(res);
 
-  const { tp, signKey } = inputs;
-
-  const verifyPhoneNum = async () => {
     if (getCodeStatus.current === 'PARTIALLY_AUTHENTICATED') {
-      console.log(codeRef);
-      console.log(signKey);
-      verifyPhone({ code: codeRef.current, signKey });
+      if (type === 'register') {
+        setSignKey(signKey);
+        verifyPhone({ code: codeRef.current, signKey });
+      } else if (type === 'recovery' && key === 'id') {
+        idRecovery({ code: codeRef.current });
+      } else if (type === 'recovery' && key === 'password') {
+        setFbCode(codeRef.current);
+        setId(id);
+        history.push('/user/recovery/password');
+      }
     } else if (getCodeStatus.current === 'BAD_PARAMS') {
       console.log(getCodeStatus);
       console.log(signKey);
       alert('핸드폰 인증 실패 (BAD_PARAMS)');
-    } else if (getCodeStatus.current === 'NOT_AUTHENTICATED') {
-      console.log(getCodeStatus);
-      console.log(signKey);
-      alert('핸드폰 인증 실패');
     }
-  };
-
-  const handleResponse = async (res: PhoneCheckResType) => {
-    await setCodeRef(res.code);
-    await setGetCodeStatus(res.status);
-    await verifyPhoneNum();
-    console.log(res);
   };
 
   const signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
-
   const tpCheck = (str: string) => new RegExp(tpRegExp).test(str);
+  const idCheck = (str: string) => new RegExp(idRegExp).test(str);
 
-  const signKeyFunc = async () => {
-    setSignKeyValidation(signKeyCheck(signKey));
-    signKeyExist(signKey);
-    setSignKey(signKey);
+  const signKeyValidate = () => {
+    const signKeyCheckResult = signKeyCheck(signKey);
+    setSignKeyValidation(signKeyCheckResult);
+    if (signKeyCheckResult) {
+      signKeyExist({ signKey });
+    }
   };
 
-  const tpFunc = async () => {
-    setTpValidation(tpCheck(tp));
-    tpExist(tp);
+  const tpValidate = () => {
+    const tpCheckResult = tpCheck(tp);
+    setTpValidation(tpCheckResult);
+    if (tpCheckResult) {
+      tpExist({ tp });
+    }
+  };
+
+  const idValidate = () => {
+    const idCheckResult = idCheck(id);
+    setIdValidation(idCheckResult);
+    if (idCheckResult) {
+      idExist({ id });
+    }
+  };
+
+  const typingCheck = (): boolean => {
+    if (type === 'register') {
+      return !!tp.length && !!signKey.length;
+    } else if (type === 'recovery' && key === 'id') {
+      return !!tp.length;
+    } else if (type === 'recovery' && key === 'password') {
+      return !!id.length && !!tp.length;
+    } else {
+      return false;
+    }
   };
 
   useEffect(() => {
-    if (verifyStatus === 'success') {
-      console.log(verifyStatus);
-      history.push('/auth/register/create');
-    } else if (verifyStatus === 'failure') {
-      console.log(verifyStatus);
-      alert('실패!');
+    const parsedQuery = queryString.parse(location.search);
+    const { type, key } = parsedQuery;
+    if (type === 'register') {
+      setQueryValidation(true);
+      setType(type);
+      setSignKey(signKey);
+    } else if (type === 'recovery' && (key === 'id' || key === 'password')) {
+      setQueryValidation(true);
+      setType(type);
+      setKey(key);
+    } else {
+      setQueryValidation(false);
+      history.push('/auth');
     }
-  }, [history, verifyStatus]);
+  }, [history]);
 
-  useEffect(
-    () => () => {
-      resetExist();
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useEffect(() => {
+    if (verifyStatus === 'success') {
+      history.push('/user/register');
+    }
+  }, [verifyStatus]);
+
+  useEffect(() => {
+    // getCodeStatus.current = 'none';
+    reset();
+  }, []);
 
   return (
-    <PhoneCheckWrapper>
-      <GreetingDiv>
-        <ColoredSpan>등록키</ColoredSpan>
-        와&nbsp;
-        <ColoredSpan>전화번호</ColoredSpan>
-        를&nbsp; 입력해주세요
-      </GreetingDiv>
-      <Form
-        onSubmit={(e: React.FormEvent<HTMLFormElement>) => e.preventDefault()}
-      >
-        <InputWrapper>
-          <InputsGroup width="28.75rem" height="6.5rem">
-            {(!signKeyValidation
-              || (signKeyExistStatus === 'failure')) && (
-              <WrongLabel>
-                형식이 잘못되었거나 없는 회원가입 키 입니다!
-              </WrongLabel>
+    <>
+      {idRecoveryStatus === 'success' && (
+        <RecoveryModalComponent
+          width='50.25rem'
+          height='24.625rem'
+          type='recovery'
+          id={recoveryId}
+          click={() => history.push('/auth')}
+        />
+      )}
+      {queryValidation ? (
+        <PhoneCheckWrapper component_type={type} component_key={key}>
+          <GreetingDiv>
+            {type === 'register' && (
+              <>
+                <ColoredSpan>등록키</ColoredSpan>와&nbsp;
+              </>
             )}
-            <Inputs
-              wrong={!signKeyValidation || (signKeyExistStatus === 'failure')}
-              width="28.75rem"
-              height="4.375rem"
-              active={!!signKey}
-              value={signKey}
-              type="text"
-              placeholder="제공된 핀 번호를 입력해주세요"
-              name="signKey"
-              autoComplete="off"
-              onChange={inputsChange}
-            />
-          </InputsGroup>
-          <InputsGroup width="28.75rem" height="6.5rem">
-            {(!tpValidation || (tpExistStatus === 'success')) && (
-              <WrongLabel>
-                형식이 잘못되었거나 이미 등록된 전화번호 입니다!
-              </WrongLabel>
+            {type === 'recovery' && key === 'password' && (
+              <>
+                <ColoredSpan>아이디</ColoredSpan>와&nbsp;
+              </>
             )}
-            <Inputs
-              wrong={!tpValidation || tpExistStatus === 'success'}
-              width="28.75rem"
-              height="4.375rem"
-              active={!!tp}
-              value={tp}
-              type="tel"
-              name="tp"
-              autoComplete="off"
-              placeholder="휴대폰 번호를 - 빼고 입력해주세요."
-              onChange={inputsChange}
-            />
-          </InputsGroup>
-        </InputWrapper>
-        <TermsBtnWrapper>
-          {!!tp && !!signKey ? (
-            <AccountKit
-              appId="265056484381541"
-              csrf={uuid.v4()}
-              debug
-              version="v1.1"
-              phoneNumber={tp}
-              onResponse={handleResponse}
-              language="ko_KR"
-              optionalFunc={async () => {
-                await signKeyFunc();
-                await tpFunc();
-              }}
-              validation={
-                tpExistStatus === 'failure'
-                && tpValidation
-                && signKeyExistStatus === 'success'
-                && signKeyValidation
-              }
-            >
-              {(p: ChildrenParams) => (
-                <Buttons width="28.75rem" height="4.375rem" active {...p}>
+            <ColoredSpan>전화번호</ColoredSpan>
+            를&nbsp; 입력해주세요
+          </GreetingDiv>
+          <Form
+            component_type={type}
+            component_key={key}
+            onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
+              e.preventDefault()
+            }
+          >
+            <InputWrapper>
+              {type === 'register' ? (
+                <InputsGroup width='28.75rem' height='6.5rem'>
+                  {(!signKeyValidation ||
+                    signKeyExistStatus === 'success-false') && (
+                    <WrongLabel>
+                      형식이 잘못되었거나 존재하지 않는 회원가입 키 입니다!
+                    </WrongLabel>
+                  )}
+                  <Inputs
+                    wrong={
+                      !signKeyValidation ||
+                      signKeyExistStatus === 'success-false'
+                    }
+                    width='28.75rem'
+                    height='4.375rem'
+                    active={!!signKey}
+                    value={signKey}
+                    type='text'
+                    placeholder='제공된 핀 번호를 입력해주세요'
+                    name='signKey'
+                    autoComplete='off'
+                    onChange={inputsChange}
+                  />
+                </InputsGroup>
+              ) : (
+                <></>
+              )}
+              {type === 'recovery' && key === 'password' ? (
+                <InputsGroup width='28.75rem' height='6.5rem'>
+                  {(!idValidation || idExistStatus === 'failure') && (
+                    <WrongLabel>
+                      형식이 잘못되었거나 존재하지 않는 아이디 입니다!
+                    </WrongLabel>
+                  )}
+                  <Inputs
+                    wrong={
+                      !idValidation ||
+                      idExistStatus === 'success-false' ||
+                      idExistStatus === 'failure'
+                    }
+                    width='28.75rem'
+                    height='4.375rem'
+                    value={id}
+                    name='id'
+                    onChange={inputsChange}
+                    placeholder='아이디'
+                    active={!!id}
+                  />
+                </InputsGroup>
+              ) : (
+                <></>
+              )}
+              <InputsGroup width='28.75rem' height='6.5rem'>
+                {(!tpValidation ||
+                  (type === 'recovery'
+                    ? tpExistStatus === 'success-false'
+                    : false) ||
+                  (type === 'register'
+                    ? tpExistStatus === 'success-true'
+                    : false)) && (
+                  <WrongLabel>
+                    형식이 잘못되었거나 존재하지 않는 전화번호 입니다!
+                  </WrongLabel>
+                )}
+                <Inputs
+                  wrong={
+                    !tpValidation ||
+                    tpExistStatus === 'failure' ||
+                    (type === 'register'
+                      ? tpExistStatus === 'success-true'
+                      : tpExistStatus === 'success-false')
+                  }
+                  width='28.75rem'
+                  height='4.375rem'
+                  active={!!tp}
+                  value={tp}
+                  type='tel'
+                  name='tp'
+                  autoComplete='off'
+                  placeholder='휴대폰 번호를 - 빼고 입력해주세요.'
+                  onChange={inputsChange}
+                />
+              </InputsGroup>
+            </InputWrapper>
+            <TermsBtnWrapper>
+              {typingCheck() ? (
+                <AccountKit
+                  appId='265056484381541'
+                  csrf={uuid.v4()}
+                  debug
+                  version='v1.1'
+                  phoneNumber={tp}
+                  onResponse={handleResponse}
+                  language='ko_KR'
+                  optionalFunc={() => {
+                    if (type === 'register') {
+                      signKeyValidate();
+                      tpValidate();
+                    } else if (type === 'recovery' && key === 'id') {
+                      tpValidate();
+                    } else if (type === 'recovery' && key === 'password') {
+                      idValidate();
+                      tpValidate();
+                    }
+                  }}
+                  validation={
+                    queryValidation &&
+                    idValidation &&
+                    tpValidation &&
+                    signKeyValidation &&
+                    (type === 'register'
+                      ? tpExistStatus === 'success-false' &&
+                        signKeyExistStatus === 'success-true'
+                      : true) &&
+                    (type === 'recovery' && key === 'id'
+                      ? tpExistStatus === 'success-true'
+                      : true) &&
+                    (type === 'recovery' && key === 'password'
+                      ? idExistStatus === 'success-true' &&
+                        tpExistStatus === 'success-true'
+                      : true)
+                  }
+                >
+                  {(p: ChildrenParams) => (
+                    <Buttons width='28.75rem' height='4.375rem' active {...p}>
+                      인증
+                    </Buttons>
+                  )}
+                </AccountKit>
+              ) : (
+                <Buttons
+                  width='28.75rem'
+                  height='4.375rem'
+                  active={false}
+                  style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
+                >
                   인증
                 </Buttons>
               )}
-            </AccountKit>
-          ) : (
-            <Buttons
-              width="28.75rem"
-              height="4.375rem"
-              active={
-                !!(tp && signKey)
-                && signKeyExistStatus === 'success'
-                && tpExistStatus === 'success'
-              }
-              style={signKeyExistStatus ? { letterSpacing: '0' } : {}}
-            >
-              인증
-            </Buttons>
-          )}
-        </TermsBtnWrapper>
-      </Form>
-    </PhoneCheckWrapper>
+            </TermsBtnWrapper>
+          </Form>
+        </PhoneCheckWrapper>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

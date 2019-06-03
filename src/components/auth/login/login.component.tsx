@@ -10,7 +10,7 @@ import {
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
 
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect } = React;
 
 interface LoginState {
   id: string;
@@ -85,9 +85,7 @@ const WrongLabel = styled.label`
   font-size: 1rem;
 `;
 
-const NavLinkDiv = (props: NavLinkProps) => {
-  return <NavLink {...props} />;
-};
+const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
 
 const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
   font-family: 'Noto Sans KR';
@@ -135,28 +133,28 @@ const LoginComponent: React.FC<
   return (
     <LoginWrapper>
       <GreetingDiv>
-        <LoginImg src={Logo} alt='' />
+        <LoginImg src={Logo} alt="" />
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
           <Inputs
-            width='28.75rem'
-            height='4.375rem'
+            width="28.75rem"
+            height="4.375rem"
             active={!!id}
-            type='id'
-            placeholder='아이디'
+            type="id"
+            placeholder="아이디"
             onChange={inputsChange}
-            name='id'
+            name="id"
             value={id}
           />
           <Inputs
-            width='28.75rem'
-            height='4.375rem'
+            width="28.75rem"
+            height="4.375rem"
             active={!!password}
-            type='password'
-            placeholder='비밀번호'
+            type="password"
+            placeholder="비밀번호"
             onChange={inputsChange}
-            name='password'
+            name="password"
             value={password}
           />
         </LoginInputWrapper>
@@ -170,17 +168,17 @@ const LoginComponent: React.FC<
           )}
         </WrongLabel>
         <Buttons
-          width='28.75rem'
-          height='4.375rem'
+          width="28.75rem"
+          height="4.375rem"
           active={!!(id && password && loginStatus !== 'pending')}
         >
           로그인
         </Buttons>
       </LoginForm>
       <FindBtnsWrapper>
-        <FindBtns to='/auth/idFind'>ID 찾기</FindBtns>
-        <FindBtns to='/auth/pwFind'>비밀번호 찾기</FindBtns>
-        <FindBtns colored to='/auth/register'>
+        <FindBtns to="/user/phone?type=recovery&key=id">ID 찾기</FindBtns>
+        <FindBtns to="/user/phone?type=recovery&key=password">비밀번호 찾기</FindBtns>
+        <FindBtns colored to="/user/phone?type=register">
           회원가입
         </FindBtns>
       </FindBtnsWrapper>

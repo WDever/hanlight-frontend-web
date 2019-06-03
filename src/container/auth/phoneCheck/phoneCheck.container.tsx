@@ -5,30 +5,50 @@ import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   AppState,
-  ExistParamsType,
-  VerifyPhoneParams,
-  registerReducerActions,
-  registerActions,
-  existReducerActions,
-  existActions,
+  userReducerActions,
+  userActions,
+  VerifyPhoneParam,
+  IdRecoveryParam,
 } from 'store';
 
 export interface PhoneCheckProps {
   verifyStatus: 'none' | 'pending' | 'success' | 'failure';
-  signKeyExistStatus: 'none' | 'pending' | 'success' | 'failure';
-  tpExistStatus: 'none' | 'pending' | 'success' | 'failure';
+  signKeyExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  tpExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  idExistStatus:
+    | 'none'
+    | 'pending'
+    | 'success-true'
+    | 'success-false'
+    | 'failure';
+  idRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';
+  recoveryId: string;
 }
 
 export interface PhoneCheckMethod {
-  tpExist(data: string): void;
-  signKeyExist(data: string): void;
-  verifyPhone(data: VerifyPhoneParams): void;
+  tpExist({ tp }: { tp: string }): void;
+  signKeyExist({ signKey }: { signKey: string }): void;
+  idExist({ id }: { id: string }): void;
+  verifyPhone(data: VerifyPhoneParam): void;
   setSignKey(data: string): void;
-  resetExist(): void;
+  reset(): void;
+  setFbCode(data: string): void;
+  idRecovery(data: IdRecoveryParam): void;
+  setId(data: string): void;
 }
 
 const PhoneCheckContainer: React.SFC<
-PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
+  PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
 > = ({
   tpExist,
   signKeyExist,
@@ -40,11 +60,19 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
   tpExistStatus,
   signKeyExistStatus,
   setSignKey,
-  resetExist,
+  reset,
+  idExistStatus,
+  idExist,
+  setFbCode,
+  idRecovery,
+  idRecoveryStatus,
+  recoveryId,
+  setId,
 }) => (
   <PhoneCheckComponent
     tpExist={tpExist}
     signKeyExist={signKeyExist}
+    idExist={idExist}
     history={history}
     match={match}
     location={location}
@@ -53,22 +81,35 @@ PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
     signKeyExistStatus={signKeyExistStatus}
     tpExistStatus={tpExistStatus}
     setSignKey={setSignKey}
-    resetExist={resetExist}
+    reset={reset}
+    idExistStatus={idExistStatus}
+    setFbCode={setFbCode}
+    idRecovery={idRecovery}
+    idRecoveryStatus={idRecoveryStatus}
+    recoveryId={recoveryId}
+    setId={setId}
   />
 );
 
-const mapStateToProps = ({ register, exist }: AppState) => ({
-  verifyStatus: register.verifyStatus,
-  tpExistStatus: exist.tpExistStatus,
-  signKeyExistStatus: exist.signKeyExistStatus,
+const mapStateToProps = ({ user }: AppState) => ({
+  verifyStatus: user.verifyStatus,
+  tpExistStatus: user.tpExistStatus,
+  signKeyExistStatus: user.signKeyExistStatus,
+  idExistStatus: user.idExistStatus,
+  idRecoveryStatus: user.idRecoveryStatus,
+  recoveryId: user.id,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<registerReducerActions & existReducerActions>) => ({
-  tpExist: bindActionCreators(existActions.tpExist, dispatch),
-  signKeyExist: bindActionCreators(existActions.signKeyExist, dispatch),
-  verifyPhone: bindActionCreators(registerActions.verifyPhone, dispatch),
-  setSignKey: bindActionCreators(registerActions.setSignKey, dispatch),
-  resetExist: bindActionCreators(existActions.reset, dispatch),
+const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
+  tpExist: bindActionCreators(userActions.tpExist, dispatch),
+  signKeyExist: bindActionCreators(userActions.signKeyExist, dispatch),
+  idExist: bindActionCreators(userActions.idExist, dispatch),
+  verifyPhone: bindActionCreators(userActions.verifyPhone, dispatch),
+  setSignKey: bindActionCreators(userActions.setSignKey, dispatch),
+  reset: bindActionCreators(userActions.reset, dispatch),
+  setFbCode: bindActionCreators(userActions.setFbCode, dispatch),
+  setId: bindActionCreators(userActions.setId, dispatch),
+  idRecovery: bindActionCreators(userActions.idRecovery, dispatch),
 });
 
 export default withRouter(

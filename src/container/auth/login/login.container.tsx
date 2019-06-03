@@ -4,10 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch, bindActionCreators } from 'redux';
 import LoginComponent from 'components/auth/login';
 import {
-  AppState,
-  userActions,
-  userReducerActions,
-  LoginParams,
+  AppState, userActions, userReducerActions, LoginParam,
 } from 'store';
 
 export interface LoginProps {
@@ -15,11 +12,11 @@ export interface LoginProps {
 }
 
 export interface LoginMethod {
-  login(data: LoginParams): void;
+  login(data: LoginParam): void;
 }
 
 const LoginContainer: React.SFC<
-LoginProps & LoginMethod & RouteComponentProps
+  LoginProps & LoginMethod & RouteComponentProps
 > = ({
   login, history, match, location, loginStatus,
 }) => (

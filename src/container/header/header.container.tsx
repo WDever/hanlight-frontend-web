@@ -12,10 +12,8 @@ export interface HeaderMethod {
 }
 
 const HeaderContainer: React.FC<
-HeaderProps & HeaderMethod & RouteComponentProps
-> = ({
-  location, match, history, resetUser,
-}) => {
+  HeaderProps & HeaderMethod & RouteComponentProps
+> = ({ location, match, history, resetUser }) => {
   const name = localStorage.getItem('name');
   return (
     <HeaderComponent

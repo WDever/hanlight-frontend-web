@@ -1,27 +1,22 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
-import PrivateRoute from 'components/privateRoute';
 import PhoneCheckPage from 'pages/auth/phoneCheck';
 import LoginPage from 'pages/auth/login';
 import RegisterPage from 'pages/auth/register';
 import MainPage from 'pages/main';
-import IdFindPage from 'pages/auth/idFind';
-import PwFindPage from 'pages/auth/pwFind';
-// import RouteComponent from './Route';
+import RecoveryPage from 'pages/auth/recovery';
 
 const App: React.FC = () => (
-  <div id="app">
-    {/* <RouteComponent /> */}
+  <div id='app'>
     <Switch>
-      <Route exact path="/auth/register/create" component={RegisterPage} />
-      <Route exact path="/auth/idFind" component={IdFindPage} />
-      <Route exact path="/auth/pwFind" component={PwFindPage} />
-      <Route exact path="/auth/register" component={PhoneCheckPage} />
-      <Route exact path="/auth" component={LoginPage} />
-      <Route exact path="/" component={MainPage} />
+      <Route path='/user/recovery' component={RecoveryPage} />
+      <Route exact path='/user/phone' component={PhoneCheckPage} />
+      <Route exact path='/user/register' component={RegisterPage} />
+      <Route exact path='/auth' component={LoginPage} />
+      <Route exact path='/' component={MainPage} />
       {/* <PrivateRoute exact path="/" enter={!!localStorage.getItem('accessToken')} redirectLocation="/auth" component={MainPage} /> */}
-      <Redirect to="/" />
+      <Redirect to='/' />
     </Switch>
   </div>
 );
