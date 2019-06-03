@@ -1,1 +1,1 @@
-export { default } from './notice.component';
+export { default } from './main-notice.component';

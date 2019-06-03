@@ -1,1 +1,1 @@
-export { default } from './timeTable.page';
+export { default } from './main-timeTable.page';

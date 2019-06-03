@@ -1,2 +1,2 @@
-export { default } from './meal.container';
-export * from './meal.container';
+export { default } from './main-meal.container';
+export * from './main-meal.container';
