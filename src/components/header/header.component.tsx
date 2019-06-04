@@ -62,21 +62,20 @@ const NameSpan = styled.span`
 `;
 
 const HeaderComponent: React.FC<
-HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
-> = ({ name, history, resetUser }) => {
+  HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
+> = ({ name, history, reset }) => {
   const logout = () => {
-    resetUser();
-    localStorage.clear();
+    reset();
     history.push('/auth');
   };
 
   return (
     <HeaderWrapper>
       <InnerBox>
-        <LogoImg src={Logo} alt="Hanlight Logo" />
+        <LogoImg src={Logo} alt='Hanlight Logo' />
         <BtnsWrapper>
           <StyledNavLink
-            to="/"
+            to='/'
             activeStyle={{
               color: '#4470ff',
               fontSize: '1.5rem',
@@ -86,7 +85,7 @@ HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
             메인
           </StyledNavLink>
           <StyledNavLink
-            to="/timeTable"
+            to='/timeTable'
             activeStyle={{
               color: '#4470ff',
               fontSize: '1.5rem',
@@ -96,7 +95,7 @@ HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
             시간표
           </StyledNavLink>
           <StyledNavLink
-            to="/schedule"
+            to='/schedule'
             activeStyle={{
               color: '#4460ff',
               fontSize: '1.5rem',
@@ -106,7 +105,7 @@ HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
             학사일정
           </StyledNavLink>
           <StyledNavLink
-            to="/board"
+            to='/board'
             activeStyle={{
               color: '#4460ff',
               fontSize: '1.5rem',

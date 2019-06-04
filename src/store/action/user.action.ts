@@ -39,6 +39,10 @@ export const SET_SIGN_KEY = 'SET_SIGN_KEY';
 export const SET_FB_CODE = 'SET_FB_CODE';
 export const SET_ID = 'SET_ID';
 
+export const GET_USER = 'GET_USER';
+export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
+export const GET_USER_FAILURE = 'GET_USER_FAILURE';
+
 export interface LoginParam {
   id: string;
   password: string;
@@ -84,14 +88,16 @@ export class LoginSuccess implements Action {
 
   public constructor(
     public payload: {
-      token: string;
-      type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-      admin: number;
-      name: string;
-      major: string | null;
-      grade: number | null;
-      classNum: number | null;
-      studentNum: number | null;
+      accessToken: string;
+      user: {
+        type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+        admin: number;
+        name: string;
+        major: string | null;
+        grade: number | null;
+        classNum: number | null;
+        studentNum: number | null;
+      };
     },
   ) {}
 }
@@ -252,6 +258,35 @@ export class SetId implements Action {
   public constructor(public payload: string) {}
 }
 
+export class GetUser implements Action {
+  public readonly type = GET_USER;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetUserSuccess implements Action {
+  public readonly type = GET_USER_SUCCESS;
+
+  public constructor(
+    public payload: {
+      token: string;
+      user: {
+        type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+        admin: number;
+        name: string;
+        major: string | null;
+        grade: number | null;
+        classNum: number | null;
+        studentNum: number | null;
+      };
+    },
+  ) {}
+}
+
+export class GetUserFailure implements Action {
+  public readonly type = GET_USER_FAILURE;
+}
+
 export const userActions = {
   login: createStandardAction(LOGIN)<LoginParam>(),
   idRecovery: createStandardAction(ID_RECOVERY)<IdRecoveryParam>(),
@@ -265,6 +300,7 @@ export const userActions = {
   reset: createStandardAction(RESET)(),
   setFbCode: createStandardAction(SET_FB_CODE)<string>(),
   setId: createStandardAction(SET_ID)<string>(),
+  getUser: createStandardAction(GET_USER)<string>(),
 };
 
 export type userReducerActions =
@@ -298,4 +334,7 @@ export type userReducerActions =
   | RegisterFailure
   | SetSignKey
   | SetFbCode
-  | SetId;
+  | SetId
+  | GetUser
+  | GetUserSuccess
+  | GetUserFailure;

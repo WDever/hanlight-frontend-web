@@ -1,8 +1,6 @@
+import TimeTableContainer from 'container/main/timeTable';
 import * as React from 'react';
 import styled from 'styled-components';
-import TimeTableContainer from 'container/main/timeTable';
-
-const { useEffect } = React;
 
 const Template = styled.div`
   display: flex;
@@ -14,28 +12,9 @@ const Template = styled.div`
   /* height: 21rem; */
 `;
 
-const Title = styled.div`
-  width: 95%;
-  font-family: 'yg-jalnan';
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-`;
-
-const Colored = styled.span`
-  color: #4470ff;
-`;
-
 const TimeTablePage: React.FC = () => {
-  const name = localStorage.getItem('name');
-
   return (
     <Template>
-      <Title>
-        <Colored>
-          {name}
-        </Colored>
-님의 시간표
-      </Title>
       <TimeTableContainer />
     </Template>
   );

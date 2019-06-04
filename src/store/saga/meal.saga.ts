@@ -1,27 +1,28 @@
-import { call, put, takeEvery } from 'redux-saga/effects';
 import { instance } from 'lib/baseUrl';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   MEAL,
-  MEAL_SUCCESS,
+  Meal,
   MEAL_FAILURE,
   MEAL_ORDER,
-  MEAL_ORDER_SUCCESS,
   MEAL_ORDER_FAILURE,
-  Meal,
+  MEAL_ORDER_SUCCESS,
+  MEAL_SUCCESS,
   MealOrder,
   MealParams,
 } from '../action';
 
-const mealApi = (data: MealParams) => instance
-  .get('/api/meal', {
-    headers: {
-      access_token: data.access_token,
-    },
-    params: {
-      sort: data.sort,
-    },
-  })
-  .then(res => res.data);
+const mealApi = (data: MealParams) =>
+  instance
+    .get('/api/meal', {
+      headers: {
+        access_token: data.accessToken,
+      },
+      params: {
+        sort: data.sort,
+      },
+    })
+    .then(res => res.data);
 
 function* mealApiSaga(action: Meal) {
   if (action.type) {
@@ -36,13 +37,14 @@ function* mealApiSaga(action: Meal) {
   }
 }
 
-const mealOrderApi = (data: string) => instance
-  .get('/api/meal/order', {
-    headers: {
-      access_token: data,
-    },
-  })
-  .then(res => res);
+const mealOrderApi = (data: string) =>
+  instance
+    .get('/api/meal/order', {
+      headers: {
+        access_token: data,
+      },
+    })
+    .then(res => res);
 
 function* mealOrderApiSaga(action: MealOrder) {
   if (action.type) {

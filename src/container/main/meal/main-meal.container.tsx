@@ -1,18 +1,19 @@
-import * as React from 'react';
 import MealComponent from 'components/main/meal';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
-  mealActions,
-  mealReducerActions,
-  MealParams,
-  MealItem,
   AppState,
+  mealActions,
+  MealItem,
+  MealParams,
+  mealReducerActions,
 } from 'store';
 
 export interface MealProps {
   mealList: MealItem[];
   mealStatus: 'none' | 'pending' | 'success' | 'failure';
+  accessToken: string;
 }
 
 export interface MealMethod {
@@ -23,13 +24,20 @@ const MealContainer: React.FC<MealProps & MealMethod> = ({
   meal,
   mealList,
   mealStatus,
+  accessToken,
 }) => (
-  <MealComponent meal={meal} mealList={mealList} mealStatus={mealStatus} />
+  <MealComponent
+    meal={meal}
+    mealList={mealList}
+    mealStatus={mealStatus}
+    accessToken={accessToken}
+  />
 );
 
-const mapStateToProsp = ({ meal }: AppState) => ({
+const mapStateToProps = ({ user, meal }: AppState) => ({
   mealList: meal.mealList,
   mealStatus: meal.mealStatus,
+  accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
@@ -37,6 +45,6 @@ const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
 });
 
 export default connect(
-  mapStateToProsp,
+  mapStateToProps,
   mapDispatchToProps,
 )(MealContainer);

@@ -1,12 +1,23 @@
+import { TimeTableMethod, TimeTableProps } from 'container/main/timeTable';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
+import { ErrorImg } from 'lib/styles';
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { ErrorImg } from 'lib/styles';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { TimeTableMethod, TimeTableProps } from 'container/main/timeTable';
-import moment from 'moment';
 import TimeTableItem from './timeTableItem';
 
 const { useEffect } = React;
+
+const Title = styled.div`
+  width: 95%;
+  font-family: 'yg-jalnan';
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+`;
+
+const Colored = styled.span`
+  color: #4470ff;
+`;
 
 const TimeTableWrapper = styled.div`
   width: 100%;
@@ -41,15 +52,18 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
   timeTableList,
   timetableApi,
   timetableStatus,
+  accessToken,
+  name,
 }) => {
-  const access_token = localStorage.getItem('accessToken');
   const Today: number = Number(moment().format('d')) - 1;
   let key = 0;
-  const TimeTableList = timetableStatus === 'success'
-    && timeTableList[Today].map((item, idx) => {
-      const sum = Number(moment().format('H')) * 3600
-        + Number(moment().format('m')) * 60
-        + Number(moment().format('s'));
+  const TimeTableList =
+    timetableStatus === 'success' &&
+    timeTableList[Today].map((item, idx) => {
+      const sum =
+        Number(moment().format('H')) * 3600 +
+        Number(moment().format('m')) * 60 +
+        Number(moment().format('s'));
       const period = (): number => {
         if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
           return 0;
@@ -86,26 +100,35 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
     });
 
   useEffect(() => {
-    timetableApi(access_token);
-  }, [access_token, timetableApi]);
+    timetableApi(accessToken);
+  }, [accessToken, timetableApi]);
 
   return (
-    <TimeTableWrapper>
-      {TimeTableList}
-      {timetableStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
-      {timeTableList[Today].length === 6 && (
-        <NoBox>
-          <Texts>오늘</Texts>
-          <Texts>6교시야</Texts>
-        </NoBox>
-      )}
-      {Today >= 5 && timetableStatus !== 'none' && (
-        <NoBox>
-          <Texts>주말</Texts>
-          <Texts>이야</Texts>
-        </NoBox>
-      )}
-    </TimeTableWrapper>
+    <>
+      <Title>
+        <Colored>{name}</Colored>
+        님의 시간표
+      </Title>
+
+      <TimeTableWrapper>
+        {TimeTableList}
+        {timetableStatus === 'failure' && (
+          <ErrorImg src={ErrorPng} alt="Error" />
+        )}
+        {timeTableList[Today].length === 6 && (
+          <NoBox>
+            <Texts>오늘</Texts>
+            <Texts>6교시야</Texts>
+          </NoBox>
+        )}
+        {Today >= 5 && timetableStatus !== 'none' && (
+          <NoBox>
+            <Texts>주말</Texts>
+            <Texts>이야</Texts>
+          </NoBox>
+        )}
+      </TimeTableWrapper>
+    </>
   );
 };
 

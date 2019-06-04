@@ -1,10 +1,10 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { ErrorImg } from 'lib/styles';
+import { MealMethod, MealProps } from 'container/main/meal';
 import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { MealProps, MealMethod } from 'container/main/meal';
-import { Link } from 'react-router-dom';
+import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import MealItem from './mealItem';
 
 const { useEffect } = React;
@@ -67,10 +67,11 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
   meal,
   mealList,
   mealStatus,
+  accessToken,
 }) => {
-  const access_token = localStorage.getItem('accessToken');
-  const MealList = mealStatus === 'success'
-    && mealList.map((item, idx) => {
+  const MealList =
+    mealStatus === 'success' &&
+    mealList.map((item, idx) => {
       if (idx <= 2) {
         const mealArr = item.detail.split(',');
         if (item.detail === '주말') {
@@ -82,7 +83,9 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
         return (
           <MealItem
             mealList={mealArr}
-            date={`${moment().format('YYYY')}년 ${moment().format('M')}월 ${item.date}일`}
+            date={`${moment().format('YYYY')}년 ${moment().format('M')}월 ${
+              item.date
+            }일`}
             key={item.date}
           />
         );
@@ -90,8 +93,8 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
     });
 
   useEffect(() => {
-    meal({ access_token, sort: 'week' });
-  }, [access_token, meal]);
+    meal({ accessToken, sort: 'week' });
+  }, [accessToken, meal]);
 
   return (
     <ListWrapper>

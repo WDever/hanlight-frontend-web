@@ -1,9 +1,9 @@
+import { CalendarMethod, CalendarProps } from 'container/main/calendar';
+import ErrorPng from 'lib/png/hugo-fatal-error.png';
+import { ErrorImg } from 'lib/styles';
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import { ErrorImg } from 'lib/styles';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import moment from 'moment';
-import { CalendarProps, CalendarMethod } from 'container/main/calendar';
 import CalendarItem from './calendarItem';
 
 const { useEffect } = React;
@@ -20,11 +20,12 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
+  accessToken,
 }) => {
-  const access_token = localStorage.getItem('accessToken');
   let key = 0;
-  const CalendarList = calendarRecentStatus === 'success'
-    && calendarList.map((item, idx) => {
+  const CalendarList =
+    calendarRecentStatus === 'success' &&
+    calendarList.map((item, idx) => {
       if (idx <= 2) {
         return (
           <CalendarItem
@@ -38,8 +39,8 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
     });
 
   useEffect(() => {
-    calendarRecentApi(access_token);
-  }, [access_token, calendarRecentApi]);
+    calendarRecentApi(accessToken);
+  }, [accessToken, calendarRecentApi]);
 
   return (
     <ScheduleWrapper>

@@ -1,6 +1,6 @@
-import { createStandardAction } from 'typesafe-actions';
 import { Action } from 'redux';
 import { MealItem } from 'store';
+import { createStandardAction } from 'typesafe-actions';
 
 export const MEAL = 'MEAL';
 export const MEAL_SUCCESS = 'MEAL_SUCCESS';
@@ -10,7 +10,7 @@ export const MEAL_ORDER_SUCCESS = 'MEAL_ORDER_SUCCESS';
 export const MEAL_ORDER_FAILURE = 'MEAL_ORDER_FAILURE';
 
 export interface MealParams {
-  access_token: string | null;
+  accessToken: string | null;
   sort: string;
 }
 
@@ -65,9 +65,10 @@ export const mealActions = {
   mealOrder: createStandardAction(MEAL_ORDER)<string>(),
 };
 
-export type mealReducerActions = | Meal
-| MealSuccess
-| MealFailure
-| MealOrder
-| MealOrderSuccess
-| MealOrderFailure;
+export type mealReducerActions =
+  | Meal
+  | MealSuccess
+  | MealFailure
+  | MealOrder
+  | MealOrderSuccess
+  | MealOrderFailure;

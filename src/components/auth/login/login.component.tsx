@@ -1,14 +1,14 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { transitions, Inputs, Buttons } from 'lib/styles';
+import { LoginMethod, LoginProps } from 'container/auth/login';
 import { useInputs } from 'lib/hooks';
-import Logo from 'lib/svg/hanlight-logo.svg';
-import { LoginProps, LoginMethod } from 'container/auth/login';
-import { RouteComponentProps, NavLink, NavLinkProps } from 'react-router-dom';
 import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
+import { Buttons, Inputs, transitions } from 'lib/styles';
+import Logo from 'lib/svg/hanlight-logo.svg';
+import * as React from 'react';
+import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 
 const { useState, useEffect } = React;
 
@@ -100,7 +100,7 @@ const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
 `;
 
 const LoginComponent: React.FC<
-LoginProps & LoginMethod & RouteComponentProps
+  LoginProps & LoginMethod & RouteComponentProps
 > = ({ login, history, loginStatus }) => {
   const [inputs, inputsChange] = useInputs<LoginState>({
     id: '',
@@ -116,10 +116,12 @@ LoginProps & LoginMethod & RouteComponentProps
   const submitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (idCheck(id) && pwCheck(password)) {
-      login({ id, password });
-    } else {
-      setValidation(false);
+    if (id && password) {
+      if (idCheck(id) && pwCheck(password)) {
+        login({ id, password });
+      } else {
+        setValidation(false);
+      }
     }
   };
 
@@ -180,7 +182,7 @@ LoginProps & LoginMethod & RouteComponentProps
         <FindBtns to="/user/phone?type=recovery&key=password">
           비밀번호 찾기
         </FindBtns>
-        <FindBtns colored to="/user/phone?type=register">
+        <FindBtns colored={true} to="/user/phone?type=register">
           회원가입
         </FindBtns>
       </FindBtnsWrapper>

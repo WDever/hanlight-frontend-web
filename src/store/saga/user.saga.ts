@@ -1,49 +1,53 @@
-import { put, call, takeEvery } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
 import { instance } from 'lib/baseUrl';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
+  ExistParam,
+  ExistResponse,
+  GET_USER,
+  GET_USER_FAILURE,
+  GET_USER_SUCCESS,
+  GetUser,
+  ID_EXIST,
+  ID_EXIST_FAILURE,
+  ID_EXIST_SUCCESS_FALSE,
+  ID_EXIST_SUCCESS_TRUE,
+  ID_RECOVERY,
+  ID_RECOVERY_FAILURE,
+  ID_RECOVERY_SUCCESS,
+  IdExist,
+  IdRecovery,
+  Login,
   LOGIN,
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
-  Login,
   LoginParam,
-  ID_RECOVERY,
-  ID_RECOVERY_SUCCESS,
-  ID_RECOVERY_FAILURE,
   PW_RECOVERY,
-  PW_RECOVERY_SUCCESS,
   PW_RECOVERY_FAILURE,
+  PW_RECOVERY_SUCCESS,
   PwRecovery,
   PwRecoveryParam,
-  IdRecovery,
-  ID_EXIST,
-  ID_EXIST_SUCCESS_TRUE,
-  ID_EXIST_SUCCESS_FALSE,
-  ID_EXIST_FAILURE,
-  TP_EXIST,
-  TP_EXIST_SUCCESS_TRUE,
-  TP_EXIST_SUCCESS_FALSE,
-  TP_EXIST_FAILURE,
-  SIGN_KEY_EXIST,
-  SIGN_KEY_EXIST_SUCCESS_TRUE,
-  SIGN_KEY_EXIST_SUCCESS_FALSE,
-  SIGN_KEY_EXIST_FAILURE,
-  ExistParam,
-  ExistResponse,
-  IdExist,
-  TpExist,
-  SignKeyExist,
-  REGISTER,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  RegisterParam,
   Register,
-  VerifyPhoneParam,
-  VerifyPhone,
-  VERIFY_PHONE_SUCCESS,
-  VERIFY_PHONE_FAILURE,
+  REGISTER,
+  REGISTER_FAILURE,
+  REGISTER_SUCCESS,
+  RegisterParam,
+  SIGN_KEY_EXIST,
+  SIGN_KEY_EXIST_FAILURE,
+  SIGN_KEY_EXIST_SUCCESS_FALSE,
+  SIGN_KEY_EXIST_SUCCESS_TRUE,
+  SignKeyExist,
+  TP_EXIST,
+  TP_EXIST_FAILURE,
+  TP_EXIST_SUCCESS_FALSE,
+  TP_EXIST_SUCCESS_TRUE,
+  TpExist,
   VERIFY_PHONE,
+  VERIFY_PHONE_FAILURE,
+  VERIFY_PHONE_SUCCESS,
+  VerifyPhone,
+  VerifyPhoneParam,
 } from '../action';
-import { AxiosResponse } from 'axios';
 
 const loginApi = (data: LoginParam) =>
   instance
@@ -58,7 +62,7 @@ function* loginApiSaga(action: Login) {
     try {
       const response = yield call(loginApi, action.payload);
       console.log(response);
-      yield put({ type: LOGIN_SUCCESS, payload: response });
+      yield put({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (e) {
       console.log(e.response);
       yield put({ type: LOGIN_FAILURE, payload: e.response });
@@ -126,7 +130,12 @@ function* idExistSaga(action: IdExist) {
         value: action.payload.id,
       });
       console.log(response);
-        yield put({ type: response.data.exist ? ID_EXIST_SUCCESS_TRUE : ID_EXIST_SUCCESS_FALSE, payload: action.payload });
+      yield put({
+        type: response.data.exist
+          ? ID_EXIST_SUCCESS_TRUE
+          : ID_EXIST_SUCCESS_FALSE,
+        payload: action.payload,
+      });
     } catch (e) {
       console.log(e.response);
       yield put({ type: ID_EXIST_FAILURE, payload: action.payload });
@@ -142,7 +151,12 @@ function* tpExistSaga(action: TpExist) {
         value: action.payload.tp,
       });
       console.log(response);
-      yield put({ type: response.data.exist ? TP_EXIST_SUCCESS_TRUE : TP_EXIST_SUCCESS_FALSE, payload: action.payload });
+      yield put({
+        type: response.data.exist
+          ? TP_EXIST_SUCCESS_TRUE
+          : TP_EXIST_SUCCESS_FALSE,
+        payload: action.payload,
+      });
     } catch (e) {
       console.log(e.response);
       yield put({ type: TP_EXIST_FAILURE, payload: action.payload });
@@ -158,7 +172,12 @@ function* signKeyExistSaga(action: SignKeyExist) {
         value: action.payload.signKey,
       });
       console.log(response);
-      yield put({ type: response.data.exist ? SIGN_KEY_EXIST_SUCCESS_TRUE : SIGN_KEY_EXIST_SUCCESS_FALSE, payload: action.payload });
+      yield put({
+        type: response.data.exist
+          ? SIGN_KEY_EXIST_SUCCESS_TRUE
+          : SIGN_KEY_EXIST_SUCCESS_FALSE,
+        payload: action.payload,
+      });
     } catch (e) {
       console.log(e.response);
       yield put({ type: SIGN_KEY_EXIST_FAILURE, payload: action.payload });
@@ -209,6 +228,33 @@ function* registerApiSaga(action: Register) {
   }
 }
 
+const getUserApi = (data: string) =>
+  instance
+    .get('http://54.180.114.156:3000/api/user', {
+      headers: {
+        access_token: data,
+      },
+    })
+    .then((res: AxiosResponse) => res.data);
+function* getUserApiSaga(action: GetUser) {
+  if (action.type) {
+    try {
+      const response = yield call(getUserApi, action.payload);
+      console.log(response);
+      yield put({
+        type: GET_USER_SUCCESS,
+        payload: {
+          user: response.data.user,
+          token: action.payload,
+        },
+      });
+    } catch (e) {
+      console.log(e.response);
+      yield put({ type: GET_USER_FAILURE, paylaod: e.response });
+    }
+  }
+}
+
 function* userSaga() {
   yield takeEvery(ID_RECOVERY, idRecoverySaga);
   yield takeEvery(PW_RECOVERY, pwRecoverySaga);
@@ -218,6 +264,7 @@ function* userSaga() {
   yield takeEvery(SIGN_KEY_EXIST, signKeyExistSaga);
   yield takeEvery(REGISTER, registerApiSaga);
   yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
+  yield takeEvery(GET_USER, getUserApiSaga);
 }
 
 export { userSaga };
