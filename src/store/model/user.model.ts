@@ -2,7 +2,7 @@ export interface UserModel {
   fbCode: string;
   signKey: string;
   id: string;
-  token: string;
+  accessToken: string;
   data: {
     type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
     admin: number;

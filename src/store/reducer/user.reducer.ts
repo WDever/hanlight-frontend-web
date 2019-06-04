@@ -6,7 +6,7 @@ const initialState: UserModel = {
   fbCode: '',
   signKey: '',
   id: '',
-  token: '',
+  accessToken: '',
   data: {
     type: 'none',
     admin: 0,
@@ -40,13 +40,13 @@ export const userReducer = (
 
       case 'LOGIN_SUCCESS':
         draft.loginStatus = 'success';
-        draft.token = action.payload.accessToken;
+        draft.accessToken = action.payload.accessToken;
         draft.data = {
           ...action.payload.user,
         };
 
         console.log(action.payload);
-        localStorage.setItem('access_token', action.payload.accessToken);
+        localStorage.setItem('accessToken', action.payload.accessToken);
         break;
 
       case 'LOGIN_FAILURE':
@@ -172,7 +172,7 @@ export const userReducer = (
         draft.getUserStatus = 'success';
         draft.loginStatus = 'success';
         draft.data = action.payload.user;
-        draft.token = action.payload.token;
+        draft.accessToken = action.payload.token;
         break;
       case 'GET_USER_FAILURE':
         draft.getUserStatus = 'failure';

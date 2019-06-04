@@ -52,7 +52,7 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
   timeTableList,
   timetableApi,
   timetableStatus,
-  token,
+  accessToken,
   name,
 }) => {
   const Today: number = Number(moment().format('d')) - 1;
@@ -100,8 +100,8 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
     });
 
   useEffect(() => {
-    timetableApi(token);
-  }, [token, timetableApi]);
+    timetableApi(accessToken);
+  }, [accessToken, timetableApi]);
 
   return (
     <>

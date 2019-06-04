@@ -7,11 +7,10 @@ class AutoLoginComponent extends React.Component<
   AutoLoginProps & AutoLoginMethod & RouteComponentProps
 > {
   public componentDidMount() {
-    const access_token = localStorage.getItem('access_token');
+    const accessToken = localStorage.getItem('accessToken');
 
-    if (access_token) {
-      console.log(access_token);
-      this.props.getUser(access_token);
+    if (accessToken) {
+      this.props.getUser(accessToken);
     } else {
       this.props.history.push('/auth');
     }

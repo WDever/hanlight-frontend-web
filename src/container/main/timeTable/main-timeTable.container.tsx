@@ -15,7 +15,7 @@ export interface TimeTableProps {
     string[]
   ];
   timetableStatus: 'none' | 'pending' | 'success' | 'failure';
-  token: string;
+  accessToken: string;
   name: string;
 }
 
@@ -27,14 +27,14 @@ const TimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
   timeTableList,
   timetableApi,
   timetableStatus,
-  token,
+  accessToken,
   name,
 }) => (
   <TimeTableComponent
     timeTableList={timeTableList}
     timetableApi={timetableApi}
     timetableStatus={timetableStatus}
-    token={token}
+    accessToken={accessToken}
     name={name}
   />
 );
@@ -42,7 +42,7 @@ const TimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
 const mapStateToProps = ({ user, timeTable }: AppState) => ({
   timeTableList: timeTable.timetable,
   timetableStatus: timeTable.timetableStatus,
-  token: user.token,
+  accessToken: user.accessToken,
   name: user.data.name,
 });
 

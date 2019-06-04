@@ -20,7 +20,7 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
-  token,
+  accessToken,
 }) => {
   let key = 0;
   const CalendarList =
@@ -39,8 +39,8 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
     });
 
   useEffect(() => {
-    calendarRecentApi(token);
-  }, [token, calendarRecentApi]);
+    calendarRecentApi(accessToken);
+  }, [accessToken, calendarRecentApi]);
 
   return (
     <ScheduleWrapper>

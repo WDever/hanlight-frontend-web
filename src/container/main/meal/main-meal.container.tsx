@@ -13,7 +13,7 @@ import {
 export interface MealProps {
   mealList: MealItem[];
   mealStatus: 'none' | 'pending' | 'success' | 'failure';
-  token: string;
+  accessToken: string;
 }
 
 export interface MealMethod {
@@ -24,20 +24,20 @@ const MealContainer: React.FC<MealProps & MealMethod> = ({
   meal,
   mealList,
   mealStatus,
-  token,
+  accessToken,
 }) => (
   <MealComponent
     meal={meal}
     mealList={mealList}
     mealStatus={mealStatus}
-    token={token}
+    accessToken={accessToken}
   />
 );
 
 const mapStateToProps = ({ user, meal }: AppState) => ({
   mealList: meal.mealList,
   mealStatus: meal.mealStatus,
-  token: user.token,
+  accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({

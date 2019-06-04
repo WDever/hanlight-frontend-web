@@ -33,7 +33,7 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
   notice,
   noticeList,
   noticeStatus,
-  token,
+  accessToken,
 }) => {
   const NoticeList =
     noticeStatus === 'success' &&
@@ -63,8 +63,8 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
     });
 
   useEffect(() => {
-    notice({ access_token: token });
-  }, [token, notice]);
+    notice({ accessToken });
+  }, [accessToken, notice]);
 
   return (
     <NoticeListWrapper>

@@ -1,6 +1,6 @@
-import { createStandardAction } from 'typesafe-actions';
 import { Action } from 'redux';
 import { CalendarItem, CalendarRecentItem } from 'store';
+import { createStandardAction } from 'typesafe-actions';
 
 export const CALENDAR = 'CALENDAR';
 export const CALENDAR_SUCCESS = 'CALENDAR_SUCCESS';
@@ -10,7 +10,7 @@ export const CALENDAR_RECENT_SUCCESS = 'CALENDAR_RECENT_SUCCESS';
 export const CALENDAR_RECENT_FAILURE = 'CALENDAR_RECENT_FAILURE';
 
 export interface CalendarParams {
-  access_token: string | null;
+  accessToken: string | null;
   month: string;
   year: string;
 }
@@ -66,9 +66,10 @@ export const calendarActions = {
   calendarRecent: createStandardAction(CALENDAR_RECENT)<string>(),
 };
 
-export type calendarReducerActions = | Calendar
-| CalendarSuccess
-| CalendarFailure
-| CalendarRecent
-| CalendarRecentSuccess
-| CalendarRecentFailure;
+export type calendarReducerActions =
+  | Calendar
+  | CalendarSuccess
+  | CalendarFailure
+  | CalendarRecent
+  | CalendarRecentSuccess
+  | CalendarRecentFailure;

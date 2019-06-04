@@ -1,6 +1,6 @@
-import { createStandardAction } from 'typesafe-actions';
 import { Action } from 'redux';
 import { NoticeListItem, NoticePostItem } from 'store';
+import { createStandardAction } from 'typesafe-actions';
 
 export const NOTICE = 'NOTICE';
 export const NOTICE_SUCCESS = 'NOTICE_SUCCESS';
@@ -10,13 +10,13 @@ export const NOTICE_POST_SUCCESS = 'NOTICE_POST_SUCCESS';
 export const NOTICE_POST_FAILURE = 'NOTICE_POST_FAILURE';
 
 export interface NoticeParams {
-  access_token: string | null;
+  accessToken: string | null;
   page?: string;
   title?: string;
 }
 
 export interface NoticePostParams {
-  access_token: string | null;
+  accessToken: string | null;
   postPk: string;
 }
 
@@ -69,9 +69,10 @@ export const noticeActions = {
   noticePost: createStandardAction(NOTICE_POST)<NoticePostParams>(),
 };
 
-export type noticeReducerActions = | Notice
-| NoticeSuccess
-| NoticeFailure
-| NoticePost
-| NoticePostSuccess
-| NoticePostFailure;
+export type noticeReducerActions =
+  | Notice
+  | NoticeSuccess
+  | NoticeFailure
+  | NoticePost
+  | NoticePostSuccess
+  | NoticePostFailure;

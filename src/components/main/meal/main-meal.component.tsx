@@ -67,7 +67,7 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
   meal,
   mealList,
   mealStatus,
-  token,
+  accessToken,
 }) => {
   const MealList =
     mealStatus === 'success' &&
@@ -93,8 +93,8 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
     });
 
   useEffect(() => {
-    meal({ access_token: token, sort: 'week' });
-  }, [token, meal]);
+    meal({ accessToken, sort: 'week' });
+  }, [accessToken, meal]);
 
   return (
     <ListWrapper>

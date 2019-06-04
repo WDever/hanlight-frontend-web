@@ -14,7 +14,7 @@ export interface NoticeListProps {
   name: string;
   noticeList: NoticeListItem[];
   noticeStatus: 'none' | 'pending' | 'success' | 'failure';
-  token: string;
+  accessToken: string;
 }
 
 export interface NoticeListMethod {
@@ -26,14 +26,14 @@ const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
   notice,
   noticeList,
   noticeStatus,
-  token,
+  accessToken,
 }) => (
   <NoticeListComponent
     name={name}
     notice={notice}
     noticeList={noticeList}
     noticeStatus={noticeStatus}
-    token={token}
+    accessToken={accessToken}
   />
 );
 
@@ -41,7 +41,7 @@ const mapStateToProps = ({ user, notice }: AppState) => ({
   name: user.data.name,
   noticeList: notice.noticeList,
   noticeStatus: notice.noticeStatus,
-  token: user.token,
+  accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({

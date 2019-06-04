@@ -1,30 +1,31 @@
-import { put, call, takeEvery } from 'redux-saga/effects';
 import { instance } from 'lib/baseUrl';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   NOTICE,
-  NOTICE_SUCCESS,
+  Notice,
   NOTICE_FAILURE,
   NOTICE_POST,
-  NOTICE_POST_SUCCESS,
   NOTICE_POST_FAILURE,
+  NOTICE_POST_SUCCESS,
+  NOTICE_SUCCESS,
   NoticeParams,
-  Notice,
-  NoticePostParams,
   NoticePost,
+  NoticePostParams,
 } from '../action';
 
-const noticeApi = (data: NoticeParams) => instance
-  .get('/api/notice', {
-    headers: {
-      access_token: data.access_token,
-    },
-    params: {
-      type: 'list',
-      page: data.page,
-      title: data.title,
-    },
-  })
-  .then(res => res.data);
+const noticeApi = (data: NoticeParams) =>
+  instance
+    .get('/api/notice', {
+      headers: {
+        access_token: data.accessToken,
+      },
+      params: {
+        type: 'list',
+        page: data.page,
+        title: data.title,
+      },
+    })
+    .then(res => res.data);
 
 function* noticeApiSaga(action: Notice) {
   if (action.type) {
@@ -39,17 +40,18 @@ function* noticeApiSaga(action: Notice) {
   }
 }
 
-const noticePostApi = (data: NoticePostParams) => instance
-  .get('/api/notice', {
-    headers: {
-      access_token: data.access_token,
-    },
-    params: {
-      type: 'post',
-      post_pk: data.postPk,
-    },
-  })
-  .then(res => res.data);
+const noticePostApi = (data: NoticePostParams) =>
+  instance
+    .get('/api/notice', {
+      headers: {
+        access_token: data.accessToken,
+      },
+      params: {
+        type: 'post',
+        post_pk: data.postPk,
+      },
+    })
+    .then(res => res.data);
 
 function* noticePostApiSaga(action: NoticePost) {
   if (action.type) {
