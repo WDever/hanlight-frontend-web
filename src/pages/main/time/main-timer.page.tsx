@@ -1,9 +1,9 @@
+import EndTimeComponent from 'components/main/timer/endTimer';
+import LunchTimeComponent from 'components/main/timer/lunchTimer';
+import EndImg from 'lib/svg/end-time-illust.svg';
+import LunchImg from 'lib/svg/jumsim-illust.svg';
 import * as React from 'react';
 import styled from 'styled-components';
-import LunchImg from 'lib/svg/jumsim-illust.svg';
-import EndImg from 'lib/svg/end-time-illust.svg';
-import EndTimeComponent from 'components/main/time/endTime';
-import LunchTimeComponent from 'components/main/time/lunchTime';
 
 const Template = styled.div`
   width: 100%;
@@ -13,23 +13,24 @@ const Template = styled.div`
 `;
 
 const TimeWrapper = styled.div`
-  height: 23.375rem;
-  width: 40rem;
+  height: 18rem;
+  width: 30rem;
   display: inline-flex;
   justify-content: flex-start;
   align-items: flex-end;
+  margin-right: 6rem;
 `;
 
 const EndTimeBackGroundImg = styled.img`
-  height: 24.5rem;
-  width: 42rem;
+  height: 18.75rem;
+  width: 34.21875rem;
   z-index: 0;
   position: absolute;
 `;
 
 const LunchTimeBackGroundImg = styled.img`
-  height: 16rem;
-  width: 30rem;
+  height: 12.25rem;
+  width: 22.5625rem;
   z-index: 0;
   position: absolute;
   padding-bottom: 2rem;
