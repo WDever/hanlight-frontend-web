@@ -11,10 +11,10 @@ const ItemBox = styled.div`
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
-  width: 63rem;
-  height: 4.375rem;
+  width: 100%;
+  height: 3.4rem;
   border-radius: 16px;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+  border: solid 1px #9e9e9e;
   cursor: pointer;
 `;
 
@@ -27,16 +27,16 @@ const Flag = styled.div<{ read: boolean }>`
 `;
 
 const TitleBox = styled.span`
-  width: 79%;
+  width: 75%;
   font-family: 'Spoqa Han Sans';
-  font-size: 1.5rem;
+  font-size: 1rem;
 `;
 
 const Date = styled.span`
   display: flex;
   justify-content: flex-end;
   font-family: 'Spoqa Han Sans';
-  font-size: 1.25rem;
+  font-size: 0.875rem;
   font-weight: 300;
   margin-right: 1rem;
   width: 8rem;
