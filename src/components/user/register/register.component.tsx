@@ -1,13 +1,14 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { Inputs, Buttons, WrongLabel, InputsGroup } from 'lib/styles';
-import { RouteComponentProps } from 'react-router-dom';
-import { RegisterProps, RegisterMethod } from 'container/auth/register';
+
+import { RegisterMethod, RegisterProps } from 'container/user/register';
 import { useInputs } from 'lib/hooks';
 import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
+import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 
 const { useEffect, useState } = React;
 
@@ -127,11 +128,11 @@ const RegisterComponent: React.FC<
 
   useEffect(() => {
     if (!signKey.length) {
-      history.push('/auth');
+      history.push('/user/login');
     } else {
       if (registerStatus === 'success') {
         console.log('성공');
-        history.push('/auth');
+        history.push('/user/login');
       } else if (registerStatus === 'failure') {
         alert('회원가입에 실패하였습니다.');
       }
@@ -151,7 +152,7 @@ const RegisterComponent: React.FC<
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>
           <InputWrapper>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {(!idValidation || idExistStatus === 'success-true') && (
                 <WrongLabel>
                   형식이 잘못되었거나 중복되는 아이디 입니다!
@@ -159,53 +160,53 @@ const RegisterComponent: React.FC<
               )}
               <Inputs
                 wrong={!idValidation || idExistStatus === 'success-true'}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!id}
                 value={id}
-                type='text'
-                placeholder='아이디'
-                name='id'
-                autoComplete='off'
+                type="text"
+                placeholder="아이디"
+                name="id"
+                autoComplete="off"
                 onChange={inputsChange}
               />
             </InputsGroup>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
               <Inputs
                 wrong={!pwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!password}
                 value={password}
-                type='password'
-                name='password'
-                autoComplete='off'
-                placeholder='비밀번호'
+                type="password"
+                name="password"
+                autoComplete="off"
+                placeholder="비밀번호"
                 onChange={inputsChange}
               />
             </InputsGroup>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>
               )}
               <Inputs
                 wrong={!rpwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!rePassword}
                 value={rePassword}
-                name='rePassword'
-                autoComplete='off'
-                placeholder='비밀번호 재입력'
-                type='password'
+                name="rePassword"
+                autoComplete="off"
+                placeholder="비밀번호 재입력"
+                type="password"
                 onChange={inputsChange}
               />
             </InputsGroup>
           </InputWrapper>
           <Buttons
-            width='28.75rem'
-            height='4.375rem'
+            width="28.75rem"
+            height="4.375rem"
             active={!!(id.length && password.length && rePassword.length)}
           >
             회원가입

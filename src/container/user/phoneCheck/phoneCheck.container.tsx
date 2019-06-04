@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import PhoneCheckComponent from 'components/auth/phoneCheck';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import PhoneCheckComponent from 'components/user/phoneCheck';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
-  userReducerActions,
-  userActions,
-  VerifyPhoneParam,
   IdRecoveryParam,
+  userActions,
+  userReducerActions,
+  VerifyPhoneParam,
 } from 'store';
 
 export interface PhoneCheckProps {

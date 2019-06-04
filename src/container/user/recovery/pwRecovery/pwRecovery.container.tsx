@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import PwRecoveryComponent from 'components/user/recovery/pwRecovery';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  PwRecoveryParam,
   userActions,
   userReducerActions,
-  PwRecoveryParam,
 } from 'store';
-import PwRecoveryComponent from 'components/auth/recovery/pwRecovery';
 
 export interface PwRecoveryProps {
   pwRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';

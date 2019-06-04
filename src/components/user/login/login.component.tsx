@@ -1,4 +1,6 @@
-import { LoginMethod, LoginProps } from 'container/auth/login';
+import * as React from 'react';
+
+import { LoginMethod, LoginProps } from 'container/user/login';
 import { useInputs } from 'lib/hooks';
 import {
   id as idRegExp,
@@ -6,7 +8,6 @@ import {
 } from 'lib/RegExp/RegExp.json';
 import { Buttons, Inputs, transitions } from 'lib/styles';
 import Logo from 'lib/svg/hanlight-logo.svg';
-import * as React from 'react';
 import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 

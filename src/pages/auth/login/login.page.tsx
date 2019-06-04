@@ -1,5 +1,6 @@
-import LoginContainer from 'container/auth/login';
 import * as React from 'react';
+
+import LoginContainer from 'container/user/login';
 import styled from 'styled-components';
 
 const Template = styled.div`

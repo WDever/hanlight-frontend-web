@@ -1,20 +1,17 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { RouteComponentProps } from 'react-router-dom';
-import {
-  Inputs, Buttons, WrongLabel, InputsGroup,
-} from 'lib/styles';
-import { useInputs } from 'lib/hooks';
-import Modal from 'components/auth/recovery/modal';
-import {
-  PwRecoveryProps,
-  PwRecoveryMethod,
-} from 'container/auth/recovery/pwRecovery';
-import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 
-const {
-  useState, useEffect,
-} = React;
+import Modal from 'components/user/recovery/modal';
+import {
+  PwRecoveryMethod,
+  PwRecoveryProps,
+} from 'container/user/recovery/pwRecovery';
+import { useInputs } from 'lib/hooks';
+import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
+import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
+
+const { useState, useEffect } = React;
 
 const PwRecoveryWrapper = styled.div`
   width: 38.125rem;
@@ -63,7 +60,7 @@ const Form = styled.form`
 `;
 
 const PwRecoveryComponent: React.FC<
-PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
+  PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 > = ({
   pwRecovery,
   pwRecoveryStatus,
@@ -83,7 +80,8 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 
   const { password, rePassword } = inputs;
 
-  const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
+  const pwCheck = (str: string): boolean =>
+    new RegExp(passwordRegExp).test(str);
 
   const rpwCheck = (str: string): boolean => str === password;
 
@@ -105,7 +103,7 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 
   useEffect(() => {
     if (!fbCode.length || !id.length) {
-      history.push('/auth');
+      history.push('/user/login');
     }
   }, [fbCode.length, history, id.length]);
 
@@ -123,7 +121,7 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
           width="50.25rem"
           height="24.625rem"
           type="phoneCheck"
-          click={() => history.push('/auth')}
+          click={() => history.push('/user/login')}
         />
       )}
 
@@ -131,8 +129,7 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
         <GreetingDiv>
           <ColoredSpan>재설정</ColoredSpan>
           할&nbsp;
-          <ColoredSpan>비밀번호</ColoredSpan>
-를 입력해주세요
+          <ColoredSpan>비밀번호</ColoredSpan>를 입력해주세요
         </GreetingDiv>
         <Form onSubmit={recoverySubmit}>
           <InputWrapper>

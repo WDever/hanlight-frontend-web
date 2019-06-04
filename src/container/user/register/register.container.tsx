@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import RegisterComponent from 'components/user/register';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
   RegisterParam,
-  userReducerActions,
   userActions,
+  userReducerActions,
 } from 'store';
-import RegisterComponent from 'components/auth/register';
 
 export interface RegisterProps {
   registerStatus: 'none' | 'pending' | 'success' | 'failure';
