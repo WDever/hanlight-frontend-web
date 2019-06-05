@@ -79,14 +79,13 @@ const RePwInput = styled(Inputs)<{ colored: boolean }>`
 const PwRecoveryComponent: React.FC<
   PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 > = ({
-  pwRecovery,
-  pwRecoveryStatus,
-  history,
   match,
+  history,
   location,
-  // fbCode,
-  id,
   reset,
+  accessToken,
+  patchPassword,
+  patchPasswordStatus,
 }) => {
   const [inputs, setInputs] = useInputs({
     password: '',
@@ -105,7 +104,11 @@ const PwRecoveryComponent: React.FC<
   const recoverySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password.length && rePassword.length) {
+    if (
+      patchPasswordStatus !== 'pending' &&
+      password.length &&
+      rePassword.length
+    ) {
       const pwCheckResult = pwCheck(password);
       const rpwCheckResult = rpwCheck(rePassword);
 
@@ -113,16 +116,16 @@ const PwRecoveryComponent: React.FC<
       setRpwValidation(rpwCheckResult);
 
       if (pwCheckResult && rpwCheckResult) {
-        // pwRecovery({ code: fbCode, id });
+        patchPassword({ accessToken, password });
       }
     }
   };
 
-  // useEffect(() => {
-  //   if (!fbCode.length || !id.length) {
-  //     history.push('/user/login');
-  //   }
-  // }, [fbCode.length, history, id.length]);
+  useEffect(() => {
+    if (!accessToken.length) {
+      history.push('/user/login');
+    }
+  }, [accessToken, history]);
 
   useEffect(
     () => () => {
@@ -131,14 +134,17 @@ const PwRecoveryComponent: React.FC<
     [reset],
   );
 
-  return /* fbCode.length && */ id.length ? (
+  return accessToken.length ? (
     <React.Fragment>
-      {pwRecoveryStatus === 'success' && (
+      {patchPasswordStatus === 'success' && (
         <Modal
           width="50.25rem"
           height="24.625rem"
           type="phoneCheck"
-          click={() => history.push('/user/login')}
+          click={() => {
+            reset();
+            history.push('/user/login');
+          }}
         />
       )}
 

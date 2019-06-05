@@ -36,4 +36,5 @@ export interface UserModel {
     | 'success-false'
     | 'failure';
   getUserStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
 }

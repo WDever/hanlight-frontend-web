@@ -4,47 +4,47 @@ import PwRecoveryComponent from 'components/user/recovery/pwRecovery';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
-import {
-  AppState,
-  PwRecoveryParam,
-  userActions,
-  userReducerActions,
-} from 'store';
+import { AppState, PatchPwParam, userActions, userReducerActions } from 'store';
 
 export interface PwRecoveryProps {
-  pwRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';
-  id: string;
+  accessToken: string;
+  patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface PwRecoveryMethod {
-  pwRecovery(data: PwRecoveryParam): void;
+  patchPassword(data: PatchPwParam): void;
   reset(): void;
 }
 
 const PwRecoveryContainer: React.FC<
   PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
-> = ({ pwRecoveryStatus, pwRecovery, match, history, location, id, reset }) => (
+> = ({
+  match,
+  history,
+  location,
+  reset,
+  accessToken,
+  patchPassword,
+  patchPasswordStatus,
+}) => (
   <PwRecoveryComponent
-    pwRecoveryStatus={pwRecoveryStatus}
-    pwRecovery={pwRecovery}
     match={match}
     history={history}
     location={location}
-    id={id}
+    accessToken={accessToken}
+    patchPassword={patchPassword}
+    patchPasswordStatus={patchPasswordStatus}
     reset={reset}
   />
 );
 
 const mapStateToProps = ({ user }: AppState) => ({
-  pwRecoveryStatus: user.pwRecoveryStatus,
-  tpExistStatus: user.tpExistStatus,
-  idExistStatus: user.idExistStatus,
-  id: user.id,
+  accessToken: user.accessToken,
+  patchPasswordStatus: user.patchPasswordStatus,
 });
 
 const maptDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
-  idExist: bindActionCreators(userActions.idExist, dispatch),
-  pwRecovery: bindActionCreators(userActions.pwRecovery, dispatch),
+  patchPassword: bindActionCreators(userActions.patchPassword, dispatch),
   reset: bindActionCreators(userActions.reset, dispatch),
 });
 

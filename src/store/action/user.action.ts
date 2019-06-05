@@ -302,4 +302,7 @@ export type userReducerActions =
   | SetFbCode
   | GetUser
   | GetUserSuccess
-  | GetUserFailure;
+  | GetUserFailure
+  | PatchPassword
+  | PatchPasswordSuccess
+  | PatchPasswordFailure;

@@ -25,6 +25,7 @@ const initialState: UserModel = {
   tpExistStatus: 'none',
   signKeyExistStatus: 'none',
   getUserStatus: 'none',
+  patchPasswordStatus: 'none',
 };
 
 export const userReducer = (
@@ -139,6 +140,16 @@ export const userReducer = (
         draft.getUserStatus = 'failure';
         draft.loginStatus = 'failure';
         localStorage.clear();
+        break;
+
+      case 'PATCH_PASSWORD':
+        draft.patchPasswordStatus = 'pending';
+        break;
+      case 'PATCH_PASSWORD_SUCCESS':
+        draft.patchPasswordStatus = 'success';
+        break;
+      case 'PATCH_PASSWORD_FAILURE':
+        draft.patchPasswordStatus = 'failure';
         break;
 
       default:
