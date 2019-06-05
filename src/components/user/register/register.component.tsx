@@ -117,7 +117,13 @@ const RegisterComponent: React.FC<
   const registerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (id && password && rePassword) {
+    if (
+      idExistStatus !== 'pending' &&
+      registerStatus !== 'pending' &&
+      id &&
+      password &&
+      rePassword
+    ) {
       const idCheckResult = idCheck(id);
       const pwCheckResult = pwCheck(password);
       const rpwCheckResult = rPwCheck(rePassword);
