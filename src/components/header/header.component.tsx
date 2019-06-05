@@ -63,9 +63,9 @@ const NameSpan = styled.span`
 
 const HeaderComponent: React.FC<
   HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
-> = ({ name, history, reset }) => {
+> = ({ name, history, resetUser }) => {
   const logout = () => {
-    reset();
+    resetUser();
     history.push('/user/login');
   };
 

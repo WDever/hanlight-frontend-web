@@ -13,7 +13,7 @@ export interface PwRecoveryProps {
 
 export interface PwRecoveryMethod {
   patchPassword(data: PatchPwParam): void;
-  reset(): void;
+  resetUser(): void;
 }
 
 const PwRecoveryContainer: React.FC<
@@ -22,7 +22,7 @@ const PwRecoveryContainer: React.FC<
   match,
   history,
   location,
-  reset,
+  resetUser,
   accessToken,
   patchPassword,
   patchPasswordStatus,
@@ -34,7 +34,7 @@ const PwRecoveryContainer: React.FC<
     accessToken={accessToken}
     patchPassword={patchPassword}
     patchPasswordStatus={patchPasswordStatus}
-    reset={reset}
+    resetUser={resetUser}
   />
 );
 
@@ -45,7 +45,7 @@ const mapStateToProps = ({ user }: AppState) => ({
 
 const maptDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   patchPassword: bindActionCreators(userActions.patchPassword, dispatch),
-  reset: bindActionCreators(userActions.reset, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 export default withRouter(

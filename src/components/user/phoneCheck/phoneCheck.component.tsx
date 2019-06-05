@@ -172,7 +172,7 @@ class PhoneCheckComponent extends React.Component<
   public getCodeStatus: GetCodeStatus = 'none';
 
   public componentDidMount() {
-    this.props.reset();
+    this.props.resetUser();
 
     const parsedQuery = queryString.parse(this.props.location.search);
     const { type, key } = parsedQuery;
@@ -353,7 +353,7 @@ class PhoneCheckComponent extends React.Component<
             type="recoveryId"
             id={recoveryId}
             click={() => {
-              this.props.reset();
+              this.props.resetUser();
               history.push('/user/login');
             }}
           />
@@ -381,7 +381,7 @@ class PhoneCheckComponent extends React.Component<
             message={errorMessage}
             click={() => {
               this.props.resetError();
-              this.props.reset();
+              this.props.resetUser();
             }}
           />
         )}

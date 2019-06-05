@@ -28,7 +28,7 @@ export interface PhoneCheckMethod {
   verifyPhone(data: VerifyPhoneParam): void;
   idRecovery(data: IdRecoveryParam): void;
   pwRecovery(data: PwRecoveryParam): void;
-  reset(): void;
+  resetUser(): void;
   resetError(): void;
 }
 
@@ -40,7 +40,7 @@ const PhoneCheckContainer: React.SFC<
   history,
   match,
   location,
-  reset,
+  resetUser,
   idRecovery,
   idRecoveryStatus,
   pwRecovery,
@@ -57,7 +57,7 @@ const PhoneCheckContainer: React.SFC<
     location={location}
     verifyPhone={verifyPhone}
     verifyPhoneStatus={verifyPhoneStatus}
-    reset={reset}
+    resetUser={resetUser}
     idRecovery={idRecovery}
     idRecoveryStatus={idRecoveryStatus}
     pwRecovery={pwRecovery}
@@ -84,7 +84,7 @@ const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   idExist: bindActionCreators(userActions.idExist, dispatch),
   verifyPhone: bindActionCreators(userActions.verifyPhone, dispatch),
   setSignKey: bindActionCreators(userActions.setSignKey, dispatch),
-  reset: bindActionCreators(userActions.reset, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
   idRecovery: bindActionCreators(userActions.idRecovery, dispatch),
   pwRecovery: bindActionCreators(userActions.pwRecovery, dispatch),
   resetError: bindActionCreators(errorActions.resetError, dispatch),

@@ -82,7 +82,7 @@ const PwRecoveryComponent: React.FC<
   match,
   history,
   location,
-  reset,
+  resetUser,
   accessToken,
   patchPassword,
   patchPasswordStatus,
@@ -129,9 +129,9 @@ const PwRecoveryComponent: React.FC<
 
   useEffect(
     () => () => {
-      reset();
+      resetUser();
     },
-    [reset],
+    [],
   );
 
   return accessToken.length ? (
@@ -142,7 +142,7 @@ const PwRecoveryComponent: React.FC<
           height="24.625rem"
           type="recoveryPw"
           click={() => {
-            reset();
+            resetUser();
             history.push('/user/login');
           }}
         />

@@ -14,12 +14,12 @@ const { useEffect } = React;
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   history,
-  reset,
+  resetUser,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
       history.push('/user/login');
-      reset();
+      resetUser();
     }
   }, [loginStatus]);
 

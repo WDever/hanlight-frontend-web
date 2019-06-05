@@ -18,7 +18,7 @@ export const ID_EXIST_SUCCESS_TRUE = 'ID_EXIST_SUCCESS_TRUE';
 export const ID_EXIST_SUCCESS_FALSE = 'ID_EXIST_SUCCESS_FALSE';
 export const ID_EXIST_FAILURE = 'ID_EXIST_FAILURE';
 
-export const RESET = 'RESET';
+export const RESET_USER = 'RESET_USER';
 
 export const VERIFY_PHONE = 'VERIFY_PHONE';
 export const VERIFY_PHONE_SUCCESS = 'VERIFY_PHONE_SUCCESS';
@@ -209,8 +209,8 @@ export class SetSignKey implements Action {
   public constructor(public payload: string) {}
 }
 
-export class Reset implements Action {
-  public readonly type = RESET;
+export class ResetUser implements Action {
+  public readonly type = RESET_USER;
 }
 
 export class SetFbCode implements Action {
@@ -270,7 +270,7 @@ export const userActions = {
   verifyPhone: createStandardAction(VERIFY_PHONE)<VerifyPhoneParam>(),
   register: createStandardAction(REGISTER)<RegisterParam>(),
   setSignKey: createStandardAction(SET_SIGN_KEY)<string>(),
-  reset: createStandardAction(RESET)(),
+  resetUser: createStandardAction(RESET_USER)(),
   setFbCode: createStandardAction(SET_FB_CODE)<string>(),
   setId: createStandardAction(SET_ID)<string>(),
   getUser: createStandardAction(GET_USER)<string>(),
@@ -291,7 +291,7 @@ export type userReducerActions =
   | IdExistSuccessTrue
   | IdExistSuccessFalse
   | IdExistFailure
-  | Reset
+  | ResetUser
   | VerifyPhone
   | VerifyPhoneSuccess
   | VerifyPhoneFailure

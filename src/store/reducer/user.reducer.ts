@@ -122,7 +122,7 @@ export const userReducer = (
         draft.idExistStatus = 'failure';
         break;
 
-      case 'RESET':
+      case 'RESET_USER':
         localStorage.clear();
         return initialState;
 

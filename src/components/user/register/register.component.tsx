@@ -94,7 +94,7 @@ const RegisterComponent: React.FC<
   signKey,
   register,
   history,
-  reset,
+  resetUser,
   idExist,
   idExistStatus,
 }) => {
@@ -166,7 +166,7 @@ const RegisterComponent: React.FC<
 
   useEffect(
     () => () => {
-      reset();
+      resetUser();
     },
     [],
   );
@@ -180,7 +180,7 @@ const RegisterComponent: React.FC<
           type="phoneCheck"
           message="회원가입 성공"
           click={() => {
-            reset();
+            resetUser();
             history.push('/user/login');
           }}
         />
