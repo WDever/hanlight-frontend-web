@@ -140,7 +140,7 @@ const PwRecoveryComponent: React.FC<
         <Modal
           width="50.25rem"
           height="24.625rem"
-          type="phoneCheck"
+          type="recoveryPw"
           click={() => {
             reset();
             history.push('/user/login');

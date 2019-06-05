@@ -204,22 +204,6 @@ class PhoneCheckComponent extends React.Component<
     }
   }
 
-  public componentDidUpdate(
-    prevProps: PhoneCheckProps & PhoneCheckMethod & RouteComponentProps,
-  ) {
-    if (prevProps !== this.props) {
-      if (prevProps.verifyPhoneStatus === 'pending') {
-        if (this.props.verifyPhoneStatus === 'success') {
-          this.props.history.push('/user/register');
-        }
-      } else if (prevProps.pwRecoveryStatus === 'pending') {
-        if (this.props.pwRecoveryStatus === 'success') {
-          this.props.history.push('/user/recovery/password');
-        }
-      }
-    }
-  }
-
   public signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
   public tpCheck = (str: string) => new RegExp(tpRegExp).test(str);
   public idCheck = (str: string) => new RegExp(idRegExp).test(str);
@@ -366,11 +350,24 @@ class PhoneCheckComponent extends React.Component<
           <Modal
             width="50.25rem"
             height="24.625rem"
-            type="recovery"
+            type="recoveryId"
             id={recoveryId}
             click={() => {
               this.props.reset();
               history.push('/user/login');
+            }}
+          />
+        )}
+        {(pwRecoveryStatus === 'success' ||
+          verifyPhoneStatus === 'success') && (
+          <Modal
+            width="50.25rem"
+            height="24.625rem"
+            type="phoneCheck"
+            click={() => {
+              type === 'recovery'
+                ? history.push('/user/recovery/password')
+                : history.push('/user/register');
             }}
           />
         )}

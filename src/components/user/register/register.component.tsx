@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import ModalComponent from 'components/modal';
 import { RegisterMethod, RegisterProps } from 'container/user/register';
 import { useInputs } from 'lib/hooks';
 import {
@@ -154,15 +155,8 @@ const RegisterComponent: React.FC<
   useEffect(() => {
     if (!signKey.length) {
       history.push('/user/login');
-    } else {
-      if (registerStatus === 'success') {
-        console.log('성공');
-        history.push('/user/login');
-      } else if (registerStatus === 'failure') {
-        alert('회원가입에 실패하였습니다.');
-      }
     }
-  }, [registerStatus, history]);
+  }, []);
 
   useEffect(
     () => () => {
@@ -173,6 +167,19 @@ const RegisterComponent: React.FC<
 
   return (
     <React.Fragment>
+      {registerStatus === 'success' && (
+        <ModalComponent
+          width="50.25rem"
+          height="24.625rem"
+          type="phoneCheck"
+          message="회원가입 성공"
+          click={() => {
+            reset();
+            history.push('/user/login');
+          }}
+        />
+      )}
+
       <RegisterWrapper>
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>

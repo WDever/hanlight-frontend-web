@@ -12,7 +12,7 @@ interface ModalSize {
 }
 
 interface ModalProps extends ModalSize {
-  type: 'phoneCheck' | 'recovery' | 'error';
+  type: 'phoneCheck' | 'recoveryId' | 'recoveryPw' | 'error';
   id?: string;
   message?: string;
   click(): void;
@@ -68,17 +68,23 @@ const ModalComponent: React.FC<ModalProps> = ({
   <Modal>
     <ModalWrapper width={width} height={height}>
       {type === 'phoneCheck' && <img src={phoneCheckSuccessSvg} alt="modal" />}
-      {type === 'recovery' && <img src={checkSvg} alt="modal" />}
+      {type.includes('recovery') && <img src={checkSvg} alt="modal" />}
       {type === 'error' && (
         <img style={{ width: '5rem' }} src={phoneCheckFailureSvg} alt="modal" />
       )}
 
       {type === 'phoneCheck' && <ModalText>{message || '인증 성공'}</ModalText>}
-      {type === 'recovery' && (
+      {type === 'recoveryId' && (
         <ModalText>
           아이디는&nbsp;
           <ColoredText>{id}</ColoredText>
-          &nbsp; 입니다
+          &nbsp; 입니다.
+        </ModalText>
+      )}
+      {type === 'recoveryPw' && (
+        <ModalText>
+          비밀번호가 &nbsp; <ColoredText>변경</ColoredText>
+          되었습니다.
         </ModalText>
       )}
       {type === 'error' && <ModalText>{message || '인증 실패'}</ModalText>}
