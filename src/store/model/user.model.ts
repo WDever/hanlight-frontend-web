@@ -1,5 +1,4 @@
 export interface UserModel {
-  fbCode: string;
   signKey: string;
   id: string;
   accessToken: string;
@@ -13,7 +12,7 @@ export interface UserModel {
     studentNum: number | null;
   };
 
-  verifyStatus: 'none' | 'pending' | 'success' | 'failure';
+  verifyPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
   registerStatus: 'none' | 'pending' | 'success' | 'failure';
   loginStatus: 'none' | 'pending' | 'success' | 'failure';
   idRecoveryStatus: 'none' | 'pending' | 'success' | 'failure';

@@ -7,6 +7,12 @@ import {
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
 import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import coloredCheckSvg from 'lib/svg/colored-check.svg';
+import coloredIdSvg from 'lib/svg/colored-id.svg';
+import coloredPwSvg from 'lib/svg/colored-password.svg';
+import disabledCheckSvg from 'lib/svg/disabled-check.svg';
+import disabledIdSvg from 'lib/svg/disabled-id.svg';
+import disabledPwSvg from 'lib/svg/disabled-password.svg';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -59,6 +65,25 @@ const Form = styled.form`
   align-items: center;
   width: 100%;
   height: 80%;
+`;
+
+const IdInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const PwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const RePwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props =>
+      props.colored ? coloredCheckSvg : disabledCheckSvg})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
 `;
 
 const RegisterComponent: React.FC<
@@ -158,7 +183,7 @@ const RegisterComponent: React.FC<
                   형식이 잘못되었거나 중복되는 아이디 입니다!
                 </WrongLabel>
               )}
-              <Inputs
+              <IdInput
                 wrong={!idValidation || idExistStatus === 'success-true'}
                 width="28.75rem"
                 height="4.375rem"
@@ -169,11 +194,12 @@ const RegisterComponent: React.FC<
                 name="id"
                 autoComplete="off"
                 onChange={inputsChange}
+                colored={!!id}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
-              <Inputs
+              <PwInput
                 wrong={!pwValidation}
                 width="28.75rem"
                 height="4.375rem"
@@ -184,13 +210,14 @@ const RegisterComponent: React.FC<
                 autoComplete="off"
                 placeholder="비밀번호"
                 onChange={inputsChange}
+                colored={!!password}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>
               )}
-              <Inputs
+              <RePwInput
                 wrong={!rpwValidation}
                 width="28.75rem"
                 height="4.375rem"
@@ -201,6 +228,7 @@ const RegisterComponent: React.FC<
                 placeholder="비밀번호 재입력"
                 type="password"
                 onChange={inputsChange}
+                colored={!!rePassword}
               />
             </InputsGroup>
           </InputWrapper>

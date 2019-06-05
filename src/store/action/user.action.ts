@@ -1,4 +1,5 @@
 import { Action } from 'redux';
+import { ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const LOGIN = 'LOGIN';
@@ -16,14 +17,6 @@ export const ID_EXIST = 'ID_EXIST';
 export const ID_EXIST_SUCCESS_TRUE = 'ID_EXIST_SUCCESS_TRUE';
 export const ID_EXIST_SUCCESS_FALSE = 'ID_EXIST_SUCCESS_FALSE';
 export const ID_EXIST_FAILURE = 'ID_EXIST_FAILURE';
-export const TP_EXIST = 'TP_EXIST';
-export const TP_EXIST_SUCCESS_TRUE = 'TP_EXIST_SUCCESS_TRUE';
-export const TP_EXIST_SUCCESS_FALSE = 'TP_EXIST_SUCCESS_FALSE';
-export const TP_EXIST_FAILURE = 'TP_EXIST_FAILURE';
-export const SIGN_KEY_EXIST = 'SIGN_KEY_EXIST';
-export const SIGN_KEY_EXIST_SUCCESS_TRUE = 'SIGN_KEY_EXIST_SUCCESS_TRUE';
-export const SIGN_KEY_EXIST_SUCCESS_FALSE = 'SIGN_KEY_EXIST_SUCCESS_FALSE';
-export const SIGN_KEY_EXIST_FAILURE = 'SIGN_KEY_EXIST_FAILURE';
 
 export const RESET = 'RESET';
 
@@ -43,6 +36,10 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_FAILURE = 'GET_USER_FAILURE';
 
+export const PATCH_PASSWORD = 'PATCH_PASSWORD';
+export const PATCH_PASSWORD_SUCCESS = 'PATCH_PASSWORD_SUCCESS';
+export const PATCH_PASSWORD_FAILURE = 'PATCH_PASSWORD_FAILURE';
+
 export interface LoginParam {
   id: string;
   password: string;
@@ -55,7 +52,6 @@ export interface IdRecoveryParam {
 export interface PwRecoveryParam {
   code: string;
   id: string;
-  password: string;
 }
 
 export interface ExistParam {
@@ -75,6 +71,11 @@ export interface RegisterParam {
   id: string;
   password: string;
   signKey: string;
+}
+
+export interface PatchPwParam {
+  accessToken: string;
+  password: string;
 }
 
 export class Login implements Action {
@@ -120,6 +121,8 @@ export class IdRecoverySuccess implements Action {
 
 export class IdRecoveryFailure implements Action {
   public readonly type = ID_RECOVERY_FAILURE;
+
+  public constructor(payload: ErrorResponse) {}
 }
 
 export class PwRecovery implements Action {
@@ -131,11 +134,15 @@ export class PwRecovery implements Action {
 export class PwRecoverySuccess implements Action {
   public readonly type = PW_RECOVERY_SUCCESS;
 
-  public constructor(public payload: { success: boolean }) {}
+  public constructor(
+    public payload: { success: boolean; accessToken: string },
+  ) {}
 }
 
 export class PwRecoveryFailure implements Action {
   public readonly type = PW_RECOVERY_FAILURE;
+
+  public constructor(payload: ErrorResponse) {}
 }
 
 export class IdExist implements Action {
@@ -160,50 +167,6 @@ export class IdExistFailure implements Action {
   public readonly type = ID_EXIST_FAILURE;
 }
 
-export class TpExist implements Action {
-  public readonly type = TP_EXIST;
-
-  public constructor(public payload: ExistParam) {}
-}
-
-export class TpExistSuccessTrue implements Action {
-  public readonly type = TP_EXIST_SUCCESS_TRUE;
-
-  public constructor(public payload: ExistResponse) {}
-}
-
-export class TpExistSuccessFalse implements Action {
-  public readonly type = TP_EXIST_SUCCESS_FALSE;
-
-  public constructor(public payload: ExistResponse) {}
-}
-
-export class TpExistFailure implements Action {
-  public readonly type = TP_EXIST_FAILURE;
-}
-
-export class SignKeyExist implements Action {
-  public readonly type = SIGN_KEY_EXIST;
-
-  public constructor(public payload: ExistParam) {}
-}
-
-export class SingKeyExistSuccessTrue implements Action {
-  public readonly type = SIGN_KEY_EXIST_SUCCESS_TRUE;
-
-  public constructor(public payload: ExistResponse) {}
-}
-
-export class SingKeyExistSuccessFalse implements Action {
-  public readonly type = SIGN_KEY_EXIST_SUCCESS_FALSE;
-
-  public constructor(public payload: ExistResponse) {}
-}
-
-export class SignKeyExistFailure implements Action {
-  public readonly type = SIGN_KEY_EXIST_FAILURE;
-}
-
 export class VerifyPhone implements Action {
   public readonly type = VERIFY_PHONE;
 
@@ -218,6 +181,8 @@ export class VerifyPhoneSuccess implements Action {
 
 export class VerifyPhoneFailure implements Action {
   public readonly type = VERIFY_PHONE_FAILURE;
+
+  public constructor(payload: ErrorResponse) {}
 }
 
 export class Register implements Action {
@@ -234,6 +199,8 @@ export class RegisterSuccess implements Action {
 
 export class RegisterFailure implements Action {
   public readonly type = REGISTER_FAILURE;
+
+  public constructor(payload: ErrorResponse) {}
 }
 
 export class SetSignKey implements Action {
@@ -248,12 +215,6 @@ export class Reset implements Action {
 
 export class SetFbCode implements Action {
   public readonly type = SET_FB_CODE;
-
-  public constructor(public payload: string) {}
-}
-
-export class SetId implements Action {
-  public readonly type = SET_ID;
 
   public constructor(public payload: string) {}
 }
@@ -283,6 +244,20 @@ export class GetUserSuccess implements Action {
   ) {}
 }
 
+export class PatchPassword implements Action {
+  public readonly type = PATCH_PASSWORD;
+
+  public constructor(public payload: PatchPwParam) {}
+}
+
+export class PatchPasswordSuccess implements Action {
+  public readonly type = PATCH_PASSWORD_SUCCESS;
+}
+
+export class PatchPasswordFailure implements Action {
+  public readonly type = PATCH_PASSWORD_FAILURE;
+}
+
 export class GetUserFailure implements Action {
   public readonly type = GET_USER_FAILURE;
 }
@@ -292,8 +267,6 @@ export const userActions = {
   idRecovery: createStandardAction(ID_RECOVERY)<IdRecoveryParam>(),
   pwRecovery: createStandardAction(PW_RECOVERY)<PwRecoveryParam>(),
   idExist: createStandardAction(ID_EXIST)<ExistParam>(),
-  tpExist: createStandardAction(TP_EXIST)<ExistParam>(),
-  signKeyExist: createStandardAction(SIGN_KEY_EXIST)<ExistParam>(),
   verifyPhone: createStandardAction(VERIFY_PHONE)<VerifyPhoneParam>(),
   register: createStandardAction(REGISTER)<RegisterParam>(),
   setSignKey: createStandardAction(SET_SIGN_KEY)<string>(),
@@ -301,6 +274,7 @@ export const userActions = {
   setFbCode: createStandardAction(SET_FB_CODE)<string>(),
   setId: createStandardAction(SET_ID)<string>(),
   getUser: createStandardAction(GET_USER)<string>(),
+  patchPassword: createStandardAction(PATCH_PASSWORD)<PatchPwParam>(),
 };
 
 export type userReducerActions =
@@ -317,14 +291,6 @@ export type userReducerActions =
   | IdExistSuccessTrue
   | IdExistSuccessFalse
   | IdExistFailure
-  | TpExist
-  | TpExistSuccessTrue
-  | TpExistSuccessFalse
-  | TpExistFailure
-  | SignKeyExist
-  | SingKeyExistSuccessTrue
-  | SingKeyExistSuccessFalse
-  | SignKeyExistFailure
   | Reset
   | VerifyPhone
   | VerifyPhoneSuccess
@@ -334,7 +300,6 @@ export type userReducerActions =
   | RegisterFailure
   | SetSignKey
   | SetFbCode
-  | SetId
   | GetUser
   | GetUserSuccess
   | GetUserFailure;

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>
+            .cls-1{fill:#bebebe}.cls-2{fill:none}
+        </style>
+    </defs>
+    <g id="disabled__check" data-name="disabled _check" transform="translate(-2048.938 -2521)">
+        <g id="Yes" transform="translate(2048.938 2521)">
+            <path id="Checkbox" d="M9.965 20L1 9.809l2.127-2.418 6.838 7.6L22.273 1 24.4 3.418z" class="cls-1" transform="translate(-1 1)"/>
+            <path id="사각형_556" d="M0 0h24v24H0z" class="cls-2" data-name="사각형 556"/>
+        </g>
+    </g>
+</svg>

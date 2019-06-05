@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import Modal from 'components/user/recovery/modal';
+import Modal from 'components/modal';
 import {
   PwRecoveryMethod,
   PwRecoveryProps,
@@ -8,6 +8,10 @@ import {
 import { useInputs } from 'lib/hooks';
 import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import coloredCheckSvg from 'lib/svg/colored-check.svg';
+import coloredPwSvg from 'lib/svg/colored-password.svg';
+import disabledCheckSvg from 'lib/svg/disabled-check.svg';
+import disabledPwSvg from 'lib/svg/disabled-password.svg';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -59,6 +63,19 @@ const Form = styled.form`
   height: 70%;
 `;
 
+const PwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const RePwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props =>
+      props.colored ? coloredCheckSvg : disabledCheckSvg})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
 const PwRecoveryComponent: React.FC<
   PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 > = ({
@@ -67,7 +84,7 @@ const PwRecoveryComponent: React.FC<
   history,
   match,
   location,
-  fbCode,
+  // fbCode,
   id,
   reset,
 }) => {
@@ -96,16 +113,16 @@ const PwRecoveryComponent: React.FC<
       setRpwValidation(rpwCheckResult);
 
       if (pwCheckResult && rpwCheckResult) {
-        pwRecovery({ code: fbCode, id, password });
+        // pwRecovery({ code: fbCode, id });
       }
     }
   };
 
-  useEffect(() => {
-    if (!fbCode.length || !id.length) {
-      history.push('/user/login');
-    }
-  }, [fbCode.length, history, id.length]);
+  // useEffect(() => {
+  //   if (!fbCode.length || !id.length) {
+  //     history.push('/user/login');
+  //   }
+  // }, [fbCode.length, history, id.length]);
 
   useEffect(
     () => () => {
@@ -114,7 +131,7 @@ const PwRecoveryComponent: React.FC<
     [reset],
   );
 
-  return fbCode.length && id.length ? (
+  return /* fbCode.length && */ id.length ? (
     <React.Fragment>
       {pwRecoveryStatus === 'success' && (
         <Modal
@@ -135,7 +152,7 @@ const PwRecoveryComponent: React.FC<
           <InputWrapper>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
-              <Inputs
+              <PwInput
                 type="password"
                 wrong={!pwValidation}
                 width="28.75rem"
@@ -145,13 +162,14 @@ const PwRecoveryComponent: React.FC<
                 onChange={setInputs}
                 placeholder="새 비밀번호"
                 active={!!password}
+                colored={!!password}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호가 일치하지 않습니다.</WrongLabel>
               )}
-              <Inputs
+              <RePwInput
                 type="password"
                 wrong={!rpwValidation}
                 width="28.75rem"
@@ -161,6 +179,7 @@ const PwRecoveryComponent: React.FC<
                 onChange={setInputs}
                 placeholder="확인"
                 active={!!rePassword}
+                colored={!!rePassword}
               />
             </InputsGroup>
           </InputWrapper>

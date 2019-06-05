@@ -3,7 +3,6 @@ import { userReducerActions } from '../action';
 import { UserModel } from '../model/user.model';
 
 const initialState: UserModel = {
-  fbCode: '',
   signKey: '',
   id: '',
   accessToken: '',
@@ -17,7 +16,7 @@ const initialState: UserModel = {
     studentNum: null,
   },
 
-  verifyStatus: 'none',
+  verifyPhoneStatus: 'none',
   registerStatus: 'none',
   loginStatus: 'none',
   idRecoveryStatus: 'none',
@@ -72,6 +71,7 @@ export const userReducer = (
 
       case 'PW_RECOVERY_SUCCESS':
         draft.pwRecoveryStatus = 'success';
+        draft.accessToken = action.payload.accessToken;
         break;
 
       case 'PW_RECOVERY_FAILURE':
@@ -79,15 +79,15 @@ export const userReducer = (
         break;
 
       case 'VERIFY_PHONE':
-        draft.verifyStatus = 'pending';
+        draft.verifyPhoneStatus = 'pending';
         break;
 
       case 'VERIFY_PHONE_SUCCESS':
-        draft.verifyStatus = 'success';
+        draft.verifyPhoneStatus = 'success';
         break;
 
       case 'VERIFY_PHONE_FAILURE':
-        draft.verifyStatus = 'failure';
+        draft.verifyPhoneStatus = 'failure';
         break;
 
       case 'REGISTER':
@@ -121,48 +121,9 @@ export const userReducer = (
         draft.idExistStatus = 'failure';
         break;
 
-      case 'TP_EXIST':
-        draft.tpExistStatus = 'pending';
-        break;
-
-      case 'TP_EXIST_SUCCESS_TRUE':
-        draft.tpExistStatus = 'success-true';
-        break;
-      case 'TP_EXIST_SUCCESS_FALSE':
-        draft.tpExistStatus = 'success-false';
-        break;
-
-      case 'TP_EXIST_FAILURE':
-        draft.tpExistStatus = 'failure';
-        break;
-
-      case 'SIGN_KEY_EXIST':
-        draft.signKeyExistStatus = 'pending';
-        break;
-
-      case 'SIGN_KEY_EXIST_SUCCESS_TRUE':
-        draft.signKeyExistStatus = 'success-true';
-        break;
-
-      case 'SIGN_KEY_EXIST_SUCCESS_FALSE':
-        draft.signKeyExistStatus = 'success-false';
-        break;
-
-      case 'SIGN_KEY_EXIST_FAILURE':
-        draft.signKeyExistStatus = 'failure';
-        break;
-
       case 'RESET':
         localStorage.clear();
         return initialState;
-
-      case 'SET_FB_CODE':
-        draft.fbCode = action.payload;
-        break;
-
-      case 'SET_ID':
-        draft.id = action.payload;
-        break;
 
       case 'GET_USER':
         draft.getUserStatus = 'pending';
