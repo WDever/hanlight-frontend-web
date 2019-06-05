@@ -277,6 +277,18 @@ class PhoneCheckComponent extends React.Component<
     }
   };
 
+  public pendingCheck = (): boolean => {
+    const {
+      idRecoveryStatus,
+      pwRecoveryStatus,
+      verifyPhoneStatus,
+    } = this.props;
+
+    return ![idRecoveryStatus, pwRecoveryStatus, verifyPhoneStatus].some(
+      status => status === 'pending',
+    );
+  };
+
   public typingCheck = (): boolean => {
     const type = this.state.query.type;
     const key = this.state.query.key;
@@ -325,6 +337,7 @@ class PhoneCheckComponent extends React.Component<
     const {
       handleChecked,
       handleInputs,
+      pendingCheck,
       idCheck,
       tpCheck,
       signKeyCheck,
@@ -478,7 +491,9 @@ class PhoneCheckComponent extends React.Component<
                     phoneNumber={tp.value}
                     onResponse={handleFbResponse}
                     language="ko_KR"
-                    validation={() => query.validation && handleChecked()}
+                    validation={() =>
+                      query.validation && pendingCheck() && handleChecked()
+                    }
                   >
                     {(p: ChildrenParams) => (
                       <Buttons
