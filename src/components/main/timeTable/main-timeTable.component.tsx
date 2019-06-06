@@ -63,46 +63,61 @@ class TimeTableComponent extends React.Component<
     this.props.timetableApi(this.props.accessToken);
   }
 
-  // let key = 0;
-
   public render() {
     const { timeTableList, timetableStatus, name } = this.props;
     const { today } = this;
 
-    const TimeTableList = timeTableList[today].map((item, index) => {
-      const sum =
-        Number(moment().format('H')) * 3600 +
-        Number(moment().format('m')) * 60 +
-        Number(moment().format('s'));
-      const period = (): number => {
-        if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
-          return 0;
-        } else if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
-          return 1;
-        } else if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
-          return 2;
-        } else if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
-          return 3;
-        } else if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
-          return 4;
-        } else if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
-          return 5;
-        } else if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
-          return 6;
+    const TimeTableList = Array(7)
+      .fill(null)
+      .map((value, index) => {
+        if (!timeTableList[today].length) {
+          if (today >= 5) {
+            return (
+              <NoBox key={index}>
+                <Texts>주말</Texts>
+                <Texts>이야</Texts>
+              </NoBox>
+            );
+          } else {
+            return <NoBox key={index} />;
+          }
+        } else if (!timeTableList[today][index]) {
+          return <NoBox key={index} />;
         } else {
-          return 7;
-        }
-      };
+          const sum =
+            Number(moment().format('H')) * 3600 +
+            Number(moment().format('m')) * 60 +
+            Number(moment().format('s'));
+          const period = (): number => {
+            if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
+              return 0;
+            } else if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
+              return 1;
+            } else if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
+              return 2;
+            } else if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
+              return 3;
+            } else if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
+              return 4;
+            } else if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
+              return 5;
+            } else if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
+              return 6;
+            } else {
+              return 7;
+            }
+          };
 
-      return (
-        <TimeTableItem
-          index={index + 1}
-          sub={item}
-          active={index === period()}
-          key={index}
-        />
-      );
-    });
+          return (
+            <TimeTableItem
+              index={index + 1}
+              sub={timeTableList[today][index]}
+              active={index === period()}
+              key={index}
+            />
+          );
+        }
+      });
 
     return (
       <>
