@@ -40,7 +40,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
             </>
           )}
         />
-        <Route exact={true} path="/meal" />
+        <Route exact={true} path="/meal" component={() => <></>} />
       </Switch>
       <FooterComponent />
     </>

@@ -16,7 +16,7 @@ const App: React.FC = () => (
       <Route exact={true} path="/user/phone" component={PhoneCheckPage} />
       <Route exact={true} path="/user/register" component={RegisterPage} />
       <Route exact={true} path="/user/login" component={LoginPage} />
-      <Route exact={true} path="/" component={MainPage} />
+      <Route path="/" component={MainPage} />
       <Redirect to="/" />
     </Switch>
   </div>
