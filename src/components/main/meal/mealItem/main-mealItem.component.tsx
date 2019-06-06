@@ -65,18 +65,20 @@ const DateWrapper = styled.div`
   margin-right: 1.5rem;
 `;
 
+const Meal = styled.span`
+  font-size: smaller;
+  white-space: nowrap;
+`;
+
 const MealItemComponent: React.FC<MealItemProps> = ({ mealList, date }) => (
   <ItemBox>
     <ContentWrapper>
       <MealWrapper>
         <Lunch>점심</Lunch>
         <ListBox>
-          <span>{mealList[0]}</span>
-          <span>{mealList[1]}</span>
-          <span>{mealList[2]}</span>
-          <span>{mealList[3]}</span>
-          <span>{mealList[4]}</span>
-          <span>{mealList[5]}</span>
+          {mealList.map((meal, i) => (
+            <Meal key={i}>{meal}</Meal>
+          ))}
         </ListBox>
       </MealWrapper>
       <Weather src={WeatherLogoSvg} alt="weather" />

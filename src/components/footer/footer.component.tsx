@@ -52,7 +52,7 @@ const FooterComponent: React.FC = () => {
       <WordsWrapper>
         <span>[04129] 서울특별시 마포구 마포대로 11길 44-80</span>
         <span>한세사이버보안고등학교 총학생회 한울</span>
-        <span>E-Mail : stucon.hansi@gmail.com</span>
+        <span>E-Mail : stucon.hansei@gmail.com</span>
         <RulesWrapper>
           <Rules to="/terms">[이용약관]</Rules>
           <Rules to="privacy">[개인정보처리방침]</Rules>
