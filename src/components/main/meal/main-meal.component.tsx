@@ -11,21 +11,20 @@ const { useEffect } = React;
 
 const ListWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100%;
   height: 28rem;
   z-index: 1;
 `;
 
 const NoBox = styled.div`
-  /* font-family: 'Sandoll Okwon'; */
-  font-size: 3rem;
+  font-size: 2.25rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 20.75rem;
-  height: 27.5rem;
+  width: 15.875rem;
+  height: 21rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   background-color: #ffffff;
   border-radius: 16px;
@@ -35,13 +34,13 @@ const NoBox = styled.div`
 const MoreBox = styled.div`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  font-size: 1.75rem;
+  font-size: 1.3125rem;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 20.75rem;
-  height: 27.5rem;
+  width: 15.875rem;
+  height: 21rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
@@ -50,8 +49,8 @@ const MoreBox = styled.div`
 
 const MoreBtn = styled(Link)`
   text-decoration: none;
-  width: 11.875rem;
-  height: 3.625rem;
+  width: 9.7rem;
+  height: 2.775rem;
   border-radius: 35px;
   border: solid 6px #f03d5c;
   color: #f03d5c;
@@ -60,6 +59,7 @@ const MoreBtn = styled(Link)`
   justify-content: center;
   align-items: center;
   z-index: 1;
+  font-size: 0.9375rem;
   cursor: pointer;
 `;
 

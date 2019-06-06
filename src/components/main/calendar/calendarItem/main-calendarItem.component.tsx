@@ -11,22 +11,27 @@ interface TextProps {
 }
 
 interface ItemProps extends BoxProps {
-  date: string;
+  year: string;
+  month: string;
+  day: string;
   contents: string;
   today?: boolean;
 }
 
 const Box = styled.div<BoxProps>`
-  width: 27.5rem;
-  height: 27.5rem;
-  box-shadow: ${props => (props.active ? '0 30px 80px 0 rgba(139, 139, 139, 0.25)' : 'none')};
-  border: ${props => (props.active ? 'none' : 'solid 1px #b9b9b9')};
+  width: 15.875rem;
+  height: 15.875rem;
+  box-shadow: ${props =>
+    props.active
+      ? ' 0 30px 80px 0 rgba(139, 139, 139, 0.25)'
+      : '0 6px 30px 0 rgba(139, 139, 139, 0.16)'};
+  /* border: ${props => (props.active ? 'none' : 'solid 1px #b9b9b9')}; */
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border-radius: 2rem;
+  border-radius: 1rem;
 `;
 
 const ContentsWrapper = styled.div`
@@ -40,9 +45,13 @@ const ContentsWrapper = styled.div`
 
 const Texts = styled.span<TextProps & BoxProps>`
   font-family: ${props => (props.contents ? 'Spoqa Han Sans' : 'Noto Sans')};
-  font-weight: ${props => (props.active ? 'bold' : 'normal')};
-  color: ${props => (props.active ? '#4470ff' : 'black')};
-  font-size: ${props => (props.contents ? '3rem' : '1.5rem')};
+  font-weight: ${props => (props.contents ? 'bold' : 'normal')};
+  color: ${props => (props.contents ? '#4470ff' : 'black')};
+  font-size: ${props => (props.contents ? '2rem' : '1rem')};
+`;
+
+const Colored = styled.span`
+  color: #4470ff;
 `;
 
 const DateWrapper = styled.div`
@@ -54,7 +63,9 @@ const DateWrapper = styled.div`
 
 const CalendarItem: React.FC<ItemProps> = ({
   active = false,
-  date,
+  year,
+  month,
+  day,
   contents,
   today,
 }) => (
@@ -62,9 +73,13 @@ const CalendarItem: React.FC<ItemProps> = ({
     <ContentsWrapper>
       <DateWrapper>
         <Texts>{today ? '오늘은' : '다가오는'}</Texts>
-        <Texts>{date}</Texts>
+        <Texts>
+          {year}년
+          <Colored> {month}</Colored>월
+          <Colored> {day}</Colored>일
+        </Texts>
       </DateWrapper>
-      <Texts contents active={active}>
+      <Texts contents={true} active={active}>
         {contents}
       </Texts>
     </ContentsWrapper>

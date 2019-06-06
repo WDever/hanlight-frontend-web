@@ -4,7 +4,7 @@ import { MainMethod, MainProps } from 'container/main';
 import Calendar from 'pages/main/calendar';
 import MealPage from 'pages/main/meal';
 import NoticePage from 'pages/main/notice';
-import TimePage from 'pages/main/time';
+import TimePage from 'pages/main/timer';
 import TimeTablePage from 'pages/main/timeTable';
 import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';

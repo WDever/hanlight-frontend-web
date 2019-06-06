@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import moment from 'moment';
 
 const { useState, useEffect } = React;
 
 const TimeBox = styled.div`
-  /* display: flex; */
-  height: 23.375rem;
-  width: 40rem;
+  height: 18rem;
+  width: 30rem;
   z-index: 1;
 `;
 
@@ -15,19 +15,18 @@ const TitleWrapper = styled.div`
   width: 100%;
   height: 3rem;
   font-family: 'yg-jalnan';
-  font-size: 2.5rem;
+  font-size: 1.875rem;
 `;
 
 const TimeWrapper = styled.div`
   vertical-align: bottom;
   display: inline-flex;
   justify-content: flex-end;
-  /* align-items: flex-end; */
   width: 100%;
   height: 5.5rem;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  font-size: 4.625rem;
+  font-size: 3.5rem;
   color: #4470ff;
 `;
 
@@ -38,7 +37,7 @@ const InnerWrapper = styled.div`
 
 const Unit = styled.span`
   font-family: 'yg-jalnan';
-  font-size: 2.3rem;
+  font-size: 1.6875rem;
   font-weight: normal;
   color: black;
 `;
@@ -78,9 +77,6 @@ const LunchTimeComponent: React.FC = () => {
     <TimeBox>
       <TitleWrapper>점심시간까지 남은시간</TitleWrapper>
       <TimeWrapper>
-        {/* <InnerWrapper>
-          {hour}<Unit>시</Unit> {min}<Unit>분</Unit> {sec}<Unit>초</Unit>
-        </InnerWrapper> */}
         <InnerWrapper>
           {remainHour}
           {' '}

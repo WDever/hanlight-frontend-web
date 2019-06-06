@@ -22,7 +22,7 @@ const NoticeListWrapper = styled.div`
 
 const InnerWrapper = styled.div<{ length: number }>`
   width: 100%;
-  height: ${props => `${props.length * 6}rem`};
+  height: ${props => `${props.length * 5}rem`};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -35,9 +35,10 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
   noticeStatus,
   accessToken,
 }) => {
+  let length = 0;
   const NoticeList =
     noticeStatus === 'success' &&
-    noticeList.map(item => {
+    noticeList.map((item, idx) => {
       const date = () => {
         if (
           moment(item.createdAt).format('YYYY.MM.DD') ===
@@ -52,14 +53,18 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
         }
         return moment(item.createdAt).format('YYYY.MM.DD');
       };
-      return (
-        <NoticeItem
-          title={item.title}
-          date={date()}
-          read={item.read}
-          key={item.pk}
-        />
-      );
+
+      if (idx <= 4) {
+        length += 1;
+        return (
+          <NoticeItem
+            title={item.title}
+            date={date()}
+            read={item.read}
+            key={item.pk}
+          />
+        );
+      }
     });
 
   useEffect(() => {
@@ -68,7 +73,7 @@ const NoticeListComponent: React.FC<NoticeListProps & NoticeListMethod> = ({
 
   return (
     <NoticeListWrapper>
-      <InnerWrapper length={noticeList.length}>{NoticeList}</InnerWrapper>
+      <InnerWrapper length={length}>{NoticeList}</InnerWrapper>
       {noticeStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
     </NoticeListWrapper>
   );

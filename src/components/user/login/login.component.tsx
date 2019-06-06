@@ -11,7 +11,7 @@ import coloredIdSvg from 'lib/svg/colored-id.svg';
 import coloredPwSvg from 'lib/svg/colored-password.svg';
 import disabledIdSvg from 'lib/svg/disabled-id.svg';
 import disabledPwSvg from 'lib/svg/disabled-password.svg';
-import Logo from 'lib/svg/hanlight-logo.svg';
+import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -152,7 +152,7 @@ const LoginComponent: React.FC<
   return (
     <LoginWrapper>
       <GreetingDiv>
-        <LoginImg src={Logo} alt="" />
+        <LoginImg src={LogoSvg} alt="" />
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>

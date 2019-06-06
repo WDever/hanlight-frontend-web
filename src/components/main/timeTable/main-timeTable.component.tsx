@@ -9,9 +9,9 @@ import TimeTableItem from './timeTableItem';
 const { useEffect } = React;
 
 const Title = styled.div`
-  width: 95%;
+  width: 81rem;;
   font-family: 'yg-jalnan';
-  font-size: 2.5rem;
+  font-size: 1.875rem;
   margin-bottom: 2rem;
 `;
 
@@ -20,19 +20,19 @@ const Colored = styled.span`
 `;
 
 const TimeTableWrapper = styled.div`
-  width: 100%;
+  width: 81rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const NoBox = styled.div`
-  width: 12rem;
-  height: 14.375rem;
+  width: 9.1875rem;
+  height: 11rem;
+  font-size: 1.625rem;
   border-radius: 32px;
-  border: solid 1px #b1b1b1;
   background-color: #ffffff;
-  /* box-shdow: none; */
+  box-shadow: 0 6px 30px 0 rgba(71, 71, 71, 0.08);
   color: black;
   font-family: 'Spoqa Han Sans';
   display: inline-flex;
