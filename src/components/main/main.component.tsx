@@ -7,7 +7,7 @@ import NoticePage from 'pages/main/notice';
 import TimePage from 'pages/main/time';
 import TimeTablePage from 'pages/main/timeTable';
 import * as React from 'react';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 const { useEffect } = React;
 
@@ -41,6 +41,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
           )}
         />
         <Route exact={true} path="/meal" component={() => <></>} />
+        <Redirect to="/" />
       </Switch>
       <FooterComponent />
     </>
