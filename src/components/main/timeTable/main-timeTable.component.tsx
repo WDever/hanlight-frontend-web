@@ -9,7 +9,7 @@ import TimeTableItem from './timeTableItem';
 const { useEffect } = React;
 
 const Title = styled.div`
-  width: 81rem;;
+  width: 81rem;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin-bottom: 2rem;
@@ -48,18 +48,28 @@ const Texts = styled.span`
   font-size: 2.25rem;
 `;
 
-const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
-  timeTableList,
-  timetableApi,
-  timetableStatus,
-  accessToken,
-  name,
-}) => {
-  const Today: number = Number(moment().format('d')) - 1;
-  let key = 0;
-  const TimeTableList =
-    timetableStatus === 'success' &&
-    timeTableList[Today].map((item, idx) => {
+class TimeTableComponent extends React.Component<
+  TimeTableProps & TimeTableMethod
+> {
+  public state: {
+    timeTableList: string[];
+  } = {
+    timeTableList: [],
+  };
+
+  public today: number = Number(moment().format('d')) - 1;
+
+  public componentDidMount() {
+    this.props.timetableApi(this.props.accessToken);
+  }
+
+  // let key = 0;
+
+  public render() {
+    const { timeTableList, timetableStatus, name } = this.props;
+    const { today } = this;
+
+    const TimeTableList = timeTableList[today].map((item, index) => {
       const sum =
         Number(moment().format('H')) * 3600 +
         Number(moment().format('m')) * 60 +
@@ -67,69 +77,55 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
       const period = (): number => {
         if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
           return 0;
-        }
-        if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
+        } else if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
           return 1;
-        }
-        if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
+        } else if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
           return 2;
-        }
-        if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
+        } else if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
           return 3;
-        }
-        if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
+        } else if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
           return 4;
-        }
-        if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
+        } else if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
           return 5;
-        }
-        if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
+        } else if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
           return 6;
+        } else {
+          return 7;
         }
-        return 7;
       };
 
       return (
         <TimeTableItem
-          index={idx + 1}
+          index={index + 1}
           sub={item}
-          active={idx === period()}
-          key={key++}
+          active={index === period()}
+          key={index}
         />
       );
     });
 
-  useEffect(() => {
-    timetableApi(accessToken);
-  }, [accessToken, timetableApi]);
+    return (
+      <>
+        <Title>
+          <Colored>{name}</Colored>
+          님의 시간표
+        </Title>
 
-  return (
-    <>
-      <Title>
-        <Colored>{name}</Colored>
-        님의 시간표
-      </Title>
-
-      <TimeTableWrapper>
-        {TimeTableList}
-        {timetableStatus === 'failure' && (
-          <ErrorImg src={ErrorPng} alt="Error" />
-        )}
-        {timeTableList[Today].length === 6 && (
-          <NoBox>
-            <Texts>오늘</Texts>
-            <Texts>6교시야</Texts>
-          </NoBox>
-        )}
-        {Today >= 5 && timetableStatus !== 'none' && (
-          <NoBox>
-            <Texts>주말</Texts>
-            <Texts>이야</Texts>
-          </NoBox>
-        )}
-      </TimeTableWrapper>
-    </>
-  );
-};
+        <TimeTableWrapper>
+          {TimeTableList}
+          {timetableStatus === 'failure' && (
+            <ErrorImg src={ErrorPng} alt="Error" />
+          )}
+          {today >= 5 && timetableStatus !== 'none' && (
+            <NoBox>
+              <Texts>주말</Texts>
+              <Texts>이야</Texts>
+            </NoBox>
+          )}
+        </TimeTableWrapper>
+      </>
+    );
+  }
+}
 
 export default TimeTableComponent;
