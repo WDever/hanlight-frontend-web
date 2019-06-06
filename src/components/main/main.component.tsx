@@ -7,7 +7,7 @@ import NoticePage from 'pages/main/notice';
 import TimePage from 'pages/main/time';
 import TimeTablePage from 'pages/main/timeTable';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 const { useEffect } = React;
 
@@ -26,13 +26,22 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   return loginStatus === 'success' ? (
     <>
       <HeaderContainer />
-      <>
-        <NoticePage />
-        <TimePage />
-        <MealPage />
-        <TimeTablePage />
-        <Calendar />
-      </>
+      <Switch>
+        <Route
+          exact={true}
+          path="/"
+          component={() => (
+            <>
+              <NoticePage />
+              <TimePage />
+              <MealPage />
+              <TimeTablePage />
+              <Calendar />
+            </>
+          )}
+        />
+        <Route exact={true} path="/meal" />
+      </Switch>
       <FooterComponent />
     </>
   ) : (
