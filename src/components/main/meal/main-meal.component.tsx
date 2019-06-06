@@ -4,31 +4,45 @@ import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { MealItem } from 'store';
 import styled from 'styled-components';
-import MealItem from './mealItem';
+import MealListItem from './mealItem';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 const ListWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
   height: 28rem;
-  z-index: 1;
 `;
 
-const NoBox = styled.div`
+const NoBox = styled.div<{ colored: boolean }>`
   font-size: 2.25rem;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   flex-direction: column;
   width: 15.875rem;
   height: 21rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
-  background-color: #ffffff;
+  background-color: ${props => (props.colored ? '#ff476c' : '#ffffff')};
   border-radius: 16px;
-  z-index: 1;
+  color: ${props => (props.colored ? 'white' : 'black')};
+`;
+
+const Text = styled.div`
+  height: 80%;
+  display: flex;
+  align-items: center;
+`;
+
+const DateWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1.125rem;
+  margin-right: 1.5rem;
+  width: fill-available;
 `;
 
 const MoreBox = styled.div`
@@ -44,7 +58,6 @@ const MoreBox = styled.div`
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
-  z-index: 1;
 `;
 
 const MoreBtn = styled(Link)`
@@ -58,7 +71,6 @@ const MoreBtn = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
   font-size: 0.9375rem;
   cursor: pointer;
 `;
@@ -70,27 +82,41 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
   accessToken,
 }) => {
   const MealList =
-    mealStatus === 'success' &&
-    mealList.map((item, idx) => {
-      if (idx <= 2) {
-        const mealArr = item.detail.split(',');
-        if (item.detail === '주말') {
-          return <NoBox>주말이다</NoBox>;
-        }
-        if (item.detail === 'X') {
-          return <NoBox>밥이 없다</NoBox>;
-        }
-        return (
-          <MealItem
-            mealList={mealArr}
-            date={`${moment().format('YYYY')}년 ${moment().format('M')}월 ${
-              item.date
-            }일`}
-            key={item.date}
-          />
-        );
-      }
-    });
+    mealStatus === 'success'
+      ? Array(3)
+          .fill(null)
+          .map((val, index) => {
+            const meal = mealList[index];
+            const date = `${moment().format('YYYY')}년 ${moment().format(
+              'M',
+            )}월 ${meal.date}일`;
+            if (meal.detail === '주말') {
+              return (
+                <NoBox key={index} colored={index === 0}>
+                  <Text>주말이다</Text>
+                  <DateWrapper>{date}</DateWrapper>
+                </NoBox>
+              );
+            } else if (meal.detail === 'X') {
+              return (
+                <NoBox key={index} colored={index === 0}>
+                  <Text>밥이 없다</Text>
+                  <DateWrapper>{date}</DateWrapper>
+                </NoBox>
+              );
+            } else {
+              return (
+                <MealListItem
+                  mealList={meal.detail.split(',')}
+                  date={`${moment().format('YYYY')}년 ${moment().format(
+                    'M',
+                  )}월 ${meal.date}일`}
+                  key={index}
+                />
+              );
+            }
+          })
+      : [];
 
   useEffect(() => {
     meal({ accessToken, sort: 'week' });

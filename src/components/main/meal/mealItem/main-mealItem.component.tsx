@@ -19,7 +19,6 @@ const ItemBox = styled.div`
   font-size: 1.5rem;
   color: white;
   box-shadow: 0 30px 80px 0 rgba(255, 0, 0, 0.25);
-  z-index: 1;
 `;
 
 const ContentWrapper = styled.div`
@@ -60,10 +59,10 @@ const ListBox = styled.div`
 `;
 
 const DateWrapper = styled.div`
-  width: 81rem;
   display: flex;
   justify-content: flex-end;
   font-size: 1.125rem;
+  margin-right: 1.5rem;
 `;
 
 const MealItemComponent: React.FC<MealItemProps> = ({ mealList, date }) => (
@@ -82,9 +81,7 @@ const MealItemComponent: React.FC<MealItemProps> = ({ mealList, date }) => (
       </MealWrapper>
       <Weather src={WeatherLogoSvg} alt="weather" />
     </ContentWrapper>
-    <DateWrapper>
-      {date}
-    </DateWrapper>
+    <DateWrapper>{date}</DateWrapper>
   </ItemBox>
 );
 
