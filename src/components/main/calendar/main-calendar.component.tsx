@@ -8,10 +8,10 @@ import CalendarItem from './calendarItem';
 
 const { useEffect } = React;
 
-const ScheduleWrapper = styled.div`
-  width: 100%;
+const CalendarWrapper = styled.div`
+  width: 81rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   z-index: 1;
 `;
@@ -26,10 +26,12 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   const CalendarList =
     calendarRecentStatus === 'success' &&
     calendarList.map((item, idx) => {
-      if (idx <= 2) {
+      if (idx <= 3) {
         return (
           <CalendarItem
-            date={`${moment().format('Y')}년 ${item.month} 월 ${item.date} 일`}
+            year={item.year}
+            month={item.month}
+            day={item.date}
             contents={item.detail}
             active={moment().format('D') === item.date}
             key={key++}
@@ -43,12 +45,12 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   }, [accessToken, calendarRecentApi]);
 
   return (
-    <ScheduleWrapper>
+    <CalendarWrapper>
       {CalendarList}
       {calendarRecentStatus === 'failure' && (
         <ErrorImg src={ErrorPng} alt="Error" />
       )}
-    </ScheduleWrapper>
+    </CalendarWrapper>
   );
 };
 

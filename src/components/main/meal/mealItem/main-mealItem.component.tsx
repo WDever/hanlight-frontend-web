@@ -1,9 +1,9 @@
+import WeatherLogoSvg from 'lib/svg/weather-sun-cloud.svg';
 import * as React from 'react';
 import styled from 'styled-components';
-import WeatherLogo from 'lib/svg/weather-sun-cloud.svg';
 
 interface MealItemProps {
-  mealList: Array<string>;
+  mealList: string[];
   date: string;
 }
 
@@ -12,8 +12,8 @@ const ItemBox = styled.div`
   flex-direction: column;
   justify-content: space-around;
   background-color: #ff476c;
-  width: 20.75rem;
-  height: 27.5rem;
+  width: 15.875rem;
+  height: 21rem;
   border-radius: 16px;
   font-family: 'Spoqa Han Sans';
   font-size: 1.5rem;
@@ -36,19 +36,19 @@ const MealWrapper = styled.div`
   width: 50%;
   height: 100%;
   font-family: 'Spoqa Han Sans';
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   color: white;
 `;
 
 const Weather = styled.img`
   margin: 2rem 1rem 0 1rem;
-  width: 4.5rem;
-  height: 4.5rem;
+  width: 3.4375rem;
+  height: 3.4375rem;
 `;
 
 const Lunch = styled.div`
   font-weight: bold;
-  font-size: 1.75rem;
+  font-size: 1.3125rem;
 `;
 
 const ListBox = styled.div`
@@ -60,9 +60,10 @@ const ListBox = styled.div`
 `;
 
 const DateWrapper = styled.div`
-  width: 90%;
+  width: 81rem;
   display: flex;
   justify-content: flex-end;
+  font-size: 1.125rem;
 `;
 
 const MealItemComponent: React.FC<MealItemProps> = ({ mealList, date }) => (
@@ -79,7 +80,7 @@ const MealItemComponent: React.FC<MealItemProps> = ({ mealList, date }) => (
           <span>{mealList[5]}</span>
         </ListBox>
       </MealWrapper>
-      <Weather src={WeatherLogo} alt="weather" />
+      <Weather src={WeatherLogoSvg} alt="weather" />
     </ContentWrapper>
     <DateWrapper>
       {date}

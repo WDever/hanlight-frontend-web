@@ -19,7 +19,7 @@ export interface CalendarMethod {
   calendarRecentApi(params: string | null): void;
 }
 
-const ScheduleContainer: React.FC<CalendarProps & CalendarMethod> = ({
+const CalendarContainer: React.FC<CalendarProps & CalendarMethod> = ({
   calendarRecentApi,
   calendarList,
   calendarRecentStatus,
@@ -49,4 +49,4 @@ const mapDispatchToProps = (dispatch: Dispatch<calendarReducerActions>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ScheduleContainer);
+)(CalendarContainer);

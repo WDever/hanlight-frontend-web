@@ -9,7 +9,6 @@ const Template = styled.div`
   justify-content: center;
   width: 100%;
   height: 33.375rem;
-  /* height: 21rem; */
 `;
 
 const TimeTablePage: React.FC = () => {

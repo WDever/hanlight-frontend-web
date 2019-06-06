@@ -1,15 +1,23 @@
 import EndTimeComponent from 'components/main/timer/endTimer';
 import LunchTimeComponent from 'components/main/timer/lunchTimer';
-import EndImg from 'lib/svg/end-time-illust.svg';
-import LunchImg from 'lib/svg/jumsim-illust.svg';
+import EndImgSvg from 'lib/svg/end-time-illust.svg';
+import LunchImgSvg from 'lib/svg/jumsim-illust.svg';
 import * as React from 'react';
 import styled from 'styled-components';
 
 const Template = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: space-around;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 7rem;
+`;
+
+const Wrapper = styled.div`
+  width: 81rem;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const TimeWrapper = styled.div`
@@ -18,7 +26,6 @@ const TimeWrapper = styled.div`
   display: inline-flex;
   justify-content: flex-start;
   align-items: flex-end;
-  margin-right: 6rem;
 `;
 
 const EndTimeBackGroundImg = styled.img`
@@ -39,16 +46,20 @@ const LunchTimeBackGroundImg = styled.img`
 const TimeComponent: React.FC = () => {
   return (
     <Template>
-      <TimeWrapper>
-        <LunchTimeBackGroundImg src={LunchImg} alt="Lunch Time Background Img" />
-        <LunchTimeComponent />
-      </TimeWrapper>
-      <TimeWrapper>
-        <EndTimeBackGroundImg src={EndImg} alt="End Time Background Img" />
-        <EndTimeComponent />
-      </TimeWrapper>
+      <Wrapper>
+        <TimeWrapper>
+          <LunchTimeBackGroundImg
+            src={LunchImgSvg}
+            alt="Lunch Time Background Img"
+          />
+          <LunchTimeComponent />
+        </TimeWrapper>
+        <TimeWrapper>
+          <EndTimeBackGroundImg src={EndImgSvg} alt="End Time Background Img" />
+          <EndTimeComponent />
+        </TimeWrapper>
+      </Wrapper>
     </Template>
-
   );
 };
 

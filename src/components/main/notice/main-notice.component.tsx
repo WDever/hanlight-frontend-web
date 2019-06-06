@@ -1,18 +1,15 @@
 import * as React from 'react';
 
 import NoticeList from 'container/main/notice/noticeList';
-import NoticeIllust from 'lib/svg/notice-illust.svg';
+import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NoticeWrapper = styled.div`
   display: flex;
-  /* flex-direction: column; */
-  /* justify-content: space-around; */
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  /* height: 88%; */
-  width: 100%;
+  width: 81rem;
 `;
 
 const Title = styled.span`
@@ -26,11 +23,10 @@ const Separator = styled.div`
   height: 100%;
   display: inline-flex;
   flex-direction: column;
-  margin-left: -5rem;
 `;
 
 const BtnWrapper = styled.div`
-  margin-left: 8.5rem;
+  margin-right: 5%;
   width: 18.4375rem;
   display: inline-flex;
   justify-content: center;
@@ -68,7 +64,7 @@ const NoticeComponent: React.FC = () => (
       <NoticeList />
     </Separator>
     <BtnWrapper>
-      <BtnBackGroundImg src={NoticeIllust} alt="Notice Background Img" />
+      <BtnBackGroundImg src={NoticeIllustSvg} alt="Notice Background Img" />
       <MoreBtn to="/notice">공지사항 전체보기</MoreBtn>
     </BtnWrapper>
   </NoticeWrapper>

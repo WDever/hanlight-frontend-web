@@ -5,7 +5,7 @@ import {
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
 import { Buttons, Inputs, transitions } from 'lib/styles';
-import Logo from 'lib/svg/hanlight-logo.svg';
+import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import * as React from 'react';
 import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
@@ -135,7 +135,7 @@ const LoginComponent: React.FC<
   return (
     <LoginWrapper>
       <GreetingDiv>
-        <LoginImg src={Logo} alt="" />
+        <LoginImg src={LogoSvg} alt="" />
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
