@@ -1,4 +1,4 @@
-import NoticeListComponent from 'components/main/notice/noticeList';
+import MainNoticeComponent from 'components/main/notice/main-notice.component';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -10,25 +10,25 @@ import {
   noticeReducerActions,
 } from 'store';
 
-export interface NoticeListProps {
+export interface MainNoticeProps {
   name: string;
   noticeList: NoticeListItem[];
   noticeStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
-export interface NoticeListMethod {
+export interface MainNoticeMethod {
   notice(params: NoticeParams): void;
 }
 
-const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
+const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
   name,
   notice,
   noticeList,
   noticeStatus,
   accessToken,
 }) => (
-  <NoticeListComponent
+  <MainNoticeComponent
     name={name}
     notice={notice}
     noticeList={noticeList}
@@ -51,4 +51,4 @@ const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NoticeListContainer);
+)(MainNoticeContainer);

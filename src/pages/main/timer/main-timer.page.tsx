@@ -54,7 +54,7 @@ const TimeComponent: React.FC = () => {
           />
           <LunchTimeComponent />
         </TimeWrapper>
-        <TimeWrapper>
+        <TimeWrapper style={{ marginRight: '5%' }}>
           <EndTimeBackGroundImg src={EndImgSvg} alt="End Time Background Img" />
           <EndTimeComponent />
         </TimeWrapper>

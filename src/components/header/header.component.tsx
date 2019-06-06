@@ -105,7 +105,7 @@ const HeaderComponent: React.FC<
               fontWeight: 'bold',
             }}
           >
-            학사일정
+            학사일정
           </StyledNavLink>
           <StyledNavLink
             exact={true}

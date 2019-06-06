@@ -14,8 +14,9 @@ const ItemBox = styled.div`
   width: 100%;
   height: 3.4rem;
   border-radius: 16px;
-  border: solid 1px #9e9e9e;
   cursor: pointer;
+  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
 `;
 
 const Flag = styled.div<{ read: boolean }>`

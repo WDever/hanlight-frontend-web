@@ -11,6 +11,16 @@ import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 const { useEffect } = React;
 
+const MainComponents = () => (
+  <>
+    <NoticePage />
+    <TimePage />
+    <MealPage />
+    <TimeTablePage />
+    <Calendar />
+  </>
+);
+
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   history,
@@ -27,19 +37,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     <>
       <HeaderContainer />
       <Switch>
-        <Route
-          exact={true}
-          path="/"
-          component={() => (
-            <>
-              <NoticePage />
-              <TimePage />
-              <MealPage />
-              <TimeTablePage />
-              <Calendar />
-            </>
-          )}
-        />
+        <Route exact={true} path="/" component={MainComponents} />
         <Route exact={true} path="/meal" component={() => <></>} />
         <Redirect to="/" />
       </Switch>
