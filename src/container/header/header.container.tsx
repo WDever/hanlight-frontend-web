@@ -1,28 +1,28 @@
-import * as React from 'react';
 import HeaderComponent from 'components/header';
+import * as React from 'react';
 import { connect } from 'react-redux';
-import { Dispatch, bindActionCreators } from 'redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
-import { userReducerActions, userActions, AppState } from 'store';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
+import { AppState, userActions, userReducerActions } from 'store';
 
 export interface HeaderProps {
   name: string;
 }
 
 export interface HeaderMethod {
-  reset(): void;
+  resetUser(): void;
 }
 
 const HeaderContainer: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
-> = ({ location, match, history, reset, name }) => {
+> = ({ location, match, history, resetUser, name }) => {
   return (
     <HeaderComponent
       name={name}
       history={history}
       location={location}
       match={match}
-      reset={reset}
+      resetUser={resetUser}
     />
   );
 };
@@ -32,7 +32,7 @@ const mapStateToProps = ({ user }: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
-  reset: bindActionCreators(userActions.reset, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 export default withRouter(

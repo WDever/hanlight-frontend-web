@@ -22,6 +22,11 @@ import {
   LOGIN_FAILURE,
   LOGIN_SUCCESS,
   LoginParam,
+  PATCH_PASSWORD,
+  PATCH_PASSWORD_FAILURE,
+  PATCH_PASSWORD_SUCCESS,
+  PatchPassword,
+  PatchPwParam,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
   PW_RECOVERY_SUCCESS,
@@ -32,16 +37,7 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   RegisterParam,
-  SIGN_KEY_EXIST,
-  SIGN_KEY_EXIST_FAILURE,
-  SIGN_KEY_EXIST_SUCCESS_FALSE,
-  SIGN_KEY_EXIST_SUCCESS_TRUE,
-  SignKeyExist,
-  TP_EXIST,
-  TP_EXIST_FAILURE,
-  TP_EXIST_SUCCESS_FALSE,
-  TP_EXIST_SUCCESS_TRUE,
-  TpExist,
+  SET_ERROR,
   VERIFY_PHONE,
   VERIFY_PHONE_FAILURE,
   VERIFY_PHONE_SUCCESS,
@@ -86,6 +82,7 @@ function* idRecoverySaga(action: IdRecovery) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: ID_RECOVERY_FAILURE, payload: e.response });
+      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -95,7 +92,6 @@ const pwRecoveryApi = (data: PwRecoveryParam) =>
     .post('http://54.180.114.156:3000/api/user/recovery/password', {
       code: data.code,
       id: data.id,
-      password: data.password,
     })
     .then(res => res.data);
 
@@ -108,6 +104,7 @@ function* pwRecoverySaga(action: PwRecovery) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: PW_RECOVERY_FAILURE, payload: e.response });
+      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -139,48 +136,7 @@ function* idExistSaga(action: IdExist) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: ID_EXIST_FAILURE, payload: action.payload });
-    }
-  }
-}
-
-function* tpExistSaga(action: TpExist) {
-  if (action.type) {
-    try {
-      const response = yield call(existApi, {
-        key: 'tp',
-        value: action.payload.tp,
-      });
-      console.log(response);
-      yield put({
-        type: response.data.exist
-          ? TP_EXIST_SUCCESS_TRUE
-          : TP_EXIST_SUCCESS_FALSE,
-        payload: action.payload,
-      });
-    } catch (e) {
-      console.log(e.response);
-      yield put({ type: TP_EXIST_FAILURE, payload: action.payload });
-    }
-  }
-}
-
-function* signKeyExistSaga(action: SignKeyExist) {
-  if (action.type) {
-    try {
-      const response = yield call(existApi, {
-        key: 'signKey',
-        value: action.payload.signKey,
-      });
-      console.log(response);
-      yield put({
-        type: response.data.exist
-          ? SIGN_KEY_EXIST_SUCCESS_TRUE
-          : SIGN_KEY_EXIST_SUCCESS_FALSE,
-        payload: action.payload,
-      });
-    } catch (e) {
-      console.log(e.response);
-      yield put({ type: SIGN_KEY_EXIST_FAILURE, payload: action.payload });
+      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -202,6 +158,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: VERIFY_PHONE_FAILURE, payload: e.response });
+      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -251,6 +208,37 @@ function* getUserApiSaga(action: GetUser) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: GET_USER_FAILURE, paylaod: e.response });
+      yield put({ type: SET_ERROR, payload: e.response.data });
+    }
+  }
+}
+
+const patchPasswordApi = (data: PatchPwParam) =>
+  instance
+    .patch(
+      'http://54.180.114.156:3000/api/user/password',
+      {
+        password: data.password,
+      },
+      {
+        headers: {
+          access_token: data.accessToken,
+        },
+      },
+    )
+    .then((res: AxiosResponse) => res.data);
+function* patchPasswordApiSaga(action: PatchPassword) {
+  if (action.type) {
+    try {
+      const response = yield call(patchPasswordApi, action.payload);
+      console.log(response);
+      yield put({
+        type: PATCH_PASSWORD_SUCCESS,
+      });
+    } catch (e) {
+      console.log(e.response);
+      yield put({ type: PATCH_PASSWORD_FAILURE, paylaod: e.response });
+      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -260,11 +248,10 @@ function* userSaga() {
   yield takeEvery(PW_RECOVERY, pwRecoverySaga);
   yield takeEvery(LOGIN, loginApiSaga);
   yield takeEvery(ID_EXIST, idExistSaga);
-  yield takeEvery(TP_EXIST, tpExistSaga);
-  yield takeEvery(SIGN_KEY_EXIST, signKeyExistSaga);
   yield takeEvery(REGISTER, registerApiSaga);
   yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
   yield takeEvery(GET_USER, getUserApiSaga);
+  yield takeEvery(PATCH_PASSWORD, patchPasswordApiSaga);
 }
 
 export { userSaga };

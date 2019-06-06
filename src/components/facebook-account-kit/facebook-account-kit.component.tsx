@@ -1,8 +1,6 @@
 import * as React from 'react';
 
-const {
-  useState, useEffect, useCallback,
-} = React;
+const { useState, useEffect, useCallback } = React;
 
 interface initialFuncProps {
   appId: string;
@@ -22,8 +20,8 @@ interface OptionsType {
 }
 
 export interface ChildrenParams {
-  onClick(): void;
   disabled?: boolean;
+  onClick(): void;
 }
 
 export interface FbAccountKitResType {
@@ -33,15 +31,14 @@ export interface FbAccountKitResType {
 }
 
 interface PropsType extends initialFuncProps, OptionsType {
+  disabled?: boolean;
+  validation?: () => boolean;
   children(params: ChildrenParams): React.ReactNode;
   onResponse(params: FbAccountKitResType): void;
-  disabled?: boolean;
-  optionalFunc?(): void;
-  validation?: boolean;
 }
 
 const initializeAccountKit = (props: initialFuncProps, callback: Function) => {
-  ((cb) => {
+  (cb => {
     const tag = document.createElement('script');
     tag.setAttribute(
       'src',
@@ -53,9 +50,7 @@ const initializeAccountKit = (props: initialFuncProps, callback: Function) => {
     document.head.appendChild(tag);
   })(() => {
     (window as any).AccountKit_OnInteractive = () => {
-      const {
-        appId, csrf, version, debug, display, redirect,
-      } = props;
+      const { appId, csrf, version, debug, display, redirect } = props;
       (window as any).AccountKit.init({
         appId,
         state: csrf,
@@ -85,14 +80,14 @@ const FacebookAccountKitComponent = ({
   countryCode,
   phoneNumber,
   emailAddress,
-  optionalFunc,
   validation,
 }: PropsType): any => {
   const [initialized, setInitialized] = useState(!!(window as any).AccountKit);
-  const [mount, setMount] = useState(false);
 
   const signIn = useCallback(() => {
-    if (disabled) return;
+    if (disabled) {
+      return;
+    }
 
     const options: OptionsType = {};
 
@@ -112,7 +107,11 @@ const FacebookAccountKitComponent = ({
     }
 
     // eslint-disable-next-line max-len
-    (window as any).AccountKit.login(loginType, options, (res: FbAccountKitResType) => onResponse(res));
+    (window as any).AccountKit.login(
+      loginType,
+      options,
+      (res: FbAccountKitResType) => onResponse(res),
+    );
   }, [countryCode, disabled, emailAddress, loginType, onResponse, phoneNumber]);
 
   useEffect(() => {
@@ -130,25 +129,14 @@ const FacebookAccountKitComponent = ({
         () => setInitialized(true),
       );
     }
-    return () => setMount(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => {
-    if (validation && mount) {
-      signIn();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [validation]); // validation 값이 바뀌기 전에 count가 바뀌어서
 
   return children({
     onClick: () => {
-      if (optionalFunc && typeof validation === 'boolean') {
-        optionalFunc();
-        setMount(true);
-      } else if (optionalFunc) {
-        optionalFunc();
-        signIn();
+      if (validation) {
+        if (validation()) {
+          signIn();
+        }
       } else {
         signIn();
       }

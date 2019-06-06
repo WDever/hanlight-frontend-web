@@ -3,7 +3,6 @@ import { userReducerActions } from '../action';
 import { UserModel } from '../model/user.model';
 
 const initialState: UserModel = {
-  fbCode: '',
   signKey: '',
   id: '',
   accessToken: '',
@@ -17,7 +16,7 @@ const initialState: UserModel = {
     studentNum: null,
   },
 
-  verifyStatus: 'none',
+  verifyPhoneStatus: 'none',
   registerStatus: 'none',
   loginStatus: 'none',
   idRecoveryStatus: 'none',
@@ -26,6 +25,7 @@ const initialState: UserModel = {
   tpExistStatus: 'none',
   signKeyExistStatus: 'none',
   getUserStatus: 'none',
+  patchPasswordStatus: 'none',
 };
 
 export const userReducer = (
@@ -72,6 +72,7 @@ export const userReducer = (
 
       case 'PW_RECOVERY_SUCCESS':
         draft.pwRecoveryStatus = 'success';
+        draft.accessToken = action.payload.accessToken;
         break;
 
       case 'PW_RECOVERY_FAILURE':
@@ -79,15 +80,15 @@ export const userReducer = (
         break;
 
       case 'VERIFY_PHONE':
-        draft.verifyStatus = 'pending';
+        draft.verifyPhoneStatus = 'pending';
         break;
 
       case 'VERIFY_PHONE_SUCCESS':
-        draft.verifyStatus = 'success';
+        draft.verifyPhoneStatus = 'success';
         break;
 
       case 'VERIFY_PHONE_FAILURE':
-        draft.verifyStatus = 'failure';
+        draft.verifyPhoneStatus = 'failure';
         break;
 
       case 'REGISTER':
@@ -121,48 +122,9 @@ export const userReducer = (
         draft.idExistStatus = 'failure';
         break;
 
-      case 'TP_EXIST':
-        draft.tpExistStatus = 'pending';
-        break;
-
-      case 'TP_EXIST_SUCCESS_TRUE':
-        draft.tpExistStatus = 'success-true';
-        break;
-      case 'TP_EXIST_SUCCESS_FALSE':
-        draft.tpExistStatus = 'success-false';
-        break;
-
-      case 'TP_EXIST_FAILURE':
-        draft.tpExistStatus = 'failure';
-        break;
-
-      case 'SIGN_KEY_EXIST':
-        draft.signKeyExistStatus = 'pending';
-        break;
-
-      case 'SIGN_KEY_EXIST_SUCCESS_TRUE':
-        draft.signKeyExistStatus = 'success-true';
-        break;
-
-      case 'SIGN_KEY_EXIST_SUCCESS_FALSE':
-        draft.signKeyExistStatus = 'success-false';
-        break;
-
-      case 'SIGN_KEY_EXIST_FAILURE':
-        draft.signKeyExistStatus = 'failure';
-        break;
-
-      case 'RESET':
+      case 'RESET_USER':
         localStorage.clear();
         return initialState;
-
-      case 'SET_FB_CODE':
-        draft.fbCode = action.payload;
-        break;
-
-      case 'SET_ID':
-        draft.id = action.payload;
-        break;
 
       case 'GET_USER':
         draft.getUserStatus = 'pending';
@@ -178,6 +140,16 @@ export const userReducer = (
         draft.getUserStatus = 'failure';
         draft.loginStatus = 'failure';
         localStorage.clear();
+        break;
+
+      case 'PATCH_PASSWORD':
+        draft.patchPasswordStatus = 'pending';
+        break;
+      case 'PATCH_PASSWORD_SUCCESS':
+        draft.patchPasswordStatus = 'success';
+        break;
+      case 'PATCH_PASSWORD_FAILURE':
+        draft.patchPasswordStatus = 'failure';
         break;
 
       default:

@@ -1,6 +1,7 @@
 import * as React from 'react';
+
+import RegisterContainer from 'container/user/register';
 import styled from 'styled-components';
-import RegisterContainer from 'container/auth/register';
 
 const Template = styled.div`
   width: 100%;

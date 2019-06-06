@@ -1,7 +1,8 @@
 import * as React from 'react';
+
+import pwRecoveryContainer from 'container/user/recovery/pwRecovery';
+import { Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
-import { Switch, Route } from 'react-router-dom';
-import pwRecoveryContainer from 'container/auth/recovery/pwRecovery';
 
 const Template = styled.div`
   display: flex;
@@ -15,8 +16,8 @@ const RecoveryPage: React.FC = () => (
   <Template>
     <Switch>
       <Route
-        exact
-        path='/user/recovery/password'
+        exact={true}
+        path="/user/recovery/password"
         component={pwRecoveryContainer}
       />
     </Switch>

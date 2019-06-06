@@ -1,13 +1,21 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { Inputs, Buttons, WrongLabel, InputsGroup } from 'lib/styles';
-import { RouteComponentProps } from 'react-router-dom';
-import { RegisterProps, RegisterMethod } from 'container/auth/register';
+
+import ModalComponent from 'components/modal';
+import { RegisterMethod, RegisterProps } from 'container/user/register';
 import { useInputs } from 'lib/hooks';
 import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
+import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import coloredCheckSvg from 'lib/svg/colored-check.svg';
+import coloredIdSvg from 'lib/svg/colored-id.svg';
+import coloredPwSvg from 'lib/svg/colored-password.svg';
+import disabledCheckSvg from 'lib/svg/disabled-check.svg';
+import disabledIdSvg from 'lib/svg/disabled-id.svg';
+import disabledPwSvg from 'lib/svg/disabled-password.svg';
+import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 
 const { useEffect, useState } = React;
 
@@ -60,6 +68,25 @@ const Form = styled.form`
   height: 80%;
 `;
 
+const IdInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const PwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const RePwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props =>
+      props.colored ? coloredCheckSvg : disabledCheckSvg})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
 const RegisterComponent: React.FC<
   RegisterProps & RegisterMethod & RouteComponentProps
 > = ({
@@ -67,7 +94,7 @@ const RegisterComponent: React.FC<
   signKey,
   register,
   history,
-  reset,
+  resetUser,
   idExist,
   idExistStatus,
 }) => {
@@ -90,7 +117,13 @@ const RegisterComponent: React.FC<
   const registerSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (id && password && rePassword) {
+    if (
+      idExistStatus !== 'pending' &&
+      registerStatus !== 'pending' &&
+      id &&
+      password &&
+      rePassword
+    ) {
       const idCheckResult = idCheck(id);
       const pwCheckResult = pwCheck(password);
       const rpwCheckResult = rPwCheck(rePassword);
@@ -127,85 +160,94 @@ const RegisterComponent: React.FC<
 
   useEffect(() => {
     if (!signKey.length) {
-      history.push('/auth');
-    } else {
-      if (registerStatus === 'success') {
-        console.log('성공');
-        history.push('/auth');
-      } else if (registerStatus === 'failure') {
-        alert('회원가입에 실패하였습니다.');
-      }
+      history.push('/user/login');
     }
-  }, [registerStatus, history]);
+  }, []);
 
   useEffect(
     () => () => {
-      reset();
+      resetUser();
     },
     [],
   );
 
   return (
     <React.Fragment>
+      {registerStatus === 'success' && (
+        <ModalComponent
+          width="50.25rem"
+          height="24.625rem"
+          type="phoneCheck"
+          message="회원가입 성공"
+          click={() => {
+            resetUser();
+            history.push('/user/login');
+          }}
+        />
+      )}
+
       <RegisterWrapper>
         <GreetingDiv>회원가입</GreetingDiv>
         <Form onSubmit={registerSubmit}>
           <InputWrapper>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {(!idValidation || idExistStatus === 'success-true') && (
                 <WrongLabel>
                   형식이 잘못되었거나 중복되는 아이디 입니다!
                 </WrongLabel>
               )}
-              <Inputs
+              <IdInput
                 wrong={!idValidation || idExistStatus === 'success-true'}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!id}
                 value={id}
-                type='text'
-                placeholder='아이디'
-                name='id'
-                autoComplete='off'
+                type="text"
+                placeholder="아이디"
+                name="id"
+                autoComplete="off"
                 onChange={inputsChange}
+                colored={!!id}
               />
             </InputsGroup>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
-              <Inputs
+              <PwInput
                 wrong={!pwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!password}
                 value={password}
-                type='password'
-                name='password'
-                autoComplete='off'
-                placeholder='비밀번호'
+                type="password"
+                name="password"
+                autoComplete="off"
+                placeholder="비밀번호"
                 onChange={inputsChange}
+                colored={!!password}
               />
             </InputsGroup>
-            <InputsGroup width='28.75rem' height='6.5rem'>
+            <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호와 일치하지 않습니다!</WrongLabel>
               )}
-              <Inputs
+              <RePwInput
                 wrong={!rpwValidation}
-                width='28.75rem'
-                height='4.375rem'
+                width="28.75rem"
+                height="4.375rem"
                 active={!!rePassword}
                 value={rePassword}
-                name='rePassword'
-                autoComplete='off'
-                placeholder='비밀번호 재입력'
-                type='password'
+                name="rePassword"
+                autoComplete="off"
+                placeholder="비밀번호 재입력"
+                type="password"
                 onChange={inputsChange}
+                colored={!!rePassword}
               />
             </InputsGroup>
           </InputWrapper>
           <Buttons
-            width='28.75rem'
-            height='4.375rem'
+            width="28.75rem"
+            height="4.375rem"
             active={!!(id.length && password.length && rePassword.length)}
           >
             회원가입

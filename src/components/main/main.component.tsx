@@ -7,32 +7,42 @@ import NoticePage from 'pages/main/notice';
 import TimePage from 'pages/main/timer';
 import TimeTablePage from 'pages/main/timeTable';
 import * as React from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 const { useEffect } = React;
 
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   history,
-  reset,
+  resetUser,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
-      history.push('/auth');
-      reset();
+      history.push('/user/login');
+      resetUser();
     }
   }, [loginStatus]);
 
   return loginStatus === 'success' ? (
     <>
       <HeaderContainer />
-      <>
-        <NoticePage />
-        <TimePage />
-        <MealPage />
-        <TimeTablePage />
-        <Calendar />
-      </>
+      <Switch>
+        <Route
+          exact={true}
+          path="/"
+          component={() => (
+            <>
+              <NoticePage />
+              <TimePage />
+              <MealPage />
+              <TimeTablePage />
+              <Calendar />
+            </>
+          )}
+        />
+        <Route exact={true} path="/meal" component={() => <></>} />
+        <Redirect to="/" />
+      </Switch>
       <FooterComponent />
     </>
   ) : (

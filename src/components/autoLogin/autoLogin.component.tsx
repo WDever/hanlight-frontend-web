@@ -12,7 +12,7 @@ class AutoLoginComponent extends React.Component<
     if (accessToken) {
       this.props.getUser(accessToken);
     } else {
-      this.props.history.push('/auth');
+      this.props.history.push('/user/login');
     }
   }
 

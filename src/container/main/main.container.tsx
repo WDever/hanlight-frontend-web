@@ -10,7 +10,7 @@ export interface MainProps {
 }
 
 export interface MainMethod {
-  reset(): void;
+  resetUser(): void;
 }
 
 const MainContainer: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
@@ -18,14 +18,14 @@ const MainContainer: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   match,
   history,
-  reset,
+  resetUser,
 }) => (
   <MainComponent
     loginStatus={loginStatus}
     history={history}
     location={location}
     match={match}
-    reset={reset}
+    resetUser={resetUser}
   />
 );
 
@@ -34,7 +34,7 @@ const mapStateToProps = ({ user }: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
-  reset: bindActionCreators(userActions.reset, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 export default withRouter(

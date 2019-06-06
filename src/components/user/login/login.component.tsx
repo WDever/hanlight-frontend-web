@@ -1,12 +1,17 @@
-import { LoginMethod, LoginProps } from 'container/auth/login';
+import * as React from 'react';
+
+import { LoginMethod, LoginProps } from 'container/user/login';
 import { useInputs } from 'lib/hooks';
 import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
 import { Buttons, Inputs, transitions } from 'lib/styles';
+import coloredIdSvg from 'lib/svg/colored-id.svg';
+import coloredPwSvg from 'lib/svg/colored-password.svg';
+import disabledIdSvg from 'lib/svg/disabled-id.svg';
+import disabledPwSvg from 'lib/svg/disabled-password.svg';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
-import * as React from 'react';
 import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -85,6 +90,18 @@ const WrongLabel = styled.label`
   font-size: 1rem;
 `;
 
+const LoginInputId = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const LoginInputPw = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
 const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
 
 const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
@@ -139,8 +156,8 @@ const LoginComponent: React.FC<
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
-          <Inputs
-            width="28.75rem"
+          <LoginInputId
+            width="25.75rem"
             height="4.375rem"
             active={!!id}
             type="id"
@@ -148,9 +165,10 @@ const LoginComponent: React.FC<
             onChange={inputsChange}
             name="id"
             value={id}
+            colored={!!id}
           />
-          <Inputs
-            width="28.75rem"
+          <LoginInputPw
+            width="25.75rem"
             height="4.375rem"
             active={!!password}
             type="password"
@@ -158,6 +176,7 @@ const LoginComponent: React.FC<
             onChange={inputsChange}
             name="password"
             value={password}
+            colored={!!password}
           />
         </LoginInputWrapper>
         <WrongLabel>

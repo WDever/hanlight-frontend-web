@@ -1,9 +1,10 @@
-/* eslint-disable no-nested-ternary */
 import * as React from 'react';
-import styled from 'styled-components';
+
 import { Buttons } from 'lib/styles';
-import phoneCheckSuccess from 'lib/svg/phoneCheck-success.svg';
-import checkImg from 'lib/svg/checkbox.svg';
+import checkSvg from 'lib/svg/checkbox.svg';
+import phoneCheckFailureSvg from 'lib/svg/phoneCheck-failure.svg';
+import phoneCheckSuccessSvg from 'lib/svg/phoneCheck-success.svg';
+import styled from 'styled-components';
 
 interface ModalSize {
   width: string;
@@ -11,8 +12,9 @@ interface ModalSize {
 }
 
 interface ModalProps extends ModalSize {
-  type: 'phoneCheck' | 'recovery';
+  type: 'phoneCheck' | 'recoveryId' | 'recoveryPw' | 'error';
   id?: string;
+  message?: string;
   click(): void;
 }
 
@@ -55,32 +57,42 @@ const ColoredText = styled.span`
   color: #4470ff;
 `;
 
-const RecoveryModalComponent: React.FC<ModalProps> = ({
+const ModalComponent: React.FC<ModalProps> = ({
   width,
   height,
   type,
   id,
   click,
+  message,
 }) => (
   <Modal>
     <ModalWrapper width={width} height={height}>
-      <img
-        src={type === 'phoneCheck' ? phoneCheckSuccess : checkImg}
-        alt='modal'
-      />
-      {type === 'phoneCheck' && <ModalText>인증 성공</ModalText>}{' '}
-      {type === 'recovery' && (
+      {type === 'phoneCheck' && <img src={phoneCheckSuccessSvg} alt="modal" />}
+      {type.includes('recovery') && <img src={checkSvg} alt="modal" />}
+      {type === 'error' && (
+        <img style={{ width: '5rem' }} src={phoneCheckFailureSvg} alt="modal" />
+      )}
+
+      {type === 'phoneCheck' && <ModalText>{message || '인증 성공'}</ModalText>}
+      {type === 'recoveryId' && (
         <ModalText>
           아이디는&nbsp;
           <ColoredText>{id}</ColoredText>
-          &nbsp; 입니다
+          &nbsp; 입니다.
         </ModalText>
       )}
-      <Buttons width='28.75rem' height='4.375rem' active onClick={click}>
+      {type === 'recoveryPw' && (
+        <ModalText>
+          비밀번호가 &nbsp; <ColoredText>변경</ColoredText>
+          되었습니다.
+        </ModalText>
+      )}
+      {type === 'error' && <ModalText>{message || '인증 실패'}</ModalText>}
+      <Buttons width="28.75rem" height="4.375rem" active={true} onClick={click}>
         확인
       </Buttons>
     </ModalWrapper>
   </Modal>
 );
 
-export default RecoveryModalComponent;
+export default ModalComponent;
