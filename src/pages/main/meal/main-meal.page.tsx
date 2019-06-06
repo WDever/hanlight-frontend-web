@@ -12,13 +12,15 @@ const Template = styled.div`
 `;
 
 const Title = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
 `;
 
 const ListWrapper = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   height: 100%;
   display: flex;
   align-items: center;
@@ -28,9 +30,7 @@ const MealPage: React.FC = () => {
   console.log(window.innerHeight);
   return (
     <Template>
-      <Title>
-        급식 정보
-      </Title>
+      <Title>급식 정보</Title>
       <ListWrapper>
         <MealContainer />
       </ListWrapper>

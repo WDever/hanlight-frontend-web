@@ -9,7 +9,8 @@ import TimeTableItem from './timeTableItem';
 const { useEffect } = React;
 
 const Title = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin-bottom: 2rem;
@@ -20,7 +21,8 @@ const Colored = styled.span`
 `;
 
 const TimeTableWrapper = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;

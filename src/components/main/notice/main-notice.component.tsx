@@ -17,7 +17,8 @@ const NoticeWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
 `;
 
 const Title = styled.span`
