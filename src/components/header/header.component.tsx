@@ -1,8 +1,8 @@
-import * as React from 'react';
-import styled from 'styled-components';
-import { NavLink, RouteComponentProps } from 'react-router-dom';
+import { HeaderMethod, HeaderProps } from 'container/header';
 import Logo from 'lib/svg/hanlight-logo.svg';
-import { HeaderProps, HeaderMethod } from 'container/header';
+import * as React from 'react';
+import { NavLink, RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -63,19 +63,19 @@ const NameSpan = styled.span`
 
 const HeaderComponent: React.FC<
   HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
-> = ({ name, history, reset }) => {
+> = ({ name, history, resetUser }) => {
   const logout = () => {
-    reset();
-    history.push('/auth');
+    resetUser();
+    history.push('/user/login');
   };
 
   return (
     <HeaderWrapper>
       <InnerBox>
-        <LogoImg src={Logo} alt='Hanlight Logo' />
+        <LogoImg src={Logo} alt="Hanlight Logo" />
         <BtnsWrapper>
           <StyledNavLink
-            to='/'
+            to="/"
             activeStyle={{
               color: '#4470ff',
               fontSize: '1.5rem',
@@ -85,7 +85,7 @@ const HeaderComponent: React.FC<
             메인
           </StyledNavLink>
           <StyledNavLink
-            to='/timeTable'
+            to="/timeTable"
             activeStyle={{
               color: '#4470ff',
               fontSize: '1.5rem',
@@ -95,7 +95,7 @@ const HeaderComponent: React.FC<
             시간표
           </StyledNavLink>
           <StyledNavLink
-            to='/schedule'
+            to="/schedule"
             activeStyle={{
               color: '#4460ff',
               fontSize: '1.5rem',
@@ -105,7 +105,7 @@ const HeaderComponent: React.FC<
             학사일정
           </StyledNavLink>
           <StyledNavLink
-            to='/board'
+            to="/board"
             activeStyle={{
               color: '#4460ff',
               fontSize: '1.5rem',

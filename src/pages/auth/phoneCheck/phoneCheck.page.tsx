@@ -1,6 +1,7 @@
 import * as React from 'react';
+
+import PhoneCheckContainer from 'container/user/phoneCheck';
 import styled from 'styled-components';
-import PhoneCheckContainer from 'container/auth/phoneCheck';
 
 const Template = styled.div`
   width: 100%;

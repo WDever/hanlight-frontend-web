@@ -1,20 +1,21 @@
 import * as React from 'react';
-import styled from 'styled-components';
-import { RouteComponentProps } from 'react-router-dom';
-import {
-  Inputs, Buttons, WrongLabel, InputsGroup,
-} from 'lib/styles';
-import { useInputs } from 'lib/hooks';
-import Modal from 'components/auth/recovery/modal';
-import {
-  PwRecoveryProps,
-  PwRecoveryMethod,
-} from 'container/auth/recovery/pwRecovery';
-import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
 
-const {
-  useState, useEffect,
-} = React;
+import Modal from 'components/modal';
+import {
+  PwRecoveryMethod,
+  PwRecoveryProps,
+} from 'container/user/recovery/pwRecovery';
+import { useInputs } from 'lib/hooks';
+import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
+import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import coloredCheckSvg from 'lib/svg/colored-check.svg';
+import coloredPwSvg from 'lib/svg/colored-password.svg';
+import disabledCheckSvg from 'lib/svg/disabled-check.svg';
+import disabledPwSvg from 'lib/svg/disabled-password.svg';
+import { RouteComponentProps } from 'react-router-dom';
+import styled from 'styled-components';
+
+const { useState, useEffect } = React;
 
 const PwRecoveryWrapper = styled.div`
   width: 38.125rem;
@@ -62,17 +63,29 @@ const Form = styled.form`
   height: 70%;
 `;
 
+const PwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
+const RePwInput = styled(Inputs)<{ colored: boolean }>`
+  background: url(${props =>
+      props.colored ? coloredCheckSvg : disabledCheckSvg})
+    no-repeat scroll 1.5rem;
+  padding-left: 3rem;
+`;
+
 const PwRecoveryComponent: React.FC<
-PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
+  PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 > = ({
-  pwRecovery,
-  pwRecoveryStatus,
-  history,
   match,
+  history,
   location,
-  fbCode,
-  id,
-  reset,
+  resetUser,
+  accessToken,
+  patchPassword,
+  patchPasswordStatus,
 }) => {
   const [inputs, setInputs] = useInputs({
     password: '',
@@ -83,14 +96,19 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
 
   const { password, rePassword } = inputs;
 
-  const pwCheck = (str: string): boolean => new RegExp(passwordRegExp).test(str);
+  const pwCheck = (str: string): boolean =>
+    new RegExp(passwordRegExp).test(str);
 
   const rpwCheck = (str: string): boolean => str === password;
 
   const recoverySubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (password.length && rePassword.length) {
+    if (
+      patchPasswordStatus !== 'pending' &&
+      password.length &&
+      rePassword.length
+    ) {
       const pwCheckResult = pwCheck(password);
       const rpwCheckResult = rpwCheck(rePassword);
 
@@ -98,32 +116,35 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
       setRpwValidation(rpwCheckResult);
 
       if (pwCheckResult && rpwCheckResult) {
-        pwRecovery({ code: fbCode, id, password });
+        patchPassword({ accessToken, password });
       }
     }
   };
 
   useEffect(() => {
-    if (!fbCode.length || !id.length) {
-      history.push('/auth');
+    if (!accessToken.length) {
+      history.push('/user/login');
     }
-  }, [fbCode.length, history, id.length]);
+  }, [accessToken, history]);
 
   useEffect(
     () => () => {
-      reset();
+      resetUser();
     },
-    [reset],
+    [],
   );
 
-  return fbCode.length && id.length ? (
+  return accessToken.length ? (
     <React.Fragment>
-      {pwRecoveryStatus === 'success' && (
+      {patchPasswordStatus === 'success' && (
         <Modal
           width="50.25rem"
           height="24.625rem"
-          type="phoneCheck"
-          click={() => history.push('/auth')}
+          type="recoveryPw"
+          click={() => {
+            resetUser();
+            history.push('/user/login');
+          }}
         />
       )}
 
@@ -131,14 +152,13 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
         <GreetingDiv>
           <ColoredSpan>재설정</ColoredSpan>
           할&nbsp;
-          <ColoredSpan>비밀번호</ColoredSpan>
-를 입력해주세요
+          <ColoredSpan>비밀번호</ColoredSpan>를 입력해주세요
         </GreetingDiv>
         <Form onSubmit={recoverySubmit}>
           <InputWrapper>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
-              <Inputs
+              <PwInput
                 type="password"
                 wrong={!pwValidation}
                 width="28.75rem"
@@ -148,13 +168,14 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
                 onChange={setInputs}
                 placeholder="새 비밀번호"
                 active={!!password}
+                colored={!!password}
               />
             </InputsGroup>
             <InputsGroup width="28.75rem" height="6.5rem">
               {!rpwValidation && (
                 <WrongLabel>비밀번호가 일치하지 않습니다.</WrongLabel>
               )}
-              <Inputs
+              <RePwInput
                 type="password"
                 wrong={!rpwValidation}
                 width="28.75rem"
@@ -164,6 +185,7 @@ PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
                 onChange={setInputs}
                 placeholder="확인"
                 active={!!rePassword}
+                colored={!!rePassword}
               />
             </InputsGroup>
           </InputWrapper>

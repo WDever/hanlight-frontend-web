@@ -1,14 +1,15 @@
 import * as React from 'react';
-import { bindActionCreators, Dispatch } from 'redux';
-import { withRouter, RouteComponentProps } from 'react-router-dom';
+
+import RegisterComponent from 'components/user/register';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
   RegisterParam,
-  userReducerActions,
   userActions,
+  userReducerActions,
 } from 'store';
-import RegisterComponent from 'components/auth/register';
 
 export interface RegisterProps {
   registerStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -23,7 +24,7 @@ export interface RegisterProps {
 
 export interface RegisterMethod {
   register(data: RegisterParam): void;
-  reset(): void;
+  resetUser(): void;
   idExist({ id }: { id: string }): void;
 }
 
@@ -37,7 +38,7 @@ const RegisterContainer: React.SFC<
   history,
   match,
   location,
-  reset,
+  resetUser,
   idExistStatus,
 }) => (
   <RegisterComponent
@@ -48,7 +49,7 @@ const RegisterContainer: React.SFC<
     history={history}
     match={match}
     location={location}
-    reset={reset}
+    resetUser={resetUser}
     idExistStatus={idExistStatus}
   />
 );
@@ -61,7 +62,7 @@ const mapStateToProps = ({ user }: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   register: bindActionCreators(userActions.register, dispatch),
-  reset: bindActionCreators(userActions.reset, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
   idExist: bindActionCreators(userActions.idExist, dispatch),
 });
 
