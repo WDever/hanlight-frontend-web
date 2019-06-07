@@ -4,35 +4,35 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  GetNoticeListParams,
   noticeActions,
   NoticeListItem,
-  NoticeParams,
   noticeReducerActions,
 } from 'store';
 
 export interface MainNoticeProps {
   name: string;
   noticeList: NoticeListItem[];
-  noticeStatus: 'none' | 'pending' | 'success' | 'failure';
+  getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
 export interface MainNoticeMethod {
-  notice(params: NoticeParams): void;
+  getNoticeList(params: GetNoticeListParams): void;
 }
 
 const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
   name,
-  notice,
+  getNoticeList,
   noticeList,
-  noticeStatus,
+  getNoticeListStatus,
   accessToken,
 }) => (
   <MainNoticeComponent
     name={name}
-    notice={notice}
+    getNoticeList={getNoticeList}
     noticeList={noticeList}
-    noticeStatus={noticeStatus}
+    getNoticeListStatus={getNoticeListStatus}
     accessToken={accessToken}
   />
 );
@@ -40,12 +40,12 @@ const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
 const mapStateToProps = ({ user, notice }: AppState) => ({
   name: user.data.name,
   noticeList: notice.noticeList,
-  noticeStatus: notice.noticeStatus,
+  getNoticeListStatus: notice.getNoticeListStatus,
   accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
-  notice: bindActionCreators(noticeActions.notice, dispatch),
+  getNoticeList: bindActionCreators(noticeActions.getNoticeList, dispatch),
 });
 
 export default connect(

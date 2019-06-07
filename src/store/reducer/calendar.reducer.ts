@@ -2,8 +2,8 @@ import { produce } from 'immer';
 import { CalendarModel, calendarReducerActions } from 'store';
 
 const initialState: CalendarModel = {
-  calendarStatus: 'none',
-  calendarRecentStatus: 'none',
+  getCalendarStatus: 'none',
+  getCalendarRecentStatus: 'none',
   calendar: [],
   calendarRecent: [],
 };
@@ -11,35 +11,36 @@ const initialState: CalendarModel = {
 export const calendarReducer = (
   state: CalendarModel = initialState,
   action: calendarReducerActions,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case 'CALENDAR':
-      draft.calendarStatus = 'pending';
-      break;
+) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case 'GET_CALENDAR':
+        draft.getCalendarStatus = 'pending';
+        break;
 
-    case 'CALENDAR_SUCCESS':
-      draft.calendarStatus = 'success';
-      draft.calendar = action.payload.data.calendar;
-      break;
+      case 'GET_CALENDAR_SUCCESS':
+        draft.getCalendarStatus = 'success';
+        draft.calendar = action.payload.data.calendar;
+        break;
 
-    case 'CALENDAR_FAILURE':
-      draft.calendarRecentStatus = 'failure';
-      break;
+      case 'GET_CALENDAR_FAILURE':
+        draft.getCalendarRecentStatus = 'failure';
+        break;
 
-    case 'CALENDAR_RECENT':
-      draft.calendarRecentStatus = 'pending';
-      break;
+      case 'GET_CALENDAR_RECENT':
+        draft.getCalendarRecentStatus = 'pending';
+        break;
 
-    case 'CALENDAR_RECENT_SUCCESS':
-      draft.calendarRecentStatus = 'success';
-      draft.calendarRecent = action.payload.data.calendar;
-      break;
+      case 'GET_CALENDAR_RECENT_SUCCESS':
+        draft.getCalendarRecentStatus = 'success';
+        draft.calendarRecent = action.payload.data.calendar;
+        break;
 
-    case 'CALENDAR_RECENT_FAILURE':
-      draft.calendarRecentStatus = 'failure';
-      break;
+      case 'GET_CALENDAR_RECENT_FAILURE':
+        draft.getCalendarRecentStatus = 'failure';
+        break;
 
-    default:
-      break;
-  }
-});
+      default:
+        break;
+    }
+  });

@@ -18,13 +18,13 @@ const CalendarWrapper = styled.div`
 `;
 
 const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
-  calendarRecentApi,
+  getCalendarRecent,
   calendarList,
-  calendarRecentStatus,
+  getCalendarRecentStatus,
   accessToken,
 }) => {
   const CalendarList =
-    calendarRecentStatus === 'success'
+    getCalendarRecentStatus === 'success'
       ? calendarList.splice(0, 4).map((item, index) => {
           const today =
             moment().format('YYYY.MM.DD') ===
@@ -47,13 +47,13 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
       : [];
 
   useEffect(() => {
-    calendarRecentApi(accessToken);
-  }, [accessToken, calendarRecentApi]);
+    getCalendarRecent(accessToken);
+  }, [accessToken]);
 
   return (
     <CalendarWrapper>
       {CalendarList}
-      {calendarRecentStatus === 'failure' && (
+      {getCalendarRecentStatus === 'failure' && (
         <ErrorImg src={ErrorPng} alt="Error" />
       )}
     </CalendarWrapper>

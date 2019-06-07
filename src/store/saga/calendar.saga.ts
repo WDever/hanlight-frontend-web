@@ -1,18 +1,18 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
-  CALENDAR,
-  Calendar,
-  CALENDAR_FAILURE,
-  CALENDAR_RECENT,
-  CALENDAR_RECENT_FAILURE,
-  CALENDAR_RECENT_SUCCESS,
-  CALENDAR_SUCCESS,
-  CalendarParams,
-  CalendarRecent,
+  GET_CALENDAR,
+  GET_CALENDAR_FAILURE,
+  GET_CALENDAR_RECENT,
+  GET_CALENDAR_RECENT_FAILURE,
+  GET_CALENDAR_RECENT_SUCCESS,
+  GET_CALENDAR_SUCCESS,
+  GetCalendar,
+  GetCalendarParams,
+  GetCalendarRecent,
 } from '../action';
 
-const calendarApi = (data: CalendarParams) =>
+const getCalendarApi = (data: GetCalendarParams) =>
   instance
     .get('http://54.180.114.156:3000/api/calendar', {
       headers: {
@@ -25,7 +25,7 @@ const calendarApi = (data: CalendarParams) =>
     })
     .then(res => res.data);
 
-const calendarRecentApi = (data: string | null) =>
+const getCalendarRecentApi = (data: string | null) =>
   instance
     .get('http://54.180.114.156:3000/api/calendar/recent', {
       headers: {
@@ -34,33 +34,33 @@ const calendarRecentApi = (data: string | null) =>
     })
     .then(res => res.data);
 
-function* calendarApiSaga(action: Calendar) {
+function* getCalendarApiSaga(action: GetCalendar) {
   if (action.type) {
     try {
-      const response = yield call(calendarApi, action.payload);
+      const response = yield call(getCalendarApi, action.payload);
       console.log(response);
-      yield put({ type: CALENDAR_SUCCESS, payload: response });
+      yield put({ type: GET_CALENDAR_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: CALENDAR_FAILURE, payload: e.response });
+      yield put({ type: GET_CALENDAR_FAILURE, payload: e.response });
     }
   }
 }
 
-function* calendarRecentApiSaga(action: CalendarRecent) {
+function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
   if (action.type) {
     try {
-      const response = yield call(calendarRecentApi, action.payload);
+      const response = yield call(getCalendarRecentApi, action.payload);
       console.log(response);
-      yield put({ type: CALENDAR_RECENT_SUCCESS, payload: response });
+      yield put({ type: GET_CALENDAR_RECENT_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: CALENDAR_RECENT_FAILURE, payload: e.response });
+      yield put({ type: GET_CALENDAR_RECENT_FAILURE, payload: e.response });
     }
   }
 }
 
 export function* calendarSaga() {
-  yield takeEvery(CALENDAR, calendarApiSaga);
-  yield takeEvery(CALENDAR_RECENT, calendarRecentApiSaga);
+  yield takeEvery(GET_CALENDAR, getCalendarApiSaga);
+  yield takeEvery(GET_CALENDAR_RECENT, getCalendarRecentApiSaga);
 }

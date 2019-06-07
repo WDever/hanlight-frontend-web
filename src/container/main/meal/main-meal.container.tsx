@@ -4,44 +4,44 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  GetMealParams,
   mealActions,
   MealItem,
-  MealParams,
   mealReducerActions,
 } from 'store';
 
 export interface MealProps {
   mealList: MealItem[];
-  mealStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMealStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
 export interface MealMethod {
-  meal(params: MealParams): void;
+  getMeal(params: GetMealParams): void;
 }
 
 const MealContainer: React.FC<MealProps & MealMethod> = ({
-  meal,
+  getMeal,
   mealList,
-  mealStatus,
+  getMealStatus,
   accessToken,
 }) => (
   <MealComponent
-    meal={meal}
+    getMeal={getMeal}
     mealList={mealList}
-    mealStatus={mealStatus}
+    getMealStatus={getMealStatus}
     accessToken={accessToken}
   />
 );
 
 const mapStateToProps = ({ user, meal }: AppState) => ({
   mealList: meal.mealList,
-  mealStatus: meal.mealStatus,
+  getMealStatus: meal.getMealStatus,
   accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
-  meal: bindActionCreators(mealActions.meal, dispatch),
+  getMeal: bindActionCreators(mealActions.getMeal, dispatch),
 });
 
 export default connect(

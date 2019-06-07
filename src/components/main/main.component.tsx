@@ -38,7 +38,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       <HeaderContainer />
       <Switch>
         <Route exact={true} path="/" component={MainComponents} />
-        <Route exact={true} path="/meal" component={() => <></>} />
+        <Route exact={true} path="/meal" component={MealPage} />
         <Redirect to="/" />
       </Switch>
       <FooterComponent />

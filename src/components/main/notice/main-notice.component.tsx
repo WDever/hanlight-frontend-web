@@ -91,13 +91,13 @@ class NoticeComponent extends React.Component<
   };
 
   public componentDidMount() {
-    this.props.notice({ accessToken: this.props.accessToken });
+    this.props.getNoticeList({ accessToken: this.props.accessToken });
   }
 
   public componentDidUpdate(prevProps: MainNoticeProps & MainNoticeMethod) {
     if (
-      prevProps.noticeStatus === 'pending' &&
-      this.props.noticeStatus === 'success'
+      prevProps.getNoticeListStatus === 'pending' &&
+      this.props.getNoticeListStatus === 'success'
     ) {
       this.setState({
         noticeList: this.state.noticeList.concat(
@@ -134,9 +134,9 @@ class NoticeComponent extends React.Component<
           <Title>공지사항</Title>
           <NoticeListWrapper>
             <InnerWrapper length={NoticeList.length}>
-              {this.props.noticeStatus === 'success' && NoticeList}
+              {this.props.getNoticeListStatus === 'success' && NoticeList}
             </InnerWrapper>
-            {this.props.noticeStatus === 'failure' && (
+            {this.props.getNoticeListStatus === 'failure' && (
               <ErrorImg src={ErrorPng} alt="Error" />
             )}
           </NoticeListWrapper>

@@ -13,8 +13,8 @@ export interface NoticePostItem {
 }
 
 export interface NoticeModel {
-  noticeStatus: 'none' | 'pending' | 'success' | 'failure';
-  noticePostStatus: 'none' | 'pending' | 'success' | 'failure';
+  getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
+  getNoticePostStatus: 'none' | 'pending' | 'success' | 'failure';
   noticeList: NoticeListItem[];
   noticePost: NoticePostItem;
 }

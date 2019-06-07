@@ -76,13 +76,13 @@ const MoreBtn = styled(Link)`
 `;
 
 const MealComponent: React.FC<MealProps & MealMethod> = ({
-  meal,
+  getMeal,
   mealList,
-  mealStatus,
+  getMealStatus,
   accessToken,
 }) => {
   const MealList =
-    mealStatus === 'success'
+    getMealStatus === 'success'
       ? Array(3)
           .fill(null)
           .map((val, index) => {
@@ -119,13 +119,13 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
       : [];
 
   useEffect(() => {
-    meal({ accessToken, sort: 'week' });
-  }, [accessToken, meal]);
+    getMeal({ accessToken, sort: 'week' });
+  }, [accessToken]);
 
   return (
     <ListWrapper>
       {MealList}
-      {mealStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
+      {getMealStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       <MoreBox>
         <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>
