@@ -1,11 +1,12 @@
 import FooterComponent from 'components/footer';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
-import Calendar from 'pages/main/calendar';
+import CalendarPage from 'pages/main/calendar';
 import MealPage from 'pages/main/meal';
 import NoticePage from 'pages/main/notice';
 import TimePage from 'pages/main/timer';
 import TimeTablePage from 'pages/main/timeTable';
+import TimeTableDetailPage from 'pages/timeTable';
 import * as React from 'react';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
@@ -29,6 +30,15 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       <Switch>
         <Route
           exact={true}
+          path="/timetable"
+          component={() => (
+            <>
+              <TimeTableDetailPage />
+            </>
+          )}
+        />
+        <Route
+          exact={true}
           path="/"
           component={() => (
             <>
@@ -36,12 +46,12 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
               <TimePage />
               <MealPage />
               <TimeTablePage />
-              <Calendar />
+              <CalendarPage />
             </>
           )}
         />
         <Route exact={true} path="/meal" component={() => <></>} />
-        <Redirect to="/" />
+       <Redirect to="/" />
       </Switch>
       <FooterComponent />
     </>
