@@ -15,37 +15,40 @@ export interface TimeTableProps {
     string[],
     string[]
   ];
-  timetableStatus: 'none' | 'pending' | 'success' | 'failure';
+  getTimetableStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
   grade: number | null;
   classNum: number | null;
+  major: string | null;
 }
 
 export interface TimeTableMethod {
-  timetableApi(param: string | null): void;
+  getTimetable(param: string | null): void;
 }
 
 const TimeTableContainer: React.FC<
   TimeTableProps & TimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
-  timetableApi,
-  timetableStatus,
+  getTimetable,
+  getTimetableStatus,
   accessToken,
   grade,
   classNum,
   history,
   match,
   location,
+  major,
 }) => {
   return (
     <TimeTableComponent
       timeTableList={timeTableList}
-      timetableApi={timetableApi}
-      timetableStatus={timetableStatus}
+      getTimetable={getTimetable}
+      getTimetableStatus={getTimetableStatus}
       accessToken={accessToken}
       grade={grade}
       classNum={classNum}
+      major={major}
       history={history}
       match={match}
       location={location}
@@ -55,14 +58,15 @@ const TimeTableContainer: React.FC<
 
 const mapStateToProps = ({ timeTable, user }: AppState) => ({
   timeTableList: timeTable.timetable,
-  timetableStatus: timeTable.timetableStatus,
+  getTimetableStatus: timeTable.getTimetableStatus,
   accessToken: user.accessToken,
+  major: user.data.major,
   grade: user.data.grade,
   classNum: user.data.classNum,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({
-  timetableApi: bindActionCreators(timeTableActions.timeTable, dispatch),
+  getTimetable: bindActionCreators(timeTableActions.getTimeTable, dispatch),
 });
 
 export default withRouter(

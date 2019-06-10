@@ -9,13 +9,14 @@ import MainNoticePage from 'pages/main/notice';
 import MainTimePage from 'pages/main/timer';
 import MainTimeTablePage from 'pages/main/timeTable';
 import MealPage from 'pages/meal';
+import TimeTablePage from 'pages/timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
 const { useEffect } = React;
 
 const Empty = styled.div`
-  height: 5.125rem;
+  height: 3.75rem;
   width: 100%;
 `;
 
@@ -48,6 +49,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       <Switch>
         <Route exact={true} path="/" component={MainComponents} />
         <Route exact={true} path="/meal" component={MealPage} />
+        <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Redirect to="/" />
       </Switch>
       <FooterComponent />

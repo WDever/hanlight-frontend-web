@@ -44,7 +44,8 @@ const NoBox = styled.div`
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
-
+const hour = 3600;
+const minute = 60;
 class TimeTableComponent extends React.Component<
   TimeTableProps & TimeTableMethod
 > {
@@ -57,42 +58,39 @@ class TimeTableComponent extends React.Component<
   public today: number = Number(moment().format('d'));
 
   public componentDidMount() {
-    this.props.timetableApi(this.props.accessToken);
+    this.props.getTimetableApi(this.props.accessToken);
   }
 
   public render() {
-    const { timeTableList, timetableStatus, name } = this.props;
+    const { timeTableList, getTimetableStatus, name } = this.props;
     const { today } = this;
 
     const TimeTableList = Array(7)
       .fill(null)
       .map((value, index) => {
-        if (!timeTableList[today].length) {
-          return <NoBox key={index} />;
-        } else if (!timeTableList[today][index]) {
+        if (!timeTableList[today].length || !timeTableList[today][index]) {
           return <NoBox key={index} />;
         } else {
           const sum =
-            Number(moment().format('H')) * 3600 +
-            Number(moment().format('m')) * 60 +
-            Number(moment().format('s'));
+            moment().get('hour') * hour +
+            moment().get('minute') * minute +
+            moment().get('second');
+
           const period = (): number => {
-            if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
-              return 0;
-            } else if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
-              return 1;
-            } else if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
-              return 2;
-            } else if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
-              return 3;
-            } else if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
-              return 4;
-            } else if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
-              return 5;
-            } else if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
-              return 6;
-            } else {
+            if (sum >= 15 * hour + 10 * minute) {
               return 7;
+            } else if (sum >= 14 * hour + 0 * minute) {
+              return 6;
+            } else if (sum >= 12 * hour + 20 * minute) {
+              return 5;
+            } else if (sum >= 11 * hour + 30 * minute) {
+              return 4;
+            } else if (sum >= 10 * hour + 30 * minute) {
+              return 3;
+            } else if (sum >= 9 * hour + 30 * minute) {
+              return 2;
+            } else {
+              return 1;
             }
           };
 
@@ -100,7 +98,7 @@ class TimeTableComponent extends React.Component<
             <TimeTableItem
               index={index + 1}
               sub={timeTableList[today][index]}
-              active={index === period()}
+              active={index + 1 === period()}
               key={index}
             />
           );
@@ -115,7 +113,7 @@ class TimeTableComponent extends React.Component<
 
         <TimeTableWrapper>
           {TimeTableList}
-          {timetableStatus === 'failure' && (
+          {getTimetableStatus === 'failure' && (
             <ErrorImg src={ErrorPng} alt="Error" />
           )}
         </TimeTableWrapper>

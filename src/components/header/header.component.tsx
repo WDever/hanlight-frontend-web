@@ -8,7 +8,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 5.125rem;
+  height: 3.75rem;
   box-shadow: 0 6px 40px 0 rgba(129, 129, 129, 0.1);
   position: fixed;
   background-color: #ffffff;
@@ -25,7 +25,7 @@ const InnerBox = styled.div`
 
 const LogoImg = styled.img`
   width: 5rem;
-  height: 3rem;
+  height: 1.875rem;
   cursor: pointer;
 `;
 

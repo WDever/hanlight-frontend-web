@@ -8,8 +8,6 @@ const Template = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 150%;
   z-index: 1;
 `;
 
@@ -20,19 +18,17 @@ const Background = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  z-index: 0;
+  z-index: -1;
 `;
 
 const LeftImg = styled.img`
-  /* width: 12rem;
-  height: 32.625rem; */
-  z-index: 0;
+  z-index: -1;
 `;
 
 const RightImg = styled.img`
   width: 56.875rem;
   height: 52rem;
-  z-index: 0;
+  z-index: -1;
 `;
 
 const TimeTablePage = () => {

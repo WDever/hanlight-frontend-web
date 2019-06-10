@@ -5,72 +5,54 @@ import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50.5%;
-  height: 100%;
   z-index: 1;
+  margin-bottom: 7rem;
 `;
 
 const Title = styled.span`
   font-size: 1.8125rem;
-  margin: 2.775rem 0;
-  */font-family: 'yg-jalnan';
+  margin-top: 5.2rem;
+  margin-bottom: 2.775rem;
+  font-family: 'yg-jalnan';
   font-size: 1.8125rem;
-
-  margin: 6% 0;
+  white-space: nowrap;
 `;
 
-const Table = styled.div`
-  width: 100%;
-  height: 68%;
-  display: flex;
-
-  justify-content: space-between;
-`;
-
-const Block = styled.div<{ now?: boolean; subject?: boolean }>`
-  height: 14.2%;
-  max-height: 14.2%;
-  color: ${props => (props.subject && props.now ? '#ffffff' : 'black')};
-  border: solid 1px #f3efef;
-  background-color: ${props =>
-    props.now && props.subject ? '#52a9ff' : props.now ? '#e2f2ff' : '#ffffff'};
+const Table = styled.table`
+  z-index: 1;
+  background-color: #ffffff;
+  text-align: center;
+  border-collapse: separate;
+  border-spacing: 0.35rem 0.1px;
+  font-size: 1.2rem;
   font-family: 'Spoqa Han Sans';
-  font-size: 1.0625rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
 `;
 
-const DaysLine = styled.div`
-  width: 15.9%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+const Th = styled.th<{ now: boolean }>`
+  width: 7.3rem;
+  height: 6.2rem;
+  border: solid 1px #f3efef;
+  background-color: ${props => (props.now ? '#e2f2ff' : 'none')};
 `;
 
-const TimeTableBlock = styled.div`
-  width: 83%;
-  height: 100%;
-  display: flex;
-  justify-content: space-between;
-`;
-
-const TimeTableLine = styled.div`
-  height: 100%;
-  width: 19%;
-  display: flex;
-  flex-direction: column;
+const Td = styled.td<{ now: boolean }>`
+  width: 7.3rem;
+  height: 6.2rem;
+  border: solid 1px #f3efef;
+  background-color: ${props => (props.now ? '#52a9ff' : 'none')};
+  color: ${props => (props.now ? '#ffffff' : 'initial')};
+  font-weight: ${props => (props.now ? 'bold' : 'none')};
 `;
 
 const Time = styled.span`
   font-size: 0.6875rem;
+  font-weight: normal;
 `;
 
 const Img = styled.img`
@@ -78,134 +60,104 @@ const Img = styled.img`
   height: 2.0125rem;
 `;
 
+const hour = 3600;
+const minute = 60;
+const days = ['월', '화', '수', '목', '금'];
+
 const TimeTableComponent: React.FC<
   TimeTableProps & TimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
-  timetableApi,
-  timetableStatus,
+  getTimetable,
+  getTimetableStatus,
   accessToken,
   grade,
   classNum,
+  major,
 }) => {
+  const [timeTable, setTimeTable] = useState<string[][]>([[], [], [], [], []]);
+
+  useEffect(() => {
+    getTimetable(accessToken);
+  }, []);
+
+  useEffect(() => {
+    if (getTimetableStatus === 'success') {
+      setTimeTable([...timeTableList].splice(1, 5));
+    }
+  }, [getTimetableStatus]);
+
   const sum =
-    Number(moment().format('H')) * 3600 +
-    Number(moment().format('m')) * 60 +
-    Number(moment().format('s'));
+    moment().get('hour') * hour +
+    moment().get('minute') * minute +
+    moment().get('second');
+
   const period = (): number => {
-    if (sum >= 8 * 3600 + 2400 && sum <= 9 * 3600 + 1800) {
-      return 0;
-    } else if (sum >= 9 * 3600 + 1800 && sum <= 10 * 3600 + 1800) {
-      return 1;
-    } else if (sum >= 10 * 3600 + 1800 && sum <= 11 * 3600 + 1800) {
-      return 2;
-    } else if (sum >= 11 * 3600 + 1800 && sum <= 12 * 3600 + 1800) {
-      return 3;
-    } else if (sum >= 13 * 3600 + 1200 && sum <= 14 * 3600 + 600) {
-      return 4;
-    } else if (sum >= 14 * 3600 + 600 && sum <= 15 * 3600 + 600) {
-      return 5;
-    } else if (sum >= 15 * 3600 + 600 && sum <= 16 * 3600 + 600) {
-      return 6;
-    } else {
+    if (sum >= 15 * hour + 10 * minute) {
       return 7;
+    } else if (sum >= 14 * hour + 0 * minute) {
+      return 6;
+    } else if (sum >= 12 * hour + 20 * minute) {
+      return 5;
+    } else if (sum >= 11 * hour + 30 * minute) {
+      return 4;
+    } else if (sum >= 10 * hour + 30 * minute) {
+      return 3;
+    } else if (sum >= 9 * hour + 30 * minute) {
+      return 2;
+    } else {
+      return 1;
     }
   };
 
-  const daysArr = ['일', '월', '화', '수', '목', '금', '토'];
-  const periodArr = [
-    {
-      num: 1,
-      time: '(9:00 ~ 9:50)',
-    },
-    {
-      num: 2,
-      time: '(10:00 ~ 10:50)',
-    },
-    {
-      num: 3,
-      time: '(11:00 ~ 11:50)',
-    },
-    {
-      num: 4,
-      time: '(12:00 ~ 12:50)',
-    },
-    {
-      num: 5,
-      time: '(13:30 ~ 14:20)',
-    },
-    {
-      num: 6,
-      time: '(14:30 ~ 15:20)',
-    },
-    {
-      num: 7,
-      time: '(15:30 ~ 16:20)',
-    },
+  const timeArr = [
+    '(8:40 ~ 9:20)',
+    '(9:30 ~ 10:20)',
+    '(10:30 ~ 11:20)',
+    '(11:30 ~ 12:20)',
+    '(13:20 ~ 14:10)',
+    '(14:20 ~ 15:10)',
+    '(15:20 ~ 16:10)',
   ];
 
-  const periodsLine = periodArr.map((item, idx) => {
-    return (
-      <Block key={item.num} now={idx === period()}>
-        <b>{item.num}교시</b>
-        <Time>{item.time}</Time>
-      </Block>
-    );
-  });
-
-  const TimeTableList =
-    timetableStatus === 'success'
-      ? [...timeTableList].splice(1, 5).map((item1, idx1) => {
-          return (
-            <TimeTableLine key={idx1}>
-              <Block now={idx1 + 1 === Number(moment().format('d'))}>
-                <b>{daysArr[idx1 + 1]}요일</b>
-              </Block>
-              {item1.map((item2, idx2) => {
-                return (
-                  <Block
-                    key={idx2}
-                    now={
-                      idx1 + 1 === Number(moment().format('d')) &&
-                      idx2 === period()
-                    }
-                    subject={true}
-                  >
-                    {item2}
-                  </Block>
-                );
-              })}
-              {Array(7 - item1.length)
-                .fill(null)
-                .map((item3, idx3) => {
-                  return (
-                    <Block key={idx3} subject={true}>
-                      없다
-                    </Block>
-                  );
-                })}
-            </TimeTableLine>
-          );
-        })
-      : [];
-
-  useEffect(() => {
-    timetableApi(accessToken);
-  }, [accessToken, timetableApi]);
+  const tBody = timeTable[1].length ? (
+    Array(7)
+      .fill(null)
+      .map((_, i) => (
+        <tr key={i}>
+          <Th key={i} now={period() === i + 1}>
+            {i + 1}교시
+            <br />
+            <Time>{timeArr[i]}</Time>
+          </Th>
+          {timeTable.map((timetable, j) => (
+            <Td key={j} now={period() === i + 1 && moment().get('d') === j + 1}>
+              {timetable[i] ? timetable[i] : ''}
+            </Td>
+          ))}
+        </tr>
+      ))
+  ) : (
+    <></>
+  );
 
   return (
     <Wrapper>
-      <Title>
-        {grade} - {classNum} 시간표
-      </Title>
+      <Title>{`${major}${grade} - ${classNum} 시간표`}</Title>
       <Table>
-        <DaysLine>
-          <Block>
-            <Img src={LogoSvg} alt="logo" />
-          </Block>
-          {periodsLine}
-        </DaysLine>
-        <TimeTableBlock>{TimeTableList}</TimeTableBlock>
+        <thead>
+          <tr>
+            <Th now={false}>
+              <Img src={LogoSvg} alt="logo" />
+            </Th>
+            {days.map((day, j) => (
+              <Th key={j} now={moment().get('d') === j + 1}>
+                {day}요일
+              </Th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>{tBody}</tbody>
       </Table>
     </Wrapper>
   );
