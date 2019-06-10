@@ -28,7 +28,8 @@ const Title = styled.span`
   margin: 2.775rem 0; */
   font-family: 'yg-jalnan';
   font-size: 1.8125rem;
-  margin: 2.775rem 0;
+  /* margin: 2.775rem 0; */
+  margin: 6% 0;
 `;
 
 const Table = styled.div`
@@ -54,11 +55,7 @@ const Block = styled.div<{ now?: boolean; subject?: boolean }>`
   color: ${props => (props.subject && props.now ? '#ffffff' : 'black')};
   border: solid 1px #f3efef;
   background-color: ${props =>
-    props.now && props.subject
-      ? '#52a9ff'
-      : props.now
-      ? '#e2f2ff'
-      : '#ffffff'};
+    props.now && props.subject ? '#52a9ff' : props.now ? '#e2f2ff' : '#ffffff'};
   font-family: 'Spoqa Han Sans';
   font-size: 1.0625rem;
   display: flex;
@@ -225,7 +222,9 @@ const TimeTableComponent: React.FC<
 
   return (
     <Wrapper>
-      <Title>{grade} - {classNum} 시간표</Title>
+      <Title>
+        {grade} - {classNum} 시간표
+      </Title>
       <Table>
         <DaysLine>
           <Block>

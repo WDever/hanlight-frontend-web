@@ -55,7 +55,8 @@ const TimeTableComponent: React.FC<TimeTableProps & TimeTableMethod> = ({
   accessToken,
   name,
 }) => {
-  const Today: number = Number(moment().format('d')) - 1;
+  // const Today: number = Number(moment().format('d')) - 1;
+  const Today: number = Number(moment().format('d'));
   let key = 0;
   const TimeTableList =
     timetableStatus === 'success' &&

@@ -16,7 +16,8 @@ const Template = styled.div`
 
 const Background = styled.div`
   width: 80%;
-  height: 88%;
+  /* height: 85%; */
+  height: 100%;
   position: absolute;
   display: flex;
   justify-content: space-between;
