@@ -11,7 +11,8 @@ const Template = styled.div`
 `;
 
 const Title = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin-bottom: 2rem;

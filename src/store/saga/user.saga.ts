@@ -47,7 +47,7 @@ import {
 
 const loginApi = (data: LoginParam) =>
   instance
-    .post('http://54.180.114.156:3000/api/user/login', {
+    .post('/api/user/login', {
       id: data.id,
       password: data.password,
     })
@@ -68,7 +68,7 @@ function* loginApiSaga(action: Login) {
 
 const idRecoveryApi = ({ code }: { code: string }) =>
   instance
-    .post('http://54.180.114.156:3000/api/user/recovery/id', {
+    .post('/api/user/recovery/id', {
       code,
     })
     .then(res => res.data);
@@ -77,7 +77,7 @@ function* idRecoverySaga(action: IdRecovery) {
   if (action.type) {
     try {
       const response = yield call(idRecoveryApi, action.payload);
-      console.log(response);
+      console.log(response)
       yield put({ type: ID_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
       console.log(e.response);
@@ -89,7 +89,7 @@ function* idRecoverySaga(action: IdRecovery) {
 
 const pwRecoveryApi = (data: PwRecoveryParam) =>
   instance
-    .post('http://54.180.114.156:3000/api/user/recovery/password', {
+    .post('/api/user/recovery/password', {
       code: data.code,
       id: data.id,
     })
@@ -143,7 +143,7 @@ function* idExistSaga(action: IdExist) {
 
 const verifyPhoneApi = (data: VerifyPhoneParam) =>
   instance
-    .post('http://54.180.114.156:3000/api/user/phone', {
+    .post('/api/user/phone', {
       code: data.code,
       signKey: data.signKey,
     })
@@ -165,7 +165,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
 
 const registerApi = (data: RegisterParam) =>
   instance
-    .post('http://54.180.114.156:3000/api/user/register', {
+    .post('/api/user/register', {
       id: data.id,
       password: data.password,
       signKey: data.signKey,
@@ -187,7 +187,7 @@ function* registerApiSaga(action: Register) {
 
 const getUserApi = (data: string) =>
   instance
-    .get('http://54.180.114.156:3000/api/user', {
+    .get('/api/user', {
       headers: {
         access_token: data,
       },
@@ -216,7 +216,7 @@ function* getUserApiSaga(action: GetUser) {
 const patchPasswordApi = (data: PatchPwParam) =>
   instance
     .patch(
-      'http://54.180.114.156:3000/api/user/password',
+      '/api/user/password',
       {
         password: data.password,
       },

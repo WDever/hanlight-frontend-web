@@ -8,7 +8,7 @@ const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  height: 5.125rem;
+  height: 3.75rem;
   box-shadow: 0 6px 40px 0 rgba(129, 129, 129, 0.1);
   position: fixed;
   background-color: #ffffff;
@@ -25,7 +25,7 @@ const InnerBox = styled.div`
 
 const LogoImg = styled.img`
   width: 5rem;
-  height: 3rem;
+  height: 1.875rem;
   cursor: pointer;
 `;
 
@@ -40,7 +40,7 @@ const BtnsWrapper = styled.div`
 
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
   color: #565656;
 `;
@@ -51,7 +51,7 @@ const Provider = styled.span`
 `;
 
 const Buttons = styled.span`
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
 `;
 
@@ -105,7 +105,7 @@ const HeaderComponent: React.FC<
               fontWeight: 'bold',
             }}
           >
-            학사일정
+            학사일정
           </StyledNavLink>
           <StyledNavLink
             exact={true}

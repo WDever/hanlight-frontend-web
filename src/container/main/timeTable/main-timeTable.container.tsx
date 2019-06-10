@@ -14,26 +14,26 @@ export interface TimeTableProps {
     string[],
     string[]
   ];
-  timetableStatus: 'none' | 'pending' | 'success' | 'failure';
+  getTimetableStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
   name: string;
 }
 
 export interface TimeTableMethod {
-  timetableApi(param: string | null): void;
+  getTimetableApi(param: string | null): void;
 }
 
 const TimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
   timeTableList,
-  timetableApi,
-  timetableStatus,
+  getTimetableStatus,
+  getTimetableApi,
   accessToken,
   name,
 }) => (
   <TimeTableComponent
     timeTableList={timeTableList}
-    timetableApi={timetableApi}
-    timetableStatus={timetableStatus}
+    getTimetableStatus={getTimetableStatus}
+    getTimetableApi={getTimetableApi}
     accessToken={accessToken}
     name={name}
   />
@@ -41,13 +41,13 @@ const TimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
 
 const mapStateToProps = ({ user, timeTable }: AppState) => ({
   timeTableList: timeTable.timetable,
-  timetableStatus: timeTable.timetableStatus,
+  getTimetableStatus: timeTable.getTimetableStatus,
   accessToken: user.accessToken,
   name: user.data.name,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({
-  timetableApi: bindActionCreators(timeTableActions.timeTable, dispatch),
+  getTimetableApi: bindActionCreators(timeTableActions.getTimeTable, dispatch),
 });
 
 export default connect(

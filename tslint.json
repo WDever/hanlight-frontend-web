@@ -16,6 +16,8 @@
     "object-literal-sort-keys": false,
     "quotemark": [true, "single", "jsx-double"],
     "interface-name": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "max-classes-per-file": false,
+    "jsx-no-lambda": false
   }
 }

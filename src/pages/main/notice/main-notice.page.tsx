@@ -1,30 +1,24 @@
-import NoticeComponent from 'components/main/notice';
+import MainNoticeComponent from 'components/main/notice';
+import MainNoticeContainer from 'container/main/notice';
 import * as React from 'react';
 import styled from 'styled-components';
 
-const NoticeTemplate = styled.div`
+const MainNoticeTemplate = styled.div`
   width: 100%;
-  /* height: 100%; */
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 3rem;
 `;
 
-const Empty = styled.div`
-  height: 5.125rem;
-  width: 100%;
-`;
-
-const NoticePage: React.FC = () => {
+const MainNoticePage: React.FC = () => {
   return (
     <React.Fragment>
-      <Empty />
-      <NoticeTemplate>
-        <NoticeComponent />
-      </NoticeTemplate>
+      <MainNoticeTemplate>
+        <MainNoticeContainer />
+      </MainNoticeTemplate>
     </React.Fragment>
   );
 };
 
-export default NoticePage;
+export default MainNoticePage;

@@ -2,74 +2,74 @@ import { Action } from 'redux';
 import { CalendarItem, CalendarRecentItem } from 'store';
 import { createStandardAction } from 'typesafe-actions';
 
-export const CALENDAR = 'CALENDAR';
-export const CALENDAR_SUCCESS = 'CALENDAR_SUCCESS';
-export const CALENDAR_FAILURE = 'CALENDAR_FAILURE';
-export const CALENDAR_RECENT = 'CALENDAR_RECENT';
-export const CALENDAR_RECENT_SUCCESS = 'CALENDAR_RECENT_SUCCESS';
-export const CALENDAR_RECENT_FAILURE = 'CALENDAR_RECENT_FAILURE';
+export const GET_CALENDAR = 'GET_CALENDAR';
+export const GET_CALENDAR_SUCCESS = 'GET_CALENDAR_SUCCESS';
+export const GET_CALENDAR_FAILURE = 'GET_CALENDAR_FAILURE';
+export const GET_CALENDAR_RECENT = 'GET_CALENDAR_RECENT';
+export const GET_CALENDAR_RECENT_SUCCESS = 'GET_CALENDAR_RECENT_SUCCESS';
+export const GET_CALENDAR_RECENT_FAILURE = 'GET_CALENDAR_RECENT_FAILURE';
 
-export interface CalendarParams {
+export interface GetCalendarParams {
   accessToken: string | null;
   month: string;
   year: string;
 }
 
-export interface CalendarResType {
+export interface GetCalendarResType {
   success: boolean;
   data: {
     calendar: CalendarItem[];
   };
 }
 
-export interface CalendarRecentResType {
+export interface GetCalendarRecentResType {
   success: boolean;
   data: {
     calendar: CalendarRecentItem[];
   };
 }
 
-export class Calendar implements Action {
-  public readonly type = CALENDAR;
+export class GetCalendar implements Action {
+  public readonly type = GET_CALENDAR;
 
-  public constructor(public payload: CalendarParams) {}
+  public constructor(public payload: GetCalendarParams) {}
 }
 
-export class CalendarSuccess implements Action {
-  public readonly type = CALENDAR_SUCCESS;
+export class GetCalendarSuccess implements Action {
+  public readonly type = GET_CALENDAR_SUCCESS;
 
-  public constructor(public payload: CalendarResType) {}
+  public constructor(public payload: GetCalendarResType) {}
 }
 
-export class CalendarFailure implements Action {
-  public readonly type = CALENDAR_FAILURE;
+export class GetCalendarFailure implements Action {
+  public readonly type = GET_CALENDAR_FAILURE;
 }
 
-export class CalendarRecent implements Action {
-  public readonly type = CALENDAR_RECENT;
+export class GetCalendarRecent implements Action {
+  public readonly type = GET_CALENDAR_RECENT;
 
   public constructor(public payload: string | null) {}
 }
 
-export class CalendarRecentSuccess implements Action {
-  public readonly type = CALENDAR_RECENT_SUCCESS;
+export class GetCalendarRecentSuccess implements Action {
+  public readonly type = GET_CALENDAR_RECENT_SUCCESS;
 
-  public constructor(public payload: CalendarRecentResType) {}
+  public constructor(public payload: GetCalendarRecentResType) {}
 }
 
-export class CalendarRecentFailure implements Action {
-  public readonly type = CALENDAR_RECENT_FAILURE;
+export class GetCalendarRecentFailure implements Action {
+  public readonly type = GET_CALENDAR_RECENT_FAILURE;
 }
 
 export const calendarActions = {
-  calendar: createStandardAction(CALENDAR)<CalendarParams>(),
-  calendarRecent: createStandardAction(CALENDAR_RECENT)<string>(),
+  getCalendar: createStandardAction(GET_CALENDAR)<GetCalendarParams>(),
+  getCalendarRecent: createStandardAction(GET_CALENDAR_RECENT)<string>(),
 };
 
 export type calendarReducerActions =
-  | Calendar
-  | CalendarSuccess
-  | CalendarFailure
-  | CalendarRecent
-  | CalendarRecentSuccess
-  | CalendarRecentFailure;
+  | GetCalendar
+  | GetCalendarSuccess
+  | GetCalendarFailure
+  | GetCalendarRecent
+  | GetCalendarRecentSuccess
+  | GetCalendarRecentFailure;

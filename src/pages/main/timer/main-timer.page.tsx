@@ -14,7 +14,8 @@ const Template = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -54,7 +55,7 @@ const TimeComponent: React.FC = () => {
           />
           <LunchTimeComponent />
         </TimeWrapper>
-        <TimeWrapper>
+        <TimeWrapper style={{ marginRight: '5%' }}>
           <EndTimeBackGroundImg src={EndImgSvg} alt="End Time Background Img" />
           <EndTimeComponent />
         </TimeWrapper>

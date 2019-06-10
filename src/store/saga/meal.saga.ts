@@ -1,18 +1,18 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
-  MEAL,
-  Meal,
-  MEAL_FAILURE,
-  MEAL_ORDER,
-  MEAL_ORDER_FAILURE,
-  MEAL_ORDER_SUCCESS,
-  MEAL_SUCCESS,
-  MealOrder,
-  MealParams,
+  GET_MEAL,
+  GET_MEAL_FAILURE,
+  GET_MEAL_ORDER,
+  GET_MEAL_ORDER_FAILURE,
+  GET_MEAL_ORDER_SUCCESS,
+  GET_MEAL_SUCCESS,
+  GetMeal,
+  GetMealOrder,
+  GetMealParams,
 } from '../action';
 
-const mealApi = (data: MealParams) =>
+const getMealApi = (data: GetMealParams) =>
   instance
     .get('/api/meal', {
       headers: {
@@ -20,24 +20,25 @@ const mealApi = (data: MealParams) =>
       },
       params: {
         sort: data.sort,
+        month: data.month,
       },
     })
     .then(res => res.data);
 
-function* mealApiSaga(action: Meal) {
+function* getMealApiSaga(action: GetMeal) {
   if (action.type) {
     try {
-      const response = yield call(mealApi, action.payload);
+      const response = yield call(getMealApi, action.payload);
       console.log(response);
-      yield put({ type: MEAL_SUCCESS, payload: response });
+      yield put({ type: GET_MEAL_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: MEAL_FAILURE, payload: e.response });
+      yield put({ type: GET_MEAL_FAILURE, payload: e.response });
     }
   }
 }
 
-const mealOrderApi = (data: string) =>
+const getMealOrderApi = (data: string) =>
   instance
     .get('/api/meal/order', {
       headers: {
@@ -46,20 +47,20 @@ const mealOrderApi = (data: string) =>
     })
     .then(res => res);
 
-function* mealOrderApiSaga(action: MealOrder) {
+function* getMealOrderApiSaga(action: GetMealOrder) {
   if (action.type) {
     try {
-      const response = yield call(mealOrderApi, action.payload);
+      const response = yield call(getMealOrderApi, action.payload);
       console.log(response);
-      yield put({ type: MEAL_ORDER_SUCCESS, payload: response });
+      yield put({ type: GET_MEAL_ORDER_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.reponse);
-      yield put({ type: MEAL_ORDER_FAILURE, payload: e.response });
+      yield put({ type: GET_MEAL_ORDER_FAILURE, payload: e.response });
     }
   }
 }
 
 export function* mealSaga() {
-  yield takeEvery(MEAL, mealApiSaga);
-  yield takeEvery(MEAL_ORDER, mealOrderApiSaga);
+  yield takeEvery(GET_MEAL, getMealApiSaga);
+  yield takeEvery(GET_MEAL_ORDER, getMealOrderApiSaga);
 }

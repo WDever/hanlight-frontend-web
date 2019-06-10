@@ -1,9 +1,9 @@
-import { createStandardAction } from 'typesafe-actions';
 import { Action } from 'redux';
+import { createStandardAction } from 'typesafe-actions';
 
-export const TIMETABLE = 'TIMETABLE';
-export const TIMETABLE_SUCCESS = 'TIMETABLE_SUCCESS';
-export const TIMETABLE_FAILURE = 'TIMETABLE_FAILURE';
+export const GET_TIMETABLE = 'GET_TIMETABLE';
+export const GET_TIMETABLE_SUCCESS = 'GET_TIMETABLE_SUCCESS';
+export const GET_TIMETABLE_FAILURE = 'GET_TIMETABLE_FAILURE';
 
 export interface TimetableResType {
   success: boolean;
@@ -18,26 +18,27 @@ export interface TimetableResType {
   };
 }
 
-export class Timetable implements Action {
-  public readonly type = TIMETABLE;
+export class GetTimetable implements Action {
+  public readonly type = GET_TIMETABLE;
 
   public constructor(public payload: string | null) {}
 }
 
-export class TimetableSuccess implements Action {
-  public readonly type = TIMETABLE_SUCCESS;
+export class GetTimetableSuccess implements Action {
+  public readonly type = GET_TIMETABLE_SUCCESS;
 
   public constructor(public payload: TimetableResType) {}
 }
 
-export class TimetableFailure implements Action {
-  public readonly type = TIMETABLE_FAILURE;
+export class GetTimetableFailure implements Action {
+  public readonly type = GET_TIMETABLE_FAILURE;
 }
 
 export const timeTableActions = {
-  timeTable: createStandardAction(TIMETABLE)<string>(),
+  getTimeTable: createStandardAction(GET_TIMETABLE)<string>(),
 };
 
-export type timeTableReducerActions = | Timetable
-| TimetableSuccess
-| TimetableFailure;
+export type timeTableReducerActions =
+  | GetTimetable
+  | GetTimetableSuccess
+  | GetTimetableFailure;

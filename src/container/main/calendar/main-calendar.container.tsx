@@ -11,37 +11,37 @@ import {
 
 export interface CalendarProps {
   calendarList: CalendarRecentItem[];
-  calendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
+  getCalendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
 export interface CalendarMethod {
-  calendarRecentApi(params: string | null): void;
+  getCalendarRecent(params: string | null): void;
 }
 
 const CalendarContainer: React.FC<CalendarProps & CalendarMethod> = ({
-  calendarRecentApi,
+  getCalendarRecent,
   calendarList,
-  calendarRecentStatus,
+  getCalendarRecentStatus,
   accessToken,
 }) => (
   <CalendarComponent
-    calendarRecentApi={calendarRecentApi}
+    getCalendarRecent={getCalendarRecent}
     calendarList={calendarList}
-    calendarRecentStatus={calendarRecentStatus}
+    getCalendarRecentStatus={getCalendarRecentStatus}
     accessToken={accessToken}
   />
 );
 
 const mapStateToProps = ({ user, calendar }: AppState) => ({
   calendarList: calendar.calendarRecent,
-  calendarRecentStatus: calendar.calendarRecentStatus,
+  getCalendarRecentStatus: calendar.getCalendarRecentStatus,
   accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<calendarReducerActions>) => ({
-  calendarRecentApi: bindActionCreators(
-    calendarActions.calendarRecent,
+  getCalendarRecent: bindActionCreators(
+    calendarActions.getCalendarRecent,
     dispatch,
   ),
 });

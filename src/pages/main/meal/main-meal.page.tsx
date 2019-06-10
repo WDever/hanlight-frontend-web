@@ -1,4 +1,4 @@
-import MealContainer from 'container/main/meal';
+import MealContainer from 'container/meal/meal.container';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -8,29 +8,28 @@ const Template = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 75%;
 `;
 
 const Title = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
+  margin-bottom: 2.5rem;
 `;
 
 const ListWrapper = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   height: 100%;
   display: flex;
   align-items: center;
 `;
 
 const MealPage: React.FC = () => {
-  console.log(window.innerHeight);
   return (
     <Template>
-      <Title>
-        급식 정보
-      </Title>
+      <Title>급식 정보</Title>
       <ListWrapper>
         <MealContainer />
       </ListWrapper>

@@ -9,7 +9,8 @@ import CalendarItem from './calendarItem';
 const { useEffect } = React;
 
 const CalendarWrapper = styled.div`
-  width: 81rem;
+  max-width: 81rem;
+  width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -17,37 +18,41 @@ const CalendarWrapper = styled.div`
 `;
 
 const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
-  calendarRecentApi,
+  getCalendarRecent,
   calendarList,
-  calendarRecentStatus,
+  getCalendarRecentStatus,
   accessToken,
 }) => {
-  let key = 0;
   const CalendarList =
-    calendarRecentStatus === 'success' &&
-    calendarList.map((item, idx) => {
-      if (idx <= 3) {
-        return (
-          <CalendarItem
-            year={item.year}
-            month={item.month}
-            day={item.date}
-            contents={item.detail}
-            active={moment().format('D') === item.date}
-            key={key++}
-          />
-        );
-      }
-    });
+    getCalendarRecentStatus === 'success'
+      ? [...calendarList].splice(0, 4).map((item, index) => {
+          const today =
+            moment().format('YYYY.MM.DD') ===
+            moment(`${item.year}.${item.month}.${item.date}`).format(
+              'YYYY.MM.DD',
+            );
+
+          return (
+            <CalendarItem
+              year={item.year}
+              month={item.month}
+              day={item.date}
+              contents={item.detail}
+              today={today}
+              key={index}
+            />
+          );
+        })
+      : [];
 
   useEffect(() => {
-    calendarRecentApi(accessToken);
-  }, [accessToken, calendarRecentApi]);
+    getCalendarRecent(accessToken);
+  }, [accessToken]);
 
   return (
     <CalendarWrapper>
       {CalendarList}
-      {calendarRecentStatus === 'failure' && (
+      {getCalendarRecentStatus === 'failure' && (
         <ErrorImg src={ErrorPng} alt="Error" />
       )}
     </CalendarWrapper>

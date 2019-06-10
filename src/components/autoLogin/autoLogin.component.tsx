@@ -21,7 +21,8 @@ class AutoLoginComponent extends React.Component<
   ) {
     if (
       prevProps.getUserStatus === 'pending' &&
-      this.props.getUserStatus === 'success'
+      this.props.getUserStatus === 'success' &&
+      this.props.location.pathname.includes('/user')
     ) {
       this.props.history.push('/');
     }

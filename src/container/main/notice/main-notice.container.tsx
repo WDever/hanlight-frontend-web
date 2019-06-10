@@ -1,38 +1,38 @@
-import NoticeListComponent from 'components/main/notice/noticeList';
+import MainNoticeComponent from 'components/main/notice/main-notice.component';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  GetNoticeListParams,
   noticeActions,
   NoticeListItem,
-  NoticeParams,
   noticeReducerActions,
 } from 'store';
 
-export interface NoticeListProps {
+export interface MainNoticeProps {
   name: string;
   noticeList: NoticeListItem[];
-  noticeStatus: 'none' | 'pending' | 'success' | 'failure';
+  getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
-export interface NoticeListMethod {
-  notice(params: NoticeParams): void;
+export interface MainNoticeMethod {
+  getNoticeList(params: GetNoticeListParams): void;
 }
 
-const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
+const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
   name,
-  notice,
+  getNoticeList,
   noticeList,
-  noticeStatus,
+  getNoticeListStatus,
   accessToken,
 }) => (
-  <NoticeListComponent
+  <MainNoticeComponent
     name={name}
-    notice={notice}
+    getNoticeList={getNoticeList}
     noticeList={noticeList}
-    noticeStatus={noticeStatus}
+    getNoticeListStatus={getNoticeListStatus}
     accessToken={accessToken}
   />
 );
@@ -40,15 +40,15 @@ const NoticeListContainer: React.FC<NoticeListProps & NoticeListMethod> = ({
 const mapStateToProps = ({ user, notice }: AppState) => ({
   name: user.data.name,
   noticeList: notice.noticeList,
-  noticeStatus: notice.noticeStatus,
+  getNoticeListStatus: notice.getNoticeListStatus,
   accessToken: user.accessToken,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
-  notice: bindActionCreators(noticeActions.notice, dispatch),
+  getNoticeList: bindActionCreators(noticeActions.getNoticeList, dispatch),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NoticeListContainer);
+)(MainNoticeContainer);

@@ -1,11 +1,12 @@
 export interface MealItem {
+  month: number;
   date: number;
   detail: string;
 }
 
 export interface MealModel {
-  mealStatus: 'none' | 'pending' | 'success' | 'failure';
-  mealOrderStatus: 'none' | 'pending' | 'success' | 'failure';
   mealList: MealItem[];
   mealOrder: string;
+  getMealStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMealOrderStatus: 'none' | 'pending' | 'success' | 'failure';
 }

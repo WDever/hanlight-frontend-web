@@ -2,73 +2,74 @@ import { Action } from 'redux';
 import { MealItem } from 'store';
 import { createStandardAction } from 'typesafe-actions';
 
-export const MEAL = 'MEAL';
-export const MEAL_SUCCESS = 'MEAL_SUCCESS';
-export const MEAL_FAILURE = 'MEAL_FAILURE';
-export const MEAL_ORDER = 'MEAL_ORDER';
-export const MEAL_ORDER_SUCCESS = 'MEAL_ORDER_SUCCESS';
-export const MEAL_ORDER_FAILURE = 'MEAL_ORDER_FAILURE';
+export const GET_MEAL = 'GET_MEAL';
+export const GET_MEAL_SUCCESS = 'GET_MEAL_SUCCESS';
+export const GET_MEAL_FAILURE = 'GET_MEAL_FAILURE';
+export const GET_MEAL_ORDER = 'GET_MEAL_ORDER';
+export const GET_MEAL_ORDER_SUCCESS = 'GET_MEAL_ORDER_SUCCESS';
+export const GET_MEAL_ORDER_FAILURE = 'GET_MEAL_ORDER_FAILURE';
 
-export interface MealParams {
+export interface GetMealParams {
   accessToken: string | null;
-  sort: string;
+  sort: 'month' | 'week';
+  month?: number;
 }
 
-export interface MealResType {
+export interface GetMealResType {
   success: boolean;
   data: {
     meal: MealItem[];
   };
 }
 
-export interface MealOrderResType {
+export interface GetMealOrderResType {
   success: boolean;
   data: {
     order: string;
   };
 }
 
-export class Meal implements Action {
-  public readonly type = MEAL;
+export class GetMeal implements Action {
+  public readonly type = GET_MEAL;
 
-  public constructor(public payload: MealParams) {}
+  public constructor(public payload: GetMealParams) {}
 }
 
-export class MealSuccess implements Action {
-  public readonly type = MEAL_SUCCESS;
+export class GetMealSuccess implements Action {
+  public readonly type = GET_MEAL_SUCCESS;
 
-  public constructor(public payload: MealResType) {}
+  public constructor(public payload: GetMealResType) {}
 }
 
-export class MealFailure implements Action {
-  public readonly type = MEAL_FAILURE;
+export class GetMealFailure implements Action {
+  public readonly type = GET_MEAL_FAILURE;
 }
 
-export class MealOrder implements Action {
-  public readonly type = MEAL_ORDER;
+export class GetMealOrder implements Action {
+  public readonly type = GET_MEAL_ORDER;
 
   public constructor(public payload: string) {}
 }
 
-export class MealOrderSuccess implements Action {
-  public readonly type = MEAL_ORDER_SUCCESS;
+export class GetMealOrderSuccess implements Action {
+  public readonly type = GET_MEAL_ORDER_SUCCESS;
 
-  public constructor(public payload: MealOrderResType) {}
+  public constructor(public payload: GetMealOrderResType) {}
 }
 
-export class MealOrderFailure implements Action {
-  public readonly type = MEAL_ORDER_FAILURE;
+export class GetMealOrderFailure implements Action {
+  public readonly type = GET_MEAL_ORDER_FAILURE;
 }
 
 export const mealActions = {
-  meal: createStandardAction(MEAL)<MealParams>(),
-  mealOrder: createStandardAction(MEAL_ORDER)<string>(),
+  getMeal: createStandardAction(GET_MEAL)<GetMealParams>(),
+  getMealOrder: createStandardAction(GET_MEAL_ORDER)<string>(),
 };
 
 export type mealReducerActions =
-  | Meal
-  | MealSuccess
-  | MealFailure
-  | MealOrder
-  | MealOrderSuccess
-  | MealOrderFailure;
+  | GetMeal
+  | GetMealSuccess
+  | GetMealFailure
+  | GetMealOrder
+  | GetMealOrderSuccess
+  | GetMealOrderFailure;

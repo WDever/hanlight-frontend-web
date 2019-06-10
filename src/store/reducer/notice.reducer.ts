@@ -2,8 +2,8 @@ import { produce } from 'immer';
 import { NoticeModel, noticeReducerActions } from 'store';
 
 const initialState: NoticeModel = {
-  noticeStatus: 'none',
-  noticePostStatus: 'none',
+  getNoticeListStatus: 'none',
+  getNoticePostStatus: 'none',
   noticeList: [],
   noticePost: {
     pk: 0,
@@ -16,35 +16,36 @@ const initialState: NoticeModel = {
 export const notcieReducer = (
   state: NoticeModel = initialState,
   action: noticeReducerActions,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case 'NOTICE':
-      draft.noticeStatus = 'pending';
-      break;
+) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case 'GET_NOTICE_LIST':
+        draft.getNoticeListStatus = 'pending';
+        break;
 
-    case 'NOTICE_SUCCESS':
-      draft.noticeStatus = 'success';
-      draft.noticeList = action.payload.data.notice;
-      break;
+      case 'GET_NOTICE_LIST_SUCCESS':
+        draft.getNoticeListStatus = 'success';
+        draft.noticeList = action.payload.data.notice;
+        break;
 
-    case 'NOTICE_FAILURE':
-      draft.noticeStatus = 'failure';
-      break;
+      case 'GET_NOTICE_LIST_FAILURE':
+        draft.getNoticeListStatus = 'failure';
+        break;
 
-    case 'NOTICE_POST':
-      draft.noticePostStatus = 'pending';
-      break;
+      case 'GET_NOTICE_POST':
+        draft.getNoticePostStatus = 'pending';
+        break;
 
-    case 'NOTICE_POST_SUCCESS':
-      draft.noticePostStatus = 'success';
-      draft.noticePost = action.payload.data;
-      break;
+      case 'GET_NOTICE_POST_SUCCESS':
+        draft.getNoticePostStatus = 'success';
+        draft.noticePost = action.payload.data;
+        break;
 
-    case 'NOTICE_POST_FAILURE':
-      draft.noticePostStatus = 'failure';
-      break;
+      case 'GET_NOTICE_POST_FAILURE':
+        draft.getNoticePostStatus = 'failure';
+        break;
 
-    default:
-      break;
-  }
-});
+      default:
+        break;
+    }
+  });

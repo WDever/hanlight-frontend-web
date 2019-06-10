@@ -2,8 +2,8 @@ import { produce } from 'immer';
 import { MealModel, mealReducerActions } from 'store';
 
 const initialState: MealModel = {
-  mealStatus: 'none',
-  mealOrderStatus: 'none',
+  getMealStatus: 'none',
+  getMealOrderStatus: 'none',
   mealList: [],
   mealOrder: '',
 };
@@ -11,35 +11,36 @@ const initialState: MealModel = {
 export const mealReducer = (
   state: MealModel = initialState,
   action: mealReducerActions,
-) => produce(state, (draft) => {
-  switch (action.type) {
-    case 'MEAL':
-      draft.mealStatus = 'pending';
-      break;
+) =>
+  produce(state, draft => {
+    switch (action.type) {
+      case 'GET_MEAL':
+        draft.getMealStatus = 'pending';
+        break;
 
-    case 'MEAL_SUCCESS':
-      draft.mealStatus = 'success';
-      draft.mealList = action.payload.data.meal;
-      break;
+      case 'GET_MEAL_SUCCESS':
+        draft.getMealStatus = 'success';
+        draft.mealList = action.payload.data.meal;
+        break;
 
-    case 'MEAL_FAILURE':
-      draft.mealStatus = 'failure';
-      break;
+      case 'GET_MEAL_FAILURE':
+        draft.getMealStatus = 'failure';
+        break;
 
-    case 'MEAL_ORDER':
-      draft.mealOrderStatus = 'pending';
-      break;
+      case 'GET_MEAL_ORDER':
+        draft.getMealOrderStatus = 'pending';
+        break;
 
-    case 'MEAL_ORDER_SUCCESS':
-      draft.mealOrderStatus = 'success';
-      draft.mealOrder = action.payload.data.order;
-      break;
+      case 'GET_MEAL_ORDER_SUCCESS':
+        draft.getMealOrderStatus = 'success';
+        draft.mealOrder = action.payload.data.order;
+        break;
 
-    case 'MEAL_ORDER_FAILURE':
-      draft.mealOrderStatus = 'failure';
-      break;
+      case 'GET_MEAL_ORDER_FAILURE':
+        draft.getMealOrderStatus = 'failure';
+        break;
 
-    default:
-      break;
-  }
-});
+      default:
+        break;
+    }
+  });

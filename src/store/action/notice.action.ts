@@ -2,77 +2,77 @@ import { Action } from 'redux';
 import { NoticeListItem, NoticePostItem } from 'store';
 import { createStandardAction } from 'typesafe-actions';
 
-export const NOTICE = 'NOTICE';
-export const NOTICE_SUCCESS = 'NOTICE_SUCCESS';
-export const NOTICE_FAILURE = 'NOTICE_FAILURE';
-export const NOTICE_POST = 'NOTICE_POST';
-export const NOTICE_POST_SUCCESS = 'NOTICE_POST_SUCCESS';
-export const NOTICE_POST_FAILURE = 'NOTICE_POST_FAILURE';
+export const GET_NOTICE_LIST = 'GET_NOTICE_LIST';
+export const GET_NOTICE_LIST_SUCCESS = 'GET_NOTICE_LIST_SUCCESS';
+export const GET_NOTICE_LIST_FAILURE = 'GET_NOTICE_LIST_FAILURE';
+export const GET_NOTICE_POST = 'GET_NOTICE_POST';
+export const GET_NOTICE_POST_SUCCESS = 'GET_NOTICE_POST_SUCCESS';
+export const GET_NOTICE_POST_FAILURE = 'GET_NOTICE_POST_FAILURE';
 
-export interface NoticeParams {
+export interface GetNoticeListParams {
   accessToken: string | null;
   page?: string;
   title?: string;
 }
 
-export interface NoticePostParams {
+export interface GetNoticePostParams {
   accessToken: string | null;
   postPk: string;
 }
 
-export interface NoticeListResType {
+export interface GetNoticeListResType {
   success: boolean;
   data: {
     notice: NoticeListItem[];
   };
 }
 
-export interface NoticePostResType {
+export interface GetNoticePostResType {
   success: boolean;
   data: NoticePostItem;
 }
 
-export class Notice implements Action {
-  public readonly type = NOTICE;
+export class GetNoticeList implements Action {
+  public readonly type = GET_NOTICE_LIST;
 
-  public constructor(public payload: NoticeParams) {}
+  public constructor(public payload: GetNoticeListParams) {}
 }
 
-export class NoticeSuccess implements Action {
-  public readonly type = NOTICE_SUCCESS;
+export class GetNoticeListSuccess implements Action {
+  public readonly type = GET_NOTICE_LIST_SUCCESS;
 
-  public constructor(public payload: NoticeListResType) {}
+  public constructor(public payload: GetNoticeListResType) {}
 }
 
-export class NoticeFailure implements Action {
-  public readonly type = NOTICE_FAILURE;
+export class GetNoticeListFailure implements Action {
+  public readonly type = GET_NOTICE_LIST_FAILURE;
 }
 
-export class NoticePost implements Action {
-  public readonly type = NOTICE_POST;
+export class GetNoticePost implements Action {
+  public readonly type = GET_NOTICE_POST;
 
-  public constructor(public payload: NoticePostParams) {}
+  public constructor(public payload: GetNoticePostParams) {}
 }
 
-export class NoticePostSuccess implements Action {
-  public readonly type = NOTICE_POST_SUCCESS;
+export class GetNoticePostSuccess implements Action {
+  public readonly type = GET_NOTICE_POST_SUCCESS;
 
-  public constructor(public payload: NoticePostResType) {}
+  public constructor(public payload: GetNoticePostResType) {}
 }
 
-export class NoticePostFailure implements Action {
-  public readonly type = NOTICE_POST_FAILURE;
+export class GetNoticePostFailure implements Action {
+  public readonly type = GET_NOTICE_POST_FAILURE;
 }
 
 export const noticeActions = {
-  notice: createStandardAction(NOTICE)<NoticeParams>(),
-  noticePost: createStandardAction(NOTICE_POST)<NoticePostParams>(),
+  getNoticeList: createStandardAction(GET_NOTICE_LIST)<GetNoticeListParams>(),
+  getNoticePost: createStandardAction(GET_NOTICE_POST)<GetNoticePostParams>(),
 };
 
 export type noticeReducerActions =
-  | Notice
-  | NoticeSuccess
-  | NoticeFailure
-  | NoticePost
-  | NoticePostSuccess
-  | NoticePostFailure;
+  | GetNoticeList
+  | GetNoticeListSuccess
+  | GetNoticeListFailure
+  | GetNoticePost
+  | GetNoticePostSuccess
+  | GetNoticePostFailure;

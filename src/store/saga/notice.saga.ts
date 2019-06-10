@@ -1,19 +1,19 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
-  NOTICE,
-  Notice,
-  NOTICE_FAILURE,
-  NOTICE_POST,
-  NOTICE_POST_FAILURE,
-  NOTICE_POST_SUCCESS,
-  NOTICE_SUCCESS,
-  NoticeParams,
-  NoticePost,
-  NoticePostParams,
+  GET_NOTICE_LIST,
+  GET_NOTICE_LIST_FAILURE,
+  GET_NOTICE_LIST_SUCCESS,
+  GET_NOTICE_POST,
+  GET_NOTICE_POST_FAILURE,
+  GET_NOTICE_POST_SUCCESS,
+  GetNoticeList,
+  GetNoticeListParams,
+  GetNoticePost,
+  GetNoticePostParams,
 } from '../action';
 
-const noticeApi = (data: NoticeParams) =>
+const getNoticeListApi = (data: GetNoticeListParams) =>
   instance
     .get('/api/notice', {
       headers: {
@@ -27,20 +27,20 @@ const noticeApi = (data: NoticeParams) =>
     })
     .then(res => res.data);
 
-function* noticeApiSaga(action: Notice) {
+function* getNoticeListApiSaga(action: GetNoticeList) {
   if (action.type) {
     try {
-      const response = yield call(noticeApi, action.payload);
+      const response = yield call(getNoticeListApi, action.payload);
       console.log(response);
-      yield put({ type: NOTICE_SUCCESS, payload: response });
+      yield put({ type: GET_NOTICE_LIST_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: NOTICE_FAILURE, payload: e.response });
+      yield put({ type: GET_NOTICE_LIST_FAILURE, payload: e.response });
     }
   }
 }
 
-const noticePostApi = (data: NoticePostParams) =>
+const getNoticePostApi = (data: GetNoticePostParams) =>
   instance
     .get('/api/notice', {
       headers: {
@@ -53,20 +53,20 @@ const noticePostApi = (data: NoticePostParams) =>
     })
     .then(res => res.data);
 
-function* noticePostApiSaga(action: NoticePost) {
+function* getNoticPostApiSaga(action: GetNoticePost) {
   if (action.type) {
     try {
-      const response = yield call(noticePostApi, action.payload);
+      const response = yield call(getNoticePostApi, action.payload);
       console.log(response);
-      yield put({ type: NOTICE_POST_SUCCESS, payload: response });
+      yield put({ type: GET_NOTICE_POST_SUCCESS, payload: response });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: NOTICE_POST_FAILURE, payload: e.response });
+      yield put({ type: GET_NOTICE_POST_FAILURE, payload: e.response });
     }
   }
 }
 
 export function* noticeSaga() {
-  yield takeEvery(NOTICE, noticeApiSaga);
-  yield takeEvery(NOTICE_POST, noticePostApiSaga);
+  yield takeEvery(GET_NOTICE_LIST, getNoticeListApiSaga);
+  yield takeEvery(GET_NOTICE_POST, getNoticPostApiSaga);
 }

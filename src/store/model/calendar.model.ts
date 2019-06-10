@@ -11,8 +11,8 @@ export interface CalendarRecentItem {
 }
 
 export interface CalendarModel {
-  calendarStatus: 'none' | 'pending' | 'success' | 'failure';
-  calendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
+  getCalendarStatus: 'none' | 'pending' | 'success' | 'failure';
+  getCalendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
   calendar: CalendarItem[];
   calendarRecent: CalendarRecentItem[];
 }

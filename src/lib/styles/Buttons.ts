@@ -3,7 +3,7 @@ import styled from 'styled-components';
 interface ButtonsProps {
   width: string | number;
   height: string | number;
-  active: boolean
+  active: boolean;
 }
 
 export const Buttons = styled.button<ButtonsProps>`
@@ -19,7 +19,8 @@ export const Buttons = styled.button<ButtonsProps>`
   font-size: 1.25rem;
   font-weight: 900;
   color: white;
-  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   outline: none;
   cursor: pointer;
+  border: 0;
 `;
