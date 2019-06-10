@@ -83,7 +83,7 @@ const TimeTableComponent: React.FC<
 
   useEffect(() => {
     if (getTimetableStatus === 'success') {
-      setTimeTable([...timeTableList].splice(1, 5));
+      setTimeTable(timeTableList.slice(1, 5));
     }
   }, [getTimetableStatus]);
 

@@ -25,7 +25,7 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
 }) => {
   const CalendarList =
     getCalendarRecentStatus === 'success'
-      ? [...calendarList].splice(0, 4).map((item, index) => {
+      ? calendarList.slice(0, 4).map((item, index) => {
           const today =
             moment().format('YYYY.MM.DD') ===
             moment(`${item.year}.${item.month}.${item.date}`).format(

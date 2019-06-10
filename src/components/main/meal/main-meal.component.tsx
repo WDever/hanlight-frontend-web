@@ -58,7 +58,7 @@ const MainMealComponent: React.FC<MealProps & MealMethod> = ({
 }) => {
   const MealList =
     getMealStatus === 'success'
-      ? [...mealList].splice(0, 3).map((val, index) => {
+      ? mealList.slice(0, 3).map((val, index) => {
           const meal = mealList[index];
           const year = moment().get('year');
           const m = moment().set({
@@ -93,7 +93,7 @@ const MainMealComponent: React.FC<MealProps & MealMethod> = ({
             );
           }
         })
-      : [];
+      : [<MoreBox />, <MoreBox />, <MoreBox />];
 
   useEffect(() => {
     getMeal({ accessToken, sort: 'week' });
