@@ -80,8 +80,8 @@ const MealItemComponent: React.FC<{
     <MealItemWrapper item={true} type={type} today={today}>
       <MealItemDay type={type}>{day}</MealItemDay>
       <MealItems type={type}>
-        {item.map(meal => (
-          <span>{meal}</span>
+        {item.map((meal, i) => (
+          <span key={i}>{meal}</span>
         ))}
       </MealItems>
       <MealDate type={type}>{date}</MealDate>
@@ -90,8 +90,8 @@ const MealItemComponent: React.FC<{
     <MealItemWrapper item={false} today={today} type={type}>
       <MealNoItemWrapper>
         <MealNoItems type={type}>
-          {item.split('\n').map(line => (
-            <MealNoItem>{line}</MealNoItem>
+          {item.split('\n').map((line, i) => (
+            <MealNoItem key={i}>{line}</MealNoItem>
           ))}
         </MealNoItems>
         {type === 'main' && <MealDate type={type}>{date}</MealDate>}

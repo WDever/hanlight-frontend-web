@@ -56,21 +56,21 @@ const LunchTimeComponent: React.FC = () => {
 
     const remainSum = sum >= 45000 ? 131400 - sum : 45000 - sum;
 
-    const computedHour = ((Math.floor(remainSum / 3600)));
-    const computedMin = (Math.floor((remainSum - (computedHour * 3600)) / 60));
-    const computedSec = (Math.floor(remainSum - (computedHour * 3600) - (computedMin * 60)));
+    const computedHour = Math.floor(remainSum / 3600);
+    const computedMin = Math.floor((remainSum - computedHour * 3600) / 60);
+    const computedSec = Math.floor(
+      remainSum - computedHour * 3600 - computedMin * 60,
+    );
 
     setRemainHour(computedHour);
     setRemainMin(computedMin);
     setRemainSec(computedSec);
   };
 
-  const startTime = () => {
-    setInterval(() => computeTime(), 1000);
-  };
-
   useEffect(() => {
-    startTime();
+    const interval = setInterval(() => computeTime(), 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -78,17 +78,11 @@ const LunchTimeComponent: React.FC = () => {
       <TitleWrapper>점심시간까지 남은시간</TitleWrapper>
       <TimeWrapper>
         <InnerWrapper>
-          {remainHour}
-          {' '}
-          <Unit> 시&nbsp;</Unit>
-&nbsp;
-          {remainMin}
-          {' '}
-          <Unit> 분&nbsp;</Unit>
-&nbsp;
-          {remainSec}
-          {' '}
-          <Unit> 초</Unit>
+          {remainHour} <Unit> 시&nbsp;</Unit>
+          &nbsp;
+          {remainMin} <Unit> 분&nbsp;</Unit>
+          &nbsp;
+          {remainSec} <Unit> 초</Unit>
         </InnerWrapper>
       </TimeWrapper>
     </TimeBox>

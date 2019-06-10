@@ -41,7 +41,7 @@ const Unit = styled.span`
   color: black;
 `;
 
-const EndTimeComponent: React.FC = () => {
+const EndTimerComponent: React.FC = () => {
   const [remainHour, setRemainHour] = useState<number>(0);
   const [remainMin, setRemainMin] = useState<number>(0);
   const [remainSec, setRemainSec] = useState<number>(0);
@@ -55,21 +55,21 @@ const EndTimeComponent: React.FC = () => {
 
     const remainSum = sum >= 58200 ? 144600 - sum : 58200 - sum;
 
-    const computedHour = ((Math.floor(remainSum / 3600)));
-    const computedMin = (Math.floor((remainSum - (computedHour * 3600)) / 60));
-    const computedSec = (Math.floor(remainSum - (computedHour * 3600) - (computedMin * 60)));
+    const computedHour = Math.floor(remainSum / 3600);
+    const computedMin = Math.floor((remainSum - computedHour * 3600) / 60);
+    const computedSec = Math.floor(
+      remainSum - computedHour * 3600 - computedMin * 60,
+    );
 
     setRemainHour(computedHour);
     setRemainMin(computedMin);
     setRemainSec(computedSec);
   };
 
-  const startTime = () => {
-    setInterval(() => computeTime(), 1000);
-  };
-
   useEffect(() => {
-    startTime();
+    const interval = setInterval(() => computeTime(), 1000);
+
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -77,21 +77,15 @@ const EndTimeComponent: React.FC = () => {
       <TitleWrapper>종례시간까지 남은시간</TitleWrapper>
       <TimeWrapper>
         <InnerWrapper>
-          {remainHour}
-          {' '}
-          <Unit> 시&nbsp;</Unit>
-&nbsp;
-          {remainMin}
-          {' '}
-          <Unit> 분&nbsp;</Unit>
-&nbsp;
-          {remainSec}
-          {' '}
-          <Unit> 초</Unit>
+          {remainHour} <Unit> 시&nbsp;</Unit>
+          &nbsp;
+          {remainMin} <Unit> 분&nbsp;</Unit>
+          &nbsp;
+          {remainSec} <Unit> 초</Unit>
         </InnerWrapper>
       </TimeWrapper>
     </TimeBox>
   );
 };
 
-export default EndTimeComponent;
+export default EndTimerComponent;

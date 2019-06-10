@@ -91,24 +91,13 @@ class NoticeComponent extends React.Component<
   };
 
   public componentDidMount() {
-    this.props.getNoticeList({ accessToken: this.props.accessToken });
-  }
-
-  public componentDidUpdate(prevProps: MainNoticeProps & MainNoticeMethod) {
-    if (
-      prevProps.getNoticeListStatus === 'pending' &&
-      this.props.getNoticeListStatus === 'success'
-    ) {
-      this.setState({
-        noticeList: this.state.noticeList.concat(
-          this.props.noticeList.slice(0, 5),
-        ),
-      });
+    if (this.props.getNoticeListStatus !== 'success') {
+      this.props.getNoticeList({ accessToken: this.props.accessToken });
     }
   }
 
   public render() {
-    const NoticeList = this.state.noticeList.map(item => {
+    const NoticeList = this.props.noticeList.slice(0, 5).map(item => {
       const date =
         moment(item.createdAt).format('YYYY.MM.DD') ===
         moment().format('YYYY.MM.DD')
