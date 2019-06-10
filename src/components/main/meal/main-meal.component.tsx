@@ -1,4 +1,4 @@
-import { MealMethod, MealProps } from 'container/main/meal';
+import { MealMethod, MealProps } from 'container/meal/meal.container';
 import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
@@ -7,42 +7,15 @@ import { Link } from 'react-router-dom';
 import { MealItem } from 'store';
 import styled from 'styled-components';
 import MealListItem from './mealItem';
+import { MealDate, MealItemWrapper } from './mealItem/mealItem.component';
 
-const { useEffect, useState } = React;
+const { useEffect } = React;
 
 const ListWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  height: 28rem;
-`;
-
-const NoBox = styled.div<{ colored: boolean }>`
-  font-size: 2.25rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
-  width: 15.875rem;
-  height: 21rem;
-  box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
-  background-color: ${props => (props.colored ? '#ff476c' : '#ffffff')};
-  border-radius: 16px;
-  color: ${props => (props.colored ? 'white' : 'black')};
-`;
-
-const Text = styled.div`
-  height: 80%;
-  display: flex;
-  align-items: center;
-`;
-
-const DateWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  font-size: 1.125rem;
-  margin-right: 1.5rem;
-  width: fill-available;
+  height: 20.1875rem;
 `;
 
 const MoreBox = styled.div`
@@ -54,7 +27,7 @@ const MoreBox = styled.div`
   align-items: center;
   flex-direction: column;
   width: 15.875rem;
-  height: 21rem;
+  height: 20.1875rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
@@ -75,7 +48,9 @@ const MoreBtn = styled(Link)`
   cursor: pointer;
 `;
 
-const MealComponent: React.FC<MealProps & MealMethod> = ({
+const days = ['일', '월', '화', '수', '목', '금', '토'];
+
+const MainMealComponent: React.FC<MealProps & MealMethod> = ({
   getMeal,
   mealList,
   getMealStatus,
@@ -83,39 +58,41 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
 }) => {
   const MealList =
     getMealStatus === 'success'
-      ? Array(3)
-          .fill(null)
-          .map((val, index) => {
-            const meal = mealList[index];
-            const date = `${moment().format('YYYY')}년 ${moment().format(
-              'M',
-            )}월 ${meal.date}일`;
-            if (meal.detail === '주말') {
-              return (
-                <NoBox key={index} colored={index === 0}>
-                  <Text>주말이다</Text>
-                  <DateWrapper>{date}</DateWrapper>
-                </NoBox>
-              );
-            } else if (meal.detail === 'X') {
-              return (
-                <NoBox key={index} colored={index === 0}>
-                  <Text>밥이 없다</Text>
-                  <DateWrapper>{date}</DateWrapper>
-                </NoBox>
-              );
-            } else {
-              return (
-                <MealListItem
-                  mealList={meal.detail.split(',')}
-                  date={`${moment().format('YYYY')}년 ${moment().format(
-                    'M',
-                  )}월 ${meal.date}일`}
-                  key={index}
-                />
-              );
-            }
-          })
+      ? [...mealList].splice(0, 3).map((val, index) => {
+          const meal = mealList[index];
+          const year = moment().get('year');
+          const m = moment().set({
+            year,
+            month: val.month - 1,
+            date: val.date,
+          });
+          const dayIndex = m.get('d');
+          const dateString = `${year}년 ${val.month}월 ${val.date}일`;
+          const todayBool = index === 0;
+          if (meal.detail === '주말' || meal.detail === 'X') {
+            return (
+              <MealListItem
+                item={meal.detail === '주말' ? '주말이다' : '밥이 없다'}
+                date={dateString}
+                key={index}
+                day={days[dayIndex]}
+                today={todayBool}
+                type={'main'}
+              />
+            );
+          } else {
+            return (
+              <MealListItem
+                item={meal.detail.split(',')}
+                date={dateString}
+                key={index}
+                day={days[dayIndex]}
+                today={todayBool}
+                type={'main'}
+              />
+            );
+          }
+        })
       : [];
 
   useEffect(() => {
@@ -135,4 +112,4 @@ const MealComponent: React.FC<MealProps & MealMethod> = ({
   );
 };
 
-export default MealComponent;
+export default MainMealComponent;

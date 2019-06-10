@@ -55,7 +55,7 @@ const GreetingDiv = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-family: Spoqa Han Sans;
   font-weight: bold;
   margin-top: 3rem;
 `;
@@ -86,7 +86,7 @@ const Form = styled.form<{
 `;
 
 const TermsBtnWrapper = styled.div`
-  font-family: 'NanumSquare';
+  font-family: 'Spoqa Han Sans';
   width: 28.125rem;
   color: black;
   font-size: 1rem;

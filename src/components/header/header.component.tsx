@@ -40,7 +40,7 @@ const BtnsWrapper = styled.div`
 
 const StyledNavLink = styled(NavLink)`
   text-decoration: none;
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
   color: #565656;
 `;
@@ -51,7 +51,7 @@ const Provider = styled.span`
 `;
 
 const Buttons = styled.span`
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
 `;
 

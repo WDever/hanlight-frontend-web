@@ -19,10 +19,9 @@ const ItemBox = styled.div<BoxProps>`
   height: 11rem;
   border-radius: 32px;
   background-color: ${props => (props.active ? '#4470ff' : '#ffffff')};
+  border: ${props => !props.active && 'solid 1px #b1b1b1'};
   box-shadow: ${props =>
-    props.active
-      ? '0 6px 25px 0 rgba(68, 112, 255, 0.4)'
-      : '0 6px 30px 0 rgba(71, 71, 71, 0.08)'};
+    props.active && '0 6px 25px 0 rgba(68, 112, 255, 0.4)'};
   color: ${props => (props.active ? 'black' : 'white')};
   font-family: 'Spoqa Han Sans';
   display: inline-flex;

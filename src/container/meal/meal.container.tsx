@@ -1,6 +1,9 @@
-import MealComponent from 'components/main/meal';
 import * as React from 'react';
+
+import MainMealComponent from 'components/main/meal';
+import MealComponent from 'components/meal/meal.component';
 import { connect } from 'react-redux';
+import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
@@ -25,14 +28,32 @@ const MealContainer: React.FC<MealProps & MealMethod> = ({
   mealList,
   getMealStatus,
   accessToken,
-}) => (
-  <MealComponent
-    getMeal={getMeal}
-    mealList={mealList}
-    getMealStatus={getMealStatus}
-    accessToken={accessToken}
-  />
-);
+}) => {
+  const mainMealComponent = (
+    <MainMealComponent
+      getMeal={getMeal}
+      mealList={mealList}
+      getMealStatus={getMealStatus}
+      accessToken={accessToken}
+    />
+  );
+
+  const mealComponent = (
+    <MealComponent
+      getMeal={getMeal}
+      mealList={mealList}
+      getMealStatus={getMealStatus}
+      accessToken={accessToken}
+    />
+  );
+
+  return (
+    <Switch>
+      <Route exact={true} path="/" render={() => mainMealComponent} />
+      <Route exact={true} path="/meal" render={() => mealComponent} />
+    </Switch>
+  );
+};
 
 const mapStateToProps = ({ user, meal }: AppState) => ({
   mealList: meal.mealList,

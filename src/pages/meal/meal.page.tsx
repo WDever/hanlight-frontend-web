@@ -1,7 +1,9 @@
 import * as React from 'react';
 
+import MealContainer from 'container/meal';
+
 const MealPage: React.FC = () => {
-  return <></>;
+  return <MealContainer />;
 };
 
 export default MealPage;

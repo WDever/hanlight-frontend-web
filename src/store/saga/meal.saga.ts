@@ -20,6 +20,7 @@ const getMealApi = (data: GetMealParams) =>
       },
       params: {
         sort: data.sort,
+        month: data.month,
       },
     })
     .then(res => res.data);

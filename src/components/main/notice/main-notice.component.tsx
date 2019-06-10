@@ -69,11 +69,11 @@ const MoreBtn = styled(Link)`
   width: 15.3rem;
   height: 3.75rem;
   border-radius: 40px;
-  border: solid 8px #ff6584;
+  border: solid 6px #ff6584;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: bold;
   font-family: 'Spoqa Han Sans';
   color: #ef3c5b;

@@ -34,7 +34,7 @@ const NoBox = styled.div`
   font-size: 1.625rem;
   border-radius: 32px;
   background-color: #ffffff;
-  box-shadow: 0 6px 30px 0 rgba(71, 71, 71, 0.08);
+  border: solid 1px #b1b1b1;
   color: black;
   font-family: 'Spoqa Han Sans';
   display: inline-flex;
@@ -43,12 +43,7 @@ const NoBox = styled.div`
   justify-content: center;
 `;
 
-const Texts = styled.span`
-  font-family: inherit;
-  font-weight: normal;
-  color: black;
-  font-size: 2.25rem;
-`;
+const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 class TimeTableComponent extends React.Component<
   TimeTableProps & TimeTableMethod
@@ -59,7 +54,7 @@ class TimeTableComponent extends React.Component<
     timeTableList: [],
   };
 
-  public today: number = Number(moment().format('d')) - 1;
+  public today: number = Number(moment().format('d'));
 
   public componentDidMount() {
     this.props.timetableApi(this.props.accessToken);
@@ -73,16 +68,7 @@ class TimeTableComponent extends React.Component<
       .fill(null)
       .map((value, index) => {
         if (!timeTableList[today].length) {
-          if (today >= 5) {
-            return (
-              <NoBox key={index}>
-                <Texts>주말</Texts>
-                <Texts>이야</Texts>
-              </NoBox>
-            );
-          } else {
-            return <NoBox key={index} />;
-          }
+          return <NoBox key={index} />;
         } else if (!timeTableList[today][index]) {
           return <NoBox key={index} />;
         } else {
@@ -124,20 +110,13 @@ class TimeTableComponent extends React.Component<
     return (
       <>
         <Title>
-          <Colored>{name}</Colored>
-          님의 시간표
+          <Colored>{days[today]}요일</Colored> 시간표
         </Title>
 
         <TimeTableWrapper>
           {TimeTableList}
           {timetableStatus === 'failure' && (
             <ErrorImg src={ErrorPng} alt="Error" />
-          )}
-          {today >= 5 && timetableStatus !== 'none' && (
-            <NoBox>
-              <Texts>주말</Texts>
-              <Texts>이야</Texts>
-            </NoBox>
           )}
         </TimeTableWrapper>
       </>

@@ -45,7 +45,7 @@ const ModalWrapper = styled.div<ModalSize>`
 `;
 
 const ModalText = styled.span`
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.75rem;
   font-weight: bold;
 `;

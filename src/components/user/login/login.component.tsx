@@ -43,7 +43,7 @@ const GreetingDiv = styled.div`
   align-items: center;
   justify-content: space-around;
   font-size: 2.25rem;
-  font-family: 'NanumSquare';
+  font-family: 'Spoqa Han Sans';
   font-weight: bold;
   margin-bottom: 2rem;
 `;
@@ -73,7 +73,7 @@ const LoginForm = styled.form`
 `;
 
 const FindBtnsWrapper = styled.div`
-  font-family: 'NanumSquare';
+  font-family: 'Spoqa Han Sans';
   width: 70%;
   color: #6c63ff;
   font-size: 1.25rem;
@@ -86,7 +86,7 @@ const WrongLabel = styled.label`
   width: 27rem;
   height: 3.125rem;
   color: #ff0000;
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1rem;
 `;
 
@@ -105,7 +105,7 @@ const LoginInputPw = styled(Inputs)<{ colored: boolean }>`
 const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
 
 const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
-  font-family: 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-size: 1.25rem;
   color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
   font-weight: 500;
@@ -133,7 +133,7 @@ const LoginComponent: React.FC<
   const submitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (id && password) {
+    if (loginStatus !== 'pending' && id && password) {
       if (idCheck(id) && pwCheck(password)) {
         login({ id, password });
       } else {
@@ -166,6 +166,7 @@ const LoginComponent: React.FC<
             name="id"
             value={id}
             colored={!!id}
+            autoComplete="off"
           />
           <LoginInputPw
             width="25.75rem"
@@ -177,6 +178,7 @@ const LoginComponent: React.FC<
             name="password"
             value={password}
             colored={!!password}
+            autoComplete="off"
           />
         </LoginInputWrapper>
         <WrongLabel>

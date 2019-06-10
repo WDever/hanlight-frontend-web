@@ -11,15 +11,9 @@ const MainNoticeTemplate = styled.div`
   margin-bottom: 3rem;
 `;
 
-const Empty = styled.div`
-  height: 5.125rem;
-  width: 100%;
-`;
-
 const MainNoticePage: React.FC = () => {
   return (
     <React.Fragment>
-      <Empty />
       <MainNoticeTemplate>
         <MainNoticeContainer />
       </MainNoticeTemplate>

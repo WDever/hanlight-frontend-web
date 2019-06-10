@@ -1,23 +1,31 @@
+import * as React from 'react';
+
 import FooterComponent from 'components/footer';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
-import Calendar from 'pages/main/calendar';
-import MealPage from 'pages/main/meal';
-import NoticePage from 'pages/main/notice';
-import TimePage from 'pages/main/timer';
-import TimeTablePage from 'pages/main/timeTable';
-import * as React from 'react';
+import MainCalendarPage from 'pages/main/calendar';
+import MainMealPage from 'pages/main/meal';
+import MainNoticePage from 'pages/main/notice';
+import MainTimePage from 'pages/main/timer';
+import MainTimeTablePage from 'pages/main/timeTable';
+import MealPage from 'pages/meal';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import styled from 'styled-components';
 
 const { useEffect } = React;
 
+const Empty = styled.div`
+  height: 5.125rem;
+  width: 100%;
+`;
+
 const MainComponents = () => (
   <>
-    <NoticePage />
-    <TimePage />
-    <MealPage />
-    <TimeTablePage />
-    <Calendar />
+    <MainNoticePage />
+    <MainTimePage />
+    <MainMealPage />
+    <MainTimeTablePage />
+    <MainCalendarPage />
   </>
 );
 
@@ -36,6 +44,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   return loginStatus === 'success' ? (
     <>
       <HeaderContainer />
+      <Empty />
       <Switch>
         <Route exact={true} path="/" component={MainComponents} />
         <Route exact={true} path="/meal" component={MealPage} />

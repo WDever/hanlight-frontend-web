@@ -1,4 +1,5 @@
 export interface MealItem {
+  month: number;
   date: number;
   detail: string;
 }

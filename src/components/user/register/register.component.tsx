@@ -43,7 +43,7 @@ const GreetingDiv = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   font-weight: bold;
   color: #4470ff;
   margin-top: 3rem;

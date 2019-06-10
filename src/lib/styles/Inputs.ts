@@ -24,7 +24,7 @@ export const Inputs = styled.input<InputsSize & { wrong?: boolean }>`
   font-size: 1.25rem;
   text-indent: 1rem;
   color: #4470ff;
-  font-family: 'Noto Sans', 'Noto Sans KR';
+  font-family: 'Spoqa Han Sans';
   outline: none;
 
   &::placeholder {

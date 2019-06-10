@@ -5,28 +5,33 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const FooterWrapper = styled.div`
+const FooterWrapper = styled.footer`
   display: flex;
   align-items: center;
   justify-content: space-around;
   width: 100%;
-  height: 15rem;
+  height: 10rem;
   background-color: #f9f9f9;
+  font-size: 0.7rem;
 `;
 
 const WordsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   font-family: 'Spoqa Han Sans';
-  font-size: 1rem;
   justify-content: space-between;
-  height: 10.75rem;
+  height: 7rem;
+`;
+
+const TextsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const RulesWrapper = styled.div`
+  width: 11.5rem;
   display: flex;
   justify-content: space-between;
-  width: 13.25rem;
 `;
 
 const Rules = styled(Link)`
@@ -46,31 +51,49 @@ const LinkBtn = styled.img`
   height: 3.125rem;
 `;
 
+const Text = styled.span`
+  font-family: 'Spoqa Han Sans';
+`;
+
 const FooterComponent: React.FC = () => {
   return (
     <FooterWrapper>
       <WordsWrapper>
-        <span>[04129] 서울특별시 마포구 마포대로 11길 44-80</span>
-        <span>한세사이버보안고등학교 총학생회 한울</span>
-        <span>E-Mail : stucon.hansei@gmail.com</span>
+        <TextsWrapper>
+          <Text>[04129] 서울특별시 마포구 마포대로 11길 44-80</Text>
+          <Text>한세사이버보안고등학교 총학생회 한울</Text>
+        </TextsWrapper>
+        <Text>E-Mail : stucon.hansei@gmail.com</Text>
         <RulesWrapper>
           <Rules to="/terms">[이용약관]</Rules>
           <Rules to="privacy">[개인정보처리방침]</Rules>
         </RulesWrapper>
-        <span>
+        <Text>
           Copyright COPYRIGHT HANSEI CYBER SRCURITY HIGHSCHOOL. ALL RIGHT
           REVERSED
-        </span>
+        </Text>
       </WordsWrapper>
       <LinksWrapper>
         <Link to="a">
-          <LinkBtn src={FbLogoSvg} alt="facebook logo" />
+          <LinkBtn
+            style={{ width: '38px', height: '38px' }}
+            src={FbLogoSvg}
+            alt="facebook logo"
+          />
         </Link>
         <Link to="a">
-          <LinkBtn src={IgLogoSvg} alt="Instagram logo" />
+          <LinkBtn
+            style={{ width: '38px', height: '38px' }}
+            src={IgLogoSvg}
+            alt="Instagram logo"
+          />
         </Link>
         <Link to="a">
-          <LinkBtn src={HatLogoSvg} alt="Hat logo" />
+          <LinkBtn
+            style={{ width: '38px', height: '30px' }}
+            src={HatLogoSvg}
+            alt="Hat logo"
+          />
         </Link>
       </LinksWrapper>
     </FooterWrapper>
