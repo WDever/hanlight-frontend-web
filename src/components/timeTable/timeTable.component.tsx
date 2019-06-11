@@ -75,17 +75,9 @@ const TimeTableComponent: React.FC<
   classNum,
   major,
 }) => {
-  const [timeTable, setTimeTable] = useState<string[][]>([[], [], [], [], []]);
-
   useEffect(() => {
     getTimetable(accessToken);
   }, []);
-
-  useEffect(() => {
-    if (getTimetableStatus === 'success') {
-      setTimeTable(timeTableList.slice(1, 5));
-    }
-  }, [getTimetableStatus]);
 
   const sum =
     moment().get('hour') * hour +
@@ -120,26 +112,30 @@ const TimeTableComponent: React.FC<
     '(15:20 ~ 16:10)',
   ];
 
-  const tBody = timeTable[1].length ? (
-    Array(7)
-      .fill(null)
-      .map((_, i) => (
-        <tr key={i}>
-          <Th key={i} now={period() === i + 1}>
-            {i + 1}교시
-            <br />
-            <Time>{timeArr[i]}</Time>
-          </Th>
-          {timeTable.map((timetable, j) => (
-            <Td key={j} now={period() === i + 1 && moment().get('d') === j + 1}>
-              {timetable[i] ? timetable[i] : ''}
-            </Td>
-          ))}
-        </tr>
-      ))
-  ) : (
-    <></>
-  );
+  const tBody =
+    getTimetableStatus === 'success' ? (
+      Array(7)
+        .fill(null)
+        .map((_, i) => (
+          <tr key={i}>
+            <Th key={i} now={period() === i + 1}>
+              {i + 1}교시
+              <br />
+              <Time>{timeArr[i]}</Time>
+            </Th>
+            {timeTableList.slice(1, 6).map((timetable, j) => (
+              <Td
+                key={j}
+                now={period() === i + 1 && moment().get('d') === j + 1}
+              >
+                {timetable[i] ? timetable[i] : ''}
+              </Td>
+            ))}
+          </tr>
+        ))
+    ) : (
+      <></>
+    );
 
   return (
     <Wrapper>

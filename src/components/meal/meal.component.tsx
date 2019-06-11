@@ -146,7 +146,7 @@ export default class MealComponent extends React.Component<
             MealList.map((_, i) => {
               if (MealList[i].length) {
                 return (
-                  <MealWeekWrapper>
+                  <MealWeekWrapper key={i}>
                     <MealWeekString>
                       {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                     </MealWeekString>

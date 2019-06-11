@@ -93,7 +93,7 @@ const MainMealComponent: React.FC<MealProps & MealMethod> = ({
             );
           }
         })
-      : [<MoreBox />, <MoreBox />, <MoreBox />];
+      : [<MoreBox key={1} />, <MoreBox key={2} />, <MoreBox key={3} />];
 
   useEffect(() => {
     getMeal({ accessToken, sort: 'week' });
