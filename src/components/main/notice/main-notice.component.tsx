@@ -83,7 +83,7 @@ const MoreBtn = styled(Link)`
   background-color: #ffffff;
 `;
 
-class NoticeComponent extends React.Component<
+class MainNoticeComponent extends React.Component<
   MainNoticeProps & MainNoticeMethod
 > {
   public state: { noticeList: NoticeListItem[] } = {
@@ -139,4 +139,4 @@ class NoticeComponent extends React.Component<
   }
 }
 
-export default NoticeComponent;
+export default MainNoticeComponent;

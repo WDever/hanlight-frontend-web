@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
   max-width: 81rem;
   width: 90%;
+  min-height: 100%;
 `;
 
 const Title = styled.div`
@@ -88,7 +89,10 @@ export default class MealComponent extends React.Component<
       JSX.Element[]
     ] = [[], [], [], [], []];
 
-    if (this.props.getMealStatus === 'success') {
+    if (
+      this.props.getMealStatus === 'success' &&
+      this.props.mealList.length > 8
+    ) {
       Array(
         moment()
           .endOf('month')

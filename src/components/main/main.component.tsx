@@ -51,7 +51,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/" component={MainComponents} />
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
-        <Route path="/notice/:pk" component={NoticePage} />
+        <Route path="/notice" component={NoticePage} />
         <Redirect to="/" />
       </Switch>
       <FooterComponent />

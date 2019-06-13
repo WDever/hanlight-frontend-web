@@ -104,7 +104,7 @@ const MainMealComponent: React.FC<MealProps & MealMethod> = ({
       {MealList}
       {getMealStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       <MoreBox>
-        <span>급식 정보가</span>
+        <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>
         <MoreBtn to="/meal">더보기</MoreBtn>
       </MoreBox>
