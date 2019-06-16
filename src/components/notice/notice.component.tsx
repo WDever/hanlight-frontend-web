@@ -163,17 +163,19 @@ export default class NoticeComponent extends React.Component {
                 <TdPk>
                   <TdPkString>2</TdPkString>
                 </TdPk>
-                <TdTitle new={false}>복장위반 공지사항</TdTitle>
+                <TdTitle new={true}>
+                  복장위반 공지사항 <TdTitleNew>NEW</TdTitleNew>
+                </TdTitle>
                 <TdCreatedAt>2019.06.02</TdCreatedAt>
               </Tr>
               <Tr>
                 <TdPk>
                   <TdPkString>3</TdPkString>
                 </TdPk>
-                <TdTitle new={true}>
+                <TdTitle new={false}>
                   복장위반 공지사항인데 지금 새벽이고 치킨을 시켰는데 4강을 하고
                   있고 존나 피곤하다. 내일 학교를 가는데 사실 오늘이지만 무튼
-                  졸업사진 준비를 하기로 했다.<TdTitleNew>NEW</TdTitleNew>
+                  졸업사진 준비를 하기로 했다.
                 </TdTitle>
                 <TdCreatedAt>2019.06.02</TdCreatedAt>
               </Tr>

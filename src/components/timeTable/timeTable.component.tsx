@@ -118,7 +118,14 @@ const TimeTableComponent: React.FC<
         .fill(null)
         .map((_, i) => (
           <tr key={i}>
-            <Th key={i} now={period() === i + 1}>
+            <Th
+              key={i}
+              now={
+                period() === i + 1 &&
+                moment().get('d') > 0 &&
+                moment().get('d') < 6
+              }
+            >
               {i + 1}교시
               <br />
               <Time>{timeArr[i]}</Time>
