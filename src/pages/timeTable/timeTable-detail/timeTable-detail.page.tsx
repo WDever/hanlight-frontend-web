@@ -30,6 +30,7 @@ const RightImg = styled.img`
   /* width: 56.875rem;
   height: 52rem; */
   z-index: -1;
+  margin-left: 3%;
 `;
 
 const TimeTablePage = () => {
