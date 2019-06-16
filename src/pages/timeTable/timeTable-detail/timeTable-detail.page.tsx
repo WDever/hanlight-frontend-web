@@ -12,13 +12,14 @@ const Template = styled.div`
 `;
 
 const Background = styled.div`
-  width: 80%;
+  width: 100%;
   height: 85%;
   position: absolute;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: flex-end;
   z-index: -1;
+  overflow-x: hidden;
 `;
 
 const LeftImg = styled.img`
@@ -26,8 +27,8 @@ const LeftImg = styled.img`
 `;
 
 const RightImg = styled.img`
-  width: 56.875rem;
-  height: 52rem;
+  /* width: 56.875rem;
+  height: 52rem; */
   z-index: -1;
 `;
 
