@@ -33,7 +33,7 @@ const LoginWrapper = styled.div`
   align-items: center;
   flex-direction: column;
   background-color: #ffffff;
-  border-radius: 48px;
+  /* border-radius: 48px; */
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   animation: ${transitions.fadeIn} 2.5s;
