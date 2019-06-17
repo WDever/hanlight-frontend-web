@@ -1,9 +1,7 @@
 import * as React from 'react';
 
 import MainMealComponent from 'components/meal/main-meal';
-import MealComponent from 'components/meal/main-meal';
 import { connect } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
@@ -13,9 +11,9 @@ import {
   mealReducerActions,
 } from 'store';
 
-export interface MealProps {
-  mealList: MealItem[];
-  getMealStatus: 'none' | 'pending' | 'success' | 'failure';
+export interface MainMealProps {
+  mealWeekList: MealItem[];
+  getMealWeekStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
@@ -23,41 +21,27 @@ export interface MealMethod {
   getMeal(params: GetMealParams): void;
 }
 
-const MealContainer: React.FC<MealProps & MealMethod> = ({
+const MealContainer: React.FC<
+  MainMealProps & MealMethod
+> = ({
   getMeal,
-  mealList,
-  getMealStatus,
+  mealWeekList,
+  getMealWeekStatus,
   accessToken,
 }) => {
-  const mainMealComponent = (
+  return (
     <MainMealComponent
       getMeal={getMeal}
-      mealList={mealList}
-      getMealStatus={getMealStatus}
+      mealWeekList={mealWeekList}
+      getMealWeekStatus={getMealWeekStatus}
       accessToken={accessToken}
     />
-  );
-
-  const mealComponent = (
-    <MealComponent
-      getMeal={getMeal}
-      mealList={mealList}
-      getMealStatus={getMealStatus}
-      accessToken={accessToken}
-    />
-  );
-
-  return (
-    <Switch>
-      <Route exact={true} path="/" render={() => mainMealComponent} />
-      <Route exact={true} path="/meal" render={() => mealComponent} />
-    </Switch>
   );
 };
 
 const mapStateToProps = ({ user, meal }: AppState) => ({
-  mealList: meal.mealList,
-  getMealStatus: meal.getMealStatus,
+  mealWeekList: meal.mealWeekList,
+  getMealWeekStatus: meal.getMealWeekStatus,
   accessToken: user.accessToken,
 });
 

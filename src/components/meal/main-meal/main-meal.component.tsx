@@ -1,4 +1,4 @@
-import { MealMethod, MealProps } from 'container/meal/main-meal';
+import { MainMealProps, MealMethod } from 'container/meal/main-meal';
 import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
@@ -50,16 +50,16 @@ const MoreBtn = styled(Link)`
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
-const MainMealComponent: React.FC<MealProps & MealMethod> = ({
+const MainMealComponent: React.FC<MainMealProps & MealMethod> = ({
   getMeal,
-  mealList,
-  getMealStatus,
+  mealWeekList,
+  getMealWeekStatus,
   accessToken,
 }) => {
   const MealList =
-    getMealStatus === 'success'
-      ? mealList.slice(0, 3).map((val, index) => {
-          const meal = mealList[index];
+    getMealWeekStatus === 'success'
+      ? mealWeekList.slice(0, 3).map((val, index) => {
+          const meal = mealWeekList[index];
           const year = moment().get('year');
           const m = moment().set({
             year,
@@ -102,7 +102,7 @@ const MainMealComponent: React.FC<MealProps & MealMethod> = ({
   return (
     <ListWrapper>
       {MealList}
-      {getMealStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
+      {getMealWeekStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       <MoreBox>
         <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>

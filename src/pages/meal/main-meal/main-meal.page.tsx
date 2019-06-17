@@ -1,4 +1,4 @@
-import MealContainer from 'container/meal/meal-detail/meal-detaill.container';
+import MealContainer from 'container/meal/main-meal';
 import * as React from 'react';
 import styled from 'styled-components';
 

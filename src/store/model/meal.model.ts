@@ -5,8 +5,10 @@ export interface MealItem {
 }
 
 export interface MealModel {
-  mealList: MealItem[];
+  mealWeekList: MealItem[];
+  mealMonthList: MealItem[];
   mealOrder: string;
-  getMealStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMealWeekStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMealMonthStatus: 'none' | 'pending' | 'success' | 'failure';
   getMealOrderStatus: 'none' | 'pending' | 'success' | 'failure';
 }

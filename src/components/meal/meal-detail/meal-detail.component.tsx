@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import MealItemComponent from 'components/meal/mealItem';
-import { MealMethod, MealProps } from 'container/meal/meal-detail';
+import { MealDetailProps, MealMethod } from 'container/meal/meal-detail';
 import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
@@ -52,7 +52,7 @@ const days = ['일', '월', '화', '수', '목', '금', '토'];
 const weeksString = ['첫', '두', '세', '네', '다섯'];
 
 export default class MealComponent extends React.Component<
-  MealProps & MealMethod
+  MealDetailProps & MealMethod
 > {
   public state: { meals: MealItem[] } = {
     meals: [],
@@ -66,20 +66,20 @@ export default class MealComponent extends React.Component<
     });
   }
 
-  public componentDidUpdate(prevProps: MealProps & MealMethod) {
+  public componentDidUpdate(prevProps: MealDetailProps & MealMethod) {
     if (
-      prevProps.getMealStatus === 'pending' &&
-      this.props.getMealStatus === 'success'
+      prevProps.getMealMonthStatus === 'pending' &&
+      this.props.getMealMonthStatus === 'success'
     ) {
       this.setState({
-        meals: this.state.meals.concat(this.props.mealList),
+        meals: this.state.meals.concat(this.props.mealMonthList),
       });
     }
   }
 
   public render() {
     const { meals } = this.state;
-    const { getMealStatus } = this.props;
+    const { getMealMonthStatus } = this.props;
 
     const MealList: [
       JSX.Element[],
@@ -90,8 +90,8 @@ export default class MealComponent extends React.Component<
     ] = [[], [], [], [], []];
 
     if (
-      this.props.getMealStatus === 'success' &&
-      this.props.mealList.length > 8
+      this.props.getMealMonthStatus === 'success' &&
+      this.props.mealMonthList.length > 8
     ) {
       Array(
         moment()
@@ -146,7 +146,7 @@ export default class MealComponent extends React.Component<
       <Meal>
         <Wrapper>
           <Title>급식 정보</Title>
-          {getMealStatus === 'success' &&
+          {getMealMonthStatus === 'success' &&
             MealList.map((_, i) => {
               if (MealList[i].length) {
                 return (
