@@ -5,7 +5,6 @@ import { createStandardAction } from 'typesafe-actions';
 export const GET_MEAL = 'GET_MEAL';
 export const GET_MEAL_WEEK_SUCCESS = 'GET_MEAL_WEEK_SUCCESS';
 export const GET_MEAL_WEEK_FAILURE = 'GET_MEAL_WEEK_FAILURE';
-export const GET_MEAL_WEEK_MONTH = 'GET_MEAL_MONTH';
 export const GET_MEAL_MONTH_SUCCESS = 'GET_MEAL_MONTH_SUCCESS';
 export const GET_MEAL_MONTH_FAILURE = 'GET_MEAL_MONTH_FAILURE';
 export const GET_MEAL_ORDER = 'GET_MEAL_ORDER';
