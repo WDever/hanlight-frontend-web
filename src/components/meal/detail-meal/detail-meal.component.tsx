@@ -59,7 +59,9 @@ export default class MealComponent extends React.Component<
   };
 
   public componentDidMount() {
-    this.props.getMeal({
+    const { getMeal } = this.props;
+
+    getMeal({
       accessToken: this.props.accessToken,
       sort: 'month',
       month: moment().get('month') + 1,
@@ -67,13 +69,15 @@ export default class MealComponent extends React.Component<
   }
 
   public componentDidUpdate(prevProps: MealDetailProps & MealMethod) {
+    const { getMealMonthStatus, mealMonthList } = this.props;
+
     if (
       prevProps.getMealMonthStatus === 'pending' &&
-      this.props.getMealMonthStatus === 'success'
+      getMealMonthStatus === 'success'
     ) {
-      this.setState({
-        meals: this.state.meals.concat(this.props.mealMonthList),
-      });
+      this.setState((state: { meals: MealItem[] }) => ({
+        meals: state.meals.concat(mealMonthList),
+      }));
     }
   }
 
@@ -89,10 +93,7 @@ export default class MealComponent extends React.Component<
       JSX.Element[]
     ] = [[], [], [], [], []];
 
-    if (
-      this.props.getMealMonthStatus === 'success' &&
-      this.props.mealMonthList.length > 8
-    ) {
+    if (getMealMonthStatus === 'success') {
       Array(
         moment()
           .endOf('month')
@@ -108,9 +109,7 @@ export default class MealComponent extends React.Component<
           const weekend =
             mealMoment.get('day') === 0 || mealMoment.get('day') === 6;
           if (!weekend) {
-            const mealIndex = this.state.meals.findIndex(
-              meal => meal.date === date,
-            );
+            const mealIndex = meals.findIndex(meal => meal.date === date);
             const dateString = mealMoment.format('MM월 DD일');
             const todayBool = moment().get('date') === mealMoment.get('date');
             const day = days[mealMoment.get('d')];
@@ -120,7 +119,7 @@ export default class MealComponent extends React.Component<
                 <MealItemComponent
                   key={date}
                   type="detail"
-                  item={this.state.meals[mealIndex].detail.split(',')}
+                  item={meals[mealIndex].detail.split(',')}
                   date={dateString}
                   today={todayBool}
                   day={day}
@@ -143,24 +142,30 @@ export default class MealComponent extends React.Component<
     }
 
     return (
-      <Meal>
-        <Wrapper>
-          <Title>급식 정보</Title>
-          {getMealMonthStatus === 'success' &&
-            MealList.map((_, i) => {
-              if (MealList[i].length) {
-                return (
-                  <MealWeekWrapper key={i}>
-                    <MealWeekString>
-                      {moment().get('month') + 1}월 {weeksString[i]} 번째 주
-                    </MealWeekString>
-                    <MealWeekItems>{MealList[i]}</MealWeekItems>
-                  </MealWeekWrapper>
-                );
-              }
-            })}
-        </Wrapper>
-      </Meal>
+      <>
+        {getMealMonthStatus === 'success' ? (
+          <Meal>
+            <Wrapper>
+              <Title>급식 정보</Title>
+              {MealList.map((_, i) => {
+                if (MealList[i].length) {
+                  return (
+                    <MealWeekWrapper key={i}>
+                      <MealWeekString>
+                        {moment().get('month') + 1}월 {weeksString[i]} 번째 주
+                      </MealWeekString>
+                      <MealWeekItems>{MealList[i]}</MealWeekItems>
+                    </MealWeekWrapper>
+                  );
+                }
+                return <></>;
+              })}
+            </Wrapper>
+          </Meal>
+        ) : (
+          <Meal style={{ height: '100%' }} />
+        )}
+      </>
     );
   }
 }
