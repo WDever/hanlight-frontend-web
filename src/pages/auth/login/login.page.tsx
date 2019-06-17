@@ -12,10 +12,6 @@ const Template = styled.div`
   justify-content: center;
 `;
 
-const Background = styled.div`
-
-`;
-
 const LoginIllust = styled.img`
   position: absolute;
   left: 5%;
