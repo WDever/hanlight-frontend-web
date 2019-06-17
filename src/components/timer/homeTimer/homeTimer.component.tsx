@@ -41,7 +41,7 @@ const Unit = styled.span`
   color: black;
 `;
 
-const EndTimerComponent: React.FC = () => {
+const HomeTimerComponent: React.FC = () => {
   const [remainHour, setRemainHour] = useState<number>(0);
   const [remainMin, setRemainMin] = useState<number>(0);
   const [remainSec, setRemainSec] = useState<number>(0);
@@ -88,4 +88,4 @@ const EndTimerComponent: React.FC = () => {
   );
 };
 
-export default EndTimerComponent;
+export default HomeTimerComponent;

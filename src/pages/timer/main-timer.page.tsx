@@ -1,4 +1,4 @@
-import EndTimeComponent from 'components/timer/endTimer';
+import HomeTimeComponent from 'components/timer/homeTimer';
 import LunchTimeComponent from 'components/timer/lunchTimer';
 import EndImgSvg from 'lib/svg/end-time-illust.svg';
 import LunchImgSvg from 'lib/svg/jumsim-illust.svg';
@@ -57,7 +57,7 @@ const TimeComponent: React.FC = () => {
         </TimeWrapper>
         <TimeWrapper style={{ marginRight: '5%' }}>
           <EndTimeBackGroundImg src={EndImgSvg} alt="End Time Background Img" />
-          <EndTimeComponent />
+          <HomeTimeComponent />
         </TimeWrapper>
       </Wrapper>
     </Template>

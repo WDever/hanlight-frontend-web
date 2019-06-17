@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import NoticeComponent from 'components/notice/notice-detail';
+import NoticeComponent from 'components/notice/detail-notice';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 const NoticePage: React.FC = () => {

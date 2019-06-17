@@ -1,4 +1,4 @@
-import TimeTableContainer from 'container/timeTable/timeTable-detail';
+import TimeTableContainer from 'container/timeTable/detail-timeTable';
 import LeftSvg from 'lib/svg/left-illust.svg';
 import RightSvg from 'lib/svg/right-illust.svg';
 import * as React from 'react';

@@ -1,4 +1,4 @@
-import TimeTableComponent from 'components/timeTable/timeTable-detail';
+import TimeTableComponent from 'components/timeTable/detail-timeTable';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';

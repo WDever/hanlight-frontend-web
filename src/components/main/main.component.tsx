@@ -5,12 +5,12 @@ import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import MainMealPage from 'pages/meal/main-meal';
-import MealPage from 'pages/meal/meal-detail';
+import MealPage from 'pages/meal/detail-meal';
 import MainNoticePage from 'pages/notice/main-notice';
-import NoticePage from 'pages/notice/notice-detail';
+import NoticePage from 'pages/notice/detail-notice';
 import MainTimePage from 'pages/timer';
 import MainTimeTablePage from 'pages/timeTable/main-timeTable';
-import TimeTablePage from 'pages/timeTable/timeTable-detail';
+import TimeTablePage from 'pages/timeTable/detail-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 

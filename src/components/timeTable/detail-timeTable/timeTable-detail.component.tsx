@@ -1,4 +1,4 @@
-import { TimeTableMethod, TimeTableProps } from 'container/timeTable/timeTable-detail';
+import { TimeTableMethod, TimeTableProps } from 'container/timeTable/detail-timeTable';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import moment from 'moment';
 import * as React from 'react';

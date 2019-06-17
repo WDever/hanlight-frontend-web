@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import MealComponent from 'components/meal/meal-detail';
+import MealComponent from 'components/meal/detail-meal';
 import { connect } from 'react-redux';
 import { Route, Switch } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
