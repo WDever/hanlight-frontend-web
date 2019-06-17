@@ -6,7 +6,6 @@ import RegisterPage from 'pages/auth/register';
 import MainPage from 'pages/main';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import './App.scss';
 
 const App: React.FC = () => (
   <div id="app">
