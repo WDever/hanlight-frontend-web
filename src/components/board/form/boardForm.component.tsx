@@ -45,16 +45,14 @@ const FormImageWrapper = styled.div`
   border-bottom: solid 1px #e5e5e5;
 `;
 
-const FormImageEmpty = styled.div`
+const FormImageEmpty = styled.label`
+  display: inline-block;
+  position: relative;
   width: 5rem;
-  height: 5rem;
+  line-height: 5rem;
   margin-right: 1rem;
   border: 1px dashed #9a9a9a;
   cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const FormImageEmptyPlus = styled.span`
@@ -65,6 +63,8 @@ const FormImageEmptyPlus = styled.span`
   height: 26px;
   background-color: #9a9a9a;
   border-radius: 2px;
+  left: 40px;
+  top: 4.2px;
 
   &::before {
     display: block;
@@ -228,6 +228,14 @@ export default class BoardFormComponent extends React.Component<
     }
   };
 
+  public removeImage = (i: number) =>
+    this.setState({
+      files: [
+        ...this.state.files.slice(0, i),
+        ...this.state.files.slice(i + 1, this.state.files.length),
+      ],
+    });
+
   public handleSubmit = () => {
     if (this.state.content.length) {
       this.props.postBoard({
@@ -247,13 +255,13 @@ export default class BoardFormComponent extends React.Component<
         if (file) {
           return (
             <FormPreviewWrapper key={i}>
-              <FormPreviewButton />
+              <FormPreviewButton onClick={() => this.removeImage(i)} />
               <FormPreview src={file.preview} />
             </FormPreviewWrapper>
           );
         } else {
           return (
-            <FormImageEmpty key={i}>
+            <FormImageEmpty htmlFor="files" key={i}>
               <FormImageEmptyPlus />
             </FormImageEmpty>
           );
