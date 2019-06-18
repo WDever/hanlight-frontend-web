@@ -130,7 +130,11 @@ const TimeTableComponent: React.FC<
           ? timeTableList.slice(1, 6).map((timetable, j) => (
               <Td
                 key={j}
-                now={period() === i + 1 && moment().get('d') === j + 1}
+                now={
+                  period() === i + 1 &&
+                  moment().get('d') === j + 1 &&
+                  !!timetable[i]
+                }
               >
                 {timetable[i] ? timetable[i] : ''}
               </Td>
