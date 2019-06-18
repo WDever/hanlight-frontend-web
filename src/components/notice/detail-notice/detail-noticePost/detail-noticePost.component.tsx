@@ -135,6 +135,14 @@ export default class NoticePostComponent extends React.Component<
     }
   }
 
+  public handleInput = (e: React.ChangeEvent<HTMLInputElement>) =>
+    this.setState({
+      searchTitle: e.currentTarget.value,
+    });
+
+  public search = () =>
+    this.props.history.push(`/notice?title=${this.state.searchTitle || ''}`);
+
   public render() {
     const { getNoticePostStatus, noticeList, match } = this.props;
     const notice =
@@ -152,8 +160,8 @@ export default class NoticePostComponent extends React.Component<
               <Title>공지사항</Title>
             </TitleWrapper>
             <SearchWrapper>
-              <SearchInput />
-              <SearchButton>검색</SearchButton>
+              <SearchInput onChange={this.handleInput} />
+              <SearchButton onClick={this.search}>검색</SearchButton>
             </SearchWrapper>
           </BoardUpsideWrapper>
           <Board>

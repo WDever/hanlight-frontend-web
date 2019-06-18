@@ -130,7 +130,7 @@ const PageNavigation = styled.div`
   justify-content: center;
 `;
 
-const Page = styled(Link)<{ current?: boolean }>`
+const Page = styled(Link)<{ current: boolean }>`
   color: ${props => (props.current ? '#4470ff' : '#000000')};
   font-weight: ${props => (props.current ? 'bold' : 'normal')};
   margin-right: 2rem;
@@ -295,6 +295,7 @@ export default class NoticeListComponent extends React.Component<
             <PageNavigation>
               {phaze > 1 && (
                 <Page
+                  current={false}
                   to={
                     `/notice?page=${page - 1}` +
                     (title ? `&title=${title}` : '')
@@ -322,6 +323,7 @@ export default class NoticeListComponent extends React.Component<
                 })}
               {phazeCount - phaze > 0 && (
                 <Page
+                  current={false}
                   style={{ marginRight: 0 }}
                   to={
                     `/notice?page=${Math.ceil(page / 10) * 10}` +
