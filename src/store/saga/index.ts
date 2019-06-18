@@ -1,9 +1,10 @@
 import { all } from 'redux-saga/effects';
-import { userSaga } from './user.saga';
+import { boardSaga } from './board.saga';
 import { calendarSaga } from './calendar.saga';
 import { mealSaga } from './meal.saga';
 import { noticeSaga } from './notice.saga';
 import { timeTableSaga } from './timeTable.saga';
+import { userSaga } from './user.saga';
 
 function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ function* rootSaga() {
     mealSaga(),
     noticeSaga(),
     timeTableSaga(),
+    boardSaga(),
   ]);
 }
 

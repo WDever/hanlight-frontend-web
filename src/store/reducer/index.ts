@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { boardReducer } from './board.reducer';
 import { calendarReducer } from './calendar.reducer';
 import { errorReducer } from './error.reducer';
 import { mealReducer } from './meal.reducer';
@@ -13,6 +14,7 @@ const reducer = combineReducers({
   notice: notcieReducer,
   timeTable: timeTableReducer,
   error: errorReducer,
+  board: boardReducer,
 });
 
 export { reducer };
