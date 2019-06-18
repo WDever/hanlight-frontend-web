@@ -4,7 +4,7 @@ import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
-import TimeTableItem from '../timeTableItem';
+import TimeTableItem from './timeTableItem';
 
 const { useEffect } = React;
 
@@ -46,7 +46,8 @@ const NoBox = styled.div`
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 const hour = 3600;
 const minute = 60;
-class TimeTableComponent extends React.Component<
+
+export default class MainTimeTableComponent extends React.Component<
   TimeTableProps & TimeTableMethod
 > {
   public state: {
@@ -121,5 +122,3 @@ class TimeTableComponent extends React.Component<
     );
   }
 }
-
-export default TimeTableComponent;

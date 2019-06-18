@@ -17,7 +17,7 @@ const CalendarWrapper = styled.div`
   z-index: 1;
 `;
 
-const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
+const MainCalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,
@@ -59,4 +59,4 @@ const CalendarComponent: React.FC<CalendarProps & CalendarMethod> = ({
   );
 };
 
-export default CalendarComponent;
+export default MainCalendarComponent;

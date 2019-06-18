@@ -19,7 +19,7 @@ export interface CalendarMethod {
   getCalendarRecent(params: string | null): void;
 }
 
-const CalendarContainer: React.FC<CalendarProps & CalendarMethod> = ({
+const MainCalendarContainer: React.FC<CalendarProps & CalendarMethod> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,
@@ -49,4 +49,4 @@ const mapDispatchToProps = (dispatch: Dispatch<calendarReducerActions>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(CalendarContainer);
+)(MainCalendarContainer);

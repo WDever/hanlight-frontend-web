@@ -18,11 +18,11 @@ const Title = styled.div`
   margin-bottom: 2rem;
 `;
 
-const CalendarPage: React.FC = () => (
+const MainCalendarPage: React.FC = () => (
   <Template>
     <Title>학사일정</Title>
     <CalendarContainer />
   </Template>
 );
 
-export default CalendarPage;
+export default MainCalendarPage;

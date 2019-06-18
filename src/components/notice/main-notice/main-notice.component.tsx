@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 import { NoticeListItem } from 'store';
 import styled from 'styled-components';
-import NoticeItem from '../noticeItem';
+import NoticeItem from './noticeItem';
 
 const NoticeWrapper = styled.div`
   display: flex;
@@ -45,7 +45,6 @@ const NoticeListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* height: 30rem; */
   margin-bottom: 5rem;
 `;
 

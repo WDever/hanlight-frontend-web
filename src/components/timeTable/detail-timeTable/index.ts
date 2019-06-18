@@ -1,1 +1,1 @@
-export { default } from './timeTable-detail.component';
+export { default } from './detail-timeTable.component';

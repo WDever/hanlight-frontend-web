@@ -21,7 +21,7 @@ export interface MealMethod {
   getMeal(params: GetMealParams): void;
 }
 
-const MealContainer: React.FC<
+const MainMealContainer: React.FC<
   MainMealProps & MealMethod
 > = ({
   getMeal,
@@ -52,4 +52,4 @@ const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MealContainer);
+)(MainMealContainer);

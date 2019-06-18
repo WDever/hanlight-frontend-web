@@ -11,7 +11,7 @@ const Template = styled.div`
   height: 33.375rem;
 `;
 
-const TimeTablePage: React.FC = () => {
+const MainTimeTablePage: React.FC = () => {
   return (
     <Template>
       <TimeTableContainer />
@@ -19,4 +19,4 @@ const TimeTablePage: React.FC = () => {
   );
 };
 
-export default TimeTablePage;
+export default MainTimeTablePage;

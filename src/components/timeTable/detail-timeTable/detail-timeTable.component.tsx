@@ -64,7 +64,7 @@ const hour = 3600;
 const minute = 60;
 const days = ['월', '화', '수', '목', '금'];
 
-const TimeTableComponent: React.FC<
+const DetailTimeTableComponent: React.FC<
   TimeTableProps & TimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
@@ -159,4 +159,4 @@ const TimeTableComponent: React.FC<
   );
 };
 
-export default TimeTableComponent;
+export default DetailTimeTableComponent;

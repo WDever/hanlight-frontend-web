@@ -26,7 +26,7 @@ const ListWrapper = styled.div`
   align-items: center;
 `;
 
-const MealPage: React.FC = () => {
+const MainMealPage: React.FC = () => {
   return (
     <Template>
       <Title>급식 정보</Title>
@@ -37,4 +37,4 @@ const MealPage: React.FC = () => {
   );
 };
 
-export default MealPage;
+export default MainMealPage;

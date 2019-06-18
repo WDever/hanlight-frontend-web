@@ -3,13 +3,12 @@ import * as React from 'react';
 import NoticeComponent from 'components/notice/detail-notice';
 import { Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-const NoticePage: React.FC = () => {
+const DetailNoticePage: React.FC = () => {
   return (
     <Switch>
       <Route exact={true} path="/notice" component={NoticeComponent} />
-      {/* <Route exact={true} path="/notice/:pk" /> */}
     </Switch>
   );
 };
 
-export default NoticePage;
+export default DetailNoticePage;

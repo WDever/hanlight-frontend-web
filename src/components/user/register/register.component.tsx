@@ -39,7 +39,6 @@ const RegisterWrapper = styled.div`
 const GreetingDiv = styled.div`
   width: 100%;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
@@ -47,7 +46,6 @@ const GreetingDiv = styled.div`
   font-weight: bold;
   color: #4470ff;
   margin-top: 3rem;
-  /* margin-bottom: 2rem; */
 `;
 
 const InputWrapper = styled.div`

@@ -44,7 +44,7 @@ const LunchTimeBackGroundImg = styled.img`
   padding-bottom: 2rem;
 `;
 
-const TimeComponent: React.FC = () => {
+const TimerComponent: React.FC = () => {
   return (
     <Template>
       <Wrapper>
@@ -64,4 +64,4 @@ const TimeComponent: React.FC = () => {
   );
 };
 
-export default TimeComponent;
+export default TimerComponent;

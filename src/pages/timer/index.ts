@@ -1,1 +1,1 @@
-export { default } from './main-timer.page';
+export { default } from './timer.page';

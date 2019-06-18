@@ -125,7 +125,7 @@ const Page = styled.p<{ current?: boolean }>`
   font-weight: ${props => (props.current ? 'bold' : 'normal')};
 `;
 
-export default class NoticeComponent extends React.Component {
+export default class DetailNoticeComponent extends React.Component {
   public render() {
     return (
       <Wrapper>

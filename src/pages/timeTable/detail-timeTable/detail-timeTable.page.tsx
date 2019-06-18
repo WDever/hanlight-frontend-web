@@ -27,13 +27,11 @@ const LeftImg = styled.img`
 `;
 
 const RightImg = styled.img`
-  /* width: 56.875rem;
-  height: 52rem; */
   z-index: -1;
   margin-left: 3%;
 `;
 
-const TimeTablePage = () => {
+const DetailTimeTablePage = () => {
   return (
     <>
       <Template>
@@ -47,4 +45,4 @@ const TimeTablePage = () => {
   );
 };
 
-export default TimeTablePage;
+export default DetailTimeTablePage;

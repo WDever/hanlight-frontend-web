@@ -51,7 +51,7 @@ const MealWeekItems = styled.div`
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 const weeksString = ['첫', '두', '세', '네', '다섯'];
 
-export default class MealComponent extends React.Component<
+export default class DetailMealComponent extends React.Component<
   MealDetailProps & MealMethod
 > {
   public state: { meals: MealItem[] } = {

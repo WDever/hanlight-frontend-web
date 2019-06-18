@@ -26,7 +26,7 @@ export interface TimeTableMethod {
   getTimetable(param: string | null): void;
 }
 
-const TimeTableContainer: React.FC<
+const DetailTimeTableContainer: React.FC<
   TimeTableProps & TimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
@@ -73,5 +73,5 @@ export default withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(TimeTableContainer),
+  )(DetailTimeTableContainer),
 );
