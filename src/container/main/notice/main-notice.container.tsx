@@ -1,6 +1,7 @@
 import MainNoticeComponent from 'components/main/notice/main-notice.component';
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
@@ -21,12 +22,17 @@ export interface MainNoticeMethod {
   getNoticeList(params: GetNoticeListParams): void;
 }
 
-const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
+const MainNoticeContainer: React.FC<
+  MainNoticeProps & MainNoticeMethod & RouteComponentProps<any>
+> = ({
   name,
   getNoticeList,
   noticeList,
   getNoticeListStatus,
   accessToken,
+  history,
+  location,
+  match,
 }) => (
   <MainNoticeComponent
     name={name}
@@ -34,6 +40,9 @@ const MainNoticeContainer: React.FC<MainNoticeProps & MainNoticeMethod> = ({
     noticeList={noticeList}
     getNoticeListStatus={getNoticeListStatus}
     accessToken={accessToken}
+    history={history}
+    location={location}
+    match={match}
   />
 );
 
@@ -48,7 +57,9 @@ const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
   getNoticeList: bindActionCreators(noticeActions.getNoticeList, dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MainNoticeContainer);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(MainNoticeContainer),
+);

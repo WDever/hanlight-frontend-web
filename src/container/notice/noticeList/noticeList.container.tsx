@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import NoticeListComponent from 'components/notice/noticeList';
 import { connect } from 'react-redux';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
