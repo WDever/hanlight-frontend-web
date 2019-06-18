@@ -1,7 +1,8 @@
+import * as React from 'react';
+
 import HatLogoSvg from 'lib/svg/college-graduation.svg';
 import FbLogoSvg from 'lib/svg/facebook-logo-button.svg';
 import IgLogoSvg from 'lib/svg/instagram.svg';
-import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -55,7 +56,7 @@ const Text = styled.span`
   font-family: 'Spoqa Han Sans';
 `;
 
-const FooterComponent: React.FC = () => {
+const FooterPage: React.FC = () => {
   return (
     <FooterWrapper>
       <WordsWrapper>
@@ -105,4 +106,4 @@ const FooterComponent: React.FC = () => {
   );
 };
 
-export default FooterComponent;
+export default FooterPage;

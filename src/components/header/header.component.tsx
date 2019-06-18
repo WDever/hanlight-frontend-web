@@ -53,12 +53,12 @@ const Provider = styled.span`
 
 const Buttons = styled.span`
   font-family: 'Spoqa Han Sans';
-  font-size: 1.25rem;
+  font-size: 1rem;
 `;
 
 const NameSpan = styled.span`
   font-family: inherit;
-  font-size: inherit;
+  font-size: 1rem;
   font-weight: bold;
 `;
 

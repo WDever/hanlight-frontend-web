@@ -1,16 +1,17 @@
 import * as React from 'react';
 
-import FooterComponent from 'components/footer';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
+import BoardPage from 'pages/board';
 import MainCalendarPage from 'pages/calendar/main-calendar';
-import MainMealPage from 'pages/meal/main-meal';
+import FooterPage from 'pages/footer';
 import MealPage from 'pages/meal/detail-meal';
-import MainNoticePage from 'pages/notice/main-notice';
+import MainMealPage from 'pages/meal/main-meal';
 import NoticePage from 'pages/notice/detail-notice';
+import MainNoticePage from 'pages/notice/main-notice';
 import MainTimePage from 'pages/timer';
-import MainTimeTablePage from 'pages/timeTable/main-timeTable';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
+import MainTimeTablePage from 'pages/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -28,6 +29,7 @@ const MainComponents = () => (
     <MainMealPage />
     <MainTimeTablePage />
     <MainCalendarPage />
+    <FooterPage />
   </>
 );
 
@@ -52,9 +54,9 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
+        <Route exact={true} path="/board" component={BoardPage} />
         <Redirect to="/" />
       </Switch>
-      <FooterComponent />
     </>
   ) : (
     <></>

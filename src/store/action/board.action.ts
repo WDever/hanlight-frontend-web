@@ -50,7 +50,7 @@ export interface GetBoardParams {
 export interface PostBoardParams {
   accessToken: string;
   content: string;
-  files: File[];
+  files?: File[];
 }
 
 export interface PatchBoardParams {

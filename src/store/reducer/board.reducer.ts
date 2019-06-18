@@ -37,6 +37,12 @@ export const boardReducer = (
         break;
       case 'POST_BOARD_SUCCESS':
         draft.postBoardStatus = 'success';
+        draft.boards.unshift({
+          ...action.payload,
+          edited: false,
+          commentCount: 0,
+          comment: [],
+        });
         break;
       case 'POST_BOARD_FAILURE':
         draft.postBoardStatus = 'failure';

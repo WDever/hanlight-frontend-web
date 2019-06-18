@@ -77,27 +77,27 @@ function* getBoardApiSaga(action: GetBoard) {
   }
 }
 
-const postBoardApi = (data: PostBoardParams) =>
-  instance
-    .post(
-      '/api/board',
-      {
-        content: data.content,
-        files: data.files,
+const postBoardApi = (data: PostBoardParams) => {
+  const formData = new FormData();
+  if (data.files && data.files.length !== 0) {
+    Array.from(data.files).forEach(file => formData.append('files', file));
+  }
+  formData.append('content', data.content);
+  return instance
+    .post('/api/board', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        access_token: data.accessToken,
       },
-      {
-        headers: {
-          access_token: data.accessToken,
-        },
-      },
-    )
+    })
     .then(res => res.data);
+};
 function* postBoardApiSaga(action: PostBoard) {
   if (action.type) {
     try {
       const response = yield call(postBoardApi, action.payload);
       console.log(response);
-      yield put({ type: POST_BOARD_SUCCESS, payload: action.payload });
+      yield put({ type: POST_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
       yield put({ type: POST_BOARD_FAILURE });
     }
