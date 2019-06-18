@@ -1,6 +1,6 @@
-import MainNoticeComponent from 'components/main/notice';
-import MainNoticeContainer from 'container/main/notice';
 import * as React from 'react';
+
+import MainNoticeContainer from 'container/main/notice';
 import styled from 'styled-components';
 
 const MainNoticeTemplate = styled.div`

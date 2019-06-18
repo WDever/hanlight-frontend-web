@@ -1,7 +1,8 @@
-import MainNoticeComponent from 'components/main/notice/main-notice.component';
 import * as React from 'react';
+
+import NoticeListComponent from 'components/notice/noticeList';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
@@ -11,55 +12,53 @@ import {
   noticeReducerActions,
 } from 'store';
 
-export interface MainNoticeProps {
-  name: string;
-  noticeList: Notice[];
-  getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
+export interface NoticeListProps {
   accessToken: string;
+  noticeList: Notice[];
+  noticeCount: number;
+  getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
-export interface MainNoticeMethod {
-  getNoticeList(params: GetNoticeListParams): void;
+export interface NoticeListMethod {
+  getNoticeList: ({ accessToken, page, title }: GetNoticeListParams) => void;
 }
 
-const MainNoticeContainer: React.FC<
-  MainNoticeProps & MainNoticeMethod & RouteComponentProps<any>
+const NoticeListContainer: React.FC<
+  NoticeListProps & NoticeListMethod & RouteComponentProps
 > = ({
-  name,
-  getNoticeList,
-  noticeList,
-  getNoticeListStatus,
   accessToken,
+  noticeList,
+  noticeCount,
+  getNoticeList,
+  getNoticeListStatus,
   history,
   location,
   match,
 }) => (
-  <MainNoticeComponent
-    name={name}
-    getNoticeList={getNoticeList}
-    noticeList={noticeList}
-    getNoticeListStatus={getNoticeListStatus}
+  <NoticeListComponent
     accessToken={accessToken}
+    noticeList={noticeList}
+    noticeCount={noticeCount}
+    getNoticeList={getNoticeList}
     history={history}
     location={location}
     match={match}
+    getNoticeListStatus={getNoticeListStatus}
   />
 );
 
 const mapStateToProps = ({ user, notice }: AppState) => ({
-  name: user.data.name,
-  noticeList: notice.noticeList,
-  getNoticeListStatus: notice.getNoticeListStatus,
   accessToken: user.accessToken,
+  noticeList: notice.noticeList,
+  noticeCount: notice.noticeCount,
+  getNoticeListStatus: notice.getNoticeListStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
   getNoticeList: bindActionCreators(noticeActions.getNoticeList, dispatch),
 });
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(MainNoticeContainer),
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NoticeListContainer);
