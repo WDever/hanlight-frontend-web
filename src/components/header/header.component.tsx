@@ -38,11 +38,12 @@ const BtnsWrapper = styled.div`
   cursor: pointer;
 `;
 
-const StyledNavLink = styled(NavLink)`
+const StyledNavLink = styled(NavLink)<{ active: boolean }>`
   text-decoration: none;
   font-family: 'Spoqa Han Sans';
-  font-size: 1.25rem;
-  color: #565656;
+  font-size: 1rem;
+  color: ${props => (props.active ? '#4460ff' : '#565656')};
+  font-weight: ${props => (props.active ? 'bold' : 'none')};
 `;
 
 const Provider = styled.span`
@@ -63,7 +64,7 @@ const NameSpan = styled.span`
 
 const HeaderComponent: React.FC<
   HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
-> = ({ name, history, resetUser }) => {
+> = ({ name, history, location, resetUser }) => {
   const logout = () => {
     resetUser();
     history.push('/user/login');
@@ -72,49 +73,44 @@ const HeaderComponent: React.FC<
   return (
     <HeaderWrapper>
       <InnerBox>
-        <LogoImg src={LogoSvg} alt="Hanlight Logo" />
+        <LogoImg
+          onClick={() => history.push('/')}
+          src={LogoSvg}
+          alt="Hanlight Logo"
+        />
         <BtnsWrapper>
           <StyledNavLink
             exact={true}
-            to="/"
-            activeStyle={{
-              color: '#4470ff',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
+            to="/notice"
+            active={location.pathname.includes('/notice')}
           >
-            메인
+            공지사항
+          </StyledNavLink>
+          <StyledNavLink
+            exact={true}
+            to="/meal"
+            active={location.pathname.includes('/meal')}
+          >
+            급식
           </StyledNavLink>
           <StyledNavLink
             exact={true}
             to="/timetable"
-            activeStyle={{
-              color: '#4470ff',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
+            active={location.pathname.includes('/timetable')}
           >
             시간표
           </StyledNavLink>
           <StyledNavLink
             exact={true}
             to="/calendar"
-            activeStyle={{
-              color: '#4460ff',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
+            active={location.pathname.includes('/calendar')}
           >
             학사일정
           </StyledNavLink>
           <StyledNavLink
             exact={true}
             to="/board"
-            activeStyle={{
-              color: '#4460ff',
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-            }}
+            active={location.pathname.includes('/board')}
           >
             대나무숲
           </StyledNavLink>
