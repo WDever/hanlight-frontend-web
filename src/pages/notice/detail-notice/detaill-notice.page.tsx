@@ -1,12 +1,18 @@
 import * as React from 'react';
 
-import NoticeComponent from 'components/notice/detail-notice';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import NoticeDetailContainer from 'container/notice/detail-notice/detail-noticePost';
+import NoticeListContainer from 'container/notice/detail-notice/detail-noticeList';
+import { Route, Switch } from 'react-router-dom';
 
 const DetailNoticePage: React.FC = () => {
   return (
     <Switch>
-      <Route exact={true} path="/notice" component={NoticeComponent} />
+      <Route exact={true} path="/notice" component={NoticeListContainer} />
+      <Route
+        exact={true}
+        path="/notice/:pk"
+        component={NoticeDetailContainer}
+      />
     </Switch>
   );
 };

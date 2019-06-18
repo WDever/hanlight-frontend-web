@@ -1,20 +1,14 @@
-export interface NoticeListItem {
+export interface Notice {
   pk: number;
   title: string;
-  createdAt: string;
-  read: boolean;
-}
-
-export interface NoticePostItem {
-  pk: number;
-  title: string;
-  content: string;
+  content?: string;
+  read?: boolean;
   createdAt: string;
 }
 
 export interface NoticeModel {
+  noticeList: Notice[];
+  noticeCount: number;
   getNoticeListStatus: 'none' | 'pending' | 'success' | 'failure';
   getNoticePostStatus: 'none' | 'pending' | 'success' | 'failure';
-  noticeList: NoticeListItem[];
-  noticePost: NoticePostItem;
 }

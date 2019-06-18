@@ -8,8 +8,8 @@ import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { ErrorImg } from 'lib/styles';
 import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import moment from 'moment';
-import { Link } from 'react-router-dom';
-import { NoticeListItem } from 'store';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { Notice } from 'store';
 import styled from 'styled-components';
 import NoticeItem from './noticeItem';
 
@@ -83,16 +83,14 @@ const MoreBtn = styled(Link)`
 `;
 
 class MainNoticeComponent extends React.Component<
-  MainNoticeProps & MainNoticeMethod
+  MainNoticeProps & MainNoticeMethod & RouteComponentProps<any>
 > {
-  public state: { noticeList: NoticeListItem[] } = {
+  public state: { noticeList: Notice[] } = {
     noticeList: [],
   };
 
   public componentDidMount() {
-    if (this.props.getNoticeListStatus !== 'success') {
-      this.props.getNoticeList({ accessToken: this.props.accessToken });
-    }
+    this.props.getNoticeList({ accessToken: this.props.accessToken });
   }
 
   public render() {
@@ -111,8 +109,9 @@ class MainNoticeComponent extends React.Component<
         <NoticeItem
           title={item.title}
           date={date}
-          read={item.read}
+          read={!!item.read}
           key={item.pk}
+          onClick={() => this.props.history.push(`/notice/${item.pk}`)}
         />
       );
     });

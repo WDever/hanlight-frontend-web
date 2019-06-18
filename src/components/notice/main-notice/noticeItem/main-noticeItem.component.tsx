@@ -5,6 +5,7 @@ interface NoticeItemProps {
   title: string;
   date: string | number;
   read: boolean;
+  onClick?: () => void;
 }
 
 const ItemBox = styled.div`
@@ -43,8 +44,13 @@ const Date = styled.span`
   width: 8rem;
 `;
 
-const NoticeItem: React.FC<NoticeItemProps> = ({ title, date, read }) => (
-  <ItemBox>
+const NoticeItem: React.FC<NoticeItemProps> = ({
+  onClick,
+  title,
+  date,
+  read,
+}) => (
+  <ItemBox onClick={onClick}>
     <Flag read={read} />
     <TitleBox>{title}</TitleBox>
     <Date>{date}</Date>

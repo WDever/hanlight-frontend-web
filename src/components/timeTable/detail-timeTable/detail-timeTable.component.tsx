@@ -112,30 +112,42 @@ const DetailTimeTableComponent: React.FC<
     '(15:20 ~ 16:10)',
   ];
 
-  const tBody =
-    getTimetableStatus === 'success' ? (
-      Array(7)
-        .fill(null)
-        .map((_, i) => (
-          <tr key={i}>
-            <Th key={i} now={period() === i + 1}>
-              {i + 1}교시
-              <br />
-              <Time>{timeArr[i]}</Time>
-            </Th>
-            {timeTableList.slice(1, 6).map((timetable, j) => (
+  const tBody = Array(7)
+    .fill(null)
+    .map((_, i) => (
+      <tr key={i}>
+        <Th
+          key={i}
+          now={
+            period() === i + 1 && moment().get('d') > 0 && moment().get('d') < 6
+          }
+        >
+          {i + 1}교시
+          <br />
+          <Time>{timeArr[i]}</Time>
+        </Th>
+        {getTimetableStatus === 'success'
+          ? timeTableList.slice(1, 6).map((timetable, j) => (
               <Td
                 key={j}
-                now={period() === i + 1 && moment().get('d') === j + 1}
+                now={
+                  period() === i + 1 &&
+                  moment().get('d') === j + 1 &&
+                  !!timetable[i]
+                }
               >
                 {timetable[i] ? timetable[i] : ''}
               </Td>
-            ))}
-          </tr>
-        ))
-    ) : (
-      <></>
-    );
+            ))
+          : Array(5)
+              .fill(null)
+              .map((_, i) => (
+                <Td key={i} now={false}>
+                  {''}
+                </Td>
+              ))}
+      </tr>
+    ));
 
   return (
     <Wrapper>
