@@ -79,6 +79,9 @@ const FooterComponent: React.FC = () => {
             style={{ width: '38px', height: '38px' }}
             src={FbLogoSvg}
             alt="facebook logo"
+            onClick={() =>
+              window.open('https://web.facebook.com/pg/한빛-176560256619015/')
+            }
           />
         </Link>
         <Link to="a">
@@ -86,6 +89,7 @@ const FooterComponent: React.FC = () => {
             style={{ width: '38px', height: '38px' }}
             src={IgLogoSvg}
             alt="Instagram logo"
+            onClick={() => window.open('https://www.instagram.com/awes_____/')}
           />
         </Link>
         <Link to="a">
@@ -93,6 +97,7 @@ const FooterComponent: React.FC = () => {
             style={{ width: '38px', height: '30px' }}
             src={HatLogoSvg}
             alt="Hat logo"
+            onClick={() => window.open('https://github.com/hanlight')}
           />
         </Link>
       </LinksWrapper>
