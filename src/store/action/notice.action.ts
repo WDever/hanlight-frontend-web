@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { NoticeListItem, NoticePostItem } from 'store';
+import { Notice } from 'store';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_NOTICE_LIST = 'GET_NOTICE_LIST';
@@ -11,7 +11,7 @@ export const GET_NOTICE_POST_FAILURE = 'GET_NOTICE_POST_FAILURE';
 
 export interface GetNoticeListParams {
   accessToken: string | null;
-  page?: string;
+  page?: number;
   title?: string;
 }
 
@@ -23,13 +23,14 @@ export interface GetNoticePostParams {
 export interface GetNoticeListResType {
   success: boolean;
   data: {
-    notice: NoticeListItem[];
+    notice: Notice[];
+    resultCount: number;
   };
 }
 
 export interface GetNoticePostResType {
   success: boolean;
-  data: NoticePostItem;
+  data: Notice;
 }
 
 export class GetNoticeList implements Action {
