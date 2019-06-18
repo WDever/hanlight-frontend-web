@@ -17,7 +17,7 @@ export interface GetNoticeListParams {
 
 export interface GetNoticePostParams {
   accessToken: string | null;
-  postPk: string;
+  postPk: number;
 }
 
 export interface GetNoticeListResType {
@@ -30,7 +30,9 @@ export interface GetNoticeListResType {
 
 export interface GetNoticePostResType {
   success: boolean;
-  data: Notice;
+  data: {
+    notice: Notice;
+  };
 }
 
 export class GetNoticeList implements Action {

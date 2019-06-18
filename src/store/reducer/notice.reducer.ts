@@ -35,12 +35,12 @@ export const notcieReducer = (
       case 'GET_NOTICE_POST_SUCCESS':
         draft.getNoticePostStatus = 'success';
         const duplicateIndex = draft.noticeList.findIndex(
-          val => val.pk === action.payload.data.pk,
+          val => val.pk === action.payload.data.notice.pk,
         );
         if (duplicateIndex < 0) {
-          draft.noticeList.push(action.payload.data);
+          draft.noticeList = [{ ...action.payload.data.notice }];
         } else {
-          draft.noticeList[duplicateIndex] = action.payload.data;
+          draft.noticeList[duplicateIndex] = action.payload.data.notice;
         }
         break;
 

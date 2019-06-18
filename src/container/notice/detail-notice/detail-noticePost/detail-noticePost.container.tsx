@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import NoticeDetailComponent from 'components/notice/detail-notice/detail-noticePost';
+import NoticePostComponent from 'components/notice/detail-notice/detail-noticePost';
 import { connect } from 'react-redux';
 import { RouteComponentProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -22,16 +22,27 @@ export interface NoticePostMethod {
   getNoticePost: ({ accessToken, postPk }: GetNoticePostParams) => void;
 }
 
-const NoticeListContainer: React.FC<
-  NoticePostProps & NoticePostMethod & RouteComponentProps
+const NoticePostContainer: React.FC<
+  NoticePostProps & NoticePostMethod & RouteComponentProps<{ postPk: string }>
 > = ({
   history,
   location,
   match,
   accessToken,
   noticeList,
+  getNoticePost,
   getNoticePostStatus,
-}) => <NoticeDetailComponent />;
+}) => (
+  <NoticePostComponent
+    history={history}
+    location={location}
+    match={match}
+    accessToken={accessToken}
+    noticeList={noticeList}
+    getNoticePost={getNoticePost}
+    getNoticePostStatus={getNoticePostStatus}
+  />
+);
 
 const mapStateToProps = ({ user, notice }: AppState) => ({
   accessToken: user.accessToken,
@@ -46,4 +57,4 @@ const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(NoticeListContainer);
+)(NoticePostContainer);
