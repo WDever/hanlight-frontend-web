@@ -1,4 +1,4 @@
-import { TimeTableMethod, TimeTableProps } from 'container/timeTable/main-timeTable';
+import { MainTimeTableMethod, MainTimeTableProps } from 'container/timeTable/main-timeTable';
 import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
@@ -48,7 +48,7 @@ const hour = 3600;
 const minute = 60;
 
 export default class MainTimeTableComponent extends React.Component<
-  TimeTableProps & TimeTableMethod
+  MainTimeTableProps & MainTimeTableMethod
 > {
   public state: {
     timeTableList: string[];

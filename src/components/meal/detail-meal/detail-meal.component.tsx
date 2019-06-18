@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import MealItemComponent from 'components/meal/mealItem';
-import { MealDetailProps, MealMethod } from 'container/meal/detail-meal';
+import { DetailMealProps, DetailMealMethod } from 'container/meal/detail-meal';
 import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
@@ -52,7 +52,7 @@ const days = ['일', '월', '화', '수', '목', '금', '토'];
 const weeksString = ['첫', '두', '세', '네', '다섯'];
 
 export default class DetailMealComponent extends React.Component<
-  MealDetailProps & MealMethod
+  DetailMealProps & DetailMealMethod
 > {
   public state: { meals: MealItem[] } = {
     meals: [],
@@ -68,7 +68,7 @@ export default class DetailMealComponent extends React.Component<
     });
   }
 
-  public componentDidUpdate(prevProps: MealDetailProps & MealMethod) {
+  public componentDidUpdate(prevProps: DetailMealProps & DetailMealMethod) {
     const { getMealMonthStatus, mealMonthList } = this.props;
 
     if (

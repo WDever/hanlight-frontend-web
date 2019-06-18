@@ -1,4 +1,4 @@
-import { TimeTableMethod, TimeTableProps } from 'container/timeTable/detail-timeTable';
+import { DetailTimeTableMethod, DetailTimeTableProps } from 'container/timeTable/detail-timeTable';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import moment from 'moment';
 import * as React from 'react';
@@ -65,7 +65,7 @@ const minute = 60;
 const days = ['월', '화', '수', '목', '금'];
 
 const DetailTimeTableComponent: React.FC<
-  TimeTableProps & TimeTableMethod & RouteComponentProps
+  DetailTimeTableProps & DetailTimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
   getTimetable,

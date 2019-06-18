@@ -17,12 +17,12 @@ export interface MainMealProps {
   accessToken: string;
 }
 
-export interface MealMethod {
+export interface MainMealMethod {
   getMeal(params: GetMealParams): void;
 }
 
 const MainMealContainer: React.FC<
-  MainMealProps & MealMethod
+  MainMealProps & MainMealMethod
 > = ({
   getMeal,
   mealWeekList,

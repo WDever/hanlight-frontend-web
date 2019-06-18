@@ -12,17 +12,17 @@ import {
   mealReducerActions,
 } from 'store';
 
-export interface MealDetailProps {
+export interface DetailMealProps {
   mealMonthList: MealItem[];
   getMealMonthStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
-export interface MealMethod {
+export interface DetailMealMethod {
   getMeal(params: GetMealParams): void;
 }
 
-const DetailMealContainer: React.FC<MealDetailProps & MealMethod> = ({
+const DetailMealContainer: React.FC<DetailMealProps & DetailMealMethod> = ({
   getMeal,
   mealMonthList,
   getMealMonthStatus,

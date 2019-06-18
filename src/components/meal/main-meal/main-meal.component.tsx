@@ -1,4 +1,4 @@
-import { MainMealProps, MealMethod } from 'container/meal/main-meal';
+import { MainMealProps, MainMealMethod } from 'container/meal/main-meal';
 import ErrorPng from 'lib/png/hugo-fatal-error.png';
 import { ErrorImg } from 'lib/styles';
 import moment from 'moment';
@@ -50,7 +50,7 @@ const MoreBtn = styled(Link)`
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
-const MainMealComponent: React.FC<MainMealProps & MealMethod> = ({
+const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
   getMeal,
   mealWeekList,
   getMealWeekStatus,

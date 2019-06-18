@@ -5,7 +5,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import { AppState, timeTableActions, timeTableReducerActions } from 'store';
 
-export interface TimeTableProps {
+export interface DetailTimeTableProps {
   timeTableList: [
     string[],
     string[],
@@ -22,12 +22,12 @@ export interface TimeTableProps {
   major: string | null;
 }
 
-export interface TimeTableMethod {
+export interface DetailTimeTableMethod {
   getTimetable(param: string | null): void;
 }
 
 const DetailTimeTableContainer: React.FC<
-  TimeTableProps & TimeTableMethod & RouteComponentProps
+  DetailTimeTableProps & DetailTimeTableMethod & RouteComponentProps
 > = ({
   timeTableList,
   getTimetable,

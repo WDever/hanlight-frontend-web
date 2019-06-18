@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { AppState, timeTableActions, timeTableReducerActions } from 'store';
 
-export interface TimeTableProps {
+export interface MainTimeTableProps {
   timeTableList: [
     string[],
     string[],
@@ -19,11 +19,11 @@ export interface TimeTableProps {
   name: string;
 }
 
-export interface TimeTableMethod {
+export interface MainTimeTableMethod {
   getTimetableApi(param: string | null): void;
 }
 
-const MainTimeTableContainer: React.FC<TimeTableProps & TimeTableMethod> = ({
+const MainTimeTableContainer: React.FC<MainTimeTableProps & MainTimeTableMethod> = ({
   timeTableList,
   getTimetableStatus,
   getTimetableApi,

@@ -9,17 +9,17 @@ import {
   calendarReducerActions,
 } from 'store';
 
-export interface CalendarProps {
+export interface MainCalendarProps {
   calendarList: CalendarRecentItem[];
   getCalendarRecentStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
 }
 
-export interface CalendarMethod {
+export interface MainCalendarMethod {
   getCalendarRecent(params: string | null): void;
 }
 
-const MainCalendarContainer: React.FC<CalendarProps & CalendarMethod> = ({
+const MainCalendarContainer: React.FC<MainCalendarProps & MainCalendarMethod> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,
