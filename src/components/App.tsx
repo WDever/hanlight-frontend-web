@@ -6,10 +6,15 @@ import RegisterPage from 'pages/auth/register';
 import MainPage from 'pages/main';
 import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import './App.scss';
+import styled from 'styled-components';
+
+const Base = styled.div`
+  width: 100%;
+  height: 100%;
+`;
 
 const App: React.FC = () => (
-  <div id="app">
+  <Base>
     <AutoLoginPage />
     <Switch>
       <Route path="/user/recovery" component={RecoveryPage} />
@@ -18,7 +23,7 @@ const App: React.FC = () => (
       <Route exact={true} path="/user/login" component={LoginPage} />
       <Route path="/" component={MainPage} />
     </Switch>
-  </div>
+  </Base>
 );
 
 export default App;

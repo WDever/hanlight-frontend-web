@@ -24,14 +24,14 @@ interface LoginState {
 
 const LoginWrapper = styled.div`
   position: relative;
-  left: 50%;
+  left: 55%;
   width: 38.125rem;
   height: 43.75rem;
   display: inline-flex;
   align-items: center;
   flex-direction: column;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
+  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   animation: ${transitions.fadeIn} 2.5s;
 `;

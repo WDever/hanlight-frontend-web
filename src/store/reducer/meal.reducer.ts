@@ -2,9 +2,11 @@ import { produce } from 'immer';
 import { MealModel, mealReducerActions } from 'store';
 
 const initialState: MealModel = {
-  getMealStatus: 'none',
+  getMealWeekStatus: 'none',
+  getMealMonthStatus: 'none',
   getMealOrderStatus: 'none',
-  mealList: [],
+  mealWeekList: [],
+  mealMonthList: [],
   mealOrder: '',
 };
 
@@ -15,16 +17,29 @@ export const mealReducer = (
   produce(state, draft => {
     switch (action.type) {
       case 'GET_MEAL':
-        draft.getMealStatus = 'pending';
+        if (action.payload.sort === 'week') {
+          draft.getMealWeekStatus = 'pending';
+        } else {
+          draft.getMealMonthStatus = 'pending';
+        }
         break;
 
-      case 'GET_MEAL_SUCCESS':
-        draft.getMealStatus = 'success';
-        draft.mealList = action.payload.data.meal;
+      case 'GET_MEAL_WEEK_SUCCESS':
+        draft.getMealWeekStatus = 'success';
+        draft.mealWeekList = action.payload.data.meal;
         break;
 
-      case 'GET_MEAL_FAILURE':
-        draft.getMealStatus = 'failure';
+      case 'GET_MEAL_WEEK_FAILURE':
+        draft.getMealWeekStatus = 'failure';
+        break;
+
+      case 'GET_MEAL_MONTH_SUCCESS':
+        draft.getMealMonthStatus = 'success';
+        draft.mealMonthList = action.payload.data.meal;
+        break;
+
+      case 'GET_MEAL_MONTH_FAILURE':
+        draft.getMealMonthStatus = 'failure';
         break;
 
       case 'GET_MEAL_ORDER':

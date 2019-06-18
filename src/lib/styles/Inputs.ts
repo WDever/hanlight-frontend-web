@@ -19,7 +19,6 @@ export const Inputs = styled.input<InputsSize & { wrong?: boolean }>`
     }
     return 'solid 1px #bebebe';
   }};
-  /* border: solid 1px #bebebe; */
   background-color: #ffffff;
   font-size: 1.25rem;
   text-indent: 1rem;

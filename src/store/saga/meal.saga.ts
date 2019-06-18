@@ -2,11 +2,13 @@ import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   GET_MEAL,
-  GET_MEAL_FAILURE,
+  GET_MEAL_MONTH_FAILURE,
+  GET_MEAL_MONTH_SUCCESS,
   GET_MEAL_ORDER,
   GET_MEAL_ORDER_FAILURE,
   GET_MEAL_ORDER_SUCCESS,
-  GET_MEAL_SUCCESS,
+  GET_MEAL_WEEK_FAILURE,
+  GET_MEAL_WEEK_SUCCESS,
   GetMeal,
   GetMealOrder,
   GetMealParams,
@@ -30,10 +32,18 @@ function* getMealApiSaga(action: GetMeal) {
     try {
       const response = yield call(getMealApi, action.payload);
       console.log(response);
-      yield put({ type: GET_MEAL_SUCCESS, payload: response });
+      if (action.payload.sort === 'week') {
+        yield put({ type: GET_MEAL_WEEK_SUCCESS, payload: response });
+      } else {
+        yield put({ type: GET_MEAL_MONTH_SUCCESS, payload: response });
+      }
     } catch (e) {
       console.log(e.response);
-      yield put({ type: GET_MEAL_FAILURE, payload: e.response });
+      if (action.payload.sort === 'week') {
+        yield put({ type: GET_MEAL_WEEK_FAILURE, payload: e.response });
+      } else {
+        yield put({ type: GET_MEAL_MONTH_FAILURE, payload: e.response });
+      }
     }
   }
 }
