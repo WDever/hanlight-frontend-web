@@ -8,7 +8,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   width: 35%;
   max-width: 32.5rem;
-  min-width: 25rem;
+  min-width: 23.5rem;
   height: 630px;
   top: 5.25rem;
   position: sticky;

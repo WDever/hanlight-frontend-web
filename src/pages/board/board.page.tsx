@@ -25,7 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const Feeds = styled.div`
-  width: 50%;
+  width: 55%;
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
@@ -33,7 +33,7 @@ const Feeds = styled.div`
 
 const Dumb = styled.div`
   min-width: 475px;
-  max-width: 600px;
+  max-width: 800px;
   height: 10000px;
   border: 1px solid black;
 `;
