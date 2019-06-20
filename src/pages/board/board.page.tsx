@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import styled from 'styled-components';
+import BoardFeedsPage from './feeds';
 import BoardFormPage from './form';
 import BoardRolePage from './role';
 
@@ -26,16 +27,11 @@ const Wrapper = styled.div`
 
 const Feeds = styled.div`
   width: 55%;
+  min-width: 475px;
+  max-width: 800px;
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
-`;
-
-const Dumb = styled.div`
-  min-width: 475px;
-  max-width: 800px;
-  height: 10000px;
-  border: 1px solid black;
 `;
 
 const BoardPage: React.FC = () => (
@@ -44,7 +40,7 @@ const BoardPage: React.FC = () => (
       <Wrapper>
         <Feeds>
           <BoardFormPage />
-          <Dumb />
+          <BoardFeedsPage />
         </Feeds>
         {window.innerWidth > 1024 && <BoardRolePage />}
       </Wrapper>

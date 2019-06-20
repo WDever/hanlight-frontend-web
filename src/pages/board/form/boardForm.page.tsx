@@ -4,8 +4,7 @@ import BoardFormContainer from 'container/board/form';
 import styled from 'styled-components';
 
 const FormWrapper = styled.div`
-  min-width: 475px;
-  max-width: 800px;
+  width: 100%;
   border-radius: 4px;
   border: solid 1px #d1d1d1;
   background-color: #ffffff;
