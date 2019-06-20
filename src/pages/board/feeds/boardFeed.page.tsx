@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import BoardCommentsContainer from 'container/board/comments';
 import dumbimg from 'lib/png/DevKyongbaek.png';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
@@ -7,7 +8,6 @@ import Dotdotdot from 'lib/svg/dotdotdot.svg';
 import EditIcon from 'lib/svg/edit-icon.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import styled from 'styled-components';
-import BoardCommentsPage from '../comments';
 
 const FeedWrapper = styled.div`
   width: 100%;
@@ -183,7 +183,7 @@ const BoardFeedspage: React.FC = () => {
               />
             </FeedBodyImgWrapper>
           </FeedBody>
-          <BoardCommentsPage board_pk={1} />
+          <BoardCommentsContainer board_pk={0} />
         </Feed>
         <CommentAllBtn>전체 댓글 보기</CommentAllBtn>
       </FeedWrapper>

@@ -1,1 +1,1 @@
-export { default } from './boardCommentsPage';
+export { default } from './board-comments.page';

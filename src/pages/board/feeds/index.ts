@@ -1,1 +1,1 @@
-export { default } from './boardFeeds.page';
+export { default } from './boardFeed.page';
