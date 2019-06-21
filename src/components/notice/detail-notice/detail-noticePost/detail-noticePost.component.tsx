@@ -98,17 +98,17 @@ const BoardContentString = styled.p`
 `;
 
 export default class NoticePostComponent extends React.Component<
-  NoticePostProps & NoticePostMethod & RouteComponentProps<{ postPk: string }>
+  NoticePostProps & NoticePostMethod & RouteComponentProps<{ post_pk: string }>
 > {
   public state: { searchTitle: undefined | string } = {
     searchTitle: undefined,
   };
 
   public componentDidMount() {
-    if (parseInt(this.props.match.params.postPk, 10)) {
+    if (parseInt(this.props.match.params.post_pk, 10)) {
       this.props.getNoticePost({
         accessToken: this.props.accessToken,
-        postPk: parseInt(this.props.match.params.postPk, 10),
+        post_pk: parseInt(this.props.match.params.post_pk, 10),
       });
     } else {
       this.props.history.push('/notice');
@@ -118,14 +118,14 @@ export default class NoticePostComponent extends React.Component<
   public componentDidUpdate(
     prevProps: NoticePostProps &
       NoticePostMethod &
-      RouteComponentProps<{ postPk: string }>,
+      RouteComponentProps<{ post_pk: string }>,
   ) {
     if (
       prevProps.getNoticePostStatus === 'pending' &&
       this.props.getNoticePostStatus === 'success' &&
       !this.props.noticeList[
         this.props.noticeList.findIndex(
-          val => val.pk === parseInt(this.props.match.params.postPk, 10),
+          val => val.pk === parseInt(this.props.match.params.post_pk, 10),
         )
       ]
     ) {
@@ -148,7 +148,7 @@ export default class NoticePostComponent extends React.Component<
     const notice =
       noticeList[
         noticeList.findIndex(
-          val => val.pk === parseInt(match.params.postPk, 10),
+          val => val.pk === parseInt(match.params.post_pk, 10),
         )
       ];
 

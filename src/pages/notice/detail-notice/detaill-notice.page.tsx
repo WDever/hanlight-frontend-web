@@ -10,7 +10,7 @@ const DetailNoticePage: React.FC = () => {
       <Route exact={true} path="/notice" component={NoticeListContainer} />
       <Route
         exact={true}
-        path="/notice/:postPk"
+        path="/notice/:post_pk"
         component={NoticePostContainer}
       />
     </Switch>

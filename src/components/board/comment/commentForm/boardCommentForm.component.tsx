@@ -1,5 +1,11 @@
 import * as React from 'react';
 
+import {
+  CommentFormMethod,
+  CommentFormOwnProps,
+  CommentFormProps,
+} from 'container/board/comment/commentForm/boardCommentForm.container';
+import { useInput } from 'lib/hooks';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import styled from 'styled-components';
 
@@ -52,16 +58,28 @@ const Form = styled.form`
   }
 `;
 
-const BoardCommentsForm: React.FC = () => {
+const CommentFormComponent: React.FC<
+  CommentFormProps & CommentFormOwnProps & CommentFormMethod
+> = ({ board_pk, postBoardComment, postBoardCommentStatus, accessToken }) => {
+  const [content, setContent] = useInput('');
+
+  const PostComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (content && postBoardCommentStatus !== 'pending') {
+      postBoardComment({ accessToken, board_pk, content });
+      setContent('');
+    }
+  };
+
   return (
     <Wrapper>
       <ProfileImg src={DefaultProfileImage} alt="Profile" />
       <Form>
-        <input type="text" />
-        <button>입력</button>
+        <input value={content} onChange={setContent} type="text" />
+        <button onClick={PostComment}>입력</button>
       </Form>
     </Wrapper>
   );
 };
 
-export default BoardCommentsForm;
+export default CommentFormComponent;

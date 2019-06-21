@@ -202,7 +202,13 @@ function* postBoardCommentApiSaga(action: PostBoardComment) {
     try {
       const response = yield call(postBoardCommentApi, action.payload);
       console.log(response);
-      yield put({ type: POST_BOARD_COMMENT_SUCCESS, payload: action.payload });
+      yield put({
+        type: POST_BOARD_COMMENT_SUCCESS,
+        payload: {
+          comment: response.data.comment,
+          board_pk: action.payload.board_pk,
+        },
+      });
     } catch (e) {
       yield put({ type: POST_BOARD_COMMENT_FAILURE });
     }
