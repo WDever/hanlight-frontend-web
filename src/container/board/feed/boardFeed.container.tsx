@@ -17,6 +17,7 @@ import {
 } from 'store';
 
 type status = 'none' | 'pending' | 'success' | 'failure';
+
 export interface BoardFeedProps {
   accessToken: string;
   boards: Board[];
@@ -37,42 +38,6 @@ export interface BoardFeedMethod {
   report: (payload: ReportParams) => void;
   getBoardComment: (payload: GetBoardCommentParams) => void;
 }
-
-const BoardFeedContainer: React.FC<BoardFeedProps & BoardFeedMethod> = ({
-  accessToken,
-  boards,
-  getBoardStatus,
-  patchBoardStatus,
-  deleteBoardStatus,
-  likeStatus,
-  reportStatus,
-  getBoard,
-  patchBoard,
-  deleteBoard,
-  like,
-  report,
-  getBoardComment,
-  getBoardCommentStatus,
-  boardsCount,
-}) => (
-  <BoardFeedComponent
-    accessToken={accessToken}
-    boards={boards}
-    boardsCount={boardsCount}
-    getBoardStatus={getBoardStatus}
-    patchBoardStatus={patchBoardStatus}
-    deleteBoardStatus={deleteBoardStatus}
-    likeStatus={likeStatus}
-    reportStatus={reportStatus}
-    getBoard={getBoard}
-    patchBoard={patchBoard}
-    deleteBoard={deleteBoard}
-    like={like}
-    report={report}
-    getBoardComment={getBoardComment}
-    getBoardCommentStatus={getBoardCommentStatus}
-  />
-);
 
 const mapStateToProps = ({ user, board }: AppState) => ({
   accessToken: user.accessToken,
@@ -95,7 +60,9 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   getBoardComment: bindActionCreators(boardActions.getBoardCommemnt, dispatch),
 });
 
-export default connect(
+const BoardFeedContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BoardFeedContainer);
+)(BoardFeedComponent);
+
+export default BoardFeedContainer;

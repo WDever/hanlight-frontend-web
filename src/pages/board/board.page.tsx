@@ -1,7 +1,7 @@
 import * as React from 'react';
 
+import BoardFeedContainer from 'container/board/feed';
 import styled from 'styled-components';
-import BoardFeedsPage from './feed';
 import BoardFormPage from './form';
 import BoardRolePage from './role';
 
@@ -41,7 +41,7 @@ const BoardPage: React.FC = () => (
       <Wrapper>
         <Feeds>
           <BoardFormPage />
-          <BoardFeedsPage />
+          <BoardFeedContainer />
         </Feeds>
         {window.innerWidth > 1024 && <BoardRolePage />}
       </Wrapper>

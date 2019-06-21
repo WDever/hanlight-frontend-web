@@ -1,38 +1,58 @@
-import * as React from 'react';
-
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
 import LikeIcon from 'lib/svg/like.svg';
+import * as React from 'react';
 import styled from 'styled-components';
 
-const FeedCommentWrapper = styled.div`
-  width: 100%;
-`;
-
-const FeedCommentTittle = styled.p`
-  font-size: 0.875rem;
-  color: #1d2129;
-`;
+interface CommentsItemProps {
+  user: string;
+  content: string;
+  date: string;
+  profileImg?: string;
+  likeCount: number;
+}
 
 const CommentWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 0.3125rem;
+  margin-top: 0.3125rem;
 `;
 
 const Comment = styled.div`
   width: 100%;
   display: flex;
+  min-height: 3.5rem;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 
 const CommentLeftWrapper = styled.div`
   width: 95%;
+  min-height: 3.5rem;
+  height: 3.5rem;
   display: flex;
+  align-items: flex-start;
 `;
 
-const CommentContentWrapper = styled.div``;
+const CommentContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+`;
+
+const ProfileImg = styled.img`
+  width: 2.5rem;
+  margin-right: 0.75rem;
+`;
+
+// const DotImg = styled.img`width: '20px', height: '30px', cursor: 'pointer'
+const DotImg = styled.img`
+  width: 1.25rem;
+  height: 1.875rem;
+  cursor: pointer;
+`;
 
 const CommentBody = styled.div`
   display: flex;
@@ -55,6 +75,12 @@ const CommentTooltip = styled.div`
   border-radius: 8px;
   background-color: #f2f3f5;
 
+  display: flex;
+  align-items: center;
+`;
+
+const CommentLikeBtnWrapper = styled.div`
+  height: 1.125rem;
   display: flex;
   align-items: center;
 `;
@@ -82,22 +108,27 @@ const CommetLikeCount = styled.span`
   margin-left: 0.25rem;
 `;
 
-const BoardCommentsPage: React.FC<{ board_pk: number }> = () => (
-  <FeedCommentWrapper>
-    <FeedCommentTittle>댓글(7)</FeedCommentTittle>
+const CommentsItem: React.FC<CommentsItemProps> = ({
+  user,
+  content,
+  profileImg,
+  likeCount,
+  date,
+}) => {
+  const a = 0;
+  return (
     <CommentWrapper>
       <Comment>
         <CommentLeftWrapper>
-          <img
-            src={DefaultProfileImage}
-            style={{ width: '40px', marginRight: '0.75rem' }}
+          <ProfileImg
+            src={profileImg ? profileImg : DefaultProfileImage}
             alt=""
           />
           <CommentContentWrapper>
             <CommentBody>
               <CommentTooltip>
-                <CommentName>이예준</CommentName>
-                <CommentContent>팩트) 김우혁 병신</CommentContent>
+                <CommentName>{user}</CommentName>
+                <CommentContent>{content}</CommentContent>
               </CommentTooltip>
               <CommentLikeWrapper>
                 <img
@@ -105,61 +136,24 @@ const BoardCommentsPage: React.FC<{ board_pk: number }> = () => (
                   style={{ width: '12.9px', height: '12.5px' }}
                   alt=""
                 />
-                <CommetLikeCount>1</CommetLikeCount>
+                <CommetLikeCount>{likeCount}</CommetLikeCount>
               </CommentLikeWrapper>
             </CommentBody>
-            <div>
+            <CommentLikeBtnWrapper>
               <CommentLikeBtn>좋아요</CommentLikeBtn>
               &ensp;
-              <CommentDate>2019년 6월 18일 오후 7:04</CommentDate>
-            </div>
+              <CommentDate>{date}</CommentDate>
+            </CommentLikeBtnWrapper>
           </CommentContentWrapper>
         </CommentLeftWrapper>
-        <img
+        <DotImg
           src={Dotdotdot}
           style={{ width: '20px', height: '30px', cursor: 'pointer' }}
           alt=""
         />
       </Comment>
     </CommentWrapper>
-    <CommentWrapper>
-      <Comment>
-        <CommentLeftWrapper>
-          <img
-            src={DefaultProfileImage}
-            style={{ width: '40px', marginRight: '0.75rem' }}
-            alt=""
-          />
-          <CommentContentWrapper>
-            <CommentBody>
-              <CommentTooltip>
-                <CommentName>이예준</CommentName>
-                <CommentContent>팩트) 김우혁 병신</CommentContent>
-              </CommentTooltip>
-              <CommentLikeWrapper>
-                <img
-                  src={LikeIcon}
-                  style={{ width: '12.9px', height: '12.5px' }}
-                  alt=""
-                />
-                <CommetLikeCount>1</CommetLikeCount>
-              </CommentLikeWrapper>
-            </CommentBody>
-            <div>
-              <CommentLikeBtn>좋아요</CommentLikeBtn>
-              &ensp;
-              <CommentDate>2019년 6월 18일 오후 7:04</CommentDate>
-            </div>
-          </CommentContentWrapper>
-        </CommentLeftWrapper>
-        <img
-          src={Dotdotdot}
-          style={{ width: '20px', height: '30px', cursor: 'pointer' }}
-          alt=""
-        />
-      </Comment>
-    </CommentWrapper>
-  </FeedCommentWrapper>
-);
+  );
+};
 
-export default BoardCommentsPage;
+export default CommentsItem;

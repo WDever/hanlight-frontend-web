@@ -1,1 +1,1 @@
-export { default } from './board-feedItem.component';
+export { default } from './boardFeedItem.component';
