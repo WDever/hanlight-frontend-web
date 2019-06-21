@@ -41,6 +41,8 @@ export const boardReducer = (
           ...action.payload,
           edited: false,
           commentCount: 0,
+          isLiked: false,
+          likeCount: 0,
           comment: [],
         });
         break;

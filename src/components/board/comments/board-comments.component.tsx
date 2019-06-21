@@ -1,7 +1,10 @@
 import * as React from 'react';
 
 import { Props } from 'container/board/comments';
+import moment from 'moment';
+import 'moment/locale/ko';
 import styled from 'styled-components';
+import Commentsinput from './commentsForm';
 import CommentsItem from './commentsItem';
 
 const FeedCommentWrapper = styled.div`
@@ -19,30 +22,22 @@ const BoardCommentsComponent: React.FC<Props> = ({
   board_pk,
   getBoardCommentStatus,
 }) => {
-  const CommentsList =
-    getBoardCommentStatus === 'success'
-      ? comments.map((item, idx) => {
-          return (
-            <CommentsItem
-              key={idx}
-              user={item.user_name}
-              content={item.content}
-              date={item.createdAt}
-              likeCount={item.likeCount}
-            />
-          );
-        })
-      : [];
+  const CommentsList = comments.map((item, i) => {
+    return (
+      <CommentsItem
+        key={i}
+        user={item.user_name}
+        content={item.content}
+        date={moment(item.createdAt).format('YYYY년 M월 D일 A H:mm')}
+        likeCount={item.likeCount}
+      />
+    );
+  });
 
   return (
     <FeedCommentWrapper>
       <FeedCommentTittle>댓글({commentCount})</FeedCommentTittle>
-      <CommentsItem
-        user="이예준"
-        content="팩트) 김우혁 병신"
-        date="2019년 6월 18일 오후 7:04"
-        likeCount={1}
-      />
+      <Commentsinput />
       {CommentsList}
     </FeedCommentWrapper>
   );

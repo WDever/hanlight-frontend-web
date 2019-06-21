@@ -14,7 +14,6 @@ export interface BoardCommentsProps {
   comments: Comment[];
   commentCount: number;
   getBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
-  // boards: Board;
 }
 
 export interface BoardCommentsMethod {}
@@ -25,13 +24,14 @@ export interface OwnProps {
 
 export type Props = BoardCommentsMethod & BoardCommentsProps & OwnProps;
 
-const mapStateToProps = ({ board }: AppState, { board_pk }: OwnProps) => ({
-  // const mapStateToProps = ({ board }: AppState) => ({
-  comments: board.boards[board_pk].comment,
-  commentCount: board.boards[board_pk].commentCount,
+const mapStateToProps = ({ board }: AppState, { board_pk }: OwnProps) => {
+  console.log(board_pk);
+  console.log(board.boards.findIndex(item => item.pk === board_pk));
+  return {
+  comments: board.boards[board.boards.findIndex(item => item.pk === board_pk)].comment,
+  commentCount: board.boards[board.boards.findIndex(item => item.pk === board_pk)].commentCount,
   getBoardCommentStatus: board.getBoardCommentStatus,
-  // boards: board.boards,
-});
+}};
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({});
 

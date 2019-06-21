@@ -183,7 +183,7 @@ const BoardFeedspage: React.FC = () => {
               />
             </FeedBodyImgWrapper>
           </FeedBody>
-          <BoardCommentsContainer board_pk={0} />
+          <BoardCommentsContainer board_pk={43} />
         </Feed>
         <CommentAllBtn>전체 댓글 보기</CommentAllBtn>
       </FeedWrapper>

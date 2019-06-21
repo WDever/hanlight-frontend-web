@@ -4,6 +4,8 @@ export interface Comment {
   content: string;
   createdAt: string;
   edited: boolean;
+  isLiked: boolean;
+  likeCount: number;
 }
 
 export interface Board {
@@ -13,6 +15,8 @@ export interface Board {
   files: string[];
   createdAt: string;
   edited: boolean;
+  isLiked: boolean;
+  likeCount: number;
   commentCount: number;
   comment: Comment[];
 }
