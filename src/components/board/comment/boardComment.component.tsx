@@ -31,6 +31,13 @@ const BoardCommentsComponent: React.FC<
         content={item.content}
         date={moment(item.createdAt).format('YYYY년 M월 D일 A H:mm')}
         likeCount={item.likeCount}
+        deleteBoardCommemnt={props.deleteBoardCommemnt}
+        patchBoardCommemnt={props.patchBoardCommemnt}
+        report={props.report}
+        deleteBoardCommentStatus={props.deleteBoardCommentStatus}
+        patchBoardCommentStatus={props.patchBoardCommentStatus}
+        reportStatus={props.reportStatus}
+        accessToken={props.accessToken}
       />
     );
   });

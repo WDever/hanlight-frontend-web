@@ -250,10 +250,11 @@ const FeedItemComponent: React.FC<{
           )}
         </FeedBody>
         <BoardCommentContainer
-          boardPk={board.pk}
+          board_pk={board.pk}
           comments={board.comment}
           commentCount={board.commentCount}
           like={like}
+          likeStatus={likeStatus}
         />
       </Feed>
       {board.commentCount > 3 && (

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
-  /* height: 2.5rem; */
   min-height: 3.5rem;
   display: flex;
   justify-content: space-between;

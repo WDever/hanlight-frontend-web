@@ -15,6 +15,8 @@ import {
 export interface BoardCommentProps {
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+  reportStatus: 'none' | 'pending' | 'success' | 'failure';
+  accessToken: string;
 }
 
 export interface BoardCommentMethod {
@@ -26,16 +28,19 @@ export interface BoardCommentMethod {
 export interface BoardCommentOwnProps {
   comments: Comment[];
   commentCount: number;
-  boardPk: number;
+  board_pk: number;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
   like(data: LikeParams): void;
 }
 
 const mapStateToProps = (
-  { board }: AppState,
+  { board, user }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
+  reportStatus: board.reportStatus,
+  accessToken: user.accessToken,
   ...ownProps,
 });
 

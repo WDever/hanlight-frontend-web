@@ -78,7 +78,7 @@ const BoardRolePage: React.FC = () => (
         </RoleContentStep>
         <RoleContentString>
           이곳은 학교내의 인트라넷 서비스입니다. 특정 대통령 및 사회의 정치적
-          성향이 들어간 단어 및 발언을 자제해주시길 바랍니다
+          성향이 들어간 단어 및 발언을 자제해주시길 바랍니다.
         </RoleContentString>
       </RoleContent>
     </Role>
