@@ -5,6 +5,7 @@ import {
   AppState,
   boardActions,
   boardReducerActions,
+  Comment,
   DeleteBoardCommentParams,
   LikeParams,
   PatchBoardCommentParams,
@@ -19,13 +20,13 @@ export interface BoardCommentProps {
 export interface BoardCommentMethod {
   deleteBoardCommemnt(data: DeleteBoardCommentParams): void;
   patchBoardCommemnt(data: PatchBoardCommentParams): void;
+  report(data: ReportParams): void;
 }
 
 export interface BoardCommentOwnProps {
   comments: Comment[];
   commentCount: number;
   boardPk: number;
-  report(data: ReportParams): void;
   like(data: LikeParams): void;
 }
 
@@ -47,6 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
     boardActions.patchBoardCommemnt,
     dispatch,
   ),
+  report: bindActionCreators(boardActions.report, dispatch),
 });
 
 const BoardCommentContainer = connect(

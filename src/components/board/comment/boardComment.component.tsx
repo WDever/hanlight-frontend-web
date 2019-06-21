@@ -1,6 +1,10 @@
 import * as React from 'react';
 
-import { Props } from 'container/board/comment';
+import {
+  BoardCommentMethod,
+  BoardCommentOwnProps,
+  BoardCommentProps,
+} from 'container/board/comment';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled from 'styled-components';
@@ -16,17 +20,14 @@ const FeedCommentTittle = styled.p`
   color: #1d2129;
 `;
 
-const BoardCommentsComponent: React.FC<Props> = ({
-  comments,
-  commentCount,
-  board_pk,
-  getBoardCommentStatus,
-}) => {
-  const CommentsList = comments.map((item, i) => {
+const BoardCommentsComponent: React.FC<
+  BoardCommentProps & BoardCommentMethod & BoardCommentOwnProps
+> = props => {
+  const CommentsList = props.comments.map((item, i) => {
     return (
       <CommentsItem
         key={i}
-        user={item.user_name}
+        user_name={item.user_name}
         content={item.content}
         date={moment(item.createdAt).format('YYYY년 M월 D일 A H:mm')}
         likeCount={item.likeCount}
@@ -36,7 +37,7 @@ const BoardCommentsComponent: React.FC<Props> = ({
 
   return (
     <FeedCommentWrapper>
-      <FeedCommentTittle>댓글({commentCount})</FeedCommentTittle>
+      <FeedCommentTittle>댓글({props.commentCount})</FeedCommentTittle>
       <Commentsinput />
       {CommentsList}
     </FeedCommentWrapper>

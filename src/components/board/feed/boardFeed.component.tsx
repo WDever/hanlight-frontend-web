@@ -80,9 +80,11 @@ export default class BoardFeedComponent extends React.Component<
   public handleOption = ({
     action,
     board_pk,
+    comment_pk,
   }: {
     action: 'delete' | 'edit' | 'report';
     board_pk: number;
+    comment_pk?: number;
   }) => {
     if (action === 'delete' && this.props.deleteBoardStatus !== 'pending') {
       this.props.deleteBoard({ board_pk, accessToken: this.props.accessToken });
@@ -93,6 +95,7 @@ export default class BoardFeedComponent extends React.Component<
         accessToken: this.props.accessToken,
         type: 'board',
         board_pk,
+        comment_pk,
       });
     }
   };
@@ -111,7 +114,7 @@ export default class BoardFeedComponent extends React.Component<
     });
 
   public render() {
-    const { boards, getBoardCommentStatus } = this.props;
+    const { boards, getBoardCommentStatus, like, likeStatus } = this.props;
     const { handleOption, getBoardComments } = this;
 
     return boards.map((board, i) => (
@@ -121,6 +124,8 @@ export default class BoardFeedComponent extends React.Component<
         handleOption={handleOption}
         getBoardComments={getBoardComments}
         getBoardCommentStatus={getBoardCommentStatus}
+        like={like}
+        likeStatus={likeStatus}
       />
     ));
   }

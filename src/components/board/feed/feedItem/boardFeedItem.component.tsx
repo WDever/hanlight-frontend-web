@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import BoardCommentContainer from 'container/board/comment';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -7,8 +8,7 @@ import EditIcon from 'lib/svg/edit-icon.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import BoardCommentsPage from 'pages/board/comments';
-import { Board } from 'store';
+import { Board, LikeParams } from 'store';
 import styled from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -148,8 +148,17 @@ const FeedItemComponent: React.FC<{
     board_pk: number;
     page: number;
   }) => void;
+  like: (data: LikeParams) => void;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
   getBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
-}> = ({ board, handleOption, getBoardComments, getBoardCommentStatus }) => {
+}> = ({
+  board,
+  handleOption,
+  getBoardComments,
+  getBoardCommentStatus,
+  like,
+  likeStatus,
+}) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [page, setPage] = React.useState<number>(1);
 
@@ -240,7 +249,12 @@ const FeedItemComponent: React.FC<{
             </FeedBodyImgWrapper>
           )}
         </FeedBody>
-        <BoardCommentsPage board_pk={board.pk} />
+        <BoardCommentContainer
+          boardPk={board.pk}
+          comments={board.comment}
+          commentCount={board.commentCount}
+          like={like}
+        />
       </Feed>
       {board.commentCount > 3 && (
         <CommentAllBtn onClick={GetBoardComments}>전체 댓글 보기</CommentAllBtn>

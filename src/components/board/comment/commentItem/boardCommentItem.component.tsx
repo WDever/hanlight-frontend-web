@@ -4,14 +4,6 @@ import LikeIcon from 'lib/svg/like.svg';
 import * as React from 'react';
 import styled from 'styled-components';
 
-interface CommentsItemProps {
-  user: string;
-  content: string;
-  date: string;
-  profileImg?: string;
-  likeCount: number;
-}
-
 const CommentWrapper = styled.div`
   width: 100%;
   display: flex;
@@ -108,52 +100,45 @@ const CommetLikeCount = styled.span`
   margin-left: 0.25rem;
 `;
 
-const CommentsItem: React.FC<CommentsItemProps> = ({
-  user,
-  content,
-  profileImg,
-  likeCount,
-  date,
-}) => {
-  const a = 0;
-  return (
-    <CommentWrapper>
-      <Comment>
-        <CommentLeftWrapper>
-          <ProfileImg
-            src={profileImg ? profileImg : DefaultProfileImage}
-            alt=""
-          />
-          <CommentContentWrapper>
-            <CommentBody>
-              <CommentTooltip>
-                <CommentName>{user}</CommentName>
-                <CommentContent>{content}</CommentContent>
-              </CommentTooltip>
-              <CommentLikeWrapper>
-                <img
-                  src={LikeIcon}
-                  style={{ width: '12.9px', height: '12.5px' }}
-                  alt=""
-                />
-                <CommetLikeCount>{likeCount}</CommetLikeCount>
-              </CommentLikeWrapper>
-            </CommentBody>
-            <CommentLikeBtnWrapper>
-              <CommentLikeBtn>좋아요</CommentLikeBtn>
-              &ensp;
-              <CommentDate>{date}</CommentDate>
-            </CommentLikeBtnWrapper>
-          </CommentContentWrapper>
-        </CommentLeftWrapper>
-        <DotImg
-          src={Dotdotdot}
-          style={{ width: '20px', height: '30px', cursor: 'pointer' }}
-          alt=""
-        />
-      </Comment>
-    </CommentWrapper>
-  );
-};
+const CommentsItem: React.FC<{
+  user_name: string;
+  content: string;
+  date: string;
+  likeCount: number;
+}> = ({ user_name, content, likeCount, date }) => (
+  <CommentWrapper>
+    <Comment>
+      <CommentLeftWrapper>
+        <ProfileImg src={DefaultProfileImage} alt="" />
+        <CommentContentWrapper>
+          <CommentBody>
+            <CommentTooltip>
+              <CommentName>{user_name}</CommentName>
+              <CommentContent>{content}</CommentContent>
+            </CommentTooltip>
+            <CommentLikeWrapper>
+              <img
+                src={LikeIcon}
+                style={{ width: '12.9px', height: '12.5px' }}
+                alt=""
+              />
+              <CommetLikeCount>{likeCount}</CommetLikeCount>
+            </CommentLikeWrapper>
+          </CommentBody>
+          <CommentLikeBtnWrapper>
+            <CommentLikeBtn>좋아요</CommentLikeBtn>
+            &ensp;
+            <CommentDate>{date}</CommentDate>
+          </CommentLikeBtnWrapper>
+        </CommentContentWrapper>
+      </CommentLeftWrapper>
+      <DotImg
+        src={Dotdotdot}
+        style={{ width: '20px', height: '30px', cursor: 'pointer' }}
+        alt=""
+      />
+    </Comment>
+  </CommentWrapper>
+);
 
 export default CommentsItem;
