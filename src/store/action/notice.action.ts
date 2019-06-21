@@ -17,7 +17,7 @@ export interface GetNoticeListParams {
 
 export interface GetNoticePostParams {
   accessToken: string | null;
-  postPk: number;
+  post_pk: number;
 }
 
 export interface GetNoticeListResType {

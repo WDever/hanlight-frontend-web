@@ -13,6 +13,7 @@ import {
 } from 'store';
 
 export interface BoardCommentProps {
+  accessToken: string;
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
 }
@@ -26,14 +27,15 @@ export interface BoardCommentMethod {
 export interface BoardCommentOwnProps {
   comments: Comment[];
   commentCount: number;
-  boardPk: number;
+  board_pk: number;
   like(data: LikeParams): void;
 }
 
 const mapStateToProps = (
-  { board }: AppState,
+  { user, board }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
+  accessToken: user.accessToken,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
   ...ownProps,

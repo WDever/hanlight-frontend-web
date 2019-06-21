@@ -3,8 +3,8 @@ import { boardReducerActions } from 'store/action/board.action';
 import { BoardModel } from 'store/model';
 
 const initialState: BoardModel = {
-  boards: [],
-  boardsCount: 0,
+  board: [],
+  boardCount: 0,
   getBoardStatus: 'none',
   postBoardStatus: 'none',
   patchBoardStatus: 'none',
@@ -23,14 +23,20 @@ export const boardReducer = (
 ) =>
   produce(state, draft => {
     switch (action.type) {
-      case 'GET_BOARD':
+      case 'GET_BOARD': {
         draft.getBoardStatus = 'pending';
         break;
-      case 'GET_BOARD_SUCCESS':
+      }
+      case 'GET_BOARD_SUCCESS': {
         draft.getBoardStatus = 'success';
-        draft.boards = draft.boards.concat(action.payload.board);
-        draft.boardsCount = action.payload.resultCount;
+        draft.board = draft.board.concat(
+          action.payload.board.filter(
+            board => draft.board.findIndex(val => val.pk === board.pk) < 0,
+          ),
+        );
+        draft.boardCount = action.payload.resultCount;
         break;
+      }
       case 'GET_BOARD_FAILURE':
         draft.getBoardStatus = 'failure';
         break;
@@ -40,14 +46,16 @@ export const boardReducer = (
         break;
       case 'POST_BOARD_SUCCESS':
         draft.postBoardStatus = 'success';
-        draft.boards.unshift({
+        draft.board.unshift({
           ...action.payload,
           edited: false,
           commentCount: 0,
           isLiked: false,
           likeCount: 0,
           comment: [],
+          write: true,
         });
+        draft.boardCount = draft.boardCount + 1;
         break;
       case 'POST_BOARD_FAILURE':
         draft.postBoardStatus = 'failure';
@@ -68,7 +76,7 @@ export const boardReducer = (
         break;
       case 'DELETE_BOARD_SUCCESS':
         draft.deleteBoardStatus = 'success';
-        draft.boards = draft.boards.filter(
+        draft.board = draft.board.filter(
           board => board.pk !== action.payload.board_pk,
         );
         break;
@@ -79,17 +87,21 @@ export const boardReducer = (
       case 'GET_BOARD_COMMENT':
         draft.getBoardCommentStatus = 'pending';
         break;
-      case 'GET_BOARD_COMMENT_SUCCESS':
+      case 'GET_BOARD_COMMENT_SUCCESS': {
         draft.getBoardCommentStatus = 'success';
         const board =
-          draft.boards[
-            draft.boards.findIndex(
-              board => board.pk === action.payload.board_pk,
-            )
+          draft.board[
+            draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
-        board.comment = action.payload.comment;
+        board.comment = board.comment.concat(
+          action.payload.comment.filter(
+            comment =>
+              board.comment.findIndex(val => val.pk === comment.pk) < 0,
+          ),
+        );
         board.commentCount = action.payload.resultCount;
         break;
+      }
       case 'GET_BOARD_COMMENT_FAILURE':
         draft.getBoardCommentStatus = 'failure';
         break;
@@ -97,9 +109,16 @@ export const boardReducer = (
       case 'POST_BOARD_COMMENT':
         draft.postBoardCommentStatus = 'pending';
         break;
-      case 'POST_BOARD_COMMENT_SUCCESS':
+      case 'POST_BOARD_COMMENT_SUCCESS': {
         draft.postBoardCommentStatus = 'success';
+        const board =
+          draft.board[
+            draft.board.findIndex(board => board.pk === action.payload.board_pk)
+          ];
+        board.comment.unshift(action.payload.comment);
+        board.commentCount += 1;
         break;
+      }
       case 'POST_BOARD_COMMENT_FAILURE':
         draft.postBoardCommentStatus = 'failure';
         break;
@@ -143,6 +162,9 @@ export const boardReducer = (
       case 'LIKE_FAILURE':
         draft.likeStatus = 'failure';
         break;
+
+      case 'RESET_BOARD':
+        return initialState;
 
       default:
         break;

@@ -162,12 +162,15 @@ const FeedItemComponent: React.FC<{
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [page, setPage] = React.useState<number>(1);
 
-  const GetBoardComments = () => {
+  const GetBoardComments = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     if (getBoardCommentStatus !== 'pending') {
       getBoardComments({ board_pk: board.pk, page });
       setPage(page + 1);
     }
   };
+
+  console.log(page);
 
   return (
     <FeedWrapper key={board.pk}>
@@ -188,31 +191,35 @@ const FeedItemComponent: React.FC<{
             <FeedHeadOptionBtn
               src={Dotdotdot}
               alt=""
-              onClick={() => setOptionToggle(true)}
+              onClick={() => setOptionToggle(!optionToggle)}
             />
           </div>
         </FeedHeadWrapper>
         {optionToggle && (
           <div>
             <FeedOptionWrapper>
-              <FeedOption
-                onClick={() => {
-                  handleOption({ action: 'edit', board_pk: board.pk });
-                  setOptionToggle(false);
-                }}
-              >
-                <FeedOptionImg src={EditIcon} alt="" />
-                <span>게시글 수정</span>
-              </FeedOption>
-              <FeedOption
-                onClick={() => {
-                  handleOption({ action: 'delete', board_pk: board.pk });
-                  setOptionToggle(false);
-                }}
-              >
-                <FeedOptionImg src={DeleteIcon} alt="" />
-                <span>게시글 삭제</span>
-              </FeedOption>
+              {board.write && (
+                <>
+                  <FeedOption
+                    onClick={() => {
+                      handleOption({ action: 'edit', board_pk: board.pk });
+                      setOptionToggle(false);
+                    }}
+                  >
+                    <FeedOptionImg src={EditIcon} alt="" />
+                    <span>게시글 수정</span>
+                  </FeedOption>
+                  <FeedOption
+                    onClick={() => {
+                      handleOption({ action: 'delete', board_pk: board.pk });
+                      setOptionToggle(false);
+                    }}
+                  >
+                    <FeedOptionImg src={DeleteIcon} alt="" />
+                    <span>게시글 삭제</span>
+                  </FeedOption>
+                </>
+              )}
               <FeedOption
                 onClick={() => {
                   handleOption({ action: 'report', board_pk: board.pk });
@@ -250,15 +257,18 @@ const FeedItemComponent: React.FC<{
           )}
         </FeedBody>
         <BoardCommentContainer
-          boardPk={board.pk}
+          board_pk={board.pk}
           comments={board.comment}
           commentCount={board.commentCount}
           like={like}
         />
       </Feed>
-      {board.commentCount > 3 && (
-        <CommentAllBtn onClick={GetBoardComments}>전체 댓글 보기</CommentAllBtn>
-      )}
+      {board.commentCount > 3 &&
+        (page === 1 || Math.ceil(board.commentCount / 10) >= page) && (
+          <CommentAllBtn onClick={GetBoardComments}>
+            전체 댓글 보기
+          </CommentAllBtn>
+        )}
     </FeedWrapper>
   );
 };

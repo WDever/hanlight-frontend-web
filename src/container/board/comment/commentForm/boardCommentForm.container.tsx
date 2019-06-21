@@ -1,0 +1,45 @@
+import BoardCommentComponent from 'components/board/comment';
+import CommentFormComponent from 'components/board/comment/commentForm';
+import { connect } from 'react-redux';
+import { bindActionCreators, Dispatch } from 'redux';
+import {
+  AppState,
+  boardActions,
+  boardReducerActions,
+  PostBoardCommentParams,
+} from 'store';
+
+export interface CommentFormProps {
+  postBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+}
+
+export interface CommentFormMethod {
+  postBoardComment(data: PostBoardCommentParams): void;
+}
+
+export interface CommentFormOwnProps {
+  board_pk: number;
+  accessToken: string;
+}
+
+const mapStateToProps = (
+  { board }: AppState,
+  ownProps: CommentFormOwnProps,
+) => ({
+  postBoardCommentStatus: board.postBoardCommentStatus,
+  ...ownProps,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
+  postBoardComment: bindActionCreators(
+    boardActions.postBoardCommemnt,
+    dispatch,
+  ),
+});
+
+const CommentFormContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CommentFormComponent);
+
+export default CommentFormContainer;
