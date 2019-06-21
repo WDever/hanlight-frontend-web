@@ -6,6 +6,7 @@ export interface Comment {
   edited: boolean;
   isLiked: boolean;
   likeCount: number;
+  write: boolean;
 }
 
 export interface Board {
@@ -19,13 +20,14 @@ export interface Board {
   likeCount: number;
   commentCount: number;
   comment: Comment[];
+  write: boolean;
 }
 
 type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardModel {
-  boards: Board[];
-  boardsCount: number;
+  board: Board[];
+  boardCount: number;
   getBoardStatus: status;
   postBoardStatus: status;
   patchBoardStatus: status;

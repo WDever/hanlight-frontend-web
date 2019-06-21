@@ -42,6 +42,8 @@ export const LIKE = 'LIKE';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
 export const LIKE_FAILURE = 'LIKE_FAILURE';
 
+export const RESET_BOARD = 'RESET_BOARD';
+
 export interface GetBoardParams {
   accessToken: string;
   page?: number;
@@ -215,7 +217,7 @@ export class PostBoardComment implements Action {
 export class PostBoardCommentSuccess implements Action {
   public readonly type = POST_BOARD_COMMENT_SUCCESS;
 
-  public constructor(public payload: Comment) {}
+  public constructor(public payload: { comment: Comment; board_pk: number }) {}
 }
 
 export class PostBoardCommentFailure implements Action {
@@ -246,6 +248,8 @@ export class DeleteBoardComment implements Action {
 
 export class DeleteBoardCommentSuccess implements Action {
   public readonly type = DELETE_BOARD_COMMENT_SUCCESS;
+
+  public constructor(public payload: DeleteBoardCommentParams) {}
 }
 
 export class DeleteBoardCommentFailure implements Action {
@@ -280,6 +284,10 @@ export class LikeFailure implements Action {
   public readonly type = LIKE_FAILURE;
 }
 
+export class ResetBoard implements Action {
+  public readonly type = RESET_BOARD;
+}
+
 export const boardActions = {
   getBoard: createStandardAction(GET_BOARD)<GetBoardParams>(),
   postBoard: createStandardAction(POST_BOARD)<PostBoardParams>(),
@@ -299,6 +307,7 @@ export const boardActions = {
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
   like: createStandardAction(LIKE)<LikeParams>(),
+  resetBoard: createStandardAction(RESET_BOARD)(),
 };
 
 export type boardReducerActions =
@@ -331,4 +340,5 @@ export type boardReducerActions =
   | ReportFailure
   | Like
   | LikeSuccess
-  | LikeFailure;
+  | LikeFailure
+  | ResetBoard;

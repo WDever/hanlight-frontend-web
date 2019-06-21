@@ -13,10 +13,10 @@ import {
 } from 'store';
 
 export interface BoardCommentProps {
+  accessToken: string;
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   reportStatus: 'none' | 'pending' | 'success' | 'failure';
-  accessToken: string;
 }
 
 export interface BoardCommentMethod {
@@ -37,10 +37,10 @@ const mapStateToProps = (
   { board, user }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
+  accessToken: user.accessToken,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
   reportStatus: board.reportStatus,
-  accessToken: user.accessToken,
   ...ownProps,
 });
 

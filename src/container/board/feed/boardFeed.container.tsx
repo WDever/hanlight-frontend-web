@@ -20,8 +20,8 @@ type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardFeedProps {
   accessToken: string;
-  boards: Board[];
-  boardsCount: number;
+  board: Board[];
+  boardCount: number;
   getBoardStatus: status;
   patchBoardStatus: status;
   deleteBoardStatus: status;
@@ -37,12 +37,13 @@ export interface BoardFeedMethod {
   like: (payload: LikeParams) => void;
   report: (payload: ReportParams) => void;
   getBoardComment: (payload: GetBoardCommentParams) => void;
+  resetBoard: () => void;
 }
 
 const mapStateToProps = ({ user, board }: AppState) => ({
   accessToken: user.accessToken,
-  boards: board.boards,
-  boardsCount: board.boardsCount,
+  board: board.board,
+  boardCount: board.boardCount,
   getBoardStatus: board.getBoardStatus,
   patchBoardStatus: board.patchBoardStatus,
   deleteBoardStatus: board.deleteBoardStatus,
@@ -58,6 +59,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   like: bindActionCreators(boardActions.like, dispatch),
   report: bindActionCreators(boardActions.report, dispatch),
   getBoardComment: bindActionCreators(boardActions.getBoardCommemnt, dispatch),
+  resetBoard: bindActionCreators(boardActions.resetBoard, dispatch),
 });
 
 const BoardFeedContainer = connect(

@@ -48,7 +48,7 @@ const getNoticePostApi = (data: GetNoticePostParams) =>
       },
       params: {
         type: 'post',
-        post_pk: data.postPk,
+        post_pk: data.post_pk,
       },
     })
     .then(res => res.data);

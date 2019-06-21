@@ -1,4 +1,5 @@
 import { BoardCommentMethod, BoardCommentProps } from 'container/board/comment';
+import { useInput } from 'lib/hooks';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -37,6 +38,7 @@ const CommentContentWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 100%;
+  width: 100%;
 `;
 
 const ProfileImg = styled.img`
@@ -61,10 +63,49 @@ const CommentName = styled.span`
   color: #443898;
   margin: 0.5rem;
 `;
+
 const CommentContent = styled.span`
   font-size: 0.81rem;
   color: #1d2129;
   margin-right: 0.75rem;
+`;
+
+const Form = styled.form`
+  /* width: calc(100% - 3rem); */
+  width: 95%;
+  min-height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  input {
+    width: calc(100% - 4.5rem);
+    min-height: 1.875rem;
+    border-radius: 8px;
+    border: solid 1px #d3d3d3;
+    background-color: #f2f3f5;
+    margin-bottom: 0.5rem;
+    text-indent: 0.5rem;
+    font-size: 0.81rem;
+    color: #1d2129;
+    margin: 0 0.75rem 0 0;
+    /* border: 0; */
+    padding: 0;
+  }
+
+  button {
+    width: 3.5rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background-color: #4470ff;
+    font-family: 'spoqa han sans';
+    font-weight: bold;
+    font-size: 0.75rem;
+    color: #e9ebee;
+    cursor: pointer;
+    outline: none;
+    border: none;
+  }
 `;
 
 const FeedOptionWrapper = styled.div`
@@ -136,31 +177,29 @@ const CommentsItem: React.FC<{
   content: string;
   date: string;
   likeCount: number;
-} & BoardCommentMethod & BoardCommentProps> = ({ user_name, content, likeCount, date, deleteBoardCommemnt, deleteBoardCommentStatus, patchBoardCommemnt, patchBoardCommentStatus, report, reportStatus, accessToken }) => {
-  const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
-
-  const handleOption = ({
+  board_pk: number;
+  comment_pk: number;
+  handleOption({
     action,
     board_pk,
     comment_pk,
   }: {
     action: 'delete' | 'edit' | 'report';
     board_pk: number;
-    comment_pk?: number;
-  }) => {
-    if (action === 'delete' && deleteBoardCommentStatus !== 'pending') {
-      deleteBoardCommemnt({ accessToken, board_pk, comment_pk });
-    } else if (action === 'edit') {
-      //
-    } else if (action === 'report' && reportStatus !== 'pending') {
-      report({
-        accessToken,
-        type: 'board',
-        board_pk,
-        comment_pk,
-      });
-    }
-  };
+    comment_pk: number;
+  }): void;
+}> = ({
+  user_name,
+  content,
+  likeCount,
+  date,
+  handleOption,
+  board_pk,
+  comment_pk,
+}) => {
+  const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
+  const [editToggle, setEditToggle] = React.useState<boolean>(false);
+  const [editedContent, setEditedContent] = useInput(content);
 
   return (
     <CommentWrapper>
@@ -168,20 +207,37 @@ const CommentsItem: React.FC<{
         <CommentLeftWrapper>
           <ProfileImg src={DefaultProfileImage} alt="" />
           <CommentContentWrapper>
-            <CommentBody>
-              <CommentTooltip>
-                <CommentName>{user_name}</CommentName>
-                <CommentContent>{content}</CommentContent>
-              </CommentTooltip>
-              <CommentLikeWrapper>
-                <img
-                  src={LikeIcon}
-                  style={{ width: '12.9px', height: '12.5px' }}
-                  alt=""
+            {editToggle ? (
+              <Form>
+                <input
+                  type="text"
+                  value={editedContent}
+                  onChange={setEditedContent}
                 />
-                <CommetLikeCount>{likeCount}</CommetLikeCount>
-              </CommentLikeWrapper>
-            </CommentBody>
+                <button
+                  onClick={() => {
+                    setEditToggle(!setEditToggle);
+                  }}
+                >
+                  등록
+                </button>
+              </Form>
+            ) : (
+              <CommentBody>
+                <CommentTooltip>
+                  <CommentName>{user_name}</CommentName>
+                  <CommentContent>{content}</CommentContent>
+                </CommentTooltip>
+                <CommentLikeWrapper>
+                  <img
+                    src={LikeIcon}
+                    style={{ width: '12.9px', height: '12.5px' }}
+                    alt=""
+                  />
+                  <CommetLikeCount>{likeCount}</CommetLikeCount>
+                </CommentLikeWrapper>
+              </CommentBody>
+            )}
             <CommentLikeBtnWrapper>
               <CommentLikeBtn>좋아요</CommentLikeBtn>
               &ensp;
@@ -196,30 +252,37 @@ const CommentsItem: React.FC<{
           onClick={() => setOptionToggle(!optionToggle)}
         />
         {optionToggle && (
-          // <div style={{ zIndex: 10 }}>
-          // <div>
           <FeedOptionWrapper>
             <FeedOption
               onClick={() => {
-                // handleOption({ action: 'edit', board_pk: board.pk });
+                handleOption({ action: 'edit', board_pk, comment_pk });
                 setOptionToggle(false);
+                setEditToggle(!editToggle);
               }}
             >
               <FeedOptionImg src={EditIcon} alt="" />
-              <span>게시글 수정</span>
+              <span>댓글 수정</span>
             </FeedOption>
             <FeedOption
               onClick={() => {
-                // handleOption({ action: 'delete', board_pk: board.pk });
+                handleOption({
+                  action: 'delete',
+                  board_pk,
+                  comment_pk,
+                });
                 setOptionToggle(false);
               }}
             >
               <FeedOptionImg src={DeleteIcon} alt="" />
-              <span>게시글 삭제</span>
+              <span>댓글 삭제</span>
             </FeedOption>
             <FeedOption
               onClick={() => {
-                // handleOption({ action: 'report', board_pk: board.pk });
+                handleOption({
+                  action: 'report',
+                  board_pk,
+                  comment_pk,
+                });
                 setOptionToggle(false);
               }}
             >
@@ -227,7 +290,6 @@ const CommentsItem: React.FC<{
               <span>신고하기</span>
             </FeedOption>
           </FeedOptionWrapper>
-          // </div>
         )}
       </Comment>
     </CommentWrapper>

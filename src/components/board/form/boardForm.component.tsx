@@ -238,10 +238,13 @@ export default class BoardFormComponent extends React.Component<
     });
 
   public handleSubmit = () => {
-    if (this.state.content.length && this.props.postBoardStatus !== 'pending') {
+    if (
+      this.state.content.trim().length &&
+      this.props.postBoardStatus !== 'pending'
+    ) {
       this.props.postBoard({
         accessToken: this.props.accessToken,
-        content: this.state.content,
+        content: this.state.content.trim(),
         files: this.state.files.map(v => v.file),
       });
     }
