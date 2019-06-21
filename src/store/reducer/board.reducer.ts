@@ -4,6 +4,7 @@ import { BoardModel } from 'store/model';
 
 const initialState: BoardModel = {
   boards: [],
+  boardsCount: 0,
   getBoardStatus: 'none',
   postBoardStatus: 'none',
   patchBoardStatus: 'none',
@@ -27,6 +28,8 @@ export const boardReducer = (
         break;
       case 'GET_BOARD_SUCCESS':
         draft.getBoardStatus = 'success';
+        draft.boards = draft.boards.concat(action.payload.board);
+        draft.boardsCount = action.payload.resultCount;
         break;
       case 'GET_BOARD_FAILURE':
         draft.getBoardStatus = 'failure';
@@ -63,6 +66,9 @@ export const boardReducer = (
         break;
       case 'DELETE_BOARD_SUCCESS':
         draft.deleteBoardStatus = 'success';
+        draft.boards = draft.boards.filter(
+          board => board.pk !== action.payload.board_pk,
+        );
         break;
       case 'DELETE_BOARD_FAILURE':
         draft.deleteBoardStatus = 'failure';
@@ -73,6 +79,14 @@ export const boardReducer = (
         break;
       case 'GET_BOARD_COMMENT_SUCCESS':
         draft.getBoardCommentStatus = 'success';
+        const board =
+          draft.boards[
+            draft.boards.findIndex(
+              board => board.pk === action.payload.board_pk,
+            )
+          ];
+        board.comment = action.payload.comment;
+        board.commentCount = action.payload.resultCount;
         break;
       case 'GET_BOARD_COMMENT_FAILURE':
         draft.getBoardCommentStatus = 'failure';

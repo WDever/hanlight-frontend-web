@@ -21,6 +21,7 @@ type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardModel {
   boards: Board[];
+  boardsCount: number;
   getBoardStatus: status;
   postBoardStatus: status;
   patchBoardStatus: status;

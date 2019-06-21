@@ -171,7 +171,10 @@ function* getBoardCommentApiSaga(action: GetBoardComment) {
     try {
       const response = yield call(getBoardCommentApi, action.payload);
       console.log(response);
-      yield put({ type: GET_BOARD_COMMENT_SUCCESS, payload: response.data });
+      yield put({
+        type: GET_BOARD_COMMENT_SUCCESS,
+        payload: { ...response.data, board_pk: action.payload.board_pk },
+      });
     } catch (e) {
       console.log(e.response);
       yield put({ type: GET_BOARD_COMMENT_FAILURE });
@@ -291,11 +294,14 @@ const reportApi = (data: ReportParams) =>
     .post(
       '/api/board/report',
       {
-        type: data.type,
-        board_pk: data.board_pk,
-        comment_pk: data.comment_pk,
+        content: data.content,
       },
       {
+        params: {
+          type: data.type,
+          board_pk: data.board_pk,
+          comment_pk: data.comment_pk,
+        },
         headers: {
           access_token: data.accessToken,
         },

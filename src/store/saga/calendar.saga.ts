@@ -14,7 +14,7 @@ import {
 
 const getCalendarApi = (data: GetCalendarParams) =>
   instance
-    .get('http://54.180.114.156:3000/api/calendar', {
+    .get('/api/calendar', {
       headers: {
         access_token: data.accessToken,
       },
@@ -27,7 +27,7 @@ const getCalendarApi = (data: GetCalendarParams) =>
 
 const getCalendarRecentApi = (data: string | null) =>
   instance
-    .get('http://54.180.114.156:3000/api/calendar/recent', {
+    .get('/api/calendar/recent', {
       headers: {
         access_token: data,
       },

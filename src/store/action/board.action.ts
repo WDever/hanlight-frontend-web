@@ -94,6 +94,7 @@ export interface ReportParams {
   type: 'board' | 'comment';
   board_pk: number;
   comment_pk?: number;
+  content?: string;
 }
 
 export interface LikeParams {
@@ -112,7 +113,7 @@ export class GetBoard implements Action {
 export class GetBoardSuccess implements Action {
   public readonly type = GET_BOARD_SUCCESS;
 
-  public constructor(public payload: Board[]) {}
+  public constructor(public payload: { board: Board[]; resultCount: number }) {}
 }
 
 export class GetBoardFailure implements Action {
@@ -175,6 +176,8 @@ export class DeleteBoard implements Action {
 
 export class DeleteBoardSuccess implements Action {
   public readonly type = DELETE_BOARD_SUCCESS;
+
+  public constructor(public payload: DeleteBoardParams) {}
 }
 
 export class DeleteBoardFailure implements Action {
@@ -190,7 +193,13 @@ export class GetBoardComment implements Action {
 export class GetBoardCommentSuccess implements Action {
   public readonly type = GET_BOARD_COMMENT_SUCCESS;
 
-  public constructor(public payload: Comment[]) {}
+  public constructor(
+    public payload: {
+      comment: Comment[];
+      resultCount: number;
+      board_pk: number;
+    },
+  ) {}
 }
 
 export class GetBoardCommentFailure implements Action {

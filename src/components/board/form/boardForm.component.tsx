@@ -225,6 +225,7 @@ export default class BoardFormComponent extends React.Component<
               }),
             });
         });
+      e.target.value = '';
     }
   };
 
@@ -237,7 +238,7 @@ export default class BoardFormComponent extends React.Component<
     });
 
   public handleSubmit = () => {
-    if (this.state.content.length) {
+    if (this.state.content.length && this.props.postBoardStatus !== 'pending') {
       this.props.postBoard({
         accessToken: this.props.accessToken,
         content: this.state.content,

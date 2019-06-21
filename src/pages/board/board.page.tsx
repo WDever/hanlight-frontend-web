@@ -1,17 +1,18 @@
 import * as React from 'react';
 
 import styled from 'styled-components';
-import BoardFeedsPage from './feeds';
+import BoardFeedsPage from './feed';
 import BoardFormPage from './form';
 import BoardRolePage from './role';
 
 const Templete = styled.div`
   width: 100%;
+  min-height: 100%;
   background-color: #e9ebee;
 
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 `;
 
 const Wrapper = styled.div`
