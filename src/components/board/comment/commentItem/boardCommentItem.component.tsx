@@ -183,10 +183,12 @@ const CommentsItem: React.FC<{
     action,
     board_pk,
     comment_pk,
+    content,
   }: {
     action: 'delete' | 'edit' | 'report';
     board_pk: number;
     comment_pk: number;
+    content?: string;
   }): void;
 }> = ({
   user_name,
@@ -217,6 +219,12 @@ const CommentsItem: React.FC<{
                 <button
                   onClick={() => {
                     setEditToggle(!setEditToggle);
+                    handleOption({
+                      action: 'edit',
+                      board_pk,
+                      comment_pk,
+                      content: editedContent,
+                    });
                   }}
                 >
                   등록

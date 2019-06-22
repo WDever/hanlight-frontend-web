@@ -236,7 +236,11 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
     try {
       const response = yield call(patchBoardCommentApi, action.payload);
       console.log(response);
-      yield put({ type: PATCH_BOARD_COMMENT_SUCCESS, payload: action.payload });
+      yield put({
+        type: PATCH_BOARD_COMMENT_SUCCESS,
+        payload: response.data,
+        meta: action.payload,
+      });
     } catch (e) {
       yield put({ type: PATCH_BOARD_COMMENT_FAILURE });
     }

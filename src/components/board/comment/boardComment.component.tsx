@@ -28,25 +28,38 @@ const BoardCommentComponent: React.FC<
     action,
     board_pk,
     comment_pk,
+    content,
   }: {
     action: 'delete' | 'edit' | 'report';
     board_pk: number;
     comment_pk: number;
+    content?: string;
   }) => {
-    if (action === 'delete' && props.deleteBoardCommentStatus !== 'pending') {
+    const {
+      deleteBoardCommemnt,
+      deleteBoardCommentStatus,
+      patchBoardCommemnt,
+      patchBoardCommentStatus,
+      report,
+      reportStatus,
+      accessToken,
+    } = props;
+    if (action === 'delete' && deleteBoardCommentStatus !== 'pending') {
       window.confirm('정말로 삭제하시겠습니까?') &&
-        props.deleteBoardCommemnt({
-          accessToken: props.accessToken,
+        deleteBoardCommemnt({
+          accessToken,
           board_pk,
           comment_pk,
         });
       SelectedBoardPk.current = board_pk;
-    } else if (action === 'edit') {
+    } else if (action === 'edit' && patchBoardCommentStatus && content) {
+      patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
+      SelectedBoardPk.current = board_pk;
       //
-    } else if (action === 'report' && props.reportStatus !== 'pending') {
+    } else if (action === 'report' && reportStatus !== 'pending') {
       window.confirm('정말로 신고하시겠습니까?') &&
-        props.report({
-          accessToken: props.accessToken,
+        report({
+          accessToken,
           type: 'board',
           board_pk,
           comment_pk,
@@ -56,34 +69,33 @@ const BoardCommentComponent: React.FC<
   };
 
   React.useEffect(() => {
-    if (props.board_pk === SelectedBoardPk.current) {
-      if (props.deleteBoardCommentStatus === 'success') {
+    const {
+      board_pk,
+      deleteBoardCommentStatus,
+      likeStatus,
+      reportStatus,
+    } = props;
+    if (board_pk === SelectedBoardPk.current) {
+      if (deleteBoardCommentStatus === 'success') {
         alert('성공');
-      } else if (props.deleteBoardCommentStatus === 'failure') {
+      } else if (deleteBoardCommentStatus === 'failure') {
         alert('실패');
       }
-      if (props.patchBoardCommentStatus === 'success') {
+      if (likeStatus === 'success') {
         alert('성공');
-      } else if (props.patchBoardCommentStatus === 'failure') {
+      } else if (likeStatus === 'failure') {
         alert('실패');
       }
-      if (props.likeStatus === 'success') {
+      if (reportStatus === 'success') {
         alert('성공');
-      } else if (props.likeStatus === 'failure') {
-        alert('실패');
-      }
-      if (props.reportStatus === 'success') {
-        alert('성공');
-      } else if (props.reportStatus === 'failure') {
+      } else if (reportStatus === 'failure') {
         alert('실패');
       }
     }
   }, [
     props.deleteBoardCommentStatus,
-    props.patchBoardCommemnt,
     props.likeStatus,
     props.reportStatus,
-    props.patchBoardCommentStatus,
   ]);
 
   const CommentsList = props.comments
