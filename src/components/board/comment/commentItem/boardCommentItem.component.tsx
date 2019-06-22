@@ -172,13 +172,15 @@ const CommetLikeCount = styled.span`
   margin-left: 0.25rem;
 `;
 
-const CommentsItem: React.FC<{
+interface CommentItemProps {
   user_name: string;
   content: string;
   date: string;
   likeCount: number;
   board_pk: number;
   comment_pk: number;
+  userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  write: boolean;
   handleOption({
     action,
     board_pk,
@@ -190,7 +192,9 @@ const CommentsItem: React.FC<{
     comment_pk: number;
     content?: string;
   }): void;
-}> = ({
+}
+
+const CommentItem: React.FC<CommentItemProps> = ({
   user_name,
   content,
   likeCount,
@@ -198,6 +202,8 @@ const CommentsItem: React.FC<{
   handleOption,
   board_pk,
   comment_pk,
+  userType,
+  write,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
@@ -247,7 +253,9 @@ const CommentsItem: React.FC<{
               </CommentBody>
             )}
             <CommentLikeBtnWrapper>
-              <CommentLikeBtn>좋아요</CommentLikeBtn>
+              {userType === 'student' && (
+                <CommentLikeBtn>좋아요</CommentLikeBtn>
+              )}
               &ensp;
               <CommentDate>{date}</CommentDate>
             </CommentLikeBtnWrapper>
@@ -261,29 +269,33 @@ const CommentsItem: React.FC<{
         />
         {optionToggle && (
           <FeedOptionWrapper>
-            <FeedOption
-              onClick={() => {
-                handleOption({ action: 'edit', board_pk, comment_pk });
-                setOptionToggle(false);
-                setEditToggle(!editToggle);
-              }}
-            >
-              <FeedOptionImg src={EditIcon} alt="" />
-              <span>댓글 수정</span>
-            </FeedOption>
-            <FeedOption
-              onClick={() => {
-                handleOption({
-                  action: 'delete',
-                  board_pk,
-                  comment_pk,
-                });
-                setOptionToggle(false);
-              }}
-            >
-              <FeedOptionImg src={DeleteIcon} alt="" />
-              <span>댓글 삭제</span>
-            </FeedOption>
+            {write && (
+              <>
+                <FeedOption
+                  onClick={() => {
+                    handleOption({ action: 'edit', board_pk, comment_pk });
+                    setOptionToggle(false);
+                    setEditToggle(!editToggle);
+                  }}
+                >
+                  <FeedOptionImg src={EditIcon} alt="" />
+                  <span>댓글 수정</span>
+                </FeedOption>
+                <FeedOption
+                  onClick={() => {
+                    handleOption({
+                      action: 'delete',
+                      board_pk,
+                      comment_pk,
+                    });
+                    setOptionToggle(false);
+                  }}
+                >
+                  <FeedOptionImg src={DeleteIcon} alt="" />
+                  <span>댓글 삭제</span>
+                </FeedOption>
+              </>
+            )}
             <FeedOption
               onClick={() => {
                 handleOption({
@@ -304,4 +316,4 @@ const CommentsItem: React.FC<{
   );
 };
 
-export default CommentsItem;
+export default CommentItem;

@@ -273,33 +273,41 @@ export default class BoardFormComponent extends React.Component<
       });
 
     return (
-      <FormContentWrapper>
-        <FormBody>
-          <img src={DefaultProfileImage} alt="" />
-          <FormBodyText
-            ref={ref => (this.content = ref)}
-            onChange={this.handleContent}
-            value={this.state.content}
-            height={this.state.textAreaHeight}
-            placeholder="대나무숲에 글을 남겨보세요!"
-          />
-        </FormBody>
-        <FormImageWrapper>{FormPreviews}</FormImageWrapper>
-        <FormButtonWrapper>
-          <div>
-            <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
-            <input
-              id="files"
-              multiple={true}
-              type="file"
-              style={{ display: 'none' }}
-              onChange={this.handleFile}
-              accept="image/*"
-            />
-          </div>
-          <FormSubmitButton onClick={this.handleSubmit}>작성</FormSubmitButton>
-        </FormButtonWrapper>
-      </FormContentWrapper>
+      <>
+        {this.props.userType === 'student' ? (
+          <FormContentWrapper>
+            <FormBody>
+              <img src={DefaultProfileImage} alt="" />
+              <FormBodyText
+                ref={ref => (this.content = ref)}
+                onChange={this.handleContent}
+                value={this.state.content}
+                height={this.state.textAreaHeight}
+                placeholder="대나무숲에 글을 남겨보세요!"
+              />
+            </FormBody>
+            <FormImageWrapper>{FormPreviews}</FormImageWrapper>
+            <FormButtonWrapper>
+              <div>
+                <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
+                <input
+                  id="files"
+                  multiple={true}
+                  type="file"
+                  style={{ display: 'none' }}
+                  onChange={this.handleFile}
+                  accept="image/*"
+                />
+              </div>
+              <FormSubmitButton onClick={this.handleSubmit}>
+                작성
+              </FormSubmitButton>
+            </FormButtonWrapper>
+          </FormContentWrapper>
+        ) : (
+          <></>
+        )}
+      </>
     );
   }
 }

@@ -14,6 +14,7 @@ import {
 
 export interface BoardCommentProps {
   accessToken: string;
+  userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   reportStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -38,6 +39,7 @@ const mapStateToProps = (
   ownProps: BoardCommentOwnProps,
 ) => ({
   accessToken: user.accessToken,
+  userType: user.data.type,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
   reportStatus: board.reportStatus,

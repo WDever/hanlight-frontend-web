@@ -55,7 +55,6 @@ const BoardCommentComponent: React.FC<
     } else if (action === 'edit' && patchBoardCommentStatus && content) {
       patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
       SelectedBoardPk.current = board_pk;
-      //
     } else if (action === 'report' && reportStatus !== 'pending') {
       window.confirm('정말로 신고하시겠습니까?') &&
         report({
@@ -92,11 +91,7 @@ const BoardCommentComponent: React.FC<
         alert('실패');
       }
     }
-  }, [
-    props.deleteBoardCommentStatus,
-    props.likeStatus,
-    props.reportStatus,
-  ]);
+  }, [props.deleteBoardCommentStatus, props.likeStatus, props.reportStatus]);
 
   const CommentsList = props.comments
     .slice()
@@ -112,6 +107,8 @@ const BoardCommentComponent: React.FC<
           board_pk={props.board_pk}
           comment_pk={item.pk}
           handleOption={handleOption}
+          userType={props.userType}
+          write={item.write}
         />
       );
     });
@@ -119,10 +116,12 @@ const BoardCommentComponent: React.FC<
   return (
     <FeedCommentWrapper>
       <FeedCommentTittle>댓글({props.commentCount})</FeedCommentTittle>
-      <CommentFormContainer
-        accessToken={props.accessToken}
-        board_pk={props.board_pk}
-      />
+      {props.userType === 'student' && (
+        <CommentFormContainer
+          accessToken={props.accessToken}
+          board_pk={props.board_pk}
+        />
+      )}
       {CommentsList}
     </FeedCommentWrapper>
   );
