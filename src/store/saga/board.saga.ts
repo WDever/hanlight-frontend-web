@@ -239,7 +239,7 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
       yield put({
         type: PATCH_BOARD_COMMENT_SUCCESS,
         payload: response.data,
-        meta: action.payload,
+        meta: action.payload.board_pk,
       });
     } catch (e) {
       yield put({ type: PATCH_BOARD_COMMENT_FAILURE });

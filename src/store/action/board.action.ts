@@ -233,7 +233,10 @@ export class PatchBoardComment implements Action {
 export class PatchBoardCommentSuccess implements Action {
   public readonly type = PATCH_BOARD_COMMENT_SUCCESS;
 
-  public constructor(public payload: Comment, public meta: PatchBoardCommentParams) {}
+  public constructor(
+    public payload: Comment,
+    public meta: { board_pk: number },
+  ) {}
 }
 
 export class PatchBoardCommentFailure implements Action {
@@ -307,7 +310,7 @@ export const boardActions = {
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
   like: createStandardAction(LIKE)<LikeParams>(),
-  resetBoard: createStandardAction(RESET_BOARD)()
+  resetBoard: createStandardAction(RESET_BOARD)(),
 };
 
 export type boardReducerActions =

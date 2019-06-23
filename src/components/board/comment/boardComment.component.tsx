@@ -51,7 +51,6 @@ const BoardCommentComponent: React.FC<
           board_pk,
           comment_pk,
         });
-      SelectedBoardPk.current = board_pk;
     } else if (action === 'edit' && patchBoardCommentStatus && content) {
       patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
       SelectedBoardPk.current = board_pk;
@@ -63,8 +62,8 @@ const BoardCommentComponent: React.FC<
           board_pk,
           comment_pk,
         });
-      SelectedBoardPk.current = board_pk;
     }
+    SelectedBoardPk.current = board_pk;
   };
 
   React.useEffect(() => {
@@ -102,13 +101,14 @@ const BoardCommentComponent: React.FC<
           key={i}
           user_name={item.user_name}
           content={item.content}
-          date={moment(item.createdAt).format('YYYY년 M월 D일 A H:mm')}
+          date={moment(item.createdAt).format('lll')}
           likeCount={item.likeCount}
           board_pk={props.board_pk}
           comment_pk={item.pk}
           handleOption={handleOption}
           userType={props.userType}
           write={item.write}
+          edited={item.edited}
         />
       );
     });

@@ -147,18 +147,16 @@ const CommentLikeBtnWrapper = styled.div`
   height: 1.125rem;
   display: flex;
   align-items: center;
+
+  span {
+    font-size: 0.75rem;
+    color: #616770;
+  }
 `;
 
 const CommentLikeBtn = styled.span`
-  font-size: 0.75rem;
-  color: #0055ff;
   margin-left: 0.5rem;
   cursor: pointer;
-`;
-
-const CommentDate = styled.span`
-  font-size: 0.75rem;
-  color: #616770;
 `;
 
 const CommentLikeWrapper = styled.div`
@@ -181,6 +179,7 @@ interface CommentItemProps {
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   write: boolean;
+  edited: boolean;
   handleOption({
     action,
     board_pk,
@@ -204,10 +203,23 @@ const CommentItem: React.FC<CommentItemProps> = ({
   comment_pk,
   userType,
   write,
+  edited,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
   const [editedContent, setEditedContent] = useInput(content);
+
+  const submitEdit = () => {
+    setEditToggle(!setEditToggle);
+    if (editedContent !== content || editedContent !== '') {
+      handleOption({
+        action: 'edit',
+        board_pk,
+        comment_pk,
+        content: editedContent,
+      });
+    }
+  };
 
   return (
     <CommentWrapper>
@@ -222,19 +234,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                   value={editedContent}
                   onChange={setEditedContent}
                 />
-                <button
-                  onClick={() => {
-                    setEditToggle(!setEditToggle);
-                    handleOption({
-                      action: 'edit',
-                      board_pk,
-                      comment_pk,
-                      content: editedContent,
-                    });
-                  }}
-                >
-                  등록
-                </button>
+                <button onClick={submitEdit}>등록</button>
               </Form>
             ) : (
               <CommentBody>
@@ -257,7 +257,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 <CommentLikeBtn>좋아요</CommentLikeBtn>
               )}
               &ensp;
-              <CommentDate>{date}</CommentDate>
+              <span>{date}</span>
+              {edited && <span>&nbsp;(수정됨)</span>}
             </CommentLikeBtnWrapper>
           </CommentContentWrapper>
         </CommentLeftWrapper>
