@@ -115,6 +115,7 @@ export const boardReducer = (
           draft.board[
             draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
+        action.payload.comment.write = true;
         board.comment.unshift(action.payload.comment);
         board.commentCount += 1;
         break;
@@ -131,9 +132,12 @@ export const boardReducer = (
           draft.board[
             draft.board.findIndex(board => board.pk === action.meta.board_pk)
           ];
-        board.comment[
-          board.comment.findIndex(comment => comment.pk === action.payload.pk)
-        ] = action.payload;
+        Object.assign(
+          board.comment[
+            board.comment.findIndex(comment => comment.pk === action.payload.pk)
+          ],
+          action.payload,
+        );
         break;
       case 'PATCH_BOARD_COMMENT_FAILURE':
         draft.patchBoardCommentStatus = 'failure';
