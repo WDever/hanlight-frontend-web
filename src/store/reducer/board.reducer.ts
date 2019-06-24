@@ -15,6 +15,7 @@ const initialState: BoardModel = {
   deleteBoardCommentStatus: 'none',
   reportStatus: 'none',
   likeStatus: 'none',
+  deemBoardStatus: false,
 };
 
 export const boardReducer = (
@@ -115,7 +116,13 @@ export const boardReducer = (
           draft.board[
             draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
-        board.comment.unshift(action.payload.comment);
+        board.comment.unshift({
+          ...action.payload.comment,
+          edited: false,
+          likeCount: 0,
+          isLiked: false,
+          write: true,
+        });
         board.commentCount += 1;
         break;
       }
@@ -161,6 +168,14 @@ export const boardReducer = (
         break;
       case 'LIKE_FAILURE':
         draft.likeStatus = 'failure';
+        break;
+
+      case 'DEEM_BOARD':
+        draft.deemBoardStatus = true;
+        break;
+
+      case 'UNDEEM_BOARD':
+        draft.deemBoardStatus = false;
         break;
 
       case 'RESET_BOARD':
