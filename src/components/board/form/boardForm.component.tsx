@@ -8,6 +8,15 @@ import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled from 'styled-components';
 
+const FormTitle = styled.div`
+  width: 100%;
+  font-size: 0.875rem;
+  border-bottom: solid 1px #d1d1d1;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1.5rem;
+`;
+
 const FormContentWrapper = styled.div`
   width: 97%;
 
@@ -273,33 +282,38 @@ export default class BoardFormComponent extends React.Component<
       });
 
     return (
-      <FormContentWrapper>
-        <FormBody>
-          <img src={DefaultProfileImage} alt="" />
-          <FormBodyText
-            ref={ref => (this.content = ref)}
-            onChange={this.handleContent}
-            value={this.state.content}
-            height={this.state.textAreaHeight}
-            placeholder="대나무숲에 글을 남겨보세요!"
-          />
-        </FormBody>
-        <FormImageWrapper>{FormPreviews}</FormImageWrapper>
-        <FormButtonWrapper>
-          <div>
-            <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
-            <input
-              id="files"
-              multiple={true}
-              type="file"
-              style={{ display: 'none' }}
-              onChange={this.handleFile}
-              accept="image/*"
+      <>
+        <FormTitle>대나무숲에 글 올리기</FormTitle>
+        <FormContentWrapper>
+          <FormBody>
+            <img src={DefaultProfileImage} alt="" />
+            <FormBodyText
+              ref={ref => (this.content = ref)}
+              onChange={this.handleContent}
+              value={this.state.content}
+              height={this.state.textAreaHeight}
+              placeholder="대나무숲에 글을 남겨보세요!"
             />
-          </div>
-          <FormSubmitButton onClick={this.handleSubmit}>작성</FormSubmitButton>
-        </FormButtonWrapper>
-      </FormContentWrapper>
+          </FormBody>
+          <FormImageWrapper>{FormPreviews}</FormImageWrapper>
+          <FormButtonWrapper>
+            <div>
+              <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
+              <input
+                id="files"
+                multiple={true}
+                type="file"
+                style={{ display: 'none' }}
+                onChange={this.handleFile}
+                accept="image/*"
+              />
+            </div>
+            <FormSubmitButton onClick={this.handleSubmit}>
+              작성
+            </FormSubmitButton>
+          </FormButtonWrapper>
+        </FormContentWrapper>
+      </>
     );
   }
 }
