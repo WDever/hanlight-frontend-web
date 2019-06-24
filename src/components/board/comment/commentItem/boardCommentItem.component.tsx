@@ -16,19 +16,32 @@ const CommentWrapper = styled.div`
   margin-top: 0.3125rem;
 `;
 
+// const DotImg = styled.img`width: '20px', height: '30px', cursor: 'pointer'
+const OptionBtn = styled.img`
+  display: none;
+  width: 1.25rem;
+  height: 1.875rem;
+  cursor: pointer;
+`;
+
 const Comment = styled.div`
   width: 100%;
   display: flex;
   min-height: 3.5rem;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
+
+  &:hover {
+    ${OptionBtn} {
+      display: initial;
+    }
+  }
 `;
 
 const CommentLeftWrapper = styled.div`
   width: 95%;
   min-height: 3.5rem;
-  height: 3.5rem;
   display: flex;
   align-items: flex-start;
 `;
@@ -46,13 +59,6 @@ const ProfileImg = styled.img`
   margin-right: 0.75rem;
 `;
 
-// const DotImg = styled.img`width: '20px', height: '30px', cursor: 'pointer'
-const OptionBtn = styled.img`
-  width: 1.25rem;
-  height: 1.875rem;
-  cursor: pointer;
-`;
-
 const CommentBody = styled.div`
   display: flex;
   align-items: center;
@@ -60,14 +66,18 @@ const CommentBody = styled.div`
 
 const CommentName = styled.span`
   font-size: 0.81rem;
+  margin-right: 0.3rem;
   color: #443898;
-  margin: 0.5rem;
+  /* margin: 0.5rem; */
 `;
 
 const CommentContent = styled.span`
   font-size: 0.81rem;
   color: #1d2129;
-  margin-right: 0.75rem;
+  padding: 0.375rem;
+
+  border-radius: 8px;
+  background-color: #f2f3f5;
 `;
 
 const Form = styled.form`
@@ -80,6 +90,7 @@ const Form = styled.form`
 
   input {
     width: calc(100% - 4.5rem);
+    width: 100%;
     min-height: 1.875rem;
     border-radius: 8px;
     border: solid 1px #d3d3d3;
@@ -88,7 +99,7 @@ const Form = styled.form`
     text-indent: 0.5rem;
     font-size: 0.81rem;
     color: #1d2129;
-    margin: 0 0.75rem 0 0;
+    /* margin: 0 0.75rem 0 0; */
     /* border: 0; */
     padding: 0;
   }
@@ -108,7 +119,7 @@ const Form = styled.form`
   }
 `;
 
-const FeedOptionWrapper = styled.div`
+const OptionWrapper = styled.div`
   width: 6.875rem;
   background-color: #ffffff;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
@@ -119,7 +130,7 @@ const FeedOptionWrapper = styled.div`
   z-index: 1;
 `;
 
-const FeedOption = styled.div`
+const Option = styled.div`
   width: 100%;
   height: 2.125rem;
   border: solid 0.5px #707070;
@@ -129,18 +140,21 @@ const FeedOption = styled.div`
   align-items: center;
 `;
 
-const FeedOptionImg = styled.img`
+const OptionImg = styled.img`
   margin-left: 0.68rem;
   margin-right: 0.7rem;
 `;
 
 const CommentTooltip = styled.div`
-  height: 2rem;
+  /* min-height: 2rem; */
+  padding: 0.5rem;
+
   border-radius: 8px;
   background-color: #f2f3f5;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 `;
 
 const CommentLikeBtnWrapper = styled.div`
@@ -228,20 +242,19 @@ const CommentItem: React.FC<CommentItemProps> = ({
           <ProfileImg src={DefaultProfileImage} alt="" />
           <CommentContentWrapper>
             {editToggle ? (
-              <Form>
+              <Form onSubmit={submitEdit}>
                 <input
                   type="text"
                   value={editedContent}
                   onChange={setEditedContent}
                 />
-                <button onClick={submitEdit}>등록</button>
               </Form>
             ) : (
               <CommentBody>
-                <CommentTooltip>
+                <CommentContent>
                   <CommentName>{user_name}</CommentName>
-                  <CommentContent>{content}</CommentContent>
-                </CommentTooltip>
+                  {content}
+                </CommentContent>
                 <CommentLikeWrapper>
                   <img
                     src={LikeIcon}
@@ -264,25 +277,30 @@ const CommentItem: React.FC<CommentItemProps> = ({
         </CommentLeftWrapper>
         <OptionBtn
           src={Dotdotdot}
-          style={{ width: '20px', height: '30px', cursor: 'pointer' }}
+          style={{
+            width: '20px',
+            height: '30px',
+            cursor: 'pointer',
+            marginBottom: '1rem',
+          }}
           alt="comment option"
           onClick={() => setOptionToggle(!optionToggle)}
         />
         {optionToggle && (
-          <FeedOptionWrapper>
+          <OptionWrapper>
             {write && (
               <>
-                <FeedOption
+                <Option
                   onClick={() => {
                     handleOption({ action: 'edit', board_pk, comment_pk });
                     setOptionToggle(false);
                     setEditToggle(!editToggle);
                   }}
                 >
-                  <FeedOptionImg src={EditIcon} alt="" />
+                  <OptionImg src={EditIcon} alt="" />
                   <span>댓글 수정</span>
-                </FeedOption>
-                <FeedOption
+                </Option>
+                <Option
                   onClick={() => {
                     handleOption({
                       action: 'delete',
@@ -292,12 +310,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
                     setOptionToggle(false);
                   }}
                 >
-                  <FeedOptionImg src={DeleteIcon} alt="" />
+                  <OptionImg src={DeleteIcon} alt="" />
                   <span>댓글 삭제</span>
-                </FeedOption>
+                </Option>
               </>
             )}
-            <FeedOption
+            <Option
               onClick={() => {
                 handleOption({
                   action: 'report',
@@ -307,10 +325,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 setOptionToggle(false);
               }}
             >
-              <FeedOptionImg src={ReportIcon} alt="" />
+              <OptionImg src={ReportIcon} alt="" />
               <span>신고하기</span>
-            </FeedOption>
-          </FeedOptionWrapper>
+            </Option>
+          </OptionWrapper>
         )}
       </Comment>
     </CommentWrapper>

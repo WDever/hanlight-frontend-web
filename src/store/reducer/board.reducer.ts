@@ -127,18 +127,17 @@ export const boardReducer = (
       case 'PATCH_BOARD_COMMENT':
         draft.patchBoardCommentStatus = 'pending';
         break;
-      case 'PATCH_BOARD_COMMENT_SUCCESS':
-        const board =
-          draft.board[
-            draft.board.findIndex(board => board.pk === action.meta.board_pk)
-          ];
-        Object.assign(
-          board.comment[
-            board.comment.findIndex(comment => comment.pk === action.payload.pk)
-          ],
-          action.payload,
+      case 'PATCH_BOARD_COMMENT_SUCCESS': {
+        draft.patchBoardCommentStatus = 'success';
+        const board = draft.board.find(
+          board => board.pk === action.meta.board_pk,
         );
+        const comment =
+          board &&
+          board.comment.find(comment => comment.pk === action.payload.pk);
+        Object.assign(comment, action.payload);
         break;
+      }
       case 'PATCH_BOARD_COMMENT_FAILURE':
         draft.patchBoardCommentStatus = 'failure';
         break;
