@@ -262,14 +262,16 @@ const FeedItemComponent: React.FC<{
           commentCount={board.commentCount}
           like={like}
           likeStatus={likeStatus}
+          GetBoardComments={GetBoardComments}
+          page={page}
         />
       </Feed>
-      {board.commentCount > 3 &&
+      {/* {board.commentCount > 3 &&
         (page === 1 || Math.ceil(board.commentCount / 10) >= page) && (
           <CommentAllBtn onClick={GetBoardComments}>
             전체 댓글 보기
           </CommentAllBtn>
-        )}
+        )} */}
     </FeedWrapper>
   );
 };

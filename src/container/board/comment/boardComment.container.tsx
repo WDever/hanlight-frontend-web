@@ -31,7 +31,9 @@ export interface BoardCommentOwnProps {
   commentCount: number;
   board_pk: number;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
+  page: number;
   like(data: LikeParams): void;
+  GetBoardComments(e: React.MouseEvent<HTMLButtonElement>): void;
 }
 
 const mapStateToProps = (

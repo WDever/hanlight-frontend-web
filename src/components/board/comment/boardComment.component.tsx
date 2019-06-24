@@ -20,6 +20,16 @@ const FeedCommentTittle = styled.p`
   color: #1d2129;
 `;
 
+const CommentAllBtn = styled.button`
+  font-size: 0.875rem;
+  font-family: 'Spoqa Han Sans';
+  color: #4470ff;
+  margin-bottom: 0.5rem;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+`;
+
 const BoardCommentComponent: React.FC<
   BoardCommentProps & BoardCommentMethod & BoardCommentOwnProps
 > = props => {
@@ -124,6 +134,13 @@ const BoardCommentComponent: React.FC<
           board_pk={props.board_pk}
         />
       )}
+      {props.commentCount > 3 &&
+        (props.page === 1 ||
+          Math.ceil(props.commentCount / 10) >= props.page) && (
+          <CommentAllBtn onClick={props.GetBoardComments}>
+            이전 댓글 보기
+          </CommentAllBtn>
+        )}
       {CommentsList}
     </FeedCommentWrapper>
   );
