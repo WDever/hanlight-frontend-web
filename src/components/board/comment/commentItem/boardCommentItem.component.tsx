@@ -7,6 +7,7 @@ import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
+import { LikeParams } from 'store';
 import styled from 'styled-components';
 
 const CommentWrapper = styled.div`
@@ -193,7 +194,9 @@ interface CommentItemProps {
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   write: boolean;
+  accessToken: string;
   edited: boolean;
+  like(params: LikeParams): void;
   handleOption({
     action,
     board_pk,
@@ -218,6 +221,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   userType,
   write,
   edited,
+  like,
+  accessToken,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
@@ -267,7 +272,18 @@ const CommentItem: React.FC<CommentItemProps> = ({
             )}
             <CommentLikeBtnWrapper>
               {userType === 'student' && (
-                <CommentLikeBtn>좋아요</CommentLikeBtn>
+                <CommentLikeBtn
+                  onClick={() =>
+                    like({
+                      accessToken,
+                      type: 'comment',
+                      board_pk,
+                      comment_pk,
+                    })
+                  }
+                >
+                  좋아요
+                </CommentLikeBtn>
               )}
               &ensp;
               <span>{date}</span>

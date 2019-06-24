@@ -108,6 +108,8 @@ const BoardCommentComponent: React.FC<
           handleOption={handleOption}
           userType={props.userType}
           write={item.write}
+          accessToken={props.accessToken}
+          like={props.like}
           edited={item.edited}
         />
       );

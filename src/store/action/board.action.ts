@@ -281,6 +281,8 @@ export class Like implements Action {
 
 export class LikeSuccess implements Action {
   public readonly type = LIKE_SUCCESS;
+
+  public constructor(public payload: LikeParams) {}
 }
 
 export class LikeFailure implements Action {

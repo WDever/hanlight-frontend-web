@@ -116,6 +116,7 @@ export const boardReducer = (
             draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
         action.payload.comment.write = true;
+        action.payload.comment.likeCount = 0;
         board.comment.unshift(action.payload.comment);
         board.commentCount += 1;
         break;
@@ -151,6 +152,7 @@ export const boardReducer = (
           draft.board[
             draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
+        board.commentCount -= 1;
         board.comment = board.comment.filter(
           item => item.pk !== action.payload.comment_pk,
         );
@@ -174,7 +176,30 @@ export const boardReducer = (
         draft.likeStatus = 'pending';
         break;
       case 'LIKE_SUCCESS':
-        draft.likeStatus = 'success';
+        {
+          draft.likeStatus = 'success';
+          const board = draft.board.find(
+            board => board.pk === action.payload.board_pk,
+          );
+
+          if (action.payload.type === 'board' && board) {
+            if (board.isLiked) {
+              board.likeCount -= 1;
+            } else {
+              board.likeCount += 1;
+            }
+          } else if (action.payload.type === 'comment' && board) {
+            const comment = board.comment.find(
+              comment => comment.pk === action.payload.comment_pk,
+            );
+
+            if (comment && comment.isLiked) {
+              comment.likeCount -= 1;
+            } else if (comment && !comment.isLiked) {
+              comment.likeCount += 1;
+            }
+          }
+        }
         break;
       case 'LIKE_FAILURE':
         draft.likeStatus = 'failure';
