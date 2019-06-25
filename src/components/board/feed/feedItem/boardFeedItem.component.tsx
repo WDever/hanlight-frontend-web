@@ -309,15 +309,17 @@ const LikeBtnWrapper = styled.div`
   border-bottom: 1px solid #d1d1d1;
 `;
 
-const LikeBtn = styled.button`
+const LikeBtn = styled.button<{ clicked: boolean }>`
   width: 35%;
   height: 100%;
   margin-left: 1.5rem;
   border: 0;
   font-size: 0.875rem;
-  color: #1d2129;
+  font-weight: ${props => (props.clicked ? 'bold' : 'normal')};
+  color: ${props => (props.clicked ? '#4470ff' : '#1d2129')};
   background-color: #ffffff;
   padding: 0;
+  cursor: pointer;
 `;
 
 type status = 'none' | 'pending' | 'success' | 'failure';
@@ -605,7 +607,10 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <LikeWrapper>
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
-              <span>좋아요 {board.likeCount}명</span>
+              <span>
+                {board.isLiked && '회원님, '}좋아요{' '}
+                {board.isLiked ? board.likeCount - 1 : board.likeCount}명
+              </span>
             </LikeView>
             <LikeBtnWrapper>
               <LikeBtn
@@ -615,8 +620,14 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                     like({ board_pk: board.pk, accessToken, type: 'board' });
                   }
                 }}
+                clicked={board.isLiked}
               >
-                게시글 좋아요
+                <img
+                  src={LikeIcon}
+                  style={{ marginRight: '0.375rem' }}
+                  alt=""
+                />
+                좋아요
               </LikeBtn>
             </LikeBtnWrapper>
           </LikeWrapper>
