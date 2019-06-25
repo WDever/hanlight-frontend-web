@@ -158,7 +158,13 @@ const CommentTooltip = styled.div`
   justify-content: center;
 `;
 
-const CommentLikeBtnWrapper = styled.div`
+const CommentLikeBtn = styled.span`
+  font-size: 0.75rem;
+  margin-left: 0.4rem;
+  cursor: pointer;
+`;
+
+const CommentLikeBtnWrapper = styled.div<{ isLiked: boolean }>`
   height: 1.125rem;
   display: flex;
   align-items: center;
@@ -167,11 +173,10 @@ const CommentLikeBtnWrapper = styled.div`
     font-size: 0.75rem;
     color: #616770;
   }
-`;
 
-const CommentLikeBtn = styled.span`
-  margin-left: 0.5rem;
-  cursor: pointer;
+  ${CommentLikeBtn} {
+    color: ${props => (props.isLiked ? '#0055ff' : '#616770')};
+  }
 `;
 
 const CommentLikeWrapper = styled.div`
@@ -196,6 +201,7 @@ interface CommentItemProps {
   write: boolean;
   accessToken: string;
   edited: boolean;
+  isLiked: boolean;
   like(params: LikeParams): void;
   handleOption({
     action,
@@ -223,6 +229,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   edited,
   like,
   accessToken,
+  isLiked,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
@@ -270,7 +277,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 </CommentLikeWrapper>
               </CommentBody>
             )}
-            <CommentLikeBtnWrapper>
+            <CommentLikeBtnWrapper isLiked={isLiked}>
               {userType === 'student' && (
                 <CommentLikeBtn
                   onClick={() =>

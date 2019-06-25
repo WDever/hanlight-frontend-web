@@ -121,6 +121,7 @@ const BoardCommentComponent: React.FC<
           accessToken={props.accessToken}
           like={props.like}
           edited={item.edited}
+          isLiked={item.isLiked}
         />
       );
     });
