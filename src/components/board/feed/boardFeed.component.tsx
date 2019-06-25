@@ -49,21 +49,13 @@ export default class BoardFeedComponent extends React.Component<
     if (prevProps !== this.props) {
       if (prevProps.deleteBoardStatus === 'pending') {
         if (this.props.deleteBoardStatus === 'success') {
-          alert('성공');
+          alert('성공적으로 삭제되었습니다.');
         } else if (this.props.deleteBoardStatus === 'failure') {
-          alert('실패');
-        }
-      } else if (prevProps.patchBoardStatus === 'pending') {
-        if (this.props.patchBoardStatus === 'success') {
-          alert('성공');
-        } else if (this.props.patchBoardStatus === 'failure') {
-          alert('실패');
+          alert('게시물을 삭제하는데 실패했습니다.');
         }
       } else if (prevProps.likeStatus === 'pending') {
-        if (this.props.likeStatus === 'success') {
-          alert('성공');
-        } else if (this.props.likeStatus === 'failure') {
-          alert('실패');
+        if (this.props.likeStatus === 'failure') {
+          alert('요청에 실패했습니다.');
         }
       } else if (prevProps.reportStatus === 'pending') {
         if (this.props.reportStatus === 'success') {
@@ -84,10 +76,12 @@ export default class BoardFeedComponent extends React.Component<
     action,
     board_pk,
     comment_pk,
+    content,
   }: {
     action: 'delete' | 'edit' | 'report';
     board_pk: number;
     comment_pk?: number;
+    content?: string;
   }) => {
     if (action === 'delete' && this.props.deleteBoardStatus !== 'pending') {
       window.confirm('정말로 삭제하시겠습니까?') &&
@@ -96,7 +90,13 @@ export default class BoardFeedComponent extends React.Component<
           accessToken: this.props.accessToken,
         });
     } else if (action === 'edit') {
-      //
+      if (content) {
+        this.props.patchBoard({
+          accessToken: this.props.accessToken,
+          board_pk,
+          content,
+        });
+      }
     } else if (action === 'report' && this.props.reportStatus !== 'pending') {
       window.confirm('정말로 신고하시겠습니까?') &&
         this.props.report({
@@ -122,11 +122,21 @@ export default class BoardFeedComponent extends React.Component<
     });
 
   public render() {
-    const { board, getBoardCommentStatus, like, likeStatus } = this.props;
+    const {
+      accessToken,
+      board,
+      getBoardCommentStatus,
+      like,
+      likeStatus,
+      deemBoard,
+      deemBoardStatus,
+      patchBoardStatus,
+    } = this.props;
     const { handleOption, getBoardComments } = this;
 
     return board.map((val, i) => (
       <FeedItemComponent
+        accessToken={accessToken}
         key={i}
         board={val}
         handleOption={handleOption}
@@ -134,6 +144,9 @@ export default class BoardFeedComponent extends React.Component<
         getBoardCommentStatus={getBoardCommentStatus}
         like={like}
         likeStatus={likeStatus}
+        deemBoard={deemBoard}
+        deemBoardStatus={deemBoardStatus}
+        patchBoardStatus={patchBoardStatus}
       />
     ));
   }

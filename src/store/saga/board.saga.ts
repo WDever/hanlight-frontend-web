@@ -110,7 +110,7 @@ const patchBoardApi = (data: PatchBoardParams) =>
       '/api/board',
       {
         content: data.content,
-        files: data.board_pk,
+        board_pk: data.board_pk,
       },
       {
         headers: {
@@ -124,7 +124,7 @@ function* patchBoardApiSaga(action: PatchBoard) {
     try {
       const response = yield call(patchBoardApi, action.payload);
       console.log(response);
-      yield put({ type: PATCH_BOARD_SUCCESS, payload: action.payload });
+      yield put({ type: PATCH_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
       yield put({ type: PATCH_BOARD_FAILURE });
     }

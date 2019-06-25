@@ -14,7 +14,6 @@ const FormTitle = styled.div`
   border-bottom: solid 1px #d1d1d1;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
-  padding-left: 1.5rem;
 `;
 
 const FormContentWrapper = styled.div`
@@ -181,18 +180,18 @@ export default class BoardFormComponent extends React.Component<
     files: [],
     textAreaHeight: 52.8,
   };
-  public content: HTMLTextAreaElement | null = null;
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
-    if (
-      prevProps.postBoardStatus === 'pending' &&
-      this.props.postBoardStatus === 'success'
-    ) {
-      this.setState({
-        content: '',
-        files: [],
-        textAreaHeight: 52.8,
-      });
+    if (prevProps.postBoardStatus === 'pending') {
+      if (this.props.postBoardStatus === 'success') {
+        this.setState({
+          content: '',
+          files: [],
+          textAreaHeight: 52.8,
+        });
+      } else if (this.props.postBoardStatus === 'failure') {
+        alert('게시물이 정상적으로 업로드되지 않았습니다.');
+      }
     }
   }
 
@@ -283,12 +282,13 @@ export default class BoardFormComponent extends React.Component<
 
     return (
       <>
-        <FormTitle>대나무숲에 글 올리기</FormTitle>
+        <FormTitle>
+          <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
+        </FormTitle>
         <FormContentWrapper>
           <FormBody>
             <img src={DefaultProfileImage} alt="" />
             <FormBodyText
-              ref={ref => (this.content = ref)}
               onChange={this.handleContent}
               value={this.state.content}
               height={this.state.textAreaHeight}
@@ -305,7 +305,7 @@ export default class BoardFormComponent extends React.Component<
                 type="file"
                 style={{ display: 'none' }}
                 onChange={this.handleFile}
-                accept="image/*"
+                accept="image/jpeg,image/x-png"
               />
             </div>
             <FormSubmitButton onClick={this.handleSubmit}>

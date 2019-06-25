@@ -28,6 +28,7 @@ export interface BoardFeedProps {
   likeStatus: status;
   reportStatus: status;
   getBoardCommentStatus: status;
+  deemBoardStatus: boolean;
 }
 
 export interface BoardFeedMethod {
@@ -38,6 +39,7 @@ export interface BoardFeedMethod {
   report: (payload: ReportParams) => void;
   getBoardComment: (payload: GetBoardCommentParams) => void;
   resetBoard: () => void;
+  deemBoard: (payload: boolean) => void;
 }
 
 const mapStateToProps = ({ user, board }: AppState) => ({
@@ -50,6 +52,7 @@ const mapStateToProps = ({ user, board }: AppState) => ({
   likeStatus: board.likeStatus,
   reportStatus: board.reportStatus,
   getBoardCommentStatus: board.getBoardCommentStatus,
+  deemBoardStatus: board.deemBoardStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
@@ -60,6 +63,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   report: bindActionCreators(boardActions.report, dispatch),
   getBoardComment: bindActionCreators(boardActions.getBoardCommemnt, dispatch),
   resetBoard: bindActionCreators(boardActions.resetBoard, dispatch),
+  deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
 });
 
 const BoardFeedContainer = connect(

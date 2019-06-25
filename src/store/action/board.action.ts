@@ -43,7 +43,6 @@ export const LIKE_SUCCESS = 'LIKE_SUCCESS';
 export const LIKE_FAILURE = 'LIKE_FAILURE';
 
 export const DEEM_BOARD = 'DEEM_BOARD';
-export const UNDEEM_BOARD = 'UNDEEM_BOARD';
 
 export const RESET_BOARD = 'RESET_BOARD';
 
@@ -279,6 +278,8 @@ export class Like implements Action {
 
 export class LikeSuccess implements Action {
   public readonly type = LIKE_SUCCESS;
+
+  public constructor(public payload: LikeParams) {}
 }
 
 export class LikeFailure implements Action {
@@ -287,10 +288,8 @@ export class LikeFailure implements Action {
 
 export class DeemBoard implements Action {
   public readonly type = DEEM_BOARD;
-}
 
-export class UndeemBoard implements Action {
-  public readonly type = UNDEEM_BOARD;
+  public constructor(public payload: boolean) {}
 }
 
 export class ResetBoard implements Action {
@@ -352,5 +351,4 @@ export type boardReducerActions =
   | LikeSuccess
   | LikeFailure
   | DeemBoard
-  | UndeemBoard
   | ResetBoard;

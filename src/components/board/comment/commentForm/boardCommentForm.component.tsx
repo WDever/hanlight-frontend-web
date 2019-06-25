@@ -75,7 +75,15 @@ const CommentFormComponent: React.FC<
     <Wrapper>
       <ProfileImg src={DefaultProfileImage} alt="Profile" />
       <Form>
-        <input value={content} onChange={setContent} type="text" />
+        <input
+          value={content}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            if (e.currentTarget.value.length <= 300) {
+              setContent(e);
+            }
+          }}
+          type="text"
+        />
         <button onClick={PostComment}>입력</button>
       </Form>
     </Wrapper>

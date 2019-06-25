@@ -1,8 +1,8 @@
 import * as React from 'react';
 
+import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
-import BoardPage from 'pages/board';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
 import MealPage from 'pages/meal/detail-meal';
@@ -54,7 +54,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
-        <Route exact={true} path="/board" component={BoardPage} />
+        <Route exact={true} path="/board" component={BoardContainer} />
         <Redirect to="/" />
       </Switch>
     </>
