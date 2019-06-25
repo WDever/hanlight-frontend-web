@@ -69,7 +69,6 @@ const CommentName = styled.span`
   font-size: 0.81rem;
   margin-right: 0.3rem;
   color: #443898;
-  /* margin: 0.5rem; */
 `;
 
 const CommentContent = styled.span`
@@ -82,7 +81,6 @@ const CommentContent = styled.span`
 `;
 
 const Form = styled.form`
-  /* width: calc(100% - 3rem); */
   width: 95%;
   min-height: 2rem;
   display: flex;
@@ -100,8 +98,6 @@ const Form = styled.form`
     text-indent: 0.5rem;
     font-size: 0.81rem;
     color: #1d2129;
-    /* margin: 0 0.75rem 0 0; */
-    /* border: 0; */
     padding: 0;
   }
 
@@ -144,18 +140,6 @@ const Option = styled.div`
 const OptionImg = styled.img`
   margin-left: 0.68rem;
   margin-right: 0.7rem;
-`;
-
-const CommentTooltip = styled.div`
-  /* min-height: 2rem; */
-  padding: 0.5rem;
-
-  border-radius: 8px;
-  background-color: #f2f3f5;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 const CommentLikeBtn = styled.span`
