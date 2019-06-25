@@ -77,7 +77,7 @@ function* idRecoverySaga(action: IdRecovery) {
   if (action.type) {
     try {
       const response = yield call(idRecoveryApi, action.payload);
-      console.log(response)
+      console.log(response);
       yield put({ type: ID_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
       console.log(e.response);
@@ -208,7 +208,7 @@ function* getUserApiSaga(action: GetUser) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: GET_USER_FAILURE, paylaod: e.response });
-      yield put({ type: SET_ERROR, payload: e.response.data });
+      yield put({ type: SET_ERROR, payload: e.response });
     }
   }
 }

@@ -38,4 +38,5 @@ export interface BoardModel {
   deleteBoardCommentStatus: status;
   reportStatus: status;
   likeStatus: status;
+  deemBoardStatus: boolean;
 }
