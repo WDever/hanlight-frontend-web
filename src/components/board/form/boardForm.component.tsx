@@ -16,6 +16,19 @@ const FormTitle = styled.div`
   padding-bottom: 0.5rem;
 `;
 
+const FormWrapper = styled.div`
+  width: 100%;
+  border-radius: 4px;
+  border: solid 1px #d1d1d1;
+  background-color: #ffffff;
+  font-family: 'Spoqa Han Sans';
+  margin-bottom: 1rem;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const FormContentWrapper = styled.div`
   width: 97%;
 
@@ -282,37 +295,43 @@ export default class BoardFormComponent extends React.Component<
 
     return (
       <>
-        <FormTitle>
-          <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
-        </FormTitle>
-        <FormContentWrapper>
-          <FormBody>
-            <img src={DefaultProfileImage} alt="" />
-            <FormBodyText
-              onChange={this.handleContent}
-              value={this.state.content}
-              height={this.state.textAreaHeight}
-              placeholder="대나무숲에 글을 남겨보세요!"
-            />
-          </FormBody>
-          <FormImageWrapper>{FormPreviews}</FormImageWrapper>
-          <FormButtonWrapper>
-            <div>
-              <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
-              <input
-                id="files"
-                multiple={true}
-                type="file"
-                style={{ display: 'none' }}
-                onChange={this.handleFile}
-                accept="image/jpeg,image/x-png"
-              />
-            </div>
-            <FormSubmitButton onClick={this.handleSubmit}>
-              작성
-            </FormSubmitButton>
-          </FormButtonWrapper>
-        </FormContentWrapper>
+        {this.props.userType === 'student' ? (
+          <FormWrapper>
+            <FormTitle>
+              <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
+            </FormTitle>
+            <FormContentWrapper>
+              <FormBody>
+                <img src={DefaultProfileImage} alt="" />
+                <FormBodyText
+                  onChange={this.handleContent}
+                  value={this.state.content}
+                  height={this.state.textAreaHeight}
+                  placeholder="대나무숲에 글을 남겨보세요!"
+                />
+              </FormBody>
+              <FormImageWrapper>{FormPreviews}</FormImageWrapper>
+              <FormButtonWrapper>
+                <div>
+                  <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
+                  <input
+                    id="files"
+                    multiple={true}
+                    type="file"
+                    style={{ display: 'none' }}
+                    onChange={this.handleFile}
+                    accept="image/jpeg,image/x-png"
+                  />
+                </div>
+                <FormSubmitButton onClick={this.handleSubmit}>
+                  작성
+                </FormSubmitButton>
+              </FormButtonWrapper>
+            </FormContentWrapper>
+          </FormWrapper>
+        ) : (
+          <></>
+        )}
       </>
     );
   }

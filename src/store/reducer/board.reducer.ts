@@ -142,9 +142,17 @@ export const boardReducer = (
       case 'PATCH_BOARD_COMMENT':
         draft.patchBoardCommentStatus = 'pending';
         break;
-      case 'PATCH_BOARD_COMMENT_SUCCESS':
+      case 'PATCH_BOARD_COMMENT_SUCCESS': {
         draft.patchBoardCommentStatus = 'success';
+        const board = draft.board.find(
+          board => board.pk === action.meta.board_pk,
+        );
+        const comment =
+          board &&
+          board.comment.find(comment => comment.pk === action.payload.pk);
+        Object.assign(comment, action.payload);
         break;
+      }
       case 'PATCH_BOARD_COMMENT_FAILURE':
         draft.patchBoardCommentStatus = 'failure';
         break;
@@ -152,9 +160,18 @@ export const boardReducer = (
       case 'DELETE_BOARD_COMMENT':
         draft.deleteBoardCommentStatus = 'pending';
         break;
-      case 'DELETE_BOARD_COMMENT_SUCCESS':
+      case 'DELETE_BOARD_COMMENT_SUCCESS': {
         draft.deleteBoardCommentStatus = 'success';
+        const board =
+          draft.board[
+            draft.board.findIndex(board => board.pk === action.payload.board_pk)
+          ];
+        board.commentCount -= 1;
+        board.comment = board.comment.filter(
+          item => item.pk !== action.payload.comment_pk,
+        );
         break;
+      }
       case 'DELETE_BOARD_COMMENT_FAILURE':
         draft.deleteBoardCommentStatus = 'failure';
         break;
@@ -191,10 +208,13 @@ export const boardReducer = (
               comment => comment.pk === action.payload.comment_pk,
             );
 
-            if (comment && comment.isLiked) {
-              comment.likeCount -= 1;
-            } else if (comment && !comment.isLiked) {
-              comment.likeCount += 1;
+            if (comment) {
+              if (comment.isLiked) {
+                comment.likeCount -= 1;
+              } else {
+                comment.likeCount += 1;
+              }
+              comment.isLiked = !comment.isLiked;
             }
           }
         }

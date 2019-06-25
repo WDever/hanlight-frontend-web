@@ -13,6 +13,7 @@ import {
 export interface BoardFormProps {
   accessToken: string;
   postBoardStatus: 'none' | 'pending' | 'success' | 'failure';
+  userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
 }
 
 export interface BoardFormMethod {
@@ -23,17 +24,20 @@ const BoardFormContainer: React.FC<BoardFormProps & BoardFormMethod> = ({
   accessToken,
   postBoardStatus,
   postBoard,
+  userType,
 }) => (
   <BoardFormComponent
     accessToken={accessToken}
     postBoardStatus={postBoardStatus}
     postBoard={postBoard}
+    userType={userType}
   />
 );
 
 const mapStateToProps = ({ user, board }: AppState) => ({
   accessToken: user.accessToken,
   postBoardStatus: board.postBoardStatus,
+  userType: user.data.type,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({

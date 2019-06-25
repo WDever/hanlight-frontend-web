@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { BoardMethod, BoardProps } from 'container/board/board.container';
 import BoardFeedContainer from 'container/board/feed';
-import BoardFormPage from 'pages/board/form';
+import BoardFormContainer from 'container/board/form';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
 
@@ -63,7 +63,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         {deemBoardStatus && <Deem />}
         <BoardWrapper>
           <Feeds>
-            <BoardFormPage />
+            <BoardFormContainer />
             <BoardFeedContainer />
           </Feeds>
           {window.innerWidth > 1024 && <BoardRolePage />}

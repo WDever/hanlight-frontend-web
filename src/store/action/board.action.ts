@@ -235,7 +235,10 @@ export class PatchBoardComment implements Action {
 export class PatchBoardCommentSuccess implements Action {
   public readonly type = PATCH_BOARD_COMMENT_SUCCESS;
 
-  public constructor(public payload: Comment) {}
+  public constructor(
+    public payload: Comment,
+    public meta: { board_pk: number },
+  ) {}
 }
 
 export class PatchBoardCommentFailure implements Action {
@@ -250,6 +253,8 @@ export class DeleteBoardComment implements Action {
 
 export class DeleteBoardCommentSuccess implements Action {
   public readonly type = DELETE_BOARD_COMMENT_SUCCESS;
+
+  public constructor(public payload: DeleteBoardCommentParams) {}
 }
 
 export class DeleteBoardCommentFailure implements Action {
