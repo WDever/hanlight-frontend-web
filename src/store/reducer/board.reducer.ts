@@ -15,6 +15,7 @@ const initialState: BoardModel = {
   deleteBoardCommentStatus: 'none',
   reportStatus: 'none',
   likeStatus: 'none',
+  deemBoardStatus: false,
 };
 
 export const boardReducer = (
@@ -64,9 +65,18 @@ export const boardReducer = (
       case 'PATCH_BOARD':
         draft.patchBoardStatus = 'pending';
         break;
-      case 'PATCH_BOARD_SUCCESS':
+      case 'PATCH_BOARD_SUCCESS': {
         draft.patchBoardStatus = 'success';
+        const boardIndex = draft.board.findIndex(
+          board => board.pk === action.payload.pk,
+        );
+        draft.board[boardIndex] = {
+          ...draft.board[boardIndex],
+          ...action.payload,
+          edited: true,
+        };
         break;
+      }
       case 'PATCH_BOARD_FAILURE':
         draft.patchBoardStatus = 'failure';
         break;
@@ -115,9 +125,13 @@ export const boardReducer = (
           draft.board[
             draft.board.findIndex(board => board.pk === action.payload.board_pk)
           ];
-        action.payload.comment.write = true;
-        action.payload.comment.likeCount = 0;
-        board.comment.unshift(action.payload.comment);
+        board.comment.unshift({
+          ...action.payload.comment,
+          edited: false,
+          likeCount: 0,
+          isLiked: false,
+          write: true,
+        });
         board.commentCount += 1;
         break;
       }
@@ -185,21 +199,21 @@ export const boardReducer = (
           if (action.payload.type === 'board' && board) {
             if (board.isLiked) {
               board.likeCount -= 1;
-              board.isLiked = !board.isLiked;
             } else {
               board.likeCount += 1;
-              board.isLiked = !board.isLiked;
             }
+            board.isLiked = !board.isLiked;
           } else if (action.payload.type === 'comment' && board) {
             const comment = board.comment.find(
               comment => comment.pk === action.payload.comment_pk,
             );
 
-            if (comment && comment.isLiked) {
-              comment.likeCount -= 1;
-              comment.isLiked = !comment.isLiked;
-            } else if (comment && !comment.isLiked) {
-              comment.likeCount += 1;
+            if (comment) {
+              if (comment.isLiked) {
+                comment.likeCount -= 1;
+              } else {
+                comment.likeCount += 1;
+              }
               comment.isLiked = !comment.isLiked;
             }
           }
@@ -209,6 +223,9 @@ export const boardReducer = (
         draft.likeStatus = 'failure';
         break;
 
+      case 'DEEM_BOARD':
+        draft.deemBoardStatus = action.payload;
+        break;
       case 'RESET_BOARD':
         return initialState;
 

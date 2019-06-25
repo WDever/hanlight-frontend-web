@@ -42,6 +42,8 @@ export const LIKE = 'LIKE';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
 export const LIKE_FAILURE = 'LIKE_FAILURE';
 
+export const DEEM_BOARD = 'DEEM_BOARD';
+
 export const RESET_BOARD = 'RESET_BOARD';
 
 export interface GetBoardParams {
@@ -289,6 +291,12 @@ export class LikeFailure implements Action {
   public readonly type = LIKE_FAILURE;
 }
 
+export class DeemBoard implements Action {
+  public readonly type = DEEM_BOARD;
+
+  public constructor(public payload: boolean) {}
+}
+
 export class ResetBoard implements Action {
   public readonly type = RESET_BOARD;
 }
@@ -312,6 +320,7 @@ export const boardActions = {
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
   like: createStandardAction(LIKE)<LikeParams>(),
+  deemBoard: createStandardAction(DEEM_BOARD)(),
   resetBoard: createStandardAction(RESET_BOARD)(),
 };
 
@@ -346,4 +355,5 @@ export type boardReducerActions =
   | Like
   | LikeSuccess
   | LikeFailure
+  | DeemBoard
   | ResetBoard;
