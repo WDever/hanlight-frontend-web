@@ -185,8 +185,10 @@ export const boardReducer = (
           if (action.payload.type === 'board' && board) {
             if (board.isLiked) {
               board.likeCount -= 1;
+              board.isLiked = !board.isLiked;
             } else {
               board.likeCount += 1;
+              board.isLiked = !board.isLiked;
             }
           } else if (action.payload.type === 'comment' && board) {
             const comment = board.comment.find(
@@ -195,8 +197,10 @@ export const boardReducer = (
 
             if (comment && comment.isLiked) {
               comment.likeCount -= 1;
+              comment.isLiked = !comment.isLiked;
             } else if (comment && !comment.isLiked) {
               comment.likeCount += 1;
+              comment.isLiked = !comment.isLiked;
             }
           }
         }
