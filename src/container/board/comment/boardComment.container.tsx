@@ -14,8 +14,10 @@ import {
 
 export interface BoardCommentProps {
   accessToken: string;
+  userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+  reportStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface BoardCommentMethod {
@@ -28,16 +30,21 @@ export interface BoardCommentOwnProps {
   comments: Comment[];
   commentCount: number;
   board_pk: number;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
+  page: number;
   like(data: LikeParams): void;
+  GetBoardComments(e: React.MouseEvent<HTMLButtonElement>): void;
 }
 
 const mapStateToProps = (
-  { user, board }: AppState,
+  { board, user }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
   accessToken: user.accessToken,
+  userType: user.data.type,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
+  reportStatus: board.reportStatus,
   ...ownProps,
 });
 
