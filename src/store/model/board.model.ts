@@ -36,7 +36,13 @@ export interface BoardModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
-  reportStatus: status;
+  reportStatus:
+    | 'none'
+    | 'pending'
+    | 'success-board'
+    | 'success-comment'
+    | 'failure-board'
+    | 'failure-comment';
   likeStatus: status;
   deemBoardStatus: boolean;
 }

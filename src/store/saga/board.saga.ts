@@ -48,8 +48,10 @@ import {
   PostBoardParams,
   REPORT,
   Report,
-  REPORT_FAILURE,
-  REPORT_SUCCESS,
+  REPORT_BOARD_FAILURE,
+  REPORT_BOARD_SUCCESS,
+  REPORT_COMMENT_FAILURE,
+  REPORT_COMMENT_SUCCESS,
   ReportParams,
 } from '../action';
 
@@ -325,9 +327,17 @@ function* reportApiSaga(action: Report) {
     try {
       const response = yield call(reportApi, action.payload);
       console.log(response);
-      yield put({ type: REPORT_SUCCESS, payload: action.payload });
+      if (action.payload.type === 'board') {
+        yield put({ type: REPORT_BOARD_SUCCESS, payload: action.payload });
+      } else {
+        yield put({ type: REPORT_COMMENT_SUCCESS, payload: action.payload });
+      }
     } catch (e) {
-      yield put({ type: REPORT_FAILURE });
+      if (action.payload.type === 'board') {
+        yield put({ type: REPORT_BOARD_FAILURE });
+      } else {
+        yield put({ type: REPORT_COMMENT_FAILURE });
+      }
     }
   }
 }

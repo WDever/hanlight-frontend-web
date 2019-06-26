@@ -1,7 +1,7 @@
-import * as React from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import App from 'components/App';
+import * as React from 'react';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { configureStore } from 'store';
 
 const store = configureStore;
