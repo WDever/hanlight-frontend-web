@@ -278,16 +278,19 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
 
 const likeApi = (data: LikeParams) =>
   instance
-    .get('/api/board/like', {
-      headers: {
-        access_token: data.accessToken,
-      },
-      params: {
+    .post(
+      '/api/board/like',
+      {
         type: data.type,
         board_pk: data.board_pk,
         comment_pk: data.comment_pk,
       },
-    })
+      {
+        headers: {
+          access_token: data.accessToken,
+        },
+      },
+    )
     .then(res => res.data);
 function* likeApiSaga(action: Like) {
   if (action.type) {
