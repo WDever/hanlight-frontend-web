@@ -85,19 +85,15 @@ const BoardCommentComponent: React.FC<
     } = props;
     if (board_pk === SelectedBoardPk.current) {
       if (deleteBoardCommentStatus === 'success') {
-        alert('성공');
+        alert('성공적으로 삭제되었습니다.');
       } else if (deleteBoardCommentStatus === 'failure') {
-        alert('실패');
-      }
-      if (likeStatus === 'success') {
-        alert('성공');
+        alert('삭제에 실패했습니다.');
       } else if (likeStatus === 'failure') {
-        alert('실패');
-      }
-      if (reportStatus === 'success') {
-        alert('성공');
-      } else if (reportStatus === 'failure') {
-        alert('실패');
+        alert('요청에 실패했습니다.');
+      } else if (reportStatus === 'success-comment') {
+        alert('성공적으로 신고되었습니다.');
+      } else if (reportStatus === 'failure-comment') {
+        alert('요청에 실패했습니다.');
       }
     }
   }, [props.deleteBoardCommentStatus, props.likeStatus, props.reportStatus]);
@@ -120,6 +116,7 @@ const BoardCommentComponent: React.FC<
           write={item.write}
           accessToken={props.accessToken}
           like={props.like}
+          likeStatus={props.likeStatus}
           edited={item.edited}
           isLiked={item.isLiked}
           deemBoard={props.deemBoard}

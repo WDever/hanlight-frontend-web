@@ -8,6 +8,8 @@ import {
 import { useInput } from 'lib/hooks';
 import styled from 'styled-components';
 
+const { useRef } = React;
+
 const Template = styled.div`
   width: 100%;
   /* height: ${window.innerHeight}px; */
@@ -130,6 +132,7 @@ const BoardReportComponent: React.FC<
   setReportToggle,
 }) => {
   const [content, setContent] = useInput('');
+  const wasPending = useRef(false);
 
   const submitReport = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -158,10 +161,22 @@ const BoardReportComponent: React.FC<
   };
 
   React.useEffect(() => {
-    if (reportStatus === 'success') {
+    if (reportStatus === 'pending') {
+      wasPending.current = true;
+    }
+    if (
+      (reportStatus === 'success-board' ||
+        reportStatus === 'success-comment') &&
+      wasPending.current
+    ) {
       close();
       alert('신고 성공');
-    } else if (reportStatus === 'failure') {
+      wasPending.current = false;
+    } else if (
+      (reportStatus === 'failure-board' ||
+        reportStatus === 'failure-comment') &&
+      wasPending.current
+    ) {
       alert('신고 실패');
     }
   }, [reportStatus]);

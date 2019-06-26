@@ -58,10 +58,10 @@ export default class BoardFeedComponent extends React.Component<
           alert('요청에 실패했습니다.');
         }
       } else if (prevProps.reportStatus === 'pending') {
-        if (this.props.reportStatus === 'success') {
-          alert('성공');
-        } else if (this.props.reportStatus === 'failure') {
-          alert('실패');
+        if (this.props.reportStatus === 'success-board') {
+          alert('성공적으로 신고되었습니다.');
+        } else if (this.props.reportStatus === 'failure-board') {
+          alert('요청에 실패했습니다.');
         }
       }
     } else if (prevState.page !== this.state.page) {

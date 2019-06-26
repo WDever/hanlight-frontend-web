@@ -35,8 +35,10 @@ export const DELETE_BOARD_COMMENT_SUCCESS = 'DELETE_BOARD_COMMENT_SUCCESS';
 export const DELETE_BOARD_COMMENT_FAILURE = 'DELETE_BOARD_COMMENT_FAILURE';
 
 export const REPORT = 'REPORT';
-export const REPORT_SUCCESS = 'REPORT_SUCCESS';
-export const REPORT_FAILURE = 'REPORT_FAILURE';
+export const REPORT_BOARD_SUCCESS = 'REPORT_BOARD_SUCCESS';
+export const REPORT_COMMENT_SUCCESS = 'REPORT_COMMENT_SUCCESS';
+export const REPORT_BOARD_FAILURE = 'REPORT_BOARD_FAILURE';
+export const REPORT_COMMENT_FAILURE = 'REPORT_COMMENT_FAILURE';
 export const REPORT_ACTIVE = 'REPORT_ACTIVE';
 
 export const LIKE = 'LIKE';
@@ -268,12 +270,20 @@ export class Report implements Action {
   public constructor(public payload: ReportParams) {}
 }
 
-export class ReportSuccess implements Action {
-  public readonly type = REPORT_SUCCESS;
+export class ReportBoardSuccess implements Action {
+  public readonly type = REPORT_BOARD_SUCCESS;
 }
 
-export class ReportFailure implements Action {
-  public readonly type = REPORT_FAILURE;
+export class ReportBoardFailure implements Action {
+  public readonly type = REPORT_BOARD_FAILURE;
+}
+
+export class ReportCommentSuccess implements Action {
+  public readonly type = REPORT_COMMENT_SUCCESS;
+}
+
+export class ReportCommentFailure implements Action {
+  public readonly type = REPORT_COMMENT_FAILURE;
 }
 
 export class ReportActive implements Action {
@@ -358,8 +368,10 @@ export type boardReducerActions =
   | DeleteBoardCommentSuccess
   | DeleteBoardCommentFailure
   | Report
-  | ReportSuccess
-  | ReportFailure
+  | ReportBoardSuccess
+  | ReportBoardFailure
+  | ReportCommentSuccess
+  | ReportCommentFailure
   | ReportActive
   | Like
   | LikeSuccess

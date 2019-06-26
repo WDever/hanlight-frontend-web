@@ -10,7 +10,13 @@ import {
 } from 'store';
 
 export interface BoardReportProps {
-  reportStatus: 'none' | 'pending' | 'success' | 'failure';
+  reportStatus:
+    | 'none'
+    | 'pending'
+    | 'success-comment'
+    | 'success-board'
+    | 'failure-board'
+    | 'failure-comment';
   reportData: ReportData;
   accessToken: string;
 }

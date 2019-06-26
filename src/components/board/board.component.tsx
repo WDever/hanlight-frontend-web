@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  margin-bottom: 3.75rem;
 
   display: flex;
   justify-content: center;

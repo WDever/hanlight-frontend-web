@@ -18,7 +18,13 @@ export interface BoardCommentProps {
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
-  reportStatus: 'none' | 'pending' | 'success' | 'failure';
+  reportStatus:
+    | 'none'
+    | 'pending'
+    | 'success-board'
+    | 'success-comment'
+    | 'failure-board'
+    | 'failure-comment';
 }
 
 export interface BoardCommentMethod {

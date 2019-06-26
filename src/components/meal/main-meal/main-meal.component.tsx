@@ -1,6 +1,4 @@
-import { MainMealProps, MainMealMethod } from 'container/meal/main-meal';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { ErrorImg } from 'lib/styles';
+import { MainMealMethod, MainMealProps } from 'container/meal/main-meal';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -102,7 +100,6 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
   return (
     <ListWrapper>
       {MealList}
-      {getMealWeekStatus === 'failure' && <ErrorImg src={ErrorPng} alt="Error" />}
       <MoreBox>
         <span>급식 정보가</span>
         <span>더 궁금하신가요?</span>

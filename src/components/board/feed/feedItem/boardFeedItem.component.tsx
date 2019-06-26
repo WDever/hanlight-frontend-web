@@ -115,6 +115,7 @@ const FeedImgContainer = styled.div`
   height: 31rem;
   max-height: 40.25rem;
   position: relative;
+  margin-bottom: 0.875rem;
 `;
 
 const FeedImgWrapper = styled.div<{ rows: number }>`
@@ -205,16 +206,6 @@ const FeedImgToggleArrow = styled.img`
   cursor: pointer;
 `;
 
-const CommentAllBtn = styled.button`
-  width: 100%;
-  height: 2.625rem;
-  font-size: 0.875rem;
-  border: solid 1px #b4b4b4;
-  background-color: #ffffff;
-  padding: 0;
-  cursor: pointer;
-`;
-
 const EditWrapper = styled.div`
   width: 100%;
   position: absolute;
@@ -260,6 +251,7 @@ const EditContentText = styled.textarea<{ height: number }>`
   box-sizing: border-box;
   color: #1d2129;
   border: 0;
+  outline: none;
 `;
 
 const EditImgWrapper = styled.div`
@@ -310,15 +302,17 @@ const LikeBtnWrapper = styled.div`
   border-bottom: 1px solid #d1d1d1;
 `;
 
-const LikeBtn = styled.button`
+const LikeBtn = styled.button<{ clicked: boolean }>`
   width: 35%;
   height: 100%;
   margin-left: 1.5rem;
   border: 0;
   font-size: 0.875rem;
-  color: #1d2129;
+  font-weight: ${props => (props.clicked ? 'bold' : 'normal')};
+  color: ${props => (props.clicked ? '#4470ff' : '#1d2129')};
   background-color: #ffffff;
   padding: 0;
+  cursor: pointer;
 `;
 
 type status = 'none' | 'pending' | 'success' | 'failure';
@@ -353,7 +347,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   like,
   likeStatus,
   deemBoard,
-  deemBoardStatus,
   patchBoardStatus,
   reportActive,
 }) => {
@@ -617,7 +610,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <LikeWrapper>
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
-              <span>좋아요 {board.likeCount}명</span>
+              <span>{board.likeCount}명</span>
             </LikeView>
             <LikeBtnWrapper>
               <LikeBtn
@@ -627,8 +620,14 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                     like({ board_pk: board.pk, accessToken, type: 'board' });
                   }
                 }}
+                clicked={board.isLiked}
               >
-                게시글 좋아요
+                <img
+                  src={LikeIcon}
+                  style={{ marginRight: '0.375rem' }}
+                  alt=""
+                />
+                좋아요
               </LikeBtn>
             </LikeBtnWrapper>
           </LikeWrapper>
