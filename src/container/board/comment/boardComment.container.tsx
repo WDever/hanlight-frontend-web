@@ -9,6 +9,7 @@ import {
   DeleteBoardCommentParams,
   LikeParams,
   PatchBoardCommentParams,
+  ReportData,
   ReportParams,
 } from 'store';
 
@@ -24,6 +25,7 @@ export interface BoardCommentMethod {
   deleteBoardCommemnt(data: DeleteBoardCommentParams): void;
   patchBoardCommemnt(data: PatchBoardCommentParams): void;
   report(data: ReportParams): void;
+  reportActive(data: ReportData): void;
 }
 
 export interface BoardCommentOwnProps {
@@ -32,8 +34,10 @@ export interface BoardCommentOwnProps {
   board_pk: number;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
   page: number;
+  deemBoard: (payload: boolean) => void;
   like(data: LikeParams): void;
   GetBoardComments(e: React.MouseEvent<HTMLButtonElement>): void;
+  setReportToggle(value: React.SetStateAction<boolean>): void;
 }
 
 const mapStateToProps = (
@@ -58,6 +62,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
     dispatch,
   ),
   report: bindActionCreators(boardActions.report, dispatch),
+  reportActive: bindActionCreators(boardActions.reportActive, dispatch),
 });
 
 const BoardCommentContainer = connect(

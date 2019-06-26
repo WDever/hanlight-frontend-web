@@ -122,6 +122,9 @@ const BoardCommentComponent: React.FC<
           like={props.like}
           edited={item.edited}
           isLiked={item.isLiked}
+          deemBoard={props.deemBoard}
+          setReportToggle={props.setReportToggle}
+          reportActive={props.reportActive}
         />
       );
     });

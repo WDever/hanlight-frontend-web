@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BoardContainer from 'container/board/board.container';
+import BoardContainer from 'container/board';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
 import MainCalendarPage from 'pages/calendar/main-calendar';

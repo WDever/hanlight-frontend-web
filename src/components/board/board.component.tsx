@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { BoardMethod, BoardProps } from 'container/board/board.container';
+import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
 import BoardRolePage from 'pages/board/role';
@@ -51,6 +51,7 @@ const Feeds = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
+  position: relative;
 `;
 
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({

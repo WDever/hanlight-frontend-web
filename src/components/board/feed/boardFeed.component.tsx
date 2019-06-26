@@ -131,6 +131,7 @@ export default class BoardFeedComponent extends React.Component<
       deemBoard,
       deemBoardStatus,
       patchBoardStatus,
+      reportActive,
     } = this.props;
     const { handleOption, getBoardComments } = this;
 
@@ -147,6 +148,7 @@ export default class BoardFeedComponent extends React.Component<
         deemBoard={deemBoard}
         deemBoardStatus={deemBoardStatus}
         patchBoardStatus={patchBoardStatus}
+        reportActive={reportActive}
       />
     ));
   }

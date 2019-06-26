@@ -13,6 +13,7 @@ import {
   GetBoardParams,
   LikeParams,
   PatchBoardParams,
+  ReportData,
   ReportParams,
 } from 'store';
 
@@ -40,6 +41,7 @@ export interface BoardFeedMethod {
   getBoardComment: (payload: GetBoardCommentParams) => void;
   resetBoard: () => void;
   deemBoard: (payload: boolean) => void;
+  reportActive(data: ReportData): void;
 }
 
 const mapStateToProps = ({ user, board }: AppState) => ({
@@ -64,6 +66,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   getBoardComment: bindActionCreators(boardActions.getBoardCommemnt, dispatch),
   resetBoard: bindActionCreators(boardActions.resetBoard, dispatch),
   deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
+  reportActive: bindActionCreators(boardActions.reportActive, dispatch),
 });
 
 const BoardFeedContainer = connect(
