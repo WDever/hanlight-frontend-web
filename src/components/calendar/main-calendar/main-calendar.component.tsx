@@ -1,6 +1,7 @@
-import { MainCalendarMethod, MainCalendarProps } from 'container/calendar/main-calendar';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { ErrorImg } from 'lib/styles';
+import {
+  MainCalendarMethod,
+  MainCalendarProps,
+} from 'container/calendar/main-calendar';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -17,7 +18,9 @@ const CalendarWrapper = styled.div`
   z-index: 1;
 `;
 
-const MainCalendarComponent: React.FC<MainCalendarProps & MainCalendarMethod> = ({
+const MainCalendarComponent: React.FC<
+  MainCalendarProps & MainCalendarMethod
+> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,
@@ -49,14 +52,7 @@ const MainCalendarComponent: React.FC<MainCalendarProps & MainCalendarMethod> = 
     getCalendarRecent(accessToken);
   }, [accessToken]);
 
-  return (
-    <CalendarWrapper>
-      {CalendarList}
-      {getCalendarRecentStatus === 'failure' && (
-        <ErrorImg src={ErrorPng} alt="Error" />
-      )}
-    </CalendarWrapper>
-  );
+  return <CalendarWrapper>{CalendarList}</CalendarWrapper>;
 };
 
 export default MainCalendarComponent;

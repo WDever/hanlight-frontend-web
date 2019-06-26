@@ -4,8 +4,6 @@ import {
   MainNoticeMethod,
   MainNoticeProps,
 } from 'container/notice/main-notice';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { ErrorImg } from 'lib/styles';
 import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import moment from 'moment';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -123,9 +121,6 @@ class MainNoticeComponent extends React.Component<
             <InnerWrapper length={NoticeList.length}>
               {this.props.getNoticeListStatus === 'success' && NoticeList}
             </InnerWrapper>
-            {this.props.getNoticeListStatus === 'failure' && (
-              <ErrorImg src={ErrorPng} alt="Error" />
-            )}
           </NoticeListWrapper>
         </Separator>
         <BtnWrapper>

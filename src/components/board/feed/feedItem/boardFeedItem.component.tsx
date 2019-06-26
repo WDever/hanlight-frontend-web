@@ -114,6 +114,7 @@ const FeedImgContainer = styled.div`
   height: 31rem;
   max-height: 40.25rem;
   position: relative;
+  margin-bottom: 0.875rem;
 `;
 
 const FeedImgWrapper = styled.div<{ rows: number }>`
@@ -201,16 +202,6 @@ const FeedXButton = styled.span<{
 const FeedImgToggleArrow = styled.img`
   position: absolute;
   top: 45%;
-  cursor: pointer;
-`;
-
-const CommentAllBtn = styled.button`
-  width: 100%;
-  height: 2.625rem;
-  font-size: 0.875rem;
-  border: solid 1px #b4b4b4;
-  background-color: #ffffff;
-  padding: 0;
   cursor: pointer;
 `;
 
@@ -353,7 +344,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   like,
   likeStatus,
   deemBoard,
-  deemBoardStatus,
   patchBoardStatus,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
@@ -607,10 +597,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <LikeWrapper>
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
-              <span>
-                {board.isLiked && '회원님, '}좋아요{' '}
-                {board.isLiked ? board.likeCount - 1 : board.likeCount}명
-              </span>
+              <span>{board.likeCount}명</span>
             </LikeView>
             <LikeBtnWrapper>
               <LikeBtn

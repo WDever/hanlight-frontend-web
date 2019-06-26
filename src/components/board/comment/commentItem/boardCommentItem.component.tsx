@@ -75,6 +75,8 @@ const CommentContent = styled.span`
   font-size: 0.81rem;
   color: #1d2129;
   padding: 0.375rem;
+  display: block;
+  word-break: break-all;
 
   border-radius: 8px;
   background-color: #f2f3f5;
@@ -122,7 +124,7 @@ const OptionWrapper = styled.div`
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
   right: 0;
-  top: 25px;
+  top: 50%;
   cursor: pointer;
   z-index: 1;
 `;
@@ -179,6 +181,7 @@ interface CommentItemProps {
   content: string;
   date: string;
   likeCount: number;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
   board_pk: number;
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
@@ -212,6 +215,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   write,
   edited,
   like,
+  likeStatus,
   accessToken,
   isLiked,
 }) => {
@@ -242,7 +246,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 <input
                   type="text"
                   value={editedContent}
-                  onChange={setEditedContent}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.currentTarget.value.length <= 300) {
+                      setEditedContent(e);
+                    }
+                  }}
                 />
               </Form>
             ) : (
@@ -264,14 +272,16 @@ const CommentItem: React.FC<CommentItemProps> = ({
             <CommentLikeBtnWrapper isLiked={isLiked}>
               {userType === 'student' && (
                 <CommentLikeBtn
-                  onClick={() =>
-                    like({
-                      accessToken,
-                      type: 'comment',
-                      board_pk,
-                      comment_pk,
-                    })
-                  }
+                  onClick={() => {
+                    if (likeStatus !== 'pending') {
+                      like({
+                        type: 'comment',
+                        accessToken,
+                        board_pk,
+                        comment_pk,
+                      });
+                    }
+                  }}
                 >
                   좋아요
                 </CommentLikeBtn>

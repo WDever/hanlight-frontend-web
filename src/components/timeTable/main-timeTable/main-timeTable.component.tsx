@@ -1,6 +1,7 @@
-import { MainTimeTableMethod, MainTimeTableProps } from 'container/timeTable/main-timeTable';
-import ErrorPng from 'lib/png/hugo-fatal-error.png';
-import { ErrorImg } from 'lib/styles';
+import {
+  MainTimeTableMethod,
+  MainTimeTableProps,
+} from 'container/timeTable/main-timeTable';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -112,12 +113,7 @@ export default class MainTimeTableComponent extends React.Component<
           <Colored>{days[today]}요일</Colored> 시간표
         </Title>
 
-        <TimeTableWrapper>
-          {TimeTableList}
-          {getTimetableStatus === 'failure' && (
-            <ErrorImg src={ErrorPng} alt="Error" />
-          )}
-        </TimeTableWrapper>
+        <TimeTableWrapper>{TimeTableList}</TimeTableWrapper>
       </>
     );
   }

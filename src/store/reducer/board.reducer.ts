@@ -150,7 +150,10 @@ export const boardReducer = (
         const comment =
           board &&
           board.comment.find(comment => comment.pk === action.payload.pk);
-        Object.assign(comment, action.payload);
+        Object.assign(comment, {
+          ...action.payload,
+          edited: true,
+        });
         break;
       }
       case 'PATCH_BOARD_COMMENT_FAILURE':
@@ -179,11 +182,17 @@ export const boardReducer = (
       case 'REPORT':
         draft.reportStatus = 'pending';
         break;
-      case 'REPORT_SUCCESS':
-        draft.reportStatus = 'success';
+      case 'REPORT_BOARD_SUCCESS':
+        draft.reportStatus = 'success-board';
         break;
-      case 'REPORT_FAILURE':
-        draft.reportStatus = 'failure';
+      case 'REPORT_BOARD_FAILURE':
+        draft.reportStatus = 'failure-board';
+        break;
+      case 'REPORT_COMMENT_SUCCESS':
+        draft.reportStatus = 'success-comment';
+        break;
+      case 'REPORT_COMMENT_FAILURE':
+        draft.reportStatus = 'failure-comment';
         break;
 
       case 'LIKE':

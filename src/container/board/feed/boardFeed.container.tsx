@@ -26,7 +26,13 @@ export interface BoardFeedProps {
   patchBoardStatus: status;
   deleteBoardStatus: status;
   likeStatus: status;
-  reportStatus: status;
+  reportStatus:
+    | 'none'
+    | 'pending'
+    | 'success-board'
+    | 'success-comment'
+    | 'failure-board'
+    | 'failure-comment';
   getBoardCommentStatus: status;
   deemBoardStatus: boolean;
 }
