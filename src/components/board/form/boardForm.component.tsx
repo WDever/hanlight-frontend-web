@@ -57,6 +57,7 @@ const FormBodyText = styled.textarea<{ height: number }>`
   resize: none;
   border: 0;
   box-sizing: border-box;
+  outline: none;
 `;
 
 const FormImageWrapper = styled.div`
@@ -101,9 +102,15 @@ const FormImageEmptyPlus = styled.span`
   }
 `;
 
-const FormPreviewWrapper = styled.div`
+const FormPreviewWrapper = styled.div<{ src: string }>`
   width: 5rem;
   height: 5rem;
+  background-image: url(${props => props.src});
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: rgba(0, 0, 0, 0.7);
+  background-blend-mode: multiply;
   position: relative;
   margin-right: 1rem;
 `;
@@ -118,9 +125,10 @@ const FormPreviewButton = styled.span`
   &::after {
     position: absolute;
     content: ' ';
-    height: 17px;
-    width: 1px;
+    height: 16px;
+    width: 2px;
     left: 7px;
+    border-radius: 1rem;
     background-color: #ffffff;
   }
   &::before {
@@ -129,12 +137,6 @@ const FormPreviewButton = styled.span`
   &::after {
     transform: rotate(-45deg);
   }
-`;
-
-const FormPreview = styled.img`
-  width: 5rem;
-  height: 5rem;
-  object-fit: cover;
 `;
 
 const FormButtonWrapper = styled.div`
@@ -279,9 +281,8 @@ export default class BoardFormComponent extends React.Component<
 
         if (file) {
           return (
-            <FormPreviewWrapper key={i}>
+            <FormPreviewWrapper src={file.preview} key={i}>
               <FormPreviewButton onClick={() => this.removeImage(i)} />
-              <FormPreview src={file.preview} />
             </FormPreviewWrapper>
           );
         } else {

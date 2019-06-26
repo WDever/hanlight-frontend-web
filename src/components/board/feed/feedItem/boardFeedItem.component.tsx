@@ -250,6 +250,7 @@ const EditContentText = styled.textarea<{ height: number }>`
   box-sizing: border-box;
   color: #1d2129;
   border: 0;
+  outline: none;
 `;
 
 const EditImgWrapper = styled.div`
