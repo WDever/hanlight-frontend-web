@@ -6,7 +6,7 @@ interface BoxProps {
 }
 
 interface TextProps {
-  contents?: boolean;
+  content?: boolean;
 }
 
 interface ItemProps extends BoxProps {
@@ -41,9 +41,9 @@ const ContentsWrapper = styled.div`
 
 const Texts = styled.span<TextProps>`
   font-family: 'Spoqa Han Sans';
-  font-weight: ${props => (props.contents ? 'bold' : 'normal')};
-  color: ${props => (props.contents ? '#4470ff' : 'black')};
-  font-size: ${props => (props.contents ? '2rem' : '1rem')};
+  font-weight: ${props => (props.content ? 'bold' : 'normal')};
+  color: ${props => (props.content ? '#4470ff' : 'black')};
+  font-size: ${props => (props.content ? '2rem' : '1rem')};
 `;
 
 const Colored = styled.span`
@@ -72,7 +72,9 @@ const CalendarItem: React.FC<ItemProps> = ({
           {year}년<Colored> {month}</Colored>월<Colored> {day}</Colored>일
         </Texts>
       </DateWrapper>
-      <Texts contents={true}>{contents}</Texts>
+      {contents.split(',').map(content => (
+        <Texts content={true}>{content}</Texts>
+      ))}
     </ContentsWrapper>
   </Box>
 );
