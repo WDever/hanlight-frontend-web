@@ -69,7 +69,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
-        <Route exact={true} path="/error" component={ErrorComponents} />
         <Redirect to="/error" />
       </Switch>
     </>
