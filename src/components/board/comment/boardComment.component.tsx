@@ -6,10 +6,11 @@ import {
   BoardCommentProps,
 } from 'container/board/comment';
 import CommentFormContainer from 'container/board/comment/commentForm';
+import { usePrevious } from 'lib/hooks';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled from 'styled-components';
-import CommentsItem from './commentItem';
+import CommentItem from './commentItem';
 
 const FeedCommentWrapper = styled.div`
   width: 100%;
@@ -34,6 +35,8 @@ const BoardCommentComponent: React.FC<
   BoardCommentProps & BoardCommentMethod & BoardCommentOwnProps
 > = props => {
   const SelectedBoardPk = React.useRef<number>(0);
+  const prevProps = usePrevious(props);
+
   const handleOption = ({
     action,
     board_pk,
@@ -59,34 +62,31 @@ const BoardCommentComponent: React.FC<
           board_pk,
           comment_pk,
         });
+      SelectedBoardPk.current = board_pk;
     } else if (action === 'edit' && patchBoardCommentStatus && content) {
       patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
       SelectedBoardPk.current = board_pk;
     }
-    SelectedBoardPk.current = board_pk;
   };
 
   React.useEffect(() => {
-    const { board_pk, deleteBoardCommentStatus, likeStatus, patchBoardCommentStatus } = props;
-    if (board_pk === SelectedBoardPk.current) {
-      if (deleteBoardCommentStatus === 'success') {
+    const { board_pk, deleteBoardCommentStatus } = props;
+    if (prevProps && board_pk === SelectedBoardPk.current) {
+      if (
+        prevProps.deleteBoardCommentStatus === 'pending' &&
+        deleteBoardCommentStatus === 'success'
+      ) {
         alert('성공적으로 삭제되었습니다.');
-      } else if (deleteBoardCommentStatus === 'failure') {
-        alert('삭제에 실패했습니다.');
-      } else if (likeStatus === 'failure') {
-        alert('요청에 실패했습니다.');
-      } else if (patchBoardCommentStatus === 'failure') {
-        alert('수정에 실패했습니다.')
       }
     }
-  }, [props.deleteBoardCommentStatus, props.likeStatus, props.patchBoardCommentStatus]);
+  }, [props.deleteBoardCommentStatus]);
 
-  const CommentsList = props.comments
+  const CommentList = props.comment
     .slice()
     .reverse()
     .map((item, i) => {
       return (
-        <CommentsItem
+        <CommentItem
           key={i}
           user_name={item.user_name}
           content={item.content}
@@ -125,7 +125,7 @@ const BoardCommentComponent: React.FC<
             이전 댓글 보기
           </CommentAllBtn>
         )}
-      {CommentsList}
+      {CommentList}
     </FeedCommentWrapper>
   );
 };

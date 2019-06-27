@@ -124,12 +124,7 @@ export default class BoardReportComponent extends React.Component<
 
     if (prevProps.reportStatus === 'pending' && reportStatus === 'success') {
       this.close();
-      alert('신고 성공');
-    } else if (
-      prevProps.reportStatus === 'pending' &&
-      reportStatus === 'failure'
-    ) {
-      alert('신고 실패');
+      alert('정상적으로 신고되었습니다.');
     }
   }
 

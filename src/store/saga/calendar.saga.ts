@@ -1,7 +1,6 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
-  calendarFailureActions,
   GET_CALENDAR,
   GET_CALENDAR_FAILURE,
   GET_CALENDAR_RECENT,
@@ -11,8 +10,8 @@ import {
   GetCalendar,
   GetCalendarParams,
   GetCalendarRecent,
+  SET_ERROR,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const getCalendarApi = (data: GetCalendarParams) =>
   instance
@@ -43,8 +42,11 @@ function* getCalendarApiSaga(action: GetCalendar) {
       console.log(response);
       yield put({ type: GET_CALENDAR_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_CALENDAR_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_CALENDAR_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -56,8 +58,11 @@ function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
       console.log(response);
       yield put({ type: GET_CALENDAR_RECENT_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_CALENDAR_RECENT_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_CALENDAR_RECENT_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -65,6 +70,4 @@ function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
 export function* calendarSaga() {
   yield takeEvery(GET_CALENDAR, getCalendarApiSaga);
   yield takeEvery(GET_CALENDAR_RECENT, getCalendarRecentApiSaga);
-
-  yield takeEvery(calendarFailureActions, ErrorSaga);
 }

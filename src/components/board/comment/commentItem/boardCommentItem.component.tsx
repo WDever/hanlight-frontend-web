@@ -17,7 +17,6 @@ const CommentWrapper = styled.div`
   margin-top: 0.3125rem;
 `;
 
-// const DotImg = styled.img`width: '20px', height: '30px', cursor: 'pointer'
 const OptionBtn = styled.img`
   display: none;
   width: 1.25rem;

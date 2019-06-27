@@ -12,9 +12,8 @@ import {
   GetMeal,
   GetMealOrder,
   GetMealParams,
-  mealFailureActions,
+  SET_ERROR,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const getMealApi = (data: GetMealParams) =>
   instance
@@ -41,11 +40,14 @@ function* getMealApiSaga(action: GetMeal) {
       }
     } catch (e) {
       console.log(e.response);
-      if (action.payload.sort === 'week') {
-        yield put({ type: GET_MEAL_WEEK_FAILURE, payload: e.response });
-      } else {
-        yield put({ type: GET_MEAL_MONTH_FAILURE, payload: e.response });
-      }
+      yield put({
+        type: SET_ERROR,
+        name:
+          action.payload.sort === 'week'
+            ? GET_MEAL_WEEK_FAILURE
+            : GET_MEAL_MONTH_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -66,8 +68,11 @@ function* getMealOrderApiSaga(action: GetMealOrder) {
       console.log(response);
       yield put({ type: GET_MEAL_ORDER_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.reponse);
-      yield put({ type: GET_MEAL_ORDER_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_MEAL_ORDER_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -75,6 +80,4 @@ function* getMealOrderApiSaga(action: GetMealOrder) {
 export function* mealSaga() {
   yield takeEvery(GET_MEAL, getMealApiSaga);
   yield takeEvery(GET_MEAL_ORDER, getMealOrderApiSaga);
-
-  yield takeEvery(mealFailureActions, ErrorSaga);
 }

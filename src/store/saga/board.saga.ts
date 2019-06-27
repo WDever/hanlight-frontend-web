@@ -1,7 +1,6 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
-  boardFailureActions,
   DELETE_BOARD,
   DELETE_BOARD_COMMENT,
   DELETE_BOARD_COMMENT_FAILURE,
@@ -52,6 +51,7 @@ import {
   REPORT_FAILURE,
   REPORT_SUCCESS,
   ReportParams,
+  SET_ERROR,
 } from '../action';
 import { ErrorSaga } from './error.saga';
 
@@ -74,7 +74,11 @@ function* getBoardApiSaga(action: GetBoard) {
       yield put({ type: GET_BOARD_SUCCESS, payload: response.data });
     } catch (e) {
       console.log(e.response);
-      yield put({ type: GET_BOARD_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        payload: e.response,
+        name: GET_BOARD_FAILURE,
+      });
     }
   }
 }
@@ -101,7 +105,7 @@ function* postBoardApiSaga(action: PostBoard) {
       console.log(response);
       yield put({ type: POST_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
-      yield put({ type: POST_BOARD_FAILURE });
+      yield put({ type: POST_BOARD_FAILURE, payload: e.response });
     }
   }
 }
@@ -128,7 +132,11 @@ function* patchBoardApiSaga(action: PatchBoard) {
       console.log(response);
       yield put({ type: PATCH_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
-      yield put({ type: PATCH_BOARD_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_BOARD_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -151,7 +159,11 @@ function* deleteBoardApiSaga(action: DeleteBoard) {
       console.log(response);
       yield put({ type: DELETE_BOARD_SUCCESS, payload: action.payload });
     } catch (e) {
-      yield put({ type: DELETE_BOARD_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: DELETE_BOARD_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -178,8 +190,14 @@ function* getBoardCommentApiSaga(action: GetBoardComment) {
         payload: { ...response.data, board_pk: action.payload.board_pk },
       });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_BOARD_COMMENT_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: yield put({
+          type: SET_ERROR,
+          name: GET_BOARD_COMMENT_FAILURE,
+          payload: e.response.data,
+        }),
+      });
     }
   }
 }
@@ -212,7 +230,11 @@ function* postBoardCommentApiSaga(action: PostBoardComment) {
         },
       });
     } catch (e) {
-      yield put({ type: POST_BOARD_COMMENT_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: POST_BOARD_COMMENT_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -246,7 +268,11 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
         },
       });
     } catch (e) {
-      yield put({ type: PATCH_BOARD_COMMENT_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_BOARD_COMMENT_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -273,7 +299,11 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
         payload: action.payload,
       });
     } catch (e) {
-      yield put({ type: DELETE_BOARD_COMMENT_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: DELETE_BOARD_COMMENT_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -301,7 +331,11 @@ function* likeApiSaga(action: Like) {
       console.log(response);
       yield put({ type: LIKE_SUCCESS, payload: action.payload });
     } catch (e) {
-      yield put({ type: LIKE_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: LIKE_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -332,7 +366,11 @@ function* reportApiSaga(action: Report) {
       console.log(response);
       yield put({ type: REPORT_SUCCESS, payload: action.payload });
     } catch (e) {
-      yield put({ type: REPORT_FAILURE });
+      yield put({
+        type: SET_ERROR,
+        name: REPORT_FAILURE,
+        payload: e.response.data,
+      });
     }
   }
 }
@@ -348,6 +386,4 @@ export function* boardSaga() {
   yield takeEvery(DELETE_BOARD_COMMENT, deleteBoardCommentApiSaga);
   yield takeEvery(LIKE, likeApiSaga);
   yield takeEvery(REPORT, reportApiSaga);
-
-  yield takeEvery(boardFailureActions, ErrorSaga);
 }

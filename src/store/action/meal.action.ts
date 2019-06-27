@@ -73,12 +73,6 @@ export class GetMealOrderFailure implements Action {
   public readonly type = GET_MEAL_ORDER_FAILURE;
 }
 
-export const mealFailureActions = [
-  GET_MEAL_WEEK_FAILURE,
-  GET_MEAL_MONTH_FAILURE,
-  GET_MEAL_ORDER_FAILURE,
-];
-
 export const mealActions = {
   getMeal: createStandardAction(GET_MEAL)<GetMealParams>(),
   getMealOrder: createStandardAction(GET_MEAL_ORDER)<string>(),
