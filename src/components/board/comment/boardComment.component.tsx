@@ -50,8 +50,6 @@ const BoardCommentComponent: React.FC<
       deleteBoardCommentStatus,
       patchBoardCommemnt,
       patchBoardCommentStatus,
-      report,
-      reportStatus,
       accessToken,
     } = props;
     if (action === 'delete' && deleteBoardCommentStatus !== 'pending') {
@@ -64,43 +62,24 @@ const BoardCommentComponent: React.FC<
     } else if (action === 'edit' && patchBoardCommentStatus && content) {
       patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
       SelectedBoardPk.current = board_pk;
-    } else if (action === 'report' && reportStatus !== 'pending') {
-      window.confirm('정말로 신고하시겠습니까?') &&
-        report({
-          accessToken,
-          type: 'board',
-          board_pk,
-          comment_pk,
-        });
     }
     SelectedBoardPk.current = board_pk;
   };
 
   React.useEffect(() => {
-    const {
-      board_pk,
-      deleteBoardCommentStatus,
-      likeStatus,
-      reportStatus,
-    } = props;
+    const { board_pk, deleteBoardCommentStatus, likeStatus, patchBoardCommentStatus } = props;
     if (board_pk === SelectedBoardPk.current) {
       if (deleteBoardCommentStatus === 'success') {
-        alert('성공');
+        alert('성공적으로 삭제되었습니다.');
       } else if (deleteBoardCommentStatus === 'failure') {
-        alert('실패');
-      }
-      if (likeStatus === 'success') {
-        alert('성공');
+        alert('삭제에 실패했습니다.');
       } else if (likeStatus === 'failure') {
-        alert('실패');
-      }
-      if (reportStatus === 'success') {
-        alert('성공');
-      } else if (reportStatus === 'failure') {
-        alert('실패');
+        alert('요청에 실패했습니다.');
+      } else if (patchBoardCommentStatus === 'failure') {
+        alert('수정에 실패했습니다.')
       }
     }
-  }, [props.deleteBoardCommentStatus, props.likeStatus, props.reportStatus]);
+  }, [props.deleteBoardCommentStatus, props.likeStatus, props.patchBoardCommentStatus]);
 
   const CommentsList = props.comments
     .slice()
@@ -120,8 +99,12 @@ const BoardCommentComponent: React.FC<
           write={item.write}
           accessToken={props.accessToken}
           like={props.like}
+          likeStatus={props.likeStatus}
           edited={item.edited}
           isLiked={item.isLiked}
+          deemBoard={props.deemBoard}
+          setReportToggle={props.setReportToggle}
+          activeReport={props.activeReport}
         />
       );
     });

@@ -1,6 +1,7 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
+  calendarFailureActions,
   GET_CALENDAR,
   GET_CALENDAR_FAILURE,
   GET_CALENDAR_RECENT,
@@ -11,6 +12,7 @@ import {
   GetCalendarParams,
   GetCalendarRecent,
 } from '../action';
+import { ErrorSaga } from './error.saga';
 
 const getCalendarApi = (data: GetCalendarParams) =>
   instance
@@ -63,4 +65,6 @@ function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
 export function* calendarSaga() {
   yield takeEvery(GET_CALENDAR, getCalendarApiSaga);
   yield takeEvery(GET_CALENDAR_RECENT, getCalendarRecentApiSaga);
+
+  yield takeEvery(calendarFailureActions, ErrorSaga);
 }

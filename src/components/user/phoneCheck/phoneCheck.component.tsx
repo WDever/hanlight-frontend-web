@@ -204,6 +204,10 @@ class PhoneCheckComponent extends React.Component<
     }
   }
 
+  public componentWillUnmount() {
+    this.props.resetError();
+  }
+
   public signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
   public tpCheck = (str: string) => new RegExp(tpRegExp).test(str);
   public idCheck = (str: string) => new RegExp(idRegExp).test(str);

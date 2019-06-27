@@ -5,9 +5,11 @@ import { rootSaga } from './saga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const composeEnhancers = typeof window === 'object' && ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any)
-  ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-  : compose;
+const composeEnhancers =
+  typeof window === 'object' &&
+  ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ as any)
+    ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
+    : compose;
 const enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 const configureStore = createStore(reducer, enhancer);
 sagaMiddleware.run(rootSaga);

@@ -16,6 +16,11 @@ const initialState: BoardModel = {
   reportStatus: 'none',
   likeStatus: 'none',
   deemBoardStatus: false,
+  activeReportData: {
+    active: false,
+    type: 'none',
+    board_pk: 0,
+  },
 };
 
 export const boardReducer = (
@@ -150,7 +155,10 @@ export const boardReducer = (
         const comment =
           board &&
           board.comment.find(comment => comment.pk === action.payload.pk);
-        Object.assign(comment, action.payload);
+        Object.assign(comment, {
+          ...action.payload,
+          edited: true,
+        });
         break;
       }
       case 'PATCH_BOARD_COMMENT_FAILURE':
@@ -184,6 +192,9 @@ export const boardReducer = (
         break;
       case 'REPORT_FAILURE':
         draft.reportStatus = 'failure';
+        break;
+      case 'ACTIVE_REPORT':
+        draft.activeReportData = action.payload;
         break;
 
       case 'LIKE':

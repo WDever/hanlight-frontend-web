@@ -6,6 +6,7 @@ import { RouteComponentProps } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  ErrorResponse,
   GetNoticePostParams,
   Notice,
   noticeActions,
@@ -44,7 +45,7 @@ const NoticePostContainer: React.FC<
   />
 );
 
-const mapStateToProps = ({ user, notice }: AppState) => ({
+const mapStateToProps = ({ user, notice, error }: AppState) => ({
   accessToken: user.accessToken,
   noticeList: notice.noticeList,
   getNoticePostStatus: notice.getNoticePostStatus,

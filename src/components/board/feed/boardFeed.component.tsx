@@ -57,12 +57,6 @@ export default class BoardFeedComponent extends React.Component<
         if (this.props.likeStatus === 'failure') {
           alert('요청에 실패했습니다.');
         }
-      } else if (prevProps.reportStatus === 'pending') {
-        if (this.props.reportStatus === 'success') {
-          alert('성공');
-        } else if (this.props.reportStatus === 'failure') {
-          alert('실패');
-        }
       }
     } else if (prevState.page !== this.state.page) {
       this.props.getBoard({
@@ -97,14 +91,6 @@ export default class BoardFeedComponent extends React.Component<
           content,
         });
       }
-    } else if (action === 'report' && this.props.reportStatus !== 'pending') {
-      window.confirm('정말로 신고하시겠습니까?') &&
-        this.props.report({
-          accessToken: this.props.accessToken,
-          type: 'board',
-          board_pk,
-          comment_pk,
-        });
     }
   };
 
@@ -131,6 +117,7 @@ export default class BoardFeedComponent extends React.Component<
       deemBoard,
       deemBoardStatus,
       patchBoardStatus,
+      activeReport,
     } = this.props;
     const { handleOption, getBoardComments } = this;
 
@@ -147,6 +134,7 @@ export default class BoardFeedComponent extends React.Component<
         deemBoard={deemBoard}
         deemBoardStatus={deemBoardStatus}
         patchBoardStatus={patchBoardStatus}
+        activeReport={activeReport}
       />
     ));
   }

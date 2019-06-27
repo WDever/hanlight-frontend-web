@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import { Notice } from 'store';
+import { ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_NOTICE_LIST = 'GET_NOTICE_LIST';
@@ -66,6 +67,11 @@ export class GetNoticePostSuccess implements Action {
 export class GetNoticePostFailure implements Action {
   public readonly type = GET_NOTICE_POST_FAILURE;
 }
+
+export const noticeFailureActions = [
+  GET_NOTICE_LIST_FAILURE,
+  GET_NOTICE_POST_FAILURE,
+];
 
 export const noticeActions = {
   getNoticeList: createStandardAction(GET_NOTICE_LIST)<GetNoticeListParams>(),

@@ -7,7 +7,7 @@ import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
-import { LikeParams } from 'store';
+import { ActiveReportData, LikeParams } from 'store';
 import styled from 'styled-components';
 
 const CommentWrapper = styled.div`
@@ -75,6 +75,8 @@ const CommentContent = styled.span`
   font-size: 0.81rem;
   color: #1d2129;
   padding: 0.375rem;
+  display: block;
+  word-break: break-all;
 
   border-radius: 8px;
   background-color: #f2f3f5;
@@ -122,7 +124,7 @@ const OptionWrapper = styled.div`
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
   position: absolute;
   right: 0;
-  top: 25px;
+  top: 50%;
   cursor: pointer;
   z-index: 1;
 `;
@@ -179,6 +181,7 @@ interface CommentItemProps {
   content: string;
   date: string;
   likeCount: number;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
   board_pk: number;
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
@@ -186,6 +189,7 @@ interface CommentItemProps {
   accessToken: string;
   edited: boolean;
   isLiked: boolean;
+  deemBoard: (payload: boolean) => void;
   like(params: LikeParams): void;
   handleOption({
     action,
@@ -198,6 +202,8 @@ interface CommentItemProps {
     comment_pk: number;
     content?: string;
   }): void;
+  setReportToggle(value: React.SetStateAction<boolean>): void;
+  activeReport(data: ActiveReportData): void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -212,8 +218,12 @@ const CommentItem: React.FC<CommentItemProps> = ({
   write,
   edited,
   like,
+  likeStatus,
   accessToken,
   isLiked,
+  deemBoard,
+  setReportToggle,
+  activeReport,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
@@ -242,7 +252,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
                 <input
                   type="text"
                   value={editedContent}
-                  onChange={setEditedContent}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (e.currentTarget.value.length <= 300) {
+                      setEditedContent(e);
+                    }
+                  }}
                 />
               </Form>
             ) : (
@@ -264,14 +278,16 @@ const CommentItem: React.FC<CommentItemProps> = ({
             <CommentLikeBtnWrapper isLiked={isLiked}>
               {userType === 'student' && (
                 <CommentLikeBtn
-                  onClick={() =>
-                    like({
-                      accessToken,
-                      type: 'comment',
-                      board_pk,
-                      comment_pk,
-                    })
-                  }
+                  onClick={() => {
+                    if (likeStatus !== 'pending') {
+                      like({
+                        type: 'comment',
+                        accessToken,
+                        board_pk,
+                        comment_pk,
+                      });
+                    }
+                  }}
                 >
                   좋아요
                 </CommentLikeBtn>
@@ -324,12 +340,15 @@ const CommentItem: React.FC<CommentItemProps> = ({
             )}
             <Option
               onClick={() => {
-                handleOption({
-                  action: 'report',
+                setOptionToggle(false);
+                setReportToggle(true);
+                activeReport({
+                  active: true,
+                  type: 'board',
                   board_pk,
                   comment_pk,
                 });
-                setOptionToggle(false);
+                deemBoard(true);
               }}
             >
               <OptionImg src={ReportIcon} alt="" />

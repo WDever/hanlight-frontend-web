@@ -20,7 +20,7 @@ export interface NoticeListProps {
 }
 
 export interface NoticeListMethod {
-  getNoticeList: ({ accessToken, page, title }: GetNoticeListParams) => void;
+  getNoticeList: (payload: GetNoticeListParams) => void;
 }
 
 const NoticeListContainer: React.FC<

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { BoardMethod, BoardProps } from 'container/board/board.container';
+import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
 import BoardRolePage from 'pages/board/role';
@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  margin-bottom: 3.75rem;
 
   display: flex;
   justify-content: center;
@@ -51,12 +52,18 @@ const Feeds = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
+  position: relative;
 `;
 
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   deemBoard,
   deemBoardStatus,
+  resetError,
 }) => {
+  React.useEffect(() => {
+    return () => resetError();
+  }, []);
+
   return (
     <Templete>
       <Wrapper>

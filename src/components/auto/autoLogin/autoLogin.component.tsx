@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AutoLoginMethod, AutoLoginProps } from 'container/autoLogin';
+import { AutoLoginMethod, AutoLoginProps } from 'container/auto/autoLogin';
 import { RouteComponentProps } from 'react-router-dom';
 
 class AutoLoginComponent extends React.Component<
@@ -11,7 +11,7 @@ class AutoLoginComponent extends React.Component<
 
     if (accessToken) {
       this.props.getUser(accessToken);
-    } else {
+    } else if (this.props.location.pathname !== '/error') {
       this.props.history.push('/user/login');
     }
   }
