@@ -105,7 +105,11 @@ function* postBoardApiSaga(action: PostBoard) {
       console.log(response);
       yield put({ type: POST_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
-      yield put({ type: POST_BOARD_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        payload: e.response,
+        name: POST_BOARD_FAILURE,
+      });
     }
   }
 }
