@@ -64,7 +64,7 @@ function* loginApiSaga(action: Login) {
       yield put({
         type: SET_ERROR,
         name: LOGIN_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -87,7 +87,7 @@ function* idRecoverySaga(action: IdRecovery) {
       yield put({
         type: SET_ERROR,
         name: ID_RECOVERY_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -111,7 +111,7 @@ function* pwRecoverySaga(action: PwRecovery) {
       yield put({
         type: SET_ERROR,
         name: PW_RECOVERY_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -145,7 +145,7 @@ function* idExistSaga(action: IdExist) {
       yield put({
         type: SET_ERROR,
         name: ID_EXIST_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -169,7 +169,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
       yield put({
         type: SET_ERROR,
         name: VERIFY_PHONE_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -194,7 +194,7 @@ function* registerApiSaga(action: Register) {
       yield put({
         type: SET_ERROR,
         name: REGISTER_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -224,7 +224,7 @@ function* getUserApiSaga(action: GetUser) {
       yield put({
         type: SET_ERROR,
         name: GET_USER_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }
@@ -256,7 +256,7 @@ function* patchPasswordApiSaga(action: PatchPassword) {
       yield put({
         type: SET_ERROR,
         name: PATCH_PASSWORD_FAILURE,
-        payload: e.response.data,
+        payload: e,
       });
     }
   }

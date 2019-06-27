@@ -13,6 +13,7 @@ export interface BoardProps {
   likeStatus: status;
   reportStatus: status;
   getBoardStatus: status;
+  postBoardStatus: status;
   patchBoardStatus: status;
   deleteBoardStatus: status;
   getBoardCommentStatus: status;
@@ -32,6 +33,7 @@ const mapStateToProps = ({ board, error }: AppState) => ({
   likeStatus: board.likeStatus,
   reportStatus: board.reportStatus,
   getBoardStatus: board.getBoardStatus,
+  postBoardStatus: board.postBoardStatus,
   patchBoardStatus: board.patchBoardStatus,
   deleteBoardStatus: board.deleteBoardStatus,
   getBoardCommentStatus: board.getBoardCommentStatus,

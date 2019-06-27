@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import { Action } from 'redux';
 import { CalendarItem, CalendarRecentItem } from 'store';
 import { ErrorResponse } from 'store/model';
@@ -10,7 +11,7 @@ export const RESET_ERROR = 'RESET_ERROR';
 export class SetError implements Action {
   public readonly type = SET_ERROR;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(public payload: AxiosResponse<ErrorResponse>) {}
 }
 
 export class ResetError implements Action {
