@@ -20,7 +20,7 @@ const AutoErrorCheckComponent: React.FC<
         history.push('/error');
       }
     }
-  }, [onError, code, message, name]);
+  }, [onError]);
 
   return <></>;
 };

@@ -91,18 +91,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
 
   const prevStatusProps:
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
-    | undefined = usePrevious({
-    likeStatus,
-    reportStatus,
-    getBoardStatus,
-    postBoardStatus,
-    patchBoardStatus,
-    deleteBoardStatus,
-    getBoardCommentStatus,
-    postBoardCommentStatus,
-    patchBoardCommentStatus,
-    deleteBoardCommentStatus,
-  });
+    | undefined = usePrevious(statusProps);
 
   useEffect(() => {
     return () => resetError();

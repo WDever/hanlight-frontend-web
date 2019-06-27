@@ -16,11 +16,11 @@ export const errorReducer = (
     switch (action.type) {
       case 'SET_ERROR':
         console.log(action);
-        if (action.payload.status) {
+        if (action.payload.response) {
           draft.onError += 1;
-          draft.code = action.payload.data.code;
-          draft.message = action.payload.data.message;
-          draft.name = action.payload.data.name;
+          draft.code = action.payload.response.data.code;
+          draft.message = action.payload.response.data.message;
+          draft.name = action.payload.response.data.name;
         } else {
           draft.onError += 1;
           draft.code = 0;
