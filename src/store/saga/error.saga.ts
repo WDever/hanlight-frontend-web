@@ -11,7 +11,7 @@ interface FailureAction extends Action {
 
 export function* ErrorSaga(action: FailureAction) {
   if (action.name) {
-    yield put({ type: action.name });
+    yield put({ type: action.name, payload: action.payload });
   }
 }
 
