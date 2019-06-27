@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AutoLoginMethod, AutoLoginProps } from 'container/autoLogin';
+import { AutoLoginMethod, AutoLoginProps } from 'container/auto/autoLogin';
 import { RouteComponentProps } from 'react-router-dom';
 
 class AutoLoginComponent extends React.Component<

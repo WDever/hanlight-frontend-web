@@ -1,4 +1,4 @@
-import AutoLoginComponent from 'components/autoLogin';
+import AutoLoginComponent from 'components/auto/autoLogin';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -13,7 +13,7 @@ export interface AutoLoginMethod {
   getUser(data: string): void;
 }
 
-const AutoLoginContainer: React.SFC<
+const AutoLoginContainer: React.FC<
   AutoLoginProps & AutoLoginMethod & RouteComponentProps
 > = ({ history, match, location, getUser, getUserStatus }) => (
   <AutoLoginComponent

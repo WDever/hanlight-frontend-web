@@ -34,13 +34,6 @@ const MainComponents = () => (
   </>
 );
 
-const ErrorComponents = () => (
-  <>
-    <ErrorContainer />
-    <FooterPage />
-  </>
-);
-
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   history,
@@ -53,6 +46,13 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       resetUser();
     }
   }, [loginStatus]);
+
+  const ErrorComponents = () => (
+    <>
+      <ErrorContainer />
+      <FooterPage />
+    </>
+  );
 
   return loginStatus === 'success' ? (
     <>
