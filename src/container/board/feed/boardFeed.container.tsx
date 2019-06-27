@@ -13,7 +13,7 @@ import {
   GetBoardParams,
   LikeParams,
   PatchBoardParams,
-  ReportData,
+  ActiveReportData,
   ReportParams,
 } from 'store';
 
@@ -27,7 +27,6 @@ export interface BoardFeedProps {
   patchBoardStatus: status;
   deleteBoardStatus: status;
   likeStatus: status;
-  reportStatus: status;
   getBoardCommentStatus: status;
   deemBoardStatus: boolean;
 }
@@ -41,7 +40,7 @@ export interface BoardFeedMethod {
   getBoardComment: (payload: GetBoardCommentParams) => void;
   resetBoard: () => void;
   deemBoard: (payload: boolean) => void;
-  reportActive(data: ReportData): void;
+  activeReport(data: ActiveReportData): void;
 }
 
 const mapStateToProps = ({ user, board }: AppState) => ({
@@ -52,7 +51,6 @@ const mapStateToProps = ({ user, board }: AppState) => ({
   patchBoardStatus: board.patchBoardStatus,
   deleteBoardStatus: board.deleteBoardStatus,
   likeStatus: board.likeStatus,
-  reportStatus: board.reportStatus,
   getBoardCommentStatus: board.getBoardCommentStatus,
   deemBoardStatus: board.deemBoardStatus,
 });
@@ -66,7 +64,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   getBoardComment: bindActionCreators(boardActions.getBoardCommemnt, dispatch),
   resetBoard: bindActionCreators(boardActions.resetBoard, dispatch),
   deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
-  reportActive: bindActionCreators(boardActions.reportActive, dispatch),
+  activeReport: bindActionCreators(boardActions.activeReport, dispatch),
 });
 
 const BoardFeedContainer = connect(

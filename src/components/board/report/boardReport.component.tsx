@@ -17,7 +17,6 @@ const ModalWrapper = styled.div`
   min-height: 13.375rem;
   margin-right: 1.25rem;
   position: absolute;
-  /* top: 8.5rem; */
   top: 30%;
   z-index: 9;
   background-color: #ffffff;
@@ -45,8 +44,6 @@ const FeedXButton = styled.span`
   right: 11px;
   height: 10px;
   width: 19px;
-  /* height: 2px;
-  width: 30px; */
   border-radius: 1.25rem;
   top: 17px;
 
@@ -137,51 +134,50 @@ export default class BoardReportComponent extends React.Component<
   }
 
   public submitReport = (e: React.FormEvent<HTMLFormElement>) => {
-    const { reportData, report, accessToken } = this.props;
+    const { ActiveReportData, report, accessToken } = this.props;
     const { content } = this.state;
 
     e.preventDefault();
-    if (reportData.type === 'board') {
+    if (ActiveReportData.type === 'board') {
       report({
         accessToken,
-        type: reportData.type,
-        board_pk: reportData.board_pk,
+        type: ActiveReportData.type,
+        board_pk: ActiveReportData.board_pk,
         content,
       });
-    } else if (reportData.type === 'comment') {
+    } else if (ActiveReportData.type === 'comment') {
       report({
         accessToken,
-        type: reportData.type,
-        board_pk: reportData.board_pk,
-        comment_pk: reportData.comment_pk,
+        type: ActiveReportData.type,
+        board_pk: ActiveReportData.board_pk,
+        comment_pk: ActiveReportData.comment_pk,
         content,
       });
     }
   };
 
   public handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const { content } = this.state;
     const { value } = e.currentTarget;
 
     this.setState(() => ({
       content: value,
     }));
-  }
+  };
 
   public close = () => {
-    const { deemBoard, setReportToggle, reportActive } = this.props;
+    const { deemBoard, setReportToggle, activeReport } = this.props;
     deemBoard(false);
     setReportToggle(false);
-    reportActive({ active: false, type: 'none', board_pk: 0, comment_pk: 0 });
+    activeReport({ active: false, type: 'none', board_pk: 0, comment_pk: 0 });
   };
 
   public render() {
-    const { reportData } = this.props;
+    const { ActiveReportData } = this.props;
     const { close, submitReport, handleChange } = this;
 
     return (
       <>
-        {reportData.active ? (
+        {ActiveReportData.active ? (
           <ModalWrapper>
             <Head>
               <Title>작성자 신고하기</Title>

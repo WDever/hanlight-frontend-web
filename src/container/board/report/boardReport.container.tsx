@@ -2,26 +2,22 @@ import BoardReportComponent from 'components/board/report';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
+  ActiveReportData,
   AppState,
   boardActions,
   boardReducerActions,
-  ReportData,
   ReportParams,
 } from 'store';
 
 export interface BoardReportProps {
-  reportStatus:
-    | 'none'
-    | 'pending'
-    | 'success'
-    | 'failure'
-  reportData: ReportData;
+  reportStatus: 'none' | 'pending' | 'success' | 'failure';
+  ActiveReportData: ActiveReportData;
   accessToken: string;
 }
 
 export interface BoardReportMethod {
   deemBoard: (payload: boolean) => void;
-  reportActive: (data: ReportData) => void;
+  activeReport: (data: ActiveReportData) => void;
   report: (payload: ReportParams) => void;
 }
 
@@ -34,7 +30,7 @@ const mapStateToProps = (
   ownProps: BoardReportOwnProps,
 ) => ({
   reportStatus: board.reportStatus,
-  reportData: board.reportData,
+  ActiveReportData: board.activeReportData,
   accessToken: user.accessToken,
   ...ownProps,
 });
@@ -42,7 +38,7 @@ const mapStateToProps = (
 const mapDispatchProps = (dispatch: Dispatch<boardReducerActions>) => ({
   deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
   report: bindActionCreators(boardActions.report, dispatch),
-  reportActive: bindActionCreators(boardActions.reportActive, dispatch),
+  activeReport: bindActionCreators(boardActions.activeReport, dispatch),
 });
 
 const BoardReportContainer = connect(

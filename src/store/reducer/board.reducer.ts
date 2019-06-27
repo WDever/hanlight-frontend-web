@@ -16,7 +16,7 @@ const initialState: BoardModel = {
   reportStatus: 'none',
   likeStatus: 'none',
   deemBoardStatus: false,
-  reportData: {
+  activeReportData: {
     active: false,
     type: 'none',
     board_pk: 0,
@@ -193,10 +193,8 @@ export const boardReducer = (
       case 'REPORT_FAILURE':
         draft.reportStatus = 'failure';
         break;
-      case 'REPORT_ACTIVE':
-        draft.reportData = {
-          ...action.payload,
-        };
+      case 'ACTIVE_REPORT':
+        draft.activeReportData = action.payload;
         break;
 
       case 'LIKE':

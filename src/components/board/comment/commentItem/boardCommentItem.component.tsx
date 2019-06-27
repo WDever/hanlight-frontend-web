@@ -7,7 +7,7 @@ import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
-import { LikeParams, ReportData } from 'store';
+import { ActiveReportData, LikeParams } from 'store';
 import styled from 'styled-components';
 
 const CommentWrapper = styled.div`
@@ -203,7 +203,7 @@ interface CommentItemProps {
     content?: string;
   }): void;
   setReportToggle(value: React.SetStateAction<boolean>): void;
-  reportActive(data: ReportData): void;
+  activeReport(data: ActiveReportData): void;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -223,7 +223,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   isLiked,
   deemBoard,
   setReportToggle,
-  reportActive,
+  activeReport,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
@@ -342,7 +342,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
               onClick={() => {
                 setOptionToggle(false);
                 setReportToggle(true);
-                reportActive({
+                activeReport({
                   active: true,
                   type: 'board',
                   board_pk,

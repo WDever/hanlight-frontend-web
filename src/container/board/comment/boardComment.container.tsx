@@ -2,6 +2,7 @@ import BoardCommentComponent from 'components/board/comment';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
+  ActiveReportData,
   AppState,
   boardActions,
   boardReducerActions,
@@ -9,7 +10,6 @@ import {
   DeleteBoardCommentParams,
   LikeParams,
   PatchBoardCommentParams,
-  ReportData,
   ReportParams,
 } from 'store';
 
@@ -18,18 +18,13 @@ export interface BoardCommentProps {
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
   patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
-  reportStatus:
-    | 'none'
-    | 'pending'
-    | 'success'
-    | 'failure'
 }
 
 export interface BoardCommentMethod {
   deleteBoardCommemnt(data: DeleteBoardCommentParams): void;
   patchBoardCommemnt(data: PatchBoardCommentParams): void;
   report(data: ReportParams): void;
-  reportActive(data: ReportData): void;
+  activeReport(data: ActiveReportData): void;
 }
 
 export interface BoardCommentOwnProps {
@@ -52,7 +47,6 @@ const mapStateToProps = (
   userType: user.data.type,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
-  reportStatus: board.reportStatus,
   ...ownProps,
 });
 
@@ -66,7 +60,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
     dispatch,
   ),
   report: bindActionCreators(boardActions.report, dispatch),
-  reportActive: bindActionCreators(boardActions.reportActive, dispatch),
+  activeReport: bindActionCreators(boardActions.activeReport, dispatch),
 });
 
 const BoardCommentContainer = connect(

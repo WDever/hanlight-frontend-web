@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Board, Comment, ReportData } from 'store/model';
+import { ActiveReportData, Board, Comment } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
@@ -37,7 +37,7 @@ export const DELETE_BOARD_COMMENT_FAILURE = 'DELETE_BOARD_COMMENT_FAILURE';
 export const REPORT = 'REPORT';
 export const REPORT_SUCCESS = 'REPORT_SUCCESS';
 export const REPORT_FAILURE = 'REPORT_FAILURE';
-export const REPORT_ACTIVE = 'REPORT_ACTIVE';
+export const ACTIVE_REPORT = 'ACTIVE_REPORT';
 
 export const LIKE = 'LIKE';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
@@ -276,10 +276,10 @@ export class ReportFailure implements Action {
   public readonly type = REPORT_FAILURE;
 }
 
-export class ReportActive implements Action {
-  public readonly type = REPORT_ACTIVE;
+export class ActiveReport implements Action {
+  public readonly type = ACTIVE_REPORT;
 
-  public constructor(public payload: ReportData) {}
+  public constructor(public payload: ActiveReportData) {}
 }
 
 export class Like implements Action {
@@ -326,7 +326,7 @@ export const boardActions = {
     DeleteBoardCommentParams
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
-  reportActive: createStandardAction(REPORT_ACTIVE)<ReportData>(),
+  activeReport: createStandardAction(ACTIVE_REPORT)<ActiveReportData>(),
   like: createStandardAction(LIKE)<LikeParams>(),
   deemBoard: createStandardAction(DEEM_BOARD)(),
   resetBoard: createStandardAction(RESET_BOARD)(),
@@ -360,7 +360,7 @@ export type boardReducerActions =
   | Report
   | ReportSuccess
   | ReportFailure
-  | ReportActive
+  | ActiveReport
   | Like
   | LikeSuccess
   | LikeFailure
