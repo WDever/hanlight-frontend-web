@@ -11,7 +11,7 @@ import {
 } from 'store';
 
 export interface ErrorProps {
-  onError: boolean;
+  onError: number;
   code: number;
   message: string;
   name: string;
