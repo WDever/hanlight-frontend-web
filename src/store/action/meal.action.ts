@@ -47,11 +47,10 @@ export class GetMealWeekFailure implements Action {
   public readonly type = GET_MEAL_WEEK_FAILURE;
 }
 
-
 export class GetMealMonthSuccess implements Action {
   public readonly type = GET_MEAL_MONTH_SUCCESS;
 
-  public constructor(public payload: GetMealResType) {};
+  public constructor(public payload: GetMealResType) {}
 }
 
 export class GetMealMonthFailure implements Action {
@@ -73,6 +72,12 @@ export class GetMealOrderSuccess implements Action {
 export class GetMealOrderFailure implements Action {
   public readonly type = GET_MEAL_ORDER_FAILURE;
 }
+
+export const mealFailureActions = [
+  GET_MEAL_WEEK_FAILURE,
+  GET_MEAL_MONTH_FAILURE,
+  GET_MEAL_ORDER_FAILURE,
+];
 
 export const mealActions = {
   getMeal: createStandardAction(GET_MEAL)<GetMealParams>(),

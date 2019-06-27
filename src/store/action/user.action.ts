@@ -262,6 +262,17 @@ export class GetUserFailure implements Action {
   public readonly type = GET_USER_FAILURE;
 }
 
+export const userFailureActions = [
+  LOGIN_FAILURE,
+  ID_RECOVERY_FAILURE,
+  PW_RECOVERY_FAILURE,
+  ID_EXIST_FAILURE,
+  VERIFY_PHONE_FAILURE,
+  REGISTER_FAILURE,
+  GET_USER_FAILURE,
+  PATCH_PASSWORD_FAILURE,
+];
+
 export const userActions = {
   login: createStandardAction(LOGIN)<LoginParam>(),
   idRecovery: createStandardAction(ID_RECOVERY)<IdRecoveryParam>(),

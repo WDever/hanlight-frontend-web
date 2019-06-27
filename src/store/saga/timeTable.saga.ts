@@ -5,7 +5,9 @@ import {
   GET_TIMETABLE_FAILURE,
   GET_TIMETABLE_SUCCESS,
   GetTimetable,
+  timeTableFailureActions,
 } from '../action';
+import { ErrorSaga } from './error.saga';
 
 const getTimetableApi = (data: string | null) =>
   instance
@@ -31,4 +33,6 @@ function* getTimetableApiSaga(action: GetTimetable) {
 
 export function* timeTableSaga() {
   yield takeEvery(GET_TIMETABLE, getTimetableApiSaga);
+
+  yield takeEvery(timeTableFailureActions, ErrorSaga);
 }

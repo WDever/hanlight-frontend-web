@@ -37,13 +37,14 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   RegisterParam,
-  SET_ERROR,
+  userFailureActions,
   VERIFY_PHONE,
   VERIFY_PHONE_FAILURE,
   VERIFY_PHONE_SUCCESS,
   VerifyPhone,
   VerifyPhoneParam,
 } from '../action';
+import { ErrorSaga } from './error.saga';
 
 const loginApi = (data: LoginParam) =>
   instance
@@ -82,7 +83,6 @@ function* idRecoverySaga(action: IdRecovery) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: ID_RECOVERY_FAILURE, payload: e.response });
-      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -104,7 +104,6 @@ function* pwRecoverySaga(action: PwRecovery) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: PW_RECOVERY_FAILURE, payload: e.response });
-      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -136,7 +135,6 @@ function* idExistSaga(action: IdExist) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: ID_EXIST_FAILURE, payload: action.payload });
-      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -158,7 +156,6 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: VERIFY_PHONE_FAILURE, payload: e.response });
-      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -208,7 +205,6 @@ function* getUserApiSaga(action: GetUser) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: GET_USER_FAILURE, paylaod: e.response });
-      yield put({ type: SET_ERROR, payload: e.response });
     }
   }
 }
@@ -238,7 +234,6 @@ function* patchPasswordApiSaga(action: PatchPassword) {
     } catch (e) {
       console.log(e.response);
       yield put({ type: PATCH_PASSWORD_FAILURE, paylaod: e.response });
-      yield put({ type: SET_ERROR, payload: e.response.data });
     }
   }
 }
@@ -252,6 +247,8 @@ function* userSaga() {
   yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
   yield takeEvery(GET_USER, getUserApiSaga);
   yield takeEvery(PATCH_PASSWORD, patchPasswordApiSaga);
+
+  yield takeEvery(userFailureActions, ErrorSaga);
 }
 
 export { userSaga };

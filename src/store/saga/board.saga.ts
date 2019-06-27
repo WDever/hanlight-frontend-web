@@ -1,6 +1,7 @@
 import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
+  boardFailureActions,
   DELETE_BOARD,
   DELETE_BOARD_COMMENT,
   DELETE_BOARD_COMMENT_FAILURE,
@@ -52,6 +53,7 @@ import {
   REPORT_SUCCESS,
   ReportParams,
 } from '../action';
+import { ErrorSaga } from './error.saga';
 
 const getBoardApi = (data: GetBoardParams) =>
   instance
@@ -346,4 +348,6 @@ export function* boardSaga() {
   yield takeEvery(DELETE_BOARD_COMMENT, deleteBoardCommentApiSaga);
   yield takeEvery(LIKE, likeApiSaga);
   yield takeEvery(REPORT, reportApiSaga);
+
+  yield takeEvery(boardFailureActions, ErrorSaga);
 }

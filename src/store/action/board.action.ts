@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { ActiveReportData, Board, Comment } from 'store/model';
+import { ActiveReportData, Board, Comment, ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
@@ -171,6 +171,8 @@ export class PatchBoardSuccess implements Action {
 
 export class PatchBoardFailure implements Action {
   public readonly type = PATCH_BOARD_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class DeleteBoard implements Action {
@@ -187,6 +189,8 @@ export class DeleteBoardSuccess implements Action {
 
 export class DeleteBoardFailure implements Action {
   public readonly type = DELETE_BOARD_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class GetBoardComment implements Action {
@@ -209,6 +213,8 @@ export class GetBoardCommentSuccess implements Action {
 
 export class GetBoardCommentFailure implements Action {
   public readonly type = GET_BOARD_COMMENT_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class PostBoardComment implements Action {
@@ -225,6 +231,8 @@ export class PostBoardCommentSuccess implements Action {
 
 export class PostBoardCommentFailure implements Action {
   public readonly type = POST_BOARD_COMMENT_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class PatchBoardComment implements Action {
@@ -244,6 +252,8 @@ export class PatchBoardCommentSuccess implements Action {
 
 export class PatchBoardCommentFailure implements Action {
   public readonly type = PATCH_BOARD_COMMENT_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class DeleteBoardComment implements Action {
@@ -260,6 +270,8 @@ export class DeleteBoardCommentSuccess implements Action {
 
 export class DeleteBoardCommentFailure implements Action {
   public readonly type = DELETE_BOARD_COMMENT_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class Report implements Action {
@@ -296,6 +308,8 @@ export class LikeSuccess implements Action {
 
 export class LikeFailure implements Action {
   public readonly type = LIKE_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class DeemBoard implements Action {
@@ -307,6 +321,18 @@ export class DeemBoard implements Action {
 export class ResetBoard implements Action {
   public readonly type = RESET_BOARD;
 }
+
+export const boardFailureActions = [
+  POST_BOARD_FAILURE,
+  PATCH_BOARD_FAILURE,
+  DELETE_BOARD_FAILURE,
+  GET_BOARD_COMMENT_FAILURE,
+  POST_BOARD_COMMENT_FAILURE,
+  PATCH_BOARD_COMMENT_FAILURE,
+  DELETE_BOARD_COMMENT_FAILURE,
+  LIKE_FAILURE,
+  REPORT_FAILURE,
+];
 
 export const boardActions = {
   getBoard: createStandardAction(GET_BOARD)<GetBoardParams>(),
