@@ -2,13 +2,8 @@ import * as React from 'react';
 
 import NoticeListComponent from 'components/notice/detail-notice/detail-noticeList';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
-import {
-  ActionCreatorsMapObject,
-  AnyAction,
-  bindActionCreators,
-  Dispatch,
-} from 'redux';
+import { RouteComponentProps } from 'react-router-dom';
+import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
   GetNoticeListParams,
@@ -16,7 +11,6 @@ import {
   noticeActions,
   noticeReducerActions,
 } from 'store';
-import { PayloadAC } from 'typesafe-actions';
 
 export interface NoticeListProps {
   accessToken: string;
