@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Board, Comment } from 'store/model';
+import { Board, Comment, ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
@@ -299,6 +299,8 @@ export class LikeSuccess implements Action {
 
 export class LikeFailure implements Action {
   public readonly type = LIKE_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class DeemBoard implements Action {

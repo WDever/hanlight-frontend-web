@@ -7,8 +7,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import TimeTableItem from './timeTableItem';
 
-const { useEffect } = React;
-
 const Title = styled.div`
   max-width: 81rem;
   width: 90%;

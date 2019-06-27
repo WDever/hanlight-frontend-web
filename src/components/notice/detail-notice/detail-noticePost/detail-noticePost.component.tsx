@@ -111,7 +111,7 @@ export default class NoticePostComponent extends React.Component<
         post_pk: parseInt(this.props.match.params.post_pk, 10),
       });
     } else {
-      this.props.history.push('/notice');
+      this.props.history.push('/error');
     }
   }
 
@@ -129,9 +129,7 @@ export default class NoticePostComponent extends React.Component<
         )
       ]
     ) {
-      this.props.history.push('/notice');
-    } else if (this.props.getNoticePostStatus === 'failure') {
-      this.props.history.push('/notice');
+      this.props.history.push('/error');
     }
   }
 
