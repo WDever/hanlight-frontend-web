@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import BoardCommentContainer from 'container/board/comment';
+import BoardReportContainer from 'container/board/report';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -11,7 +12,7 @@ import ReportIcon from 'lib/svg/report-icon.svg';
 import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { Board, LikeParams } from 'store';
+import { ActiveReportData, Board, LikeParams } from 'store';
 import styled from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -334,6 +335,7 @@ interface FeedItemMethod {
   getBoardComments: (payload: { board_pk: number; page: number }) => void;
   like: (payload: LikeParams) => void;
   deemBoard: (payload: boolean) => void;
+  activeReport(data: ActiveReportData): void;
 }
 
 const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
@@ -346,6 +348,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   likeStatus,
   deemBoard,
   patchBoardStatus,
+  activeReport,
 }) => {
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editing, setEditing] = React.useState<boolean>(false);
@@ -360,6 +363,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     toggle: false,
     index: 0,
   });
+  const [reportToggle, setReportToggle] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     setOptionToggle(false);
@@ -387,6 +391,9 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
 
   return (
     <FeedWrapper key={board.pk}>
+      {reportToggle && (
+        <BoardReportContainer setReportToggle={setReportToggle} />
+      )}
       {editing && (
         <EditWrapper>
           <FeedXButton
@@ -489,8 +496,14 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
               )}
               <FeedOption
                 onClick={() => {
-                  handleOption({ action: 'report', board_pk: board.pk });
                   setOptionToggle(false);
+                  setReportToggle(true);
+                  deemBoard(true);
+                  activeReport({
+                    active: true,
+                    type: 'board',
+                    board_pk: board.pk,
+                  });
                 }}
               >
                 <FeedOptionImg src={ReportIcon} alt="" />
@@ -628,6 +641,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           likeStatus={likeStatus}
           GetBoardComments={GetBoardComments}
           page={page}
+          deemBoard={deemBoard}
+          setReportToggle={setReportToggle}
         />
       </Feed>
     </FeedWrapper>

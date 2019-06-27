@@ -23,6 +23,13 @@ export interface Board {
   write: boolean;
 }
 
+export interface ActiveReportData {
+  type: 'none' | 'board' | 'comment';
+  board_pk: number;
+  comment_pk?: number;
+  active: boolean;
+}
+
 type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardModel {
@@ -36,13 +43,8 @@ export interface BoardModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
-  reportStatus:
-    | 'none'
-    | 'pending'
-    | 'success-board'
-    | 'success-comment'
-    | 'failure-board'
-    | 'failure-comment';
+  reportStatus: status;
   likeStatus: status;
   deemBoardStatus: boolean;
+  activeReportData: ActiveReportData;
 }

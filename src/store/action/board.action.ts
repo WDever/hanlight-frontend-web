@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { Board, Comment, ErrorResponse } from 'store/model';
+import { ActiveReportData, Board, Comment, ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
@@ -35,10 +35,9 @@ export const DELETE_BOARD_COMMENT_SUCCESS = 'DELETE_BOARD_COMMENT_SUCCESS';
 export const DELETE_BOARD_COMMENT_FAILURE = 'DELETE_BOARD_COMMENT_FAILURE';
 
 export const REPORT = 'REPORT';
-export const REPORT_BOARD_SUCCESS = 'REPORT_BOARD_SUCCESS';
-export const REPORT_COMMENT_SUCCESS = 'REPORT_COMMENT_SUCCESS';
-export const REPORT_BOARD_FAILURE = 'REPORT_BOARD_FAILURE';
-export const REPORT_COMMENT_FAILURE = 'REPORT_COMMENT_FAILURE';
+export const REPORT_SUCCESS = 'REPORT_SUCCESS';
+export const REPORT_FAILURE = 'REPORT_FAILURE';
+export const ACTIVE_REPORT = 'ACTIVE_REPORT';
 
 export const LIKE = 'LIKE';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
@@ -281,24 +280,18 @@ export class Report implements Action {
   public constructor(public payload: ReportParams) {}
 }
 
-export class ReportBoardSuccess implements Action {
-  public readonly type = REPORT_BOARD_SUCCESS;
+export class ReportSuccess implements Action {
+  public readonly type = REPORT_SUCCESS;
 }
 
-export class ReportBoardFailure implements Action {
-  public readonly type = REPORT_BOARD_FAILURE;
-
-  public constructor(public payload: ErrorResponse) {}
+export class ReportFailure implements Action {
+  public readonly type = REPORT_FAILURE;
 }
 
-export class ReportCommentSuccess implements Action {
-  public readonly type = REPORT_COMMENT_SUCCESS;
-}
+export class ActiveReport implements Action {
+  public readonly type = ACTIVE_REPORT;
 
-export class ReportCommentFailure implements Action {
-  public readonly type = REPORT_COMMENT_FAILURE;
-
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(public payload: ActiveReportData) {}
 }
 
 export class Like implements Action {
@@ -338,6 +331,7 @@ export const boardFailureActions = [
   PATCH_BOARD_COMMENT_FAILURE,
   DELETE_BOARD_COMMENT_FAILURE,
   LIKE_FAILURE,
+  REPORT_FAILURE,
 ];
 
 export const boardActions = {
@@ -358,6 +352,7 @@ export const boardActions = {
     DeleteBoardCommentParams
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
+  activeReport: createStandardAction(ACTIVE_REPORT)<ActiveReportData>(),
   like: createStandardAction(LIKE)<LikeParams>(),
   deemBoard: createStandardAction(DEEM_BOARD)(),
   resetBoard: createStandardAction(RESET_BOARD)(),
@@ -389,10 +384,9 @@ export type boardReducerActions =
   | DeleteBoardCommentSuccess
   | DeleteBoardCommentFailure
   | Report
-  | ReportBoardSuccess
-  | ReportBoardFailure
-  | ReportCommentSuccess
-  | ReportCommentFailure
+  | ReportSuccess
+  | ReportFailure
+  | ActiveReport
   | Like
   | LikeSuccess
   | LikeFailure
