@@ -48,10 +48,8 @@ import {
   PostBoardParams,
   REPORT,
   Report,
-  REPORT_BOARD_FAILURE,
-  REPORT_BOARD_SUCCESS,
-  REPORT_COMMENT_FAILURE,
-  REPORT_COMMENT_SUCCESS,
+  REPORT_FAILURE,
+  REPORT_SUCCESS,
   ReportParams,
 } from '../action';
 
@@ -280,16 +278,19 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
 
 const likeApi = (data: LikeParams) =>
   instance
-    .get('/api/board/like', {
-      headers: {
-        access_token: data.accessToken,
-      },
-      params: {
+    .post(
+      '/api/board/like',
+      {
         type: data.type,
         board_pk: data.board_pk,
         comment_pk: data.comment_pk,
       },
-    })
+      {
+        headers: {
+          access_token: data.accessToken,
+        },
+      },
+    )
     .then(res => res.data);
 function* likeApiSaga(action: Like) {
   if (action.type) {
@@ -327,17 +328,9 @@ function* reportApiSaga(action: Report) {
     try {
       const response = yield call(reportApi, action.payload);
       console.log(response);
-      if (action.payload.type === 'board') {
-        yield put({ type: REPORT_BOARD_SUCCESS, payload: action.payload });
-      } else {
-        yield put({ type: REPORT_COMMENT_SUCCESS, payload: action.payload });
-      }
+      yield put({ type: REPORT_SUCCESS, payload: action.payload });
     } catch (e) {
-      if (action.payload.type === 'board') {
-        yield put({ type: REPORT_BOARD_FAILURE });
-      } else {
-        yield put({ type: REPORT_COMMENT_FAILURE });
-      }
+      yield put({ type: REPORT_FAILURE });
     }
   }
 }
