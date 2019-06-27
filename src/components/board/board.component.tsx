@@ -58,7 +58,12 @@ const Feeds = styled.div`
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   deemBoard,
   deemBoardStatus,
+  resetError,
 }) => {
+  React.useEffect(() => {
+    return () => resetError();
+  }, []);
+
   return (
     <Templete>
       <Wrapper>

@@ -12,7 +12,9 @@ import {
   GetMeal,
   GetMealOrder,
   GetMealParams,
+  mealFailureActions,
 } from '../action';
+import { ErrorSaga } from './error.saga';
 
 const getMealApi = (data: GetMealParams) =>
   instance
@@ -73,4 +75,6 @@ function* getMealOrderApiSaga(action: GetMealOrder) {
 export function* mealSaga() {
   yield takeEvery(GET_MEAL, getMealApiSaga);
   yield takeEvery(GET_MEAL_ORDER, getMealOrderApiSaga);
+
+  yield takeEvery(mealFailureActions, ErrorSaga);
 }
