@@ -5,11 +5,14 @@ import { SET_ERROR } from 'store/action';
 import { ErrorResponse } from 'store/model';
 
 interface FailureAction extends Action {
-  name: string;
+  name?: string;
+  payload: AxiosResponse<ErrorResponse>;
 }
 
 export function* ErrorSaga(action: FailureAction) {
-  yield put({ type: action.name });
+  if (action.name) {
+    yield put({ type: action.name });
+  }
 }
 
 export function* errorSaga() {
