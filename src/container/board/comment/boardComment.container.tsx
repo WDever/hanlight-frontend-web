@@ -21,10 +21,8 @@ export interface BoardCommentProps {
   reportStatus:
     | 'none'
     | 'pending'
-    | 'success-board'
-    | 'success-comment'
-    | 'failure-board'
-    | 'failure-comment';
+    | 'success'
+    | 'failure'
 }
 
 export interface BoardCommentMethod {

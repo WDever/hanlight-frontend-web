@@ -13,10 +13,8 @@ export interface BoardReportProps {
   reportStatus:
     | 'none'
     | 'pending'
-    | 'success-comment'
-    | 'success-board'
-    | 'failure-board'
-    | 'failure-comment';
+    | 'success'
+    | 'failure'
   reportData: ReportData;
   accessToken: string;
 }

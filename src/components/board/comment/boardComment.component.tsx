@@ -90,9 +90,9 @@ const BoardCommentComponent: React.FC<
         alert('삭제에 실패했습니다.');
       } else if (likeStatus === 'failure') {
         alert('요청에 실패했습니다.');
-      } else if (reportStatus === 'success-comment') {
+      } else if (reportStatus === 'success') {
         alert('성공적으로 신고되었습니다.');
-      } else if (reportStatus === 'failure-comment') {
+      } else if (reportStatus === 'failure') {
         alert('요청에 실패했습니다.');
       }
     }

@@ -187,17 +187,11 @@ export const boardReducer = (
       case 'REPORT':
         draft.reportStatus = 'pending';
         break;
-      case 'REPORT_BOARD_SUCCESS':
-        draft.reportStatus = 'success-board';
+      case 'REPORT_SUCCESS':
+        draft.reportStatus = 'success';
         break;
-      case 'REPORT_BOARD_FAILURE':
-        draft.reportStatus = 'failure-board';
-        break;
-      case 'REPORT_COMMENT_SUCCESS':
-        draft.reportStatus = 'success-comment';
-        break;
-      case 'REPORT_COMMENT_FAILURE':
-        draft.reportStatus = 'failure-comment';
+      case 'REPORT_FAILURE':
+        draft.reportStatus = 'failure';
         break;
       case 'REPORT_ACTIVE':
         draft.reportData = {

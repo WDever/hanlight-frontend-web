@@ -10,16 +10,6 @@ import styled from 'styled-components';
 
 const { useRef } = React;
 
-const Template = styled.div`
-  width: 100%;
-  /* height: ${window.innerHeight}px; */
-  /* height: ${window.scrollY}; */
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-
 const ModalWrapper = styled.div`
   width: 100%;
   min-width: 475px;
@@ -120,21 +110,36 @@ const Form = styled.form`
   }
 `;
 
-const BoardReportComponent: React.FC<
-  BoardReportProps & BoardReportMethod & BoardReportOwnProps
-> = ({
-  accessToken,
-  reportData,
-  report,
-  reportActive,
-  deemBoard,
-  reportStatus,
-  setReportToggle,
-}) => {
-  const [content, setContent] = useInput('');
-  const wasPending = useRef(false);
+interface BoardReportState {
+  content: string;
+}
 
-  const submitReport = (e: React.FormEvent<HTMLFormElement>) => {
+export default class BoardReportComponent extends React.Component<
+  BoardReportProps & BoardReportMethod & BoardReportOwnProps,
+  BoardReportState
+> {
+  public state: BoardReportState = {
+    content: '',
+  };
+
+  public componentDidUpdate(prevProps: BoardReportProps) {
+    const { reportStatus } = this.props;
+
+    if (prevProps.reportStatus === 'pending' && reportStatus === 'success') {
+      this.close();
+      alert('신고 성공');
+    } else if (
+      prevProps.reportStatus === 'pending' &&
+      reportStatus === 'failure'
+    ) {
+      alert('신고 실패');
+    }
+  }
+
+  public submitReport = (e: React.FormEvent<HTMLFormElement>) => {
+    const { reportData, report, accessToken } = this.props;
+    const { content } = this.state;
+
     e.preventDefault();
     if (reportData.type === 'board') {
       report({
@@ -154,57 +159,49 @@ const BoardReportComponent: React.FC<
     }
   };
 
-  const close = () => {
+  public handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const { content } = this.state;
+    const { value } = e.currentTarget;
+
+    this.setState(() => ({
+      content: value,
+    }));
+  }
+
+  public close = () => {
+    const { deemBoard, setReportToggle, reportActive } = this.props;
     deemBoard(false);
     setReportToggle(false);
     reportActive({ active: false, type: 'none', board_pk: 0, comment_pk: 0 });
   };
 
-  React.useEffect(() => {
-    if (reportStatus === 'pending') {
-      wasPending.current = true;
-    }
-    if (
-      (reportStatus === 'success-board' ||
-        reportStatus === 'success-comment') &&
-      wasPending.current
-    ) {
-      close();
-      alert('신고 성공');
-      wasPending.current = false;
-    } else if (
-      (reportStatus === 'failure-board' ||
-        reportStatus === 'failure-comment') &&
-      wasPending.current
-    ) {
-      alert('신고 실패');
-    }
-  }, [reportStatus]);
+  public render() {
+    const { reportData } = this.props;
+    const { close, submitReport, handleChange } = this;
 
-  return (
-    <>
-      {reportData.active ? (
-        <ModalWrapper>
-          <Head>
-            <Title>작성자 신고하기</Title>
-            <FeedXButton onClick={close} />
-          </Head>
-          <Form onSubmit={submitReport}>
-            <textarea
-              minLength={1}
-              maxLength={300}
-              autoFocus={true}
-              placeholder="신고사유를 작성해주세요. (최대 300자)  ex)풍기문란, 욕설, 성희롱"
-              onChange={setContent}
-            />
-            <button>신고하기</button>
-          </Form>
-        </ModalWrapper>
-      ) : (
-        <></>
-      )}
-    </>
-  );
-};
-
-export default React.memo(BoardReportComponent);
+    return (
+      <>
+        {reportData.active ? (
+          <ModalWrapper>
+            <Head>
+              <Title>작성자 신고하기</Title>
+              <FeedXButton onClick={close} />
+            </Head>
+            <Form onSubmit={submitReport}>
+              <textarea
+                minLength={1}
+                maxLength={300}
+                autoFocus={true}
+                placeholder="신고사유를 작성해주세요. (최대 300자)  ex)풍기문란, 욕설, 성희롱"
+                onChange={handleChange}
+              />
+              <button>신고하기</button>
+            </Form>
+          </ModalWrapper>
+        ) : (
+          <></>
+        )}
+      </>
+    );
+  }
+}
