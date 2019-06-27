@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import BoardContainer from 'container/board/board.container';
+import ErrorContainer from 'container/error';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
 import MainCalendarPage from 'pages/calendar/main-calendar';
@@ -33,10 +34,18 @@ const MainComponents = () => (
   </>
 );
 
+const ErrorComponents = () => (
+  <>
+    <ErrorContainer />
+    <FooterPage />
+  </>
+);
+
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   history,
   resetUser,
+  location,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
@@ -47,15 +56,21 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
 
   return loginStatus === 'success' ? (
     <>
-      <HeaderContainer />
-      <Empty />
+      {location.pathname !== '/error' && (
+        <>
+          <HeaderContainer />
+          <Empty />
+        </>
+      )}
+
       <Switch>
         <Route exact={true} path="/" component={MainComponents} />
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
-        <Redirect to="/" />
+        <Route exact={true} path="/error" component={ErrorComponents} />
+        <Redirect to="/error" />
       </Switch>
     </>
   ) : (

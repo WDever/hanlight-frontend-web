@@ -1,10 +1,11 @@
+import React from 'react';
+
 import AutoLoginPage from 'pages/auth/autoLogin';
 import LoginPage from 'pages/auth/login';
 import PhoneCheckPage from 'pages/auth/phoneCheck';
 import RecoveryPage from 'pages/auth/recovery';
 import RegisterPage from 'pages/auth/register';
 import MainPage from 'pages/main';
-import React from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
