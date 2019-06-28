@@ -10,7 +10,9 @@ const AutoErrorCheckComponent: React.FC<
 > = ({ history, location, onError, code, message, name }) => {
   useEffect(() => {
     if (onError) {
-      if (
+      if (!code) {
+        alert(message);
+      } else if (
         code === 403 ||
         (!location.pathname.includes('/board') && code === 404) ||
         code >= 500
@@ -18,7 +20,7 @@ const AutoErrorCheckComponent: React.FC<
         history.push('/error');
       }
     }
-  }, [onError, code, message, name]);
+  }, [onError]);
 
   return <></>;
 };

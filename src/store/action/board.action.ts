@@ -322,18 +322,6 @@ export class ResetBoard implements Action {
   public readonly type = RESET_BOARD;
 }
 
-export const boardFailureActions = [
-  POST_BOARD_FAILURE,
-  PATCH_BOARD_FAILURE,
-  DELETE_BOARD_FAILURE,
-  GET_BOARD_COMMENT_FAILURE,
-  POST_BOARD_COMMENT_FAILURE,
-  PATCH_BOARD_COMMENT_FAILURE,
-  DELETE_BOARD_COMMENT_FAILURE,
-  LIKE_FAILURE,
-  REPORT_FAILURE,
-];
-
 export const boardActions = {
   getBoard: createStandardAction(GET_BOARD)<GetBoardParams>(),
   postBoard: createStandardAction(POST_BOARD)<PostBoardParams>(),

@@ -204,8 +204,6 @@ export default class BoardFormComponent extends React.Component<
           files: [],
           textAreaHeight: 52.8,
         });
-      } else if (this.props.postBoardStatus === 'failure') {
-        alert('게시물이 정상적으로 업로드되지 않았습니다.');
       }
     }
   }

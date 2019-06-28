@@ -5,7 +5,7 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { AppState } from 'store';
 
 export interface AutoErrorCheckProps {
-  onError: boolean;
+  onError: number;
   code: number;
   message: string;
   name: string;

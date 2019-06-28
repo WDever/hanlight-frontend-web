@@ -19,6 +19,7 @@ const ModalWrapper = styled.div`
   position: absolute;
   top: 30%;
   z-index: 9;
+  font-family: 'Spoqa Han Sans';
   background-color: #ffffff;
   border-radius: 4px;
   border: solid 1px #d1d1d1;
@@ -29,23 +30,24 @@ const ModalWrapper = styled.div`
 
 const Head = styled.div`
   width: 100%;
-  font-family: 'Spoqa Han Sans';
+  min-height: 2.3rem;
   font-size: 0.875rem;
+  font-family: inherit;
   background-color: #ffffff;
   border-bottom: solid 1px #e5e5e5;
-  min-height: 2.3rem;
+  font-family: inherit;
   display: flex;
   align-items: center;
   justify-content: space-between;
 `;
 
 const FeedXButton = styled.span`
-  position: absolute;
+  width: 19px;
+  top: 17px;
   right: 11px;
   height: 10px;
-  width: 19px;
   border-radius: 1.25rem;
-  top: 17px;
+  position: absolute;
 
   cursor: pointer;
 
@@ -76,6 +78,7 @@ const Form = styled.form`
   width: 90%;
   height: 11rem;
   font-size: 0.875rem;
+  font-family: inherit;
   margin-top: 0.5rem;
   display: flex;
   flex-direction: column;
@@ -85,6 +88,7 @@ const Form = styled.form`
   textarea {
     min-height: 73.07%;
     font-size: 0.875rem;
+    font-family: inherit;
     width: 100%;
     outline: none;
     resize: none;
@@ -124,12 +128,7 @@ export default class BoardReportComponent extends React.Component<
 
     if (prevProps.reportStatus === 'pending' && reportStatus === 'success') {
       this.close();
-      alert('신고 성공');
-    } else if (
-      prevProps.reportStatus === 'pending' &&
-      reportStatus === 'failure'
-    ) {
-      alert('신고 실패');
+      alert('정상적으로 신고되었습니다.');
     }
   }
 

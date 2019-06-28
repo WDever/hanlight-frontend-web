@@ -72,8 +72,10 @@ const CalendarItem: React.FC<ItemProps> = ({
           {year}년<Colored> {month}</Colored>월<Colored> {day}</Colored>일
         </Texts>
       </DateWrapper>
-      {contents.split(',').map(content => (
-        <Texts content={true}>{content}</Texts>
+      {contents.split(',').map((content, i) => (
+        <Texts content={true} key={i}>
+          {content}
+        </Texts>
       ))}
     </ContentsWrapper>
   </Box>

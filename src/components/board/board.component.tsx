@@ -3,8 +3,11 @@ import * as React from 'react';
 import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
+import { usePrevious } from 'lib/hooks';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
+
+const { useEffect } = React;
 
 const Templete = styled.div`
   width: 100%;
@@ -56,13 +59,59 @@ const Feeds = styled.div`
 `;
 
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
-  deemBoard,
   deemBoardStatus,
   resetError,
+  likeStatus,
+  reportStatus,
+  getBoardStatus,
+  postBoardStatus,
+  patchBoardStatus,
+  deleteBoardStatus,
+  getBoardCommentStatus,
+  postBoardCommentStatus,
+  patchBoardCommentStatus,
+  deleteBoardCommentStatus,
+  errorCode,
+  errorMessage,
 }) => {
-  React.useEffect(() => {
+  const statusProps: {
+    [key: string]: 'none' | 'pending' | 'success' | 'failure';
+  } = {
+    likeStatus,
+    reportStatus,
+    getBoardStatus,
+    postBoardStatus,
+    patchBoardStatus,
+    deleteBoardStatus,
+    getBoardCommentStatus,
+    postBoardCommentStatus,
+    patchBoardCommentStatus,
+    deleteBoardCommentStatus,
+  };
+
+  const prevStatusProps:
+    | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
+    | undefined = usePrevious(statusProps);
+
+  useEffect(() => {
     return () => resetError();
   }, []);
+
+  useEffect(() => {
+    if (prevStatusProps) {
+      if (
+        Object.keys(prevStatusProps).some(
+          status =>
+            prevStatusProps[status] === 'pending' &&
+            statusProps[status] === 'failure',
+        )
+      ) {
+        if (errorCode === 404 || errorCode === 412) {
+          alert(errorMessage);
+        }
+      }
+    }
+  }, [statusProps]);
 
   return (
     <Templete>
@@ -71,7 +120,11 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />
-            <BoardFeedContainer />
+            <BoardFeedContainer
+              likeStatus={likeStatus}
+              errorCode={errorCode}
+              errorMessage={errorMessage}
+            />
           </Feeds>
           {window.innerWidth > 1024 && <BoardRolePage />}
         </BoardWrapper>
