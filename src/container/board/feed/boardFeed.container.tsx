@@ -4,6 +4,7 @@ import BoardFeedComponent from 'components/board/feed';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
+  ActiveReportData,
   AppState,
   Board,
   boardActions,
@@ -13,7 +14,6 @@ import {
   GetBoardParams,
   LikeParams,
   PatchBoardParams,
-  ActiveReportData,
   ReportParams,
 } from 'store';
 
@@ -26,7 +26,6 @@ export interface BoardFeedProps {
   getBoardStatus: status;
   patchBoardStatus: status;
   deleteBoardStatus: status;
-  likeStatus: status;
   getBoardCommentStatus: status;
   deemBoardStatus: boolean;
 }
@@ -43,16 +42,25 @@ export interface BoardFeedMethod {
   activeReport(data: ActiveReportData): void;
 }
 
-const mapStateToProps = ({ user, board }: AppState) => ({
+export interface BoardFeedOwnProps {
+  errorCode: number;
+  errorMessage: string;
+  likeStatus: status;
+}
+
+const mapStateToProps = (
+  { user, board }: AppState,
+  ownProps: BoardFeedOwnProps,
+) => ({
   accessToken: user.accessToken,
   board: board.board,
   boardCount: board.boardCount,
   getBoardStatus: board.getBoardStatus,
   patchBoardStatus: board.patchBoardStatus,
   deleteBoardStatus: board.deleteBoardStatus,
-  likeStatus: board.likeStatus,
   getBoardCommentStatus: board.getBoardCommentStatus,
   deemBoardStatus: board.deemBoardStatus,
+  ...ownProps,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({

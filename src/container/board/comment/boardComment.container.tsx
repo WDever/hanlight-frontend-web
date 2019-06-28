@@ -28,7 +28,7 @@ export interface BoardCommentMethod {
 }
 
 export interface BoardCommentOwnProps {
-  comments: Comment[];
+  comment: Comment[];
   commentCount: number;
   board_pk: number;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -40,7 +40,7 @@ export interface BoardCommentOwnProps {
 }
 
 const mapStateToProps = (
-  { board, user }: AppState,
+  { board, user, error }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
   accessToken: user.accessToken,

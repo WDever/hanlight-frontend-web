@@ -20,31 +20,21 @@ export interface BoardFormMethod {
   postBoard: ({ accessToken, content, files }: PostBoardParams) => void;
 }
 
-const BoardFormContainer: React.FC<BoardFormProps & BoardFormMethod> = ({
-  accessToken,
-  postBoardStatus,
-  postBoard,
-  userType,
-}) => (
-  <BoardFormComponent
-    accessToken={accessToken}
-    postBoardStatus={postBoardStatus}
-    postBoard={postBoard}
-    userType={userType}
-  />
-);
-
-const mapStateToProps = ({ user, board }: AppState) => ({
+const mapStateToProps = ({ user, board, error }: AppState) => ({
   accessToken: user.accessToken,
   postBoardStatus: board.postBoardStatus,
   userType: user.data.type,
+  errorCode: error.code,
+  errorMessage: error.message,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   postBoard: bindActionCreators(boardActions.postBoard, dispatch),
 });
 
-export default connect(
+const BoardFormContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(BoardFormContainer);
+)(BoardFormComponent);
+
+export default BoardFormContainer;

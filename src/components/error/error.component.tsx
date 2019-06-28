@@ -63,23 +63,13 @@ const Button = styled.button`
 
 const ErrorComponent: React.FC<
   ErrorProps & ErrorMethod & RouteComponentProps
-> = ({ onError, code, name, message, history, setError, resetError }) => {
-  const toMain = (e: React.MouseEvent<HTMLButtonElement>) => {
+> = ({ onError, code, name, message, history, resetError }) => {
+  const toPrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    history.push('/');
+    history.goBack();
   };
 
   useEffect(() => {
-    if (!onError) {
-      setError({
-        code: 404,
-        name: 'Page Not Found',
-        message:
-          '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 옳바른지 확인해주세요.',
-        description: '',
-      });
-    }
-
     return () => resetError();
   }, []);
 
@@ -88,10 +78,14 @@ const ErrorComponent: React.FC<
       <Center>
         <LeftWrapper>
           <Title>
-            {code} - {name}
+            {onError ? `${code} - ${name}` : '404 - Page Not Found'}
           </Title>
-          <Content>{message}</Content>
-          <Button onClick={toMain}>메인으로</Button>
+          <Content>
+            {onError
+              ? message
+              : '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 옳바른지 확인해주세요.'}
+          </Content>
+          <Button onClick={toPrevious}>이전으로</Button>
         </LeftWrapper>
         <ErrorImg src={Illust} alt="" />
       </Center>

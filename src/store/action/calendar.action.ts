@@ -61,11 +61,6 @@ export class GetCalendarRecentFailure implements Action {
   public readonly type = GET_CALENDAR_RECENT_FAILURE;
 }
 
-export const calendarFailureActions = [
-  GET_CALENDAR_FAILURE,
-  GET_CALENDAR_RECENT_FAILURE,
-];
-
 export const calendarActions = {
   getCalendar: createStandardAction(GET_CALENDAR)<GetCalendarParams>(),
   getCalendarRecent: createStandardAction(GET_CALENDAR_RECENT)<string>(),

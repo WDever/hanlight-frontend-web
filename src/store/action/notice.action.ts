@@ -68,11 +68,6 @@ export class GetNoticePostFailure implements Action {
   public readonly type = GET_NOTICE_POST_FAILURE;
 }
 
-export const noticeFailureActions = [
-  GET_NOTICE_LIST_FAILURE,
-  GET_NOTICE_POST_FAILURE,
-];
-
 export const noticeActions = {
   getNoticeList: createStandardAction(GET_NOTICE_LIST)<GetNoticeListParams>(),
   getNoticePost: createStandardAction(GET_NOTICE_POST)<GetNoticePostParams>(),

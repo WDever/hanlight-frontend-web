@@ -1,6 +1,7 @@
 import { all } from 'redux-saga/effects';
 import { boardSaga } from './board.saga';
 import { calendarSaga } from './calendar.saga';
+import { errorSaga } from './error.saga';
 import { mealSaga } from './meal.saga';
 import { noticeSaga } from './notice.saga';
 import { timeTableSaga } from './timeTable.saga';
@@ -14,6 +15,7 @@ function* rootSaga() {
     noticeSaga(),
     timeTableSaga(),
     boardSaga(),
+    errorSaga(),
   ]);
 }
 

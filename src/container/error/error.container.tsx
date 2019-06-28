@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import ErrorComponent from 'components/error';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -10,14 +11,13 @@ import {
 } from 'store';
 
 export interface ErrorProps {
-  onError: boolean;
+  onError: number;
   code: number;
   message: string;
   name: string;
 }
 
 export interface ErrorMethod {
-  setError: (payload: ErrorResponse) => void;
   resetError: () => void;
 }
 
@@ -29,7 +29,6 @@ const mapStateToProps = ({ error }: AppState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions>) => ({
-  setError: bindActionCreators(errorActions.setError, dispatch),
   resetError: bindActionCreators(errorActions.resetError, dispatch),
 });
 
