@@ -44,7 +44,6 @@ import {
   VerifyPhone,
   VerifyPhoneParam,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const loginApi = (data: LoginParam) =>
   instance
