@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 interface BoxProps {
   today: boolean;
+  type: 'main' | 'detail';
 }
 
 interface TextProps {
@@ -17,8 +18,8 @@ interface ItemProps extends BoxProps {
 }
 
 const Box = styled.div<BoxProps>`
-  width: 15.875rem;
-  height: 15.875rem;
+  width: ${props => (props.type === 'main' ? '15.875rem' : '12.5rem')};
+  height: ${props => (props.type === 'main' ? '15.875rem' : '16.575rem')};
   box-shadow: ${props =>
     props.today ? '0 6px 30px 0 rgba(139, 139, 139, 0.16)' : 'none'};
   border: ${props => (props.today ? 'none' : 'solid 1px #b9b9b9')};
@@ -28,6 +29,8 @@ const Box = styled.div<BoxProps>`
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
+  margin: ${props => (props.type === 'detail' ? '2.1875rem 1rem' : 'none')};
+  /* margin-bottom: ${props => (props.type === 'detail' ? '2.1875rem' : 'none')}; */
 `;
 
 const ContentsWrapper = styled.div`
@@ -63,8 +66,9 @@ const CalendarItem: React.FC<ItemProps> = ({
   day,
   contents,
   today,
+  type,
 }) => (
-  <Box today={today}>
+  <Box type={type} today={today}>
     <ContentsWrapper>
       <DateWrapper>
         <Texts>{today ? '오늘은' : '다가오는'}</Texts>
