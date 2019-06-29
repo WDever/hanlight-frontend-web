@@ -37,7 +37,6 @@ const MonthBar = styled.div`
   width: 60%;
   display: flex;
   justify-content: space-between;
-  /* margin-right: 1rem; */
   margin-bottom: 0.5rem;
   align-items: flex-end;
 
@@ -54,17 +53,11 @@ const MonthItem = styled.span<{ now: boolean }>`
 
 const CalendarWrapper = styled.div<{ test: number}>`
   width: 105%;
-  /* 나중에 사용 할 수도 있음*/
-  /* width: 100%;
-  display: flex;
-  /* justify-content: space-between;
-  justify-content: flex-start; */
-  /* flex-wrap: wrap; */
   display: ${ ({test}) => ( test === 0 ? 'flex' : 'grid')};
   justify-content: center;
   align-items: center;
   grid-template-columns: repeat(5, 1fr);
-  margin: 0 -1.1rem;
+  margin: 0 -1.05rem;
 
   p {
     font-size: 2rem;
@@ -132,46 +125,6 @@ const DetailCalendarComponent: React.FC<
     ) : (
       <p>학사일정이 없습니다.</p>
     );
-
-  // 나중에라도 쓸거에요 아직 안지우려구요
-
-  //   Array(Math.ceil(calendar.length / 5))
-  //     .fill(null)
-  //     .map((item, i, org) => {
-  //       return (
-  //         // <CalendarLine amount={calendar.length % 5} key={i}>
-  //         <CalendarLine
-  //           amount={calendar.slice(i * 5, (i + 1) * 5).length}
-  //           key={i}
-  //         >
-  //           {calendar.slice(i * 5, (i + 1) * 5).map((item, i) => {
-  //             const today =
-  //               moment().format('M.D') === `${selectedMonth}.${item.date}`;
-
-  //             return (
-  //               // <div
-  //               //   style={{
-  //               //     width: '1fr',
-  //               //     display: 'flex',
-  //               //     justifyContent: 'center',
-  //               //   }}
-  //               // >
-  //               <CalendarItem
-  //                 year={moment().format('YYYY')}
-  //                 month={selectedMonth}
-  //                 day={item.date}
-  //                 contents={item.detail}
-  //                 today={today}
-  //                 key={i}
-  //                 type="detail"
-  //               />
-  //               // </div>
-  //             );
-  //           })}
-  //         </CalendarLine>
-  //       );
-  //     })
-  // : (<span>학사일정이 없습니다.</span>);
 
   useEffect(() => {
     getCalendar({
