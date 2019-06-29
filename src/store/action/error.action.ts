@@ -10,7 +10,7 @@ export const RESET_ERROR = 'RESET_ERROR';
 export class SetError implements Action {
   public readonly type = SET_ERROR;
 
-  public constructor(public payload: AxiosError<ErrorResponse>) {}
+  public constructor(public payload: { err: AxiosError<ErrorResponse> }) {}
 }
 
 export class ResetError implements Action {

@@ -5,6 +5,7 @@ import {
   ActiveReportData,
   AppState,
   boardActions,
+  BoardApiModel,
   boardReducerActions,
   Comment,
   DeleteBoardCommentParams,
@@ -16,8 +17,6 @@ import {
 export interface BoardCommentProps {
   accessToken: string;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-  deleteBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
-  patchBoardCommentStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface BoardCommentMethod {
@@ -34,19 +33,18 @@ export interface BoardCommentOwnProps {
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
   page: number;
   deemBoard: (payload: boolean) => void;
+  boardApiStatus: BoardApiModel;
   like(data: LikeParams): void;
   GetBoardComments(e: React.MouseEvent<HTMLButtonElement>): void;
   setReportToggle(value: React.SetStateAction<boolean>): void;
 }
 
 const mapStateToProps = (
-  { board, user, error }: AppState,
+  { board, user }: AppState,
   ownProps: BoardCommentOwnProps,
 ) => ({
   accessToken: user.accessToken,
   userType: user.data.type,
-  deleteBoardCommentStatus: board.deleteBoardCommentStatus,
-  patchBoardCommentStatus: board.patchBoardCommentStatus,
   ...ownProps,
 });
 

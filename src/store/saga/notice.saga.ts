@@ -38,7 +38,7 @@ function* getNoticeListApiSaga(action: GetNoticeList) {
       yield put({
         type: SET_ERROR,
         name: GET_NOTICE_LIST_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -67,7 +67,7 @@ function* getNoticPostApiSaga(action: GetNoticePost) {
       yield put({
         type: SET_ERROR,
         name: GET_NOTICE_POST_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }

@@ -28,7 +28,7 @@ function* getTimetableApiSaga(action: GetTimetable) {
       yield put({
         type: SET_ERROR,
         name: GET_TIMETABLE_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }

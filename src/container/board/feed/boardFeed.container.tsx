@@ -8,6 +8,7 @@ import {
   AppState,
   Board,
   boardActions,
+  BoardApiModel,
   boardReducerActions,
   DeleteBoardParams,
   GetBoardCommentParams,
@@ -23,10 +24,6 @@ export interface BoardFeedProps {
   accessToken: string;
   board: Board[];
   boardCount: number;
-  getBoardStatus: status;
-  patchBoardStatus: status;
-  deleteBoardStatus: status;
-  getBoardCommentStatus: status;
   deemBoardStatus: boolean;
 }
 
@@ -46,6 +43,7 @@ export interface BoardFeedOwnProps {
   errorCode: number;
   errorMessage: string;
   likeStatus: status;
+  boardApiStatus: BoardApiModel;
 }
 
 const mapStateToProps = (
@@ -55,10 +53,6 @@ const mapStateToProps = (
   accessToken: user.accessToken,
   board: board.board,
   boardCount: board.boardCount,
-  getBoardStatus: board.getBoardStatus,
-  patchBoardStatus: board.patchBoardStatus,
-  deleteBoardStatus: board.deleteBoardStatus,
-  getBoardCommentStatus: board.getBoardCommentStatus,
   deemBoardStatus: board.deemBoardStatus,
   ...ownProps,
 });

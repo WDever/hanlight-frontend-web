@@ -6,7 +6,7 @@ import { ErrorResponse } from 'store/model';
 
 interface FailureAction extends Action {
   name?: string;
-  payload: AxiosError<ErrorResponse>;
+  payload: { err: AxiosError<ErrorResponse>; origin: Action };
 }
 
 export function* ErrorSaga(action: FailureAction) {

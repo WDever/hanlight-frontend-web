@@ -20,8 +20,8 @@ export default class BoardFeedComponent extends React.Component<
 
   public infiniteScroll = () => {
     if (
-      this.props.getBoardStatus !== 'none' &&
-      this.props.getBoardStatus !== 'pending' &&
+      this.props.boardApiStatus.getBoardStatus !== 'none' &&
+      this.props.boardApiStatus.getBoardStatus !== 'pending' &&
       document.documentElement.scrollTop +
         document.documentElement.clientHeight ===
         document.documentElement.scrollHeight &&
@@ -44,12 +44,12 @@ export default class BoardFeedComponent extends React.Component<
   }
 
   public componentDidUpdate(
-    prevProps: BoardFeedProps & BoardFeedMethod,
+    prevProps: BoardFeedProps & BoardFeedMethod & BoardFeedOwnProps,
     prevState: BoardFeedState,
   ) {
     if (prevProps !== this.props) {
-      if (prevProps.deleteBoardStatus === 'pending') {
-        if (this.props.deleteBoardStatus === 'success') {
+      if (prevProps.boardApiStatus.deleteBoardStatus === 'pending') {
+        if (this.props.boardApiStatus.deleteBoardStatus === 'success') {
           alert('성공적으로 삭제되었습니다.');
         }
       }
@@ -71,7 +71,10 @@ export default class BoardFeedComponent extends React.Component<
     comment_pk?: number;
     content?: string;
   }) => {
-    if (action === 'delete' && this.props.deleteBoardStatus !== 'pending') {
+    if (
+      action === 'delete' &&
+      this.props.boardApiStatus.deleteBoardStatus !== 'pending'
+    ) {
       window.confirm('정말로 삭제하시겠습니까?') &&
         this.props.deleteBoard({
           board_pk,
@@ -105,13 +108,12 @@ export default class BoardFeedComponent extends React.Component<
     const {
       accessToken,
       board,
-      getBoardCommentStatus,
       like,
       likeStatus,
       deemBoard,
       deemBoardStatus,
-      patchBoardStatus,
       activeReport,
+      boardApiStatus,
     } = this.props;
     const { handleOption, getBoardComments } = this;
 
@@ -122,13 +124,12 @@ export default class BoardFeedComponent extends React.Component<
         board={val}
         handleOption={handleOption}
         getBoardComments={getBoardComments}
-        getBoardCommentStatus={getBoardCommentStatus}
         like={like}
         likeStatus={likeStatus}
         deemBoard={deemBoard}
         deemBoardStatus={deemBoardStatus}
-        patchBoardStatus={patchBoardStatus}
         activeReport={activeReport}
+        boardApiStatus={boardApiStatus}
       />
     ));
   }

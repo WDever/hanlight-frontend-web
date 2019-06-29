@@ -5,10 +5,7 @@ import {
   BoardReportOwnProps,
   BoardReportProps,
 } from 'container/board/report';
-import { useInput } from 'lib/hooks';
 import styled from 'styled-components';
-
-const { useRef } = React;
 
 const ModalWrapper = styled.div`
   width: 100%;
@@ -123,35 +120,30 @@ export default class BoardReportComponent extends React.Component<
     content: '',
   };
 
-  public componentDidUpdate(prevProps: BoardReportProps) {
-    const { reportStatus } = this.props;
-
-    if (prevProps.reportStatus === 'pending' && reportStatus === 'success') {
-      this.close();
-      alert('정상적으로 신고되었습니다.');
-    }
-  }
-
   public submitReport = (e: React.FormEvent<HTMLFormElement>) => {
-    const { ActiveReportData, report, accessToken } = this.props;
+    const { ActiveReportData, report, reportStatus, accessToken } = this.props;
     const { content } = this.state;
 
     e.preventDefault();
-    if (ActiveReportData.type === 'board') {
-      report({
-        accessToken,
-        type: ActiveReportData.type,
-        board_pk: ActiveReportData.board_pk,
-        content,
-      });
-    } else if (ActiveReportData.type === 'comment') {
-      report({
-        accessToken,
-        type: ActiveReportData.type,
-        board_pk: ActiveReportData.board_pk,
-        comment_pk: ActiveReportData.comment_pk,
-        content,
-      });
+
+    if (reportStatus !== 'pending' && content) {
+      if (ActiveReportData.type === 'board') {
+        report({
+          accessToken,
+          type: ActiveReportData.type,
+          board_pk: ActiveReportData.board_pk,
+          content,
+        });
+      } else if (ActiveReportData.type === 'comment') {
+        report({
+          accessToken,
+          type: ActiveReportData.type,
+          board_pk: ActiveReportData.board_pk,
+          comment_pk: ActiveReportData.comment_pk,
+          content,
+        });
+      }
+      this.close();
     }
   };
 

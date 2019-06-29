@@ -47,13 +47,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     }
   }, [loginStatus]);
 
-  const ErrorComponents = () => (
-    <>
-      <ErrorContainer />
-      <FooterPage />
-    </>
-  );
-
   return loginStatus === 'success' ? (
     <>
       {location.pathname !== '/error' && (

@@ -46,7 +46,7 @@ function* getMealApiSaga(action: GetMeal) {
           action.payload.sort === 'week'
             ? GET_MEAL_WEEK_FAILURE
             : GET_MEAL_MONTH_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -71,7 +71,7 @@ function* getMealOrderApiSaga(action: GetMealOrder) {
       yield put({
         type: SET_ERROR,
         name: GET_MEAL_ORDER_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }

@@ -44,6 +44,11 @@ const StyledNavLink = styled(NavLink)<{ active: boolean }>`
   font-size: 1rem;
   color: ${props => (props.active ? '#4460ff' : '#565656')};
   font-weight: ${props => (props.active ? 'bold' : 'none')};
+
+  &:hover {
+    color: #4460ff;
+    font-weight: bold;
+  }
 `;
 
 const Provider = styled.span`
