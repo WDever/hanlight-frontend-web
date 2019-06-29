@@ -30,7 +30,6 @@ const Box = styled.div<BoxProps>`
   justify-content: center;
   border-radius: 1rem;
   margin: ${props => (props.type === 'detail' ? '2.1875rem 1rem' : 'none')};
-  /* margin-bottom: ${props => (props.type === 'detail' ? '2.1875rem' : 'none')}; */
 `;
 
 const ContentsWrapper = styled.div`
@@ -46,7 +45,7 @@ const Texts = styled.span<TextProps>`
   font-family: 'Spoqa Han Sans';
   font-weight: ${props => (props.content ? 'bold' : 'normal')};
   color: ${props => (props.content ? '#4470ff' : 'black')};
-  font-size: ${props => (props.content ? '2rem' : '1rem')};
+  font-size: ${props => (props.content ? '1.5rem' : '1rem')};
 `;
 
 const Colored = styled.span`
@@ -76,7 +75,7 @@ const CalendarItem: React.FC<ItemProps> = ({
           {year}년<Colored> {month}</Colored>월<Colored> {day}</Colored>일
         </Texts>
       </DateWrapper>
-      {contents.split(',').map((content, i) => (
+      {contents.split(/,|\s/g).map((content, i) => (
         <Texts content={true} key={i}>
           {content}
         </Texts>
