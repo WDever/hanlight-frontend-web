@@ -76,7 +76,7 @@ function* getBoardApiSaga(action: GetBoard) {
       console.log(e.response);
       yield put({
         type: SET_ERROR,
-        payload: e,
+        payload: { err: e, origin: action.payload },
         name: GET_BOARD_FAILURE,
       });
     }
@@ -107,7 +107,7 @@ function* postBoardApiSaga(action: PostBoard) {
     } catch (e) {
       yield put({
         type: SET_ERROR,
-        payload: e,
+        payload: { err: e, origin: action.payload },
         name: POST_BOARD_FAILURE,
       });
     }
@@ -139,7 +139,7 @@ function* patchBoardApiSaga(action: PatchBoard) {
       yield put({
         type: SET_ERROR,
         name: PATCH_BOARD_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -166,7 +166,7 @@ function* deleteBoardApiSaga(action: DeleteBoard) {
       yield put({
         type: SET_ERROR,
         name: DELETE_BOARD_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -199,7 +199,7 @@ function* getBoardCommentApiSaga(action: GetBoardComment) {
         name: yield put({
           type: SET_ERROR,
           name: GET_BOARD_COMMENT_FAILURE,
-          payload: e,
+          payload: { err: e, origin: action.payload },
         }),
       });
     }
@@ -237,7 +237,7 @@ function* postBoardCommentApiSaga(action: PostBoardComment) {
       yield put({
         type: SET_ERROR,
         name: POST_BOARD_COMMENT_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -275,7 +275,7 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
       yield put({
         type: SET_ERROR,
         name: PATCH_BOARD_COMMENT_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -306,7 +306,7 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
       yield put({
         type: SET_ERROR,
         name: DELETE_BOARD_COMMENT_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -338,7 +338,7 @@ function* likeApiSaga(action: Like) {
       yield put({
         type: SET_ERROR,
         name: LIKE_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -350,13 +350,11 @@ const reportApi = (data: ReportParams) =>
       '/api/board/report',
       {
         content: data.content,
+        type: data.type,
+        board_pk: data.board_pk,
+        comment_pk: data.comment_pk,
       },
       {
-        params: {
-          type: data.type,
-          board_pk: data.board_pk,
-          comment_pk: data.comment_pk,
-        },
         headers: {
           access_token: data.accessToken,
         },
@@ -368,12 +366,12 @@ function* reportApiSaga(action: Report) {
     try {
       const response = yield call(reportApi, action.payload);
       console.log(response);
-      yield put({ type: REPORT_SUCCESS, payload: action.payload });
+      yield put({ type: REPORT_SUCCESS });
     } catch (e) {
       yield put({
         type: SET_ERROR,
         name: REPORT_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }

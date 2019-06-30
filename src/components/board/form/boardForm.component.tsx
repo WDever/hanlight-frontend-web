@@ -40,8 +40,8 @@ const FormContentWrapper = styled.div`
 
 const FormBody = styled.div`
   width: 100%;
-  margin-top: 2.25rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
 
   display: flex;
   align-items: center;

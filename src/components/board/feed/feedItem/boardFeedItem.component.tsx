@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import BoardCommentContainer from 'container/board/comment';
 import BoardReportContainer from 'container/board/report';
+import { usePrevious } from 'lib/hooks';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -12,7 +13,7 @@ import ReportIcon from 'lib/svg/report-icon.svg';
 import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { ActiveReportData, Board, LikeParams } from 'store';
+import { ActiveReportData, Board, BoardApiModel, LikeParams } from 'store';
 import styled from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -321,9 +322,8 @@ interface FeedItemProps {
   accessToken: string;
   board: Board;
   likeStatus: status;
-  getBoardCommentStatus: status;
-  patchBoardStatus: status;
   deemBoardStatus: boolean;
+  boardApiStatus: BoardApiModel;
 }
 
 interface FeedItemMethod {
@@ -343,13 +343,30 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   board,
   handleOption,
   getBoardComments,
-  getBoardCommentStatus,
   like,
   likeStatus,
   deemBoard,
-  patchBoardStatus,
   activeReport,
+  boardApiStatus,
 }) => {
+  const {
+    getBoardStatus,
+    postBoardStatus,
+    patchBoardStatus,
+    deleteBoardStatus,
+  } = boardApiStatus;
+
+  const statusProps: {
+    [key: string]: 'none' | 'pending' | 'success' | 'failure';
+  } = {
+    getBoardStatus,
+    postBoardStatus,
+    patchBoardStatus,
+    deleteBoardStatus,
+  };
+  const prevStatusProps:
+    | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
+    | undefined = usePrevious(statusProps);
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editing, setEditing] = React.useState<boolean>(false);
   const [editHeight, setEditHeight] = React.useState<number>(80);
@@ -366,12 +383,41 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   const [reportToggle, setReportToggle] = React.useState<boolean>(false);
 
   React.useEffect(() => {
-    setOptionToggle(false);
-  }, [board]);
+    if (prevStatusProps) {
+      if (
+        Object.keys(prevStatusProps).some(
+          status =>
+            prevStatusProps[status] === 'pending' &&
+            statusProps[status] !== 'pending',
+        )
+      ) {
+        if (editing) {
+          deemBoard(false);
+          setEditing(false);
+          setEditHeight(80);
+          setEditContent('');
+        }
+        if (imgToggle.toggle) {
+          setImgToggle({ toggle: false, index: 0 });
+          deemBoard(false);
+        }
+        if (reportToggle) {
+          deemBoard(false);
+          setReportToggle(false);
+          activeReport({
+            active: false,
+            type: 'none',
+            board_pk: board.pk,
+          });
+        }
+        setOptionToggle(false);
+      }
+    }
+  }, [statusProps]);
 
   const GetBoardComments = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (getBoardCommentStatus !== 'pending') {
+    if (boardApiStatus.getBoardCommentStatus !== 'pending') {
       getBoardComments({ board_pk: board.pk, page });
       setPage(page + 1);
     }
@@ -643,6 +689,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           page={page}
           deemBoard={deemBoard}
           setReportToggle={setReportToggle}
+          boardApiStatus={boardApiStatus}
         />
       </Feed>
     </FeedWrapper>

@@ -45,7 +45,7 @@ function* getCalendarApiSaga(action: GetCalendar) {
       yield put({
         type: SET_ERROR,
         name: GET_CALENDAR_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }
@@ -61,7 +61,7 @@ function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
       yield put({
         type: SET_ERROR,
         name: GET_CALENDAR_RECENT_FAILURE,
-        payload: e,
+        payload: { err: e, origin: action.payload },
       });
     }
   }

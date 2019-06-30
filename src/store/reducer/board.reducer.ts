@@ -84,6 +84,17 @@ export const boardReducer = (
       }
       case 'PATCH_BOARD_FAILURE':
         draft.patchBoardStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          draft.board.splice(
+            draft.board.findIndex(
+              board => board.pk === action.payload.origin.board_pk,
+            ),
+            1,
+          );
+        }
         break;
 
       case 'DELETE_BOARD':
@@ -97,6 +108,17 @@ export const boardReducer = (
         break;
       case 'DELETE_BOARD_FAILURE':
         draft.deleteBoardStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          draft.board.splice(
+            draft.board.findIndex(
+              board => board.pk === action.payload.origin.board_pk,
+            ),
+            1,
+          );
+        }
         break;
 
       case 'GET_BOARD_COMMENT':
@@ -119,6 +141,17 @@ export const boardReducer = (
       }
       case 'GET_BOARD_COMMENT_FAILURE':
         draft.getBoardCommentStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          draft.board.splice(
+            draft.board.findIndex(
+              board => board.pk === action.payload.origin.board_pk,
+            ),
+            1,
+          );
+        }
         break;
 
       case 'POST_BOARD_COMMENT':
@@ -142,6 +175,17 @@ export const boardReducer = (
       }
       case 'POST_BOARD_COMMENT_FAILURE':
         draft.postBoardCommentStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          draft.board.splice(
+            draft.board.findIndex(
+              board => board.pk === action.payload.origin.board_pk,
+            ),
+            1,
+          );
+        }
         break;
 
       case 'PATCH_BOARD_COMMENT':
@@ -163,6 +207,22 @@ export const boardReducer = (
       }
       case 'PATCH_BOARD_COMMENT_FAILURE':
         draft.patchBoardCommentStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          const boardIndex = draft.board.findIndex(
+            board => board.pk === action.payload.origin.board_pk,
+          );
+          action.payload.err.response.data.name === 'NotFoundBoard'
+            ? draft.board.splice(boardIndex, 1)
+            : draft.board[boardIndex].comment.splice(
+                draft.board[boardIndex].comment.findIndex(
+                  comment => comment.pk === action.payload.origin.comment_pk,
+                ),
+                1,
+              );
+        }
         break;
 
       case 'DELETE_BOARD_COMMENT':
@@ -182,6 +242,22 @@ export const boardReducer = (
       }
       case 'DELETE_BOARD_COMMENT_FAILURE':
         draft.deleteBoardCommentStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          const boardIndex = draft.board.findIndex(
+            board => board.pk === action.payload.origin.board_pk,
+          );
+          action.payload.err.response.data.name === 'NotFoundBoard'
+            ? draft.board.splice(boardIndex, 1)
+            : draft.board[boardIndex].comment.splice(
+                draft.board[boardIndex].comment.findIndex(
+                  comment => comment.pk === action.payload.origin.comment_pk,
+                ),
+                1,
+              );
+        }
         break;
 
       case 'REPORT':
@@ -192,6 +268,24 @@ export const boardReducer = (
         break;
       case 'REPORT_FAILURE':
         draft.reportStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          const boardIndex = draft.board.findIndex(
+            board => board.pk === action.payload.origin.board_pk,
+          );
+          if (action.payload.origin.comment_pk) {
+            draft.board[boardIndex].comment.splice(
+              draft.board[boardIndex].comment.findIndex(
+                comment => comment.pk === action.payload.origin.comment_pk,
+              ),
+              1,
+            );
+          } else {
+            draft.board.splice(boardIndex, 1);
+          }
+        }
         break;
       case 'ACTIVE_REPORT':
         draft.activeReportData = action.payload;
@@ -232,6 +326,24 @@ export const boardReducer = (
         break;
       case 'LIKE_FAILURE':
         draft.likeStatus = 'failure';
+        if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code === 404
+        ) {
+          const boardIndex = draft.board.findIndex(
+            board => board.pk === action.payload.origin.board_pk,
+          );
+          if (action.payload.origin.comment_pk) {
+            draft.board[boardIndex].comment.splice(
+              draft.board[boardIndex].comment.findIndex(
+                comment => comment.pk === action.payload.origin.comment_pk,
+              ),
+              1,
+            );
+          } else {
+            draft.board.splice(boardIndex, 1);
+          }
+        }
         break;
 
       case 'DEEM_BOARD':

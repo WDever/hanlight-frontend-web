@@ -25,6 +25,7 @@ const CommentAllBtn = styled.button`
   font-size: 0.875rem;
   font-family: 'Spoqa Han Sans';
   color: #4470ff;
+  background-color: #ffffff;
   margin-bottom: 0.5rem;
   border: none;
   padding: 0;
@@ -37,6 +38,21 @@ const BoardCommentComponent: React.FC<
   const SelectedBoardPk = React.useRef<number>(0);
   const prevProps = usePrevious(props);
 
+  const {
+    deleteBoardCommemnt,
+    patchBoardCommemnt,
+    accessToken,
+    boardApiStatus,
+    board_pk,
+  } = props;
+
+  const {
+    getBoardCommentStatus,
+    postBoardCommentStatus,
+    patchBoardCommentStatus,
+    deleteBoardCommentStatus,
+  } = boardApiStatus;
+
   const handleOption = ({
     action,
     board_pk,
@@ -48,13 +64,6 @@ const BoardCommentComponent: React.FC<
     comment_pk: number;
     content?: string;
   }) => {
-    const {
-      deleteBoardCommemnt,
-      deleteBoardCommentStatus,
-      patchBoardCommemnt,
-      patchBoardCommentStatus,
-      accessToken,
-    } = props;
     if (action === 'delete' && deleteBoardCommentStatus !== 'pending') {
       window.confirm('정말로 삭제하시겠습니까?') &&
         deleteBoardCommemnt({
@@ -70,16 +79,15 @@ const BoardCommentComponent: React.FC<
   };
 
   React.useEffect(() => {
-    const { board_pk, deleteBoardCommentStatus } = props;
     if (prevProps && board_pk === SelectedBoardPk.current) {
       if (
-        prevProps.deleteBoardCommentStatus === 'pending' &&
+        prevProps.boardApiStatus.deleteBoardCommentStatus === 'pending' &&
         deleteBoardCommentStatus === 'success'
       ) {
         alert('성공적으로 삭제되었습니다.');
       }
     }
-  }, [props.deleteBoardCommentStatus]);
+  }, [props.boardApiStatus.deleteBoardCommentStatus]);
 
   const CommentList = props.comment
     .slice()
@@ -88,23 +96,19 @@ const BoardCommentComponent: React.FC<
       return (
         <CommentItem
           key={i}
-          user_name={item.user_name}
-          content={item.content}
-          date={moment(item.createdAt).format('lll')}
-          likeCount={item.likeCount}
-          board_pk={props.board_pk}
+          comment={item}
           comment_pk={item.pk}
+          date={moment(item.createdAt).format('lll')}
+          board_pk={props.board_pk}
           handleOption={handleOption}
           userType={props.userType}
-          write={item.write}
           accessToken={props.accessToken}
           like={props.like}
           likeStatus={props.likeStatus}
-          edited={item.edited}
-          isLiked={item.isLiked}
           deemBoard={props.deemBoard}
           setReportToggle={props.setReportToggle}
           activeReport={props.activeReport}
+          boardApiStatus={boardApiStatus}
         />
       );
     });

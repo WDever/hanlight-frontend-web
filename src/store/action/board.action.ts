@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { Action } from 'redux';
 import { ActiveReportData, Board, Comment, ErrorResponse } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
@@ -123,6 +124,10 @@ export class GetBoardSuccess implements Action {
 
 export class GetBoardFailure implements Action {
   public readonly type = GET_BOARD_FAILURE;
+
+  public constructor(
+    public payload: { err: AxiosError<ErrorResponse>; origin: GetBoardParams },
+  ) {}
 }
 
 export class PostBoard implements Action {
@@ -147,6 +152,10 @@ export class PostBoardSuccess implements Action {
 
 export class PostBoardFailure implements Action {
   public readonly type = POST_BOARD_FAILURE;
+
+  public constructor(
+    public payload: { err: AxiosError<ErrorResponse>; origin: PostBoardParams },
+  ) {}
 }
 
 export class PatchBoard implements Action {
@@ -172,7 +181,12 @@ export class PatchBoardSuccess implements Action {
 export class PatchBoardFailure implements Action {
   public readonly type = PATCH_BOARD_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: PatchBoardParams;
+    },
+  ) {}
 }
 
 export class DeleteBoard implements Action {
@@ -190,7 +204,12 @@ export class DeleteBoardSuccess implements Action {
 export class DeleteBoardFailure implements Action {
   public readonly type = DELETE_BOARD_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: DeleteBoardParams;
+    },
+  ) {}
 }
 
 export class GetBoardComment implements Action {
@@ -214,7 +233,12 @@ export class GetBoardCommentSuccess implements Action {
 export class GetBoardCommentFailure implements Action {
   public readonly type = GET_BOARD_COMMENT_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: GetBoardCommentParams;
+    },
+  ) {}
 }
 
 export class PostBoardComment implements Action {
@@ -232,7 +256,12 @@ export class PostBoardCommentSuccess implements Action {
 export class PostBoardCommentFailure implements Action {
   public readonly type = POST_BOARD_COMMENT_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: PostBoardCommentParams;
+    },
+  ) {}
 }
 
 export class PatchBoardComment implements Action {
@@ -253,7 +282,12 @@ export class PatchBoardCommentSuccess implements Action {
 export class PatchBoardCommentFailure implements Action {
   public readonly type = PATCH_BOARD_COMMENT_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: PatchBoardCommentParams;
+    },
+  ) {}
 }
 
 export class DeleteBoardComment implements Action {
@@ -271,7 +305,12 @@ export class DeleteBoardCommentSuccess implements Action {
 export class DeleteBoardCommentFailure implements Action {
   public readonly type = DELETE_BOARD_COMMENT_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: {
+      err: AxiosError<ErrorResponse>;
+      origin: DeleteBoardCommentParams;
+    },
+  ) {}
 }
 
 export class Report implements Action {
@@ -286,6 +325,10 @@ export class ReportSuccess implements Action {
 
 export class ReportFailure implements Action {
   public readonly type = REPORT_FAILURE;
+
+  public constructor(
+    public payload: { err: AxiosError<ErrorResponse>; origin: ReportParams },
+  ) {}
 }
 
 export class ActiveReport implements Action {
@@ -309,7 +352,9 @@ export class LikeSuccess implements Action {
 export class LikeFailure implements Action {
   public readonly type = LIKE_FAILURE;
 
-  public constructor(public payload: ErrorResponse) {}
+  public constructor(
+    public payload: { err: AxiosError<ErrorResponse>; origin: LikeParams },
+  ) {}
 }
 
 export class DeemBoard implements Action {

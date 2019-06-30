@@ -121,6 +121,16 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
           <Feeds>
             <BoardFormContainer />
             <BoardFeedContainer
+              boardApiStatus={{
+                getBoardStatus,
+                postBoardStatus,
+                patchBoardStatus,
+                deleteBoardStatus,
+                getBoardCommentStatus,
+                postBoardCommentStatus,
+                patchBoardCommentStatus,
+                deleteBoardCommentStatus,
+              }}
               likeStatus={likeStatus}
               errorCode={errorCode}
               errorMessage={errorMessage}
