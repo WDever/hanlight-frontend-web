@@ -47,7 +47,7 @@ const DateBar = styled.div`
 `;
 
 const Select = styled.select`
-  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
@@ -88,13 +88,6 @@ const CalendarWrapper = styled.div<{ listLength: number }>`
   }
 `;
 
-const CalendarLine = styled.div<{ amount: number }>`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  flex-flow: row wrap;
-`;
-
 const DetailCalendarComponent: React.FC<
   DetailCalendarMethod & DetailCalendarProps
 > = ({ getCalendar, getCalendarStatus, accessToken, calendar }) => {
@@ -115,30 +108,17 @@ const DetailCalendarComponent: React.FC<
     setSelecetedYear(value);
   };
 
-  const monthList = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-  ];
-
   const yearList = ['2019', '2020'];
 
-  const MonthList = monthList.map((item, i) => {
-    return (
-      <option key={i} selected={item === selectedMonth} value={item}>
-        {item}월
-      </option>
-    );
-  });
+  const MonthList = Array(12)
+    .fill(null)
+    .map((item, i) => {
+      return (
+        <option key={i} selected={String(i + 1) === selectedMonth} value={i + 1}>
+          {item}월
+        </option>
+      );
+    });
 
   const YearList = yearList.map((item, i) => {
     return (
