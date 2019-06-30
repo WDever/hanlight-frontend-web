@@ -43,6 +43,7 @@ const MainCalendarComponent: React.FC<
               contents={item.detail}
               today={today}
               key={index}
+              type="main"
             />
           );
         })

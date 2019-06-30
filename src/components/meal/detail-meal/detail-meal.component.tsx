@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import MealItemComponent from 'components/meal/mealItem';
-import { DetailMealProps, DetailMealMethod } from 'container/meal/detail-meal';
+import { DetailMealMethod, DetailMealProps } from 'container/meal/detail-meal';
 import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
