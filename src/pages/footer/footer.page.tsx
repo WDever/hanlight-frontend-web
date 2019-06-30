@@ -66,8 +66,8 @@ const FooterPage: React.FC = () => {
         </TextsWrapper>
         <Text>E-Mail : stucon.hansei@gmail.com</Text>
         <RulesWrapper>
-          <Rules to="/terms">[이용약관]</Rules>
-          <Rules to="privacy">[개인정보처리방침]</Rules>
+          <Rules to="/service/termsofuse">[이용약관]</Rules>
+          <Rules to="/service/privacypolicy">[개인정보처리방침]</Rules>
         </RulesWrapper>
         <Text>
           Copyright COPYRIGHT HANSEI CYBER SRCURITY HIGHSCHOOL. ALL RIGHT

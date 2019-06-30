@@ -114,8 +114,12 @@ const DetailCalendarComponent: React.FC<
     .fill(null)
     .map((item, i) => {
       return (
-        <option key={i} selected={String(i + 1) === selectedMonth} value={i + 1}>
-          {item}월
+        <option
+          key={i}
+          selected={String(i + 1) === selectedMonth}
+          value={i + 1}
+        >
+          {i + 1}월
         </option>
       );
     });
@@ -129,7 +133,7 @@ const DetailCalendarComponent: React.FC<
   });
 
   const CalendarList =
-    getCalendarStatus === 'success' && calendar.length !== 0 ? (
+    calendar.length !== 0 ? (
       calendar.map((item, i) => {
         const today =
           moment().format('M.D') === `${selectedMonth}.${item.date}`;
@@ -171,9 +175,14 @@ const DetailCalendarComponent: React.FC<
           </Select>
         </DateBar>
       </TitleBar>
-      <CalendarWrapper listLength={calendar.length}>
-        {CalendarList}
-      </CalendarWrapper>
+      {getCalendarStatus === 'success' && (
+        <CalendarWrapper listLength={calendar.length}>
+          {CalendarList}
+        </CalendarWrapper>
+      )}
+      {getCalendarStatus === 'pending' && (
+        <p style={{ fontFamily: 'Spoqa Han Sans' }}>불러오는중 ... </p>
+      )}
     </Wrapper>
   );
 };

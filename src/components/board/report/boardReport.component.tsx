@@ -120,6 +120,17 @@ export default class BoardReportComponent extends React.Component<
     content: '',
   };
 
+  public componentDidUpdate(
+    prevProps: BoardReportProps & BoardReportMethod & BoardReportOwnProps,
+  ) {
+    if (
+      prevProps.reportStatus === 'pending' &&
+      this.props.reportStatus === 'success'
+    ) {
+      this.close();
+    }
+  }
+
   public submitReport = (e: React.FormEvent<HTMLFormElement>) => {
     const { ActiveReportData, report, reportStatus, accessToken } = this.props;
     const { content } = this.state;
@@ -143,7 +154,6 @@ export default class BoardReportComponent extends React.Component<
           content,
         });
       }
-      this.close();
     }
   };
 
