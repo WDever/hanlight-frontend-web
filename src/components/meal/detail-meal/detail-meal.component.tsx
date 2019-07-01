@@ -41,11 +41,12 @@ const MealWeekString = styled.div`
   margin-bottom: 1.275rem;
 `;
 
-const MealWeekItems = styled.div`
+const MealWeekItems = styled.div<{ listLength: number }>`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  width: ${({ listLength }) => listLength * 20}%;
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -100,7 +101,7 @@ export default class DetailMealComponent extends React.Component<
           .get('date'),
       )
         .fill(null)
-        .forEach((_, i) => {
+        .forEach((_, i, o) => {
           const date = i + 1;
 
           const mealMoment = moment({
@@ -114,6 +115,15 @@ export default class DetailMealComponent extends React.Component<
             const todayBool = moment().get('date') === mealMoment.get('date');
             const day = days[mealMoment.get('d')];
             const week = Math.ceil(date / 7) - 1;
+            const weekLength =
+              mealMoment.get('week') - week * 7 < 5
+                ? mealMoment.get('week') - week * 7
+                : 5;
+            console.log(mealIndex);
+            console.log(day);
+            console.log(mealMoment.get('week') - week * 7);
+            console.log(week);
+            console.log(o);
             if (mealIndex > 0) {
               MealList[week].push(
                 <MealItemComponent
@@ -123,6 +133,7 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
+                  listLength={weekLength}
                 />,
               );
             } else {
@@ -134,6 +145,7 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
+                  listLength={weekLength}
                 />,
               );
             }
@@ -147,14 +159,16 @@ export default class DetailMealComponent extends React.Component<
           <Meal>
             <Wrapper>
               <Title>급식 정보</Title>
-              {MealList.map((_, i) => {
+              {MealList.map((_, i, o) => {
                 if (MealList[i].length) {
                   return (
                     <MealWeekWrapper key={i}>
                       <MealWeekString>
                         {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                       </MealWeekString>
-                      <MealWeekItems>{MealList[i]}</MealWeekItems>
+                      <MealWeekItems listLength={MealList[i].length}>
+                        {MealList[i]}
+                      </MealWeekItems>
                     </MealWeekWrapper>
                   );
                 }
