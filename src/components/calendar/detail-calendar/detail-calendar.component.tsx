@@ -5,6 +5,7 @@ import {
   DetailCalendarMethod,
   DetailCalendarProps,
 } from 'container/calendar/detail-calendar';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled, { css } from 'styled-components';
@@ -66,6 +67,10 @@ const CalendarWrapper = styled.div<{ listLength: number }>`
   ${({ listLength }) =>
     listLength !== 0
       ? css`
+          @media only screen and ${Device.laptop} {
+            grid-template-columns: repeat(4, 20%);
+            grid-column-gap: 5%;
+          }
           width: 105%;
           display: grid;
           margin: 0 -1.05rem;
@@ -114,8 +119,12 @@ const DetailCalendarComponent: React.FC<
     .fill(null)
     .map((item, i) => {
       return (
-        <option key={i} selected={String(i + 1) === selectedMonth} value={i + 1}>
-          {item}월
+        <option
+          key={i}
+          selected={String(i + 1) === selectedMonth}
+          value={i + 1}
+        >
+          {i + 1}월
         </option>
       );
     });

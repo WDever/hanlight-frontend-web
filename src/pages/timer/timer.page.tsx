@@ -1,5 +1,6 @@
 import HomeTimeComponent from 'components/timer/homeTimer';
 import LunchTimeComponent from 'components/timer/lunchTimer';
+import { Device } from 'lib/styles';
 import EndImgSvg from 'lib/svg/end-time-illust.svg';
 import LunchImgSvg from 'lib/svg/jumsim-illust.svg';
 import * as React from 'react';
@@ -23,14 +24,14 @@ const Wrapper = styled.div`
 
 const TimeWrapper = styled.div`
   height: 18rem;
-  width: 30rem;
+  max-width: 30rem;
   display: inline-flex;
   justify-content: flex-start;
   align-items: flex-end;
 `;
 
 const EndTimeBackGroundImg = styled.img`
-  height: 18.75rem;
+  height: 19.7rem;
   width: 34.21875rem;
   z-index: 0;
   position: absolute;
@@ -42,6 +43,17 @@ const LunchTimeBackGroundImg = styled.img`
   z-index: 0;
   position: absolute;
   padding-bottom: 2rem;
+`;
+
+const EndImgWrapper = styled.div`
+  @media only screen and ${Device.laptop} {
+    max-width: 30.8rem;
+  }
+
+  overflow-x: hidden;
+  width: 34.21875rem;
+  height: 19.7rem;
+  position: absolute;
 `;
 
 const TimerComponent: React.FC = () => {
@@ -56,7 +68,12 @@ const TimerComponent: React.FC = () => {
           <LunchTimeComponent />
         </TimeWrapper>
         <TimeWrapper style={{ marginRight: '5%' }}>
-          <EndTimeBackGroundImg src={EndImgSvg} alt="End Time Background Img" />
+          <EndImgWrapper>
+            <EndTimeBackGroundImg
+              src={EndImgSvg}
+              alt="End Time Background Img"
+            />
+          </EndImgWrapper>
           <HomeTimeComponent />
         </TimeWrapper>
       </Wrapper>

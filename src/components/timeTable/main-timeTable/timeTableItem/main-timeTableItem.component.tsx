@@ -15,7 +15,10 @@ interface Props extends BoxProps, TextProps {
 }
 
 const ItemBox = styled.div<BoxProps>`
-  width: 9.1875rem;
+  @media only screen and (max-width: 1024px) {
+    height: 8rem;
+  }
+  width: 11.34%;
   height: 11rem;
   border-radius: 32px;
   background-color: ${props => (props.active ? '#4470ff' : '#ffffff')};
