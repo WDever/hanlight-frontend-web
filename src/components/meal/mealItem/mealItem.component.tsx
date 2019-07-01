@@ -1,32 +1,48 @@
 import * as React from 'react';
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-// 286.7로
+interface MealItemProps {
+  today: boolean;
+  item: boolean;
+  type: 'main' | 'detail';
+}
 
-export const MealItemWrapper = styled.div<{today: boolean; item: boolean; type: 'main' | 'detail';}>`
-  @media only screen and (max-width: 1024px) {
-    width: 13.225rem;
-  }
-  width: ${props => (props.type === 'main' ? '15.225rem' : '18%')};
-  /* max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};
-  height: ${props => (props.type === 'main' ? '20.1875rem' : '17.91875rem')}; */
-  max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};
-  height: ${props => (props.type === 'main' ? '100%' : '17.91875rem')};
+export const MealItemWrapper = styled.div<MealItemProps>`
+  ${({ type }) =>
+    type === 'main'
+      ? css`
+          @media only screen and (max-width: 1024px) {
+            width: 13.225rem;
+          }
+          width: 15.225rem;
+          height: 100%;
+        `
+      : css`
+          width: 18%;
+          height: 17.91875rem;
+          max-width: 13.54375rem;
+        `}
 
   font-family: 'Spoqa Han Sans';
   border-radius: 32px;
-  box-shadow: ${props =>
-    props.today
-      ? '0 30px 80px 0 rgba(255, 0, 0, 0.25)'
-      : '0 40px 60px 0 rgba(101, 101, 101, 0.16)'};
-  background-color: ${props => (props.today ? '#ff476c' : '#ffffff')};
+  ${({ today }) =>
+    today
+      ? css`
+          box-shadow: 0 30px 80px 0 rgba(255, 0, 0, 0.25);
+          background-color: #ff476c;
+          color: #ffffff;
+        `
+      : css`
+          box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
+          background-color: #ffffff;
+          color: #000000;
+        `}
   display: flex;
   flex-direction: column;
   justify-content: ${props => (props.item ? 'space-between' : 'flex-end')};
   font-style: normal;
   font-stretch: normal;
-  color: ${props => (props.today ? '#ffffff' : '#000000')};
 `;
 
 const MealItemDay = styled.div<{ type: 'main' | 'detail' }>`
