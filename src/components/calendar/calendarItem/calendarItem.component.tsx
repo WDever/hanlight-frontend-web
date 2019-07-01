@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface BoxProps {
   today: boolean;
@@ -20,6 +20,20 @@ interface ItemProps extends BoxProps {
 const Box = styled.div<BoxProps>`
   width: ${props => (props.type === 'main' ? '15.875rem' : '12.5rem')};
   height: ${props => (props.type === 'main' ? '15.875rem' : '16.575rem')};
+  ${({ type }) =>
+    type === 'main'
+      ? css`
+          @media only screen and (max-width: 1024px) {
+            width: 12.5rem;
+            height: 12.5rem;
+          }
+          width: 15.875rem;
+          height: 15.875rem;
+        `
+      : css`
+          width: 12.5rem;
+          height: 16.575rem;
+        `}
   box-shadow: ${props =>
     props.today ? '0 6px 30px 0 rgba(139, 139, 139, 0.16)' : 'none'};
   border: ${props => (props.today ? 'none' : 'solid 1px #b9b9b9')};

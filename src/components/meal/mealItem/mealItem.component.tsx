@@ -2,14 +2,15 @@ import * as React from 'react';
 
 import styled from 'styled-components';
 
-export const MealItemWrapper = styled.div<{
-  today: boolean;
-  item: boolean;
-  type: 'main' | 'detail';
-}>`
-  width: ${props => (props.type === 'main' ? '15.225rem' : '18%')};
-  max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')}
-  height: ${props => (props.type === 'main' ? '20.1875rem' : '17.91875rem')};
+// 286.7로
+
+export const MealItemWrapper = styled.div<{today: boolean; item: boolean; type: 'main' | 'detail';}>`
+  width: ${props => (props.type === 'main' ? '18.8%' : '18%')};
+  /* max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};
+  height: ${props => (props.type === 'main' ? '20.1875rem' : '17.91875rem')}; */
+  max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};
+  height: ${props => (props.type === 'main' ? '100%' : '17.91875rem')};
+
   font-family: 'Spoqa Han Sans';
   border-radius: 32px;
   box-shadow: ${props =>

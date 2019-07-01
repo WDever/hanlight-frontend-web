@@ -24,8 +24,8 @@ const MoreBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 15.875rem;
-  height: 20.1875rem;
+  width: 18.8%;
+  height: 100%;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
@@ -33,7 +33,8 @@ const MoreBox = styled.div`
 
 const MoreBtn = styled(Link)`
   text-decoration: none;
-  width: 9.7rem;
+  width: 68.626%;
+  /* width: 9.7rem; */
   height: 2.775rem;
   border-radius: 35px;
   border: solid 6px #f03d5c;
