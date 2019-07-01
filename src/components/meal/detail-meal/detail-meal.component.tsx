@@ -101,7 +101,7 @@ export default class DetailMealComponent extends React.Component<
           .get('date'),
       )
         .fill(null)
-        .forEach((_, i, o) => {
+        .forEach((_, i) => {
           const date = i + 1;
 
           const mealMoment = moment({
@@ -119,11 +119,6 @@ export default class DetailMealComponent extends React.Component<
               mealMoment.get('week') - week * 7 < 5
                 ? mealMoment.get('week') - week * 7
                 : 5;
-            console.log(mealIndex);
-            console.log(day);
-            console.log(mealMoment.get('week') - week * 7);
-            console.log(week);
-            console.log(o);
             if (mealIndex > 0) {
               MealList[week].push(
                 <MealItemComponent
@@ -159,7 +154,7 @@ export default class DetailMealComponent extends React.Component<
           <Meal>
             <Wrapper>
               <Title>급식 정보</Title>
-              {MealList.map((_, i, o) => {
+              {MealList.map((_, i) => {
                 if (MealList[i].length) {
                   return (
                     <MealWeekWrapper key={i}>
