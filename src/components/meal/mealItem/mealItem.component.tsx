@@ -5,7 +5,10 @@ import styled from 'styled-components';
 // 286.7로
 
 export const MealItemWrapper = styled.div<{today: boolean; item: boolean; type: 'main' | 'detail';}>`
-  width: ${props => (props.type === 'main' ? '18.8%' : '18%')};
+  @media only screen and (max-width: 1024px) {
+    width: 13.225rem;
+  }
+  width: ${props => (props.type === 'main' ? '15.225rem' : '18%')};
   /* max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};
   height: ${props => (props.type === 'main' ? '20.1875rem' : '17.91875rem')}; */
   max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')};

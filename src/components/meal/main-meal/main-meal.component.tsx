@@ -17,6 +17,11 @@ const ListWrapper = styled.div`
 `;
 
 const MoreBox = styled.div`
+  @media only screen and (max-width: 1024px) {
+    width: 13.225rem;
+  }
+  width: 15.225rem;
+  height: 100%;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
   font-size: 1.3125rem;
@@ -24,8 +29,6 @@ const MoreBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 18.8%;
-  height: 100%;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;

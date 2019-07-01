@@ -48,7 +48,7 @@ const LunchTimeBackGroundImg = styled.img`
 
 const EndImgWrapper = styled.div`
   @media only screen and (max-width: 1024px) {
-    max-width: 30rem;
+    max-width: 30.8rem;
   }
 
   overflow-x: hidden;
