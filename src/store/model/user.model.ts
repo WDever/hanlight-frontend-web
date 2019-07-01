@@ -1,8 +1,9 @@
 export interface UserModel {
-  signKey: string;
   id: string;
+  signKey: string;
   accessToken: string;
   data: {
+    id: string;
     type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
     admin: number;
     name: string;
@@ -37,4 +38,5 @@ export interface UserModel {
     | 'failure';
   getUserStatus: 'none' | 'pending' | 'success' | 'failure';
   patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
 }

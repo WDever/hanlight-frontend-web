@@ -133,7 +133,13 @@ const HeaderComponent: React.FC<
             &nbsp;님
           </SpanWrapper>
           <SpanWrapper>
-            <SpanBtn>정보 수정</SpanBtn>
+            <StyledNavLink
+              exact={true}
+              to="/profile"
+              active={location.pathname.includes('/user/profile')}
+            >
+              정보 수정
+            </StyledNavLink>
           </SpanWrapper>
           <SpanWrapper onClick={logout}>
             <SpanBtn>로그아웃</SpanBtn>

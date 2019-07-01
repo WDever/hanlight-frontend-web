@@ -7,6 +7,7 @@ const initialState: UserModel = {
   id: '',
   accessToken: '',
   data: {
+    id: '',
     type: 'none',
     admin: 0,
     name: '',
@@ -26,6 +27,7 @@ const initialState: UserModel = {
   signKeyExistStatus: 'none',
   getUserStatus: 'none',
   patchPasswordStatus: 'none',
+  patchPhoneStatus: 'none',
 };
 
 export const userReducer = (
@@ -150,6 +152,16 @@ export const userReducer = (
         break;
       case 'PATCH_PASSWORD_FAILURE':
         draft.patchPasswordStatus = 'failure';
+        break;
+
+      case 'PATCH_PHONE':
+        draft.patchPhoneStatus = 'pending';
+        break;
+      case 'PATCH_PHONE_SUCCESS':
+        draft.patchPhoneStatus = 'success';
+        break;
+      case 'PATCH_PHONE_FAILURE':
+        draft.patchPhoneStatus = 'failure';
         break;
 
       default:
