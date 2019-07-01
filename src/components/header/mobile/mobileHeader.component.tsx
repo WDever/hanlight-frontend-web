@@ -4,6 +4,7 @@ import { HeaderMethod, HeaderProps } from 'container/header';
 import HanlightLogo from 'lib/svg/hanlight-logo.svg';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
+import MobileMenuComponent from './menu';
 
 const HeaderWrapper = styled.div`
   width: 100%;
@@ -17,7 +18,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
 `;
 
-const Menu = styled.div`
+const MenuIcon = styled.div`
   width: 1.25rem;
   height: 1rem;
   position: absolute;
@@ -38,16 +39,19 @@ const MenuSpan = styled.span`
 
 const MobileHeaderComponent: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
-> = () => {
+> = props => {
   return (
-    <HeaderWrapper>
-      <Menu>
-        <MenuSpan />
-        <MenuSpan style={{ width: '16px' }} />
-        <MenuSpan />
-      </Menu>
-      <img style={{ height: '1rem' }} src={HanlightLogo} alt="" />
-    </HeaderWrapper>
+    <>
+      <MobileMenuComponent {...props} />
+      <HeaderWrapper>
+        <MenuIcon>
+          <MenuSpan />
+          <MenuSpan style={{ width: '16px' }} />
+          <MenuSpan />
+        </MenuIcon>
+        <img style={{ height: '1rem' }} src={HanlightLogo} alt="" />
+      </HeaderWrapper>
+    </>
   );
 };
 
