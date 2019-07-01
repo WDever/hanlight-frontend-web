@@ -1,11 +1,14 @@
-import { DetailTimeTableMethod, DetailTimeTableProps } from 'container/timeTable/detail-timeTable';
+import {
+  DetailTimeTableMethod,
+  DetailTimeTableProps,
+} from 'container/timeTable/detail-timeTable';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import moment from 'moment';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
-const { useEffect, useState } = React;
+const { useEffect } = React;
 
 const Wrapper = styled.div`
   display: flex;
@@ -151,7 +154,11 @@ const DetailTimeTableComponent: React.FC<
 
   return (
     <Wrapper>
-      <Title>{`${major}${grade} - ${classNum} 시간표`}</Title>
+      <Title>
+        {major
+          ? `${major}${grade} - ${classNum} 시간표`
+          : '재학생만 시간표 조회가 가능합니다.'}
+      </Title>
       <Table>
         <thead>
           <tr>

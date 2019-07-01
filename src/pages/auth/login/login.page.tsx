@@ -1,27 +1,18 @@
 import * as React from 'react';
 
 import LoginContainer from 'container/user/login';
-import LoginIllustSvg from 'lib/svg/login-illust.svg';
 import styled from 'styled-components';
 
 const Template = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
-`;
-
-const LoginIllust = styled.img`
-  position: absolute;
-  left: 5%;
-  width: 42.6%;
-  height: 65.8%;
+  align-items: center;
 `;
 
 const LoginPage: React.FC = () => (
   <Template>
-    <LoginIllust src={LoginIllustSvg} alt="Login Illust" />
     <LoginContainer />
   </Template>
 );

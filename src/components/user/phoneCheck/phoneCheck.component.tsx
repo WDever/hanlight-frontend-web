@@ -10,7 +10,7 @@ import {
   signKey as signKeyRegExp,
   tp as tpRegExp,
 } from 'lib/RegExp/RegExp.json';
-import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import { Buttons, Device, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
 import coloredIdSvg from 'lib/svg/colored-id.svg';
 import coloredPhoneSvg from 'lib/svg/colored-phone.svg';
 import coloredSignKeySvg from 'lib/svg/colored-signKey.svg';
@@ -29,24 +29,35 @@ export type GetCodeStatus =
   | 'NOT_AUTHENTICATED'
   | 'BAD_PARAMS';
 
-const PhoneCheckWrapper = styled.div<{
+interface PhoneCheckTypeProps {
   component_type: string;
   component_key: string;
-}>`
+}
+
+const PhoneCheckWrapper = styled.div<PhoneCheckTypeProps>`
   width: ${props =>
     props.component_type === 'recovery' && props.component_key === 'id'
       ? 38.1875
       : 38.125}rem;
   height: ${props =>
     props.component_type === 'recovery' && props.component_key === 'id'
-      ? 24.5625
-      : 31.875}rem;
+      ? '24.5625'
+      : '31.875'}rem;
   margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+
+  @media ${Device.tablet} {
+    box-shadow: none;
+    width: 85%;
+    margin: 0;
+  }
+  @media ${Device.mobileL} {
+    height: 25rem;
+  }
 `;
 
 const GreetingDiv = styled.div`
@@ -58,21 +69,28 @@ const GreetingDiv = styled.div`
   font-family: Spoqa Han Sans;
   font-weight: bold;
   margin-top: 3rem;
+
+  @media ${Device.tablet} {
+    font-size: 2rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1.25rem;
+  }
 `;
 
 const InputWrapper = styled.div`
-  width: 100%;
-  height: 60%;
+  width: 87.5%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
+  @media ${Device.tablet} {
+    width: 100%;
+  }
 `;
 
-const Form = styled.form<{
-  component_type: string;
-  component_key: string;
-}>`
+const Form = styled.form<PhoneCheckTypeProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -95,32 +113,40 @@ const TermsBtnWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 3rem;
+
+  @media ${Device.tablet} {
+    width: 100%;
+  }
 `;
 
 const ColoredSpan = styled.span`
   color: #4470ff;
-  font-size: 1.5rem;
 `;
 
-const PhoneInput = styled(Inputs)<{ colored: boolean }>`
+const Input = styled(Inputs)`
+  padding-left: 3rem;
+`;
+
+const InputGroup = styled(InputsGroup)``;
+
+const PhoneInput = styled(Input)<{ colored: boolean }>`
   background: url(${props =>
       props.colored ? coloredPhoneSvg : disabledPhoneSvg})
     no-repeat scroll 1.5rem;
-  padding-left: 3rem;
 `;
 
-const IdInput = styled(Inputs)<{ colored: boolean }>`
+const IdInput = styled(Input)<{ colored: boolean }>`
   background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
     no-repeat scroll 1.5rem;
-  padding-left: 3rem;
 `;
 
-const SignKeyInput = styled(Inputs)<{ colored: boolean }>`
+const SignKeyInput = styled(Input)<{ colored: boolean }>`
   background: url(${props =>
       props.colored ? coloredSignKeySvg : disabledSignKeySvg})
     no-repeat scroll 1.5rem;
-  padding-left: 3rem;
 `;
+
+const Button = styled(Buttons)``;
 
 class PhoneCheckComponent extends React.Component<
   PhoneCheckProps & PhoneCheckMethod & RouteComponentProps,
@@ -380,7 +406,7 @@ class PhoneCheckComponent extends React.Component<
           verifyPhoneStatus === 'failure') && (
           <Modal
             width="50.25rem"
-            height="22.625rem"
+            height="24.625rem"
             type="error"
             message={errorMessage}
             click={() => {
@@ -416,7 +442,7 @@ class PhoneCheckComponent extends React.Component<
             >
               <InputWrapper>
                 {type === 'register' ? (
-                  <InputsGroup width="28.75rem" height="6.5rem">
+                  <InputGroup width="28.75rem" height="6.5rem">
                     {!signKey.checked && (
                       <WrongLabel>
                         형식이 잘못되었거나 존재하지 않는 회원가입 키 입니다!
@@ -435,12 +461,12 @@ class PhoneCheckComponent extends React.Component<
                       onChange={handleInputs}
                       colored={!!signKey.value}
                     />
-                  </InputsGroup>
+                  </InputGroup>
                 ) : (
                   <React.Fragment />
                 )}
                 {type === 'recovery' && key === 'password' ? (
-                  <InputsGroup width="28.75rem" height="6.5rem">
+                  <InputGroup width="28.75rem" height="6.5rem">
                     {!id.checked && (
                       <WrongLabel>
                         형식이 잘못되었거나 존재하지 않는 아이디 입니다!
@@ -454,14 +480,15 @@ class PhoneCheckComponent extends React.Component<
                       name="id"
                       onChange={handleInputs}
                       placeholder="아이디"
+                      autoComplete="off"
                       active={!!id.value}
                       colored={!!id.value}
                     />
-                  </InputsGroup>
+                  </InputGroup>
                 ) : (
                   <React.Fragment />
                 )}
-                <InputsGroup width="28.75rem" height="6.5rem">
+                <InputGroup width="28.75rem" height="6.5rem">
                   {!tp.checked && (
                     <WrongLabel>
                       형식이 잘못되었거나 존재하지 않는 전화번호 입니다!
@@ -480,7 +507,7 @@ class PhoneCheckComponent extends React.Component<
                     onChange={handleInputs}
                     colored={!!tp.value}
                   />
-                </InputsGroup>
+                </InputGroup>
               </InputWrapper>
               <TermsBtnWrapper>
                 {typingCheck() ? (
@@ -497,20 +524,24 @@ class PhoneCheckComponent extends React.Component<
                     }
                   >
                     {(p: ChildrenParams) => (
-                      <Buttons
+                      <Button
                         width="28.75rem"
                         height="4.375rem"
-                        active={true}
+                        active={
+                          verifyPhoneStatus !== 'pending' &&
+                          idRecoveryStatus !== 'pending' &&
+                          pwRecoveryStatus !== 'pending'
+                        }
                         {...p}
                       >
                         인증
-                      </Buttons>
+                      </Button>
                     )}
                   </AccountKit>
                 ) : (
-                  <Buttons width="28.75rem" height="4.375rem" active={false}>
+                  <Button width="28.75rem" height="4.375rem" active={false}>
                     인증
-                  </Buttons>
+                  </Button>
                 )}
               </TermsBtnWrapper>
             </Form>

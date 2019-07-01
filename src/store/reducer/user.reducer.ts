@@ -6,15 +6,13 @@ const initialState: UserModel = {
   signKey: '',
   id: '',
   accessToken: '',
-  data: {
-    type: 'none',
-    admin: 0,
-    name: '',
-    major: null,
-    grade: null,
-    classNum: null,
-    studentNum: null,
-  },
+  type: 'none',
+  admin: 0,
+  name: '',
+  major: null,
+  grade: null,
+  classNum: null,
+  studentNum: null,
 
   verifyPhoneStatus: 'none',
   registerStatus: 'none',
@@ -26,6 +24,7 @@ const initialState: UserModel = {
   signKeyExistStatus: 'none',
   getUserStatus: 'none',
   patchPasswordStatus: 'none',
+  patchPhoneStatus: 'none',
 };
 
 export const userReducer = (
@@ -41,9 +40,9 @@ export const userReducer = (
       case 'LOGIN_SUCCESS':
         draft.loginStatus = 'success';
         draft.accessToken = action.payload.accessToken;
-        draft.data = {
+        Object.assign(draft, {
           ...action.payload.user,
-        };
+        });
 
         console.log(action.payload);
         localStorage.setItem('accessToken', action.payload.accessToken);
@@ -133,7 +132,9 @@ export const userReducer = (
       case 'GET_USER_SUCCESS':
         draft.getUserStatus = 'success';
         draft.loginStatus = 'success';
-        draft.data = action.payload.user;
+        Object.assign(draft, {
+          ...action.payload.user,
+        });
         draft.accessToken = action.payload.token;
         break;
       case 'GET_USER_FAILURE':
@@ -150,6 +151,16 @@ export const userReducer = (
         break;
       case 'PATCH_PASSWORD_FAILURE':
         draft.patchPasswordStatus = 'failure';
+        break;
+
+      case 'PATCH_PHONE':
+        draft.patchPhoneStatus = 'pending';
+        break;
+      case 'PATCH_PHONE_SUCCESS':
+        draft.patchPhoneStatus = 'success';
+        break;
+      case 'PATCH_PHONE_FAILURE':
+        draft.patchPhoneStatus = 'failure';
         break;
 
       default:

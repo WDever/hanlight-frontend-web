@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Buttons } from 'lib/styles';
+import { Buttons, Device } from 'lib/styles';
 import checkSvg from 'lib/svg/checkbox.svg';
 import phoneCheckFailureSvg from 'lib/svg/phoneCheck-failure.svg';
 import phoneCheckSuccessSvg from 'lib/svg/phoneCheck-success.svg';
@@ -26,7 +26,7 @@ const Modal = styled.div`
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: #0000006e;
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -41,12 +41,30 @@ const ModalWrapper = styled.div<ModalSize>`
   justify-content: space-around;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+
+  @media ${Device.tablet} {
+    width: 93%;
+  }
+
+  @media ${Device.mobileL} {
+    height: 17.5rem;
+  }
 `;
 
 const ModalText = styled.span`
   font-family: 'Spoqa Han Sans';
   font-size: 1.75rem;
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
+`;
+
+const SuccessImg = styled.img`
+  @media ${Device.mobileL} {
+    width: 8rem;
+  }
 `;
 
 const ColoredText = styled.span`
@@ -54,6 +72,16 @@ const ColoredText = styled.span`
   font-size: inherit;
   font-weight: inherit;
   color: #4470ff;
+`;
+
+const Button = styled(Buttons)`
+  @media ${Device.desktop} {
+    width: 85%;
+  }
+  @media ${Device.mobileL} {
+    width: 90%;
+    height: 3.2rem;
+  }
 `;
 
 const ModalComponent: React.FC<ModalProps> = ({
@@ -66,7 +94,9 @@ const ModalComponent: React.FC<ModalProps> = ({
 }) => (
   <Modal>
     <ModalWrapper width={width} height={height}>
-      {type === 'phoneCheck' && <img src={phoneCheckSuccessSvg} alt="modal" />}
+      {type === 'phoneCheck' && (
+        <SuccessImg src={phoneCheckSuccessSvg} alt="modal" />
+      )}
       {type.includes('recovery') && <img src={checkSvg} alt="modal" />}
       {type === 'error' && (
         <img style={{ width: '5rem' }} src={phoneCheckFailureSvg} alt="modal" />
@@ -87,9 +117,9 @@ const ModalComponent: React.FC<ModalProps> = ({
         </ModalText>
       )}
       {type === 'error' && <ModalText>{message || '인증 실패'}</ModalText>}
-      <Buttons width="28.75rem" height="4.375rem" active={true} onClick={click}>
+      <Button width="28.75rem" height="4.375rem" active={true} onClick={click}>
         확인
-      </Buttons>
+      </Button>
     </ModalWrapper>
   </Modal>
 );

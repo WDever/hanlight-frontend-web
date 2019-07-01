@@ -77,7 +77,6 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
   } = {
-    likeStatus,
     reportStatus,
     getBoardStatus,
     postBoardStatus,
@@ -94,7 +93,12 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     | undefined = usePrevious(statusProps);
 
   useEffect(() => {
-    return () => resetError();
+    return () => {
+      if (errorCode < 500) {
+        console.log(errorCode);
+        resetError();
+      }
+    };
   }, []);
 
   useEffect(() => {

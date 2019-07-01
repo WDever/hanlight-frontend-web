@@ -138,7 +138,7 @@ const DetailCalendarComponent: React.FC<
   });
 
   const CalendarList =
-    getCalendarStatus === 'success' && calendar.length !== 0 ? (
+    calendar.length !== 0 ? (
       calendar.map((item, i) => {
         const today =
           moment().format('M.D') === `${selectedMonth}.${item.date}`;
@@ -180,9 +180,14 @@ const DetailCalendarComponent: React.FC<
           </Select>
         </DateBar>
       </TitleBar>
-      <CalendarWrapper listLength={calendar.length}>
-        {CalendarList}
-      </CalendarWrapper>
+      {getCalendarStatus === 'success' && (
+        <CalendarWrapper listLength={calendar.length}>
+          {CalendarList}
+        </CalendarWrapper>
+      )}
+      {getCalendarStatus === 'pending' && (
+        <p style={{ fontFamily: 'Spoqa Han Sans' }}>불러오는중 ... </p>
+      )}
     </Wrapper>
   );
 };
