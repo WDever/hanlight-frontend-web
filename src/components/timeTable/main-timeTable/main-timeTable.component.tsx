@@ -2,6 +2,7 @@ import {
   MainTimeTableMethod,
   MainTimeTableProps,
 } from 'container/timeTable/main-timeTable';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -28,7 +29,11 @@ const TimeTableWrapper = styled.div`
 `;
 
 const NoBox = styled.div`
-  width: 9.1875rem;
+  @media ${Device.laptop} {
+    height: 8rem;
+  }
+
+  width: 11.34%;
   height: 11rem;
   font-size: 1.625rem;
   border-radius: 32px;

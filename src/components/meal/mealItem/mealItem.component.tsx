@@ -1,28 +1,52 @@
 import * as React from 'react';
 
-import styled from 'styled-components';
+import { Device } from 'lib/styles';
+import styled, { css } from 'styled-components';
 
-export const MealItemWrapper = styled.div<{
+interface MealItemProps {
   today: boolean;
   item: boolean;
   type: 'main' | 'detail';
-}>`
-  width: ${props => (props.type === 'main' ? '15.225rem' : '18%')};
-  max-width: ${props => (props.type === 'main' ? 'none' : '13.54375rem')}
-  height: ${props => (props.type === 'main' ? '20.1875rem' : '17.91875rem')};
+  listLength: number;
+}
+
+export const MealItemWrapper = styled.div<MealItemProps>`
+  ${({ type }) =>
+    type === 'main'
+      ? css`
+          @media only screen and ${Device.laptop} {
+            width: 13.225rem;
+          }
+          width: 15.225rem;
+          height: 100%;
+        `
+      : css<{ listLength: number }>`
+          width: ${({ listLength }) =>
+            (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
+            100}%;
+          height: 17.91875rem;
+          max-width: 13.54375rem;
+        `}
+
   font-family: 'Spoqa Han Sans';
   border-radius: 32px;
-  box-shadow: ${props =>
-    props.today
-      ? '0 30px 80px 0 rgba(255, 0, 0, 0.25)'
-      : '0 40px 60px 0 rgba(101, 101, 101, 0.16)'};
-  background-color: ${props => (props.today ? '#ff476c' : '#ffffff')};
+  ${({ today }) =>
+    today
+      ? css`
+          box-shadow: 0 30px 80px 0 rgba(255, 0, 0, 0.25);
+          background-color: #ff476c;
+          color: #ffffff;
+        `
+      : css`
+          box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
+          background-color: #ffffff;
+          color: #000000;
+        `}
   display: flex;
   flex-direction: column;
   justify-content: ${props => (props.item ? 'space-between' : 'flex-end')};
   font-style: normal;
   font-stretch: normal;
-  color: ${props => (props.today ? '#ffffff' : '#000000')};
 `;
 
 const MealItemDay = styled.div<{ type: 'main' | 'detail' }>`
@@ -75,9 +99,15 @@ const MealItemComponent: React.FC<{
   date: string;
   day: string;
   today: boolean;
-}> = ({ item, date, day, today, type }) => {
+  listLength?: number;
+}> = ({ item, date, day, today, type, listLength = 5 }) => {
   return item instanceof Array ? (
-    <MealItemWrapper item={true} type={type} today={today}>
+    <MealItemWrapper
+      item={true}
+      type={type}
+      today={today}
+      listLength={listLength}
+    >
       <MealItemDay type={type}>{day}</MealItemDay>
       <MealItems type={type}>
         {item.map((meal, i) => (
@@ -87,7 +117,12 @@ const MealItemComponent: React.FC<{
       <MealDate type={type}>{date}</MealDate>
     </MealItemWrapper>
   ) : (
-    <MealItemWrapper item={false} today={today} type={type}>
+    <MealItemWrapper
+      item={false}
+      today={today}
+      type={type}
+      listLength={listLength}
+    >
       <MealNoItemWrapper>
         <MealNoItems type={type}>
           {item.split('\n').map((line, i) => (

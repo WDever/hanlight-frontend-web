@@ -40,6 +40,10 @@ export const PATCH_PASSWORD = 'PATCH_PASSWORD';
 export const PATCH_PASSWORD_SUCCESS = 'PATCH_PASSWORD_SUCCESS';
 export const PATCH_PASSWORD_FAILURE = 'PATCH_PASSWORD_FAILURE';
 
+export const PATCH_PHONE = 'PATCH_PHONE';
+export const PATCH_PHONE_SUCCESS = 'PATCH_PHONE_SUCCESS';
+export const PATCH_PHONE_FAILURE = 'PATCH_PHONE_FAILURE';
+
 export interface LoginParam {
   id: string;
   password: string;
@@ -78,6 +82,11 @@ export interface PatchPwParam {
   password: string;
 }
 
+export interface PatchPhoneParam {
+  accessToken: string;
+  code: string;
+}
+
 export class Login implements Action {
   public readonly type = LOGIN;
 
@@ -91,6 +100,7 @@ export class LoginSuccess implements Action {
     public payload: {
       accessToken: string;
       user: {
+        id: string;
         type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
         admin: number;
         name: string;
@@ -232,6 +242,7 @@ export class GetUserSuccess implements Action {
     public payload: {
       token: string;
       user: {
+        id: string;
         type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
         admin: number;
         name: string;
@@ -242,6 +253,10 @@ export class GetUserSuccess implements Action {
       };
     },
   ) {}
+}
+
+export class GetUserFailure implements Action {
+  public readonly type = GET_USER_FAILURE;
 }
 
 export class PatchPassword implements Action {
@@ -258,20 +273,19 @@ export class PatchPasswordFailure implements Action {
   public readonly type = PATCH_PASSWORD_FAILURE;
 }
 
-export class GetUserFailure implements Action {
-  public readonly type = GET_USER_FAILURE;
+export class PatchPhone implements Action {
+  public readonly type = PATCH_PHONE;
+
+  public constructor(public payload: PatchPhoneParam) {}
 }
 
-export const userFailureActions = [
-  LOGIN_FAILURE,
-  ID_RECOVERY_FAILURE,
-  PW_RECOVERY_FAILURE,
-  ID_EXIST_FAILURE,
-  VERIFY_PHONE_FAILURE,
-  REGISTER_FAILURE,
-  GET_USER_FAILURE,
-  PATCH_PASSWORD_FAILURE,
-];
+export class PatchPhoneSuccess implements Action {
+  public readonly type = PATCH_PHONE_SUCCESS;
+}
+
+export class PatchPhoneFailure implements Action {
+  public readonly type = PATCH_PHONE_FAILURE;
+}
 
 export const userActions = {
   login: createStandardAction(LOGIN)<LoginParam>(),
@@ -286,6 +300,7 @@ export const userActions = {
   setId: createStandardAction(SET_ID)<string>(),
   getUser: createStandardAction(GET_USER)<string>(),
   patchPassword: createStandardAction(PATCH_PASSWORD)<PatchPwParam>(),
+  patchPhone: createStandardAction(PATCH_PHONE)<PatchPhoneParam>(),
 };
 
 export type userReducerActions =
@@ -316,4 +331,7 @@ export type userReducerActions =
   | GetUserFailure
   | PatchPassword
   | PatchPasswordSuccess
-  | PatchPasswordFailure;
+  | PatchPasswordFailure
+  | PatchPhone
+  | PatchPhoneSuccess
+  | PatchPhoneFailure;

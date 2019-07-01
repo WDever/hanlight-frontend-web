@@ -47,7 +47,7 @@ const MainNoticeContainer: React.FC<
 );
 
 const mapStateToProps = ({ user, notice }: AppState) => ({
-  name: user.data.name,
+  name: user.name,
   noticeList: notice.noticeList,
   getNoticeListStatus: notice.getNoticeListStatus,
   accessToken: user.accessToken,

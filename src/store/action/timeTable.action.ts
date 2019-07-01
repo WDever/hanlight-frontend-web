@@ -34,8 +34,6 @@ export class GetTimetableFailure implements Action {
   public readonly type = GET_TIMETABLE_FAILURE;
 }
 
-export const timeTableFailureActions = [GET_TIMETABLE_FAILURE];
-
 export const timeTableActions = {
   getTimeTable: createStandardAction(GET_TIMETABLE)<string>(),
 };

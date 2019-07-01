@@ -32,6 +32,17 @@ export interface ActiveReportData {
 
 type status = 'none' | 'pending' | 'success' | 'failure';
 
+export interface BoardApiModel {
+  getBoardStatus: status;
+  postBoardStatus: status;
+  patchBoardStatus: status;
+  deleteBoardStatus: status;
+  getBoardCommentStatus: status;
+  postBoardCommentStatus: status;
+  patchBoardCommentStatus: status;
+  deleteBoardCommentStatus: status;
+}
+
 export interface BoardModel {
   board: Board[];
   boardCount: number;

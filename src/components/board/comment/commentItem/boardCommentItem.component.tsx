@@ -1,5 +1,4 @@
-import { BoardCommentMethod, BoardCommentProps } from 'container/board/comment';
-import { useInput } from 'lib/hooks';
+import { useInput, usePrevious } from 'lib/hooks';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -7,17 +6,16 @@ import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
-import { ActiveReportData, LikeParams } from 'store';
+import { ActiveReportData, BoardApiModel, Comment, LikeParams } from 'store';
 import styled from 'styled-components';
 
-const CommentWrapper = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 0.3125rem;
 `;
 
-// const DotImg = styled.img`width: '20px', height: '30px', cursor: 'pointer'
 const OptionBtn = styled.img`
   display: none;
   width: 1.25rem;
@@ -25,7 +23,7 @@ const OptionBtn = styled.img`
   cursor: pointer;
 `;
 
-const Comment = styled.div`
+const CommentWrapper = styled.div`
   width: 100%;
   display: flex;
   min-height: 3.5rem;
@@ -177,18 +175,17 @@ const CommetLikeCount = styled.span`
 `;
 
 interface CommentItemProps {
-  user_name: string;
-  content: string;
+  comment: Comment;
   date: string;
-  likeCount: number;
-  likeStatus: 'none' | 'pending' | 'success' | 'failure';
   board_pk: number;
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-  write: boolean;
   accessToken: string;
-  edited: boolean;
-  isLiked: boolean;
+  boardApiStatus: BoardApiModel;
+  likeStatus: 'none' | 'pending' | 'success' | 'failure';
+}
+
+interface CommentItemMethod {
   deemBoard: (payload: boolean) => void;
   like(params: LikeParams): void;
   handleOption({
@@ -206,28 +203,68 @@ interface CommentItemProps {
   activeReport(data: ActiveReportData): void;
 }
 
-const CommentItem: React.FC<CommentItemProps> = ({
-  user_name,
-  content,
-  likeCount,
+const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
+  comment,
   date,
   handleOption,
   board_pk,
   comment_pk,
   userType,
-  write,
-  edited,
   like,
   likeStatus,
   accessToken,
-  isLiked,
   deemBoard,
   setReportToggle,
   activeReport,
+  boardApiStatus,
 }) => {
+  const {
+    getBoardStatus,
+    postBoardStatus,
+    patchBoardStatus,
+    deleteBoardStatus,
+    getBoardCommentStatus,
+    postBoardCommentStatus,
+    patchBoardCommentStatus,
+    deleteBoardCommentStatus,
+  } = boardApiStatus;
+  const statusProps: {
+    [key: string]: 'none' | 'pending' | 'success' | 'failure';
+  } = {
+    getBoardStatus,
+    postBoardStatus,
+    patchBoardStatus,
+    deleteBoardStatus,
+    getBoardCommentStatus,
+    postBoardCommentStatus,
+    patchBoardCommentStatus,
+    deleteBoardCommentStatus,
+  };
+  const prevStatusProps:
+    | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
+    | undefined = usePrevious(statusProps);
+  const { user_name, content, likeCount, edited, isLiked, write } = comment;
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
-  const [editedContent, setEditedContent] = useInput(content);
+  const [editedContent, setEditedContent] = useInput('');
+
+  React.useEffect(() => {
+    if (prevStatusProps) {
+      if (
+        Object.keys(prevStatusProps).some(
+          status =>
+            prevStatusProps[status] === 'pending' &&
+            statusProps[status] !== 'pending',
+        )
+      ) {
+        setOptionToggle(false);
+        if (editToggle) {
+          setEditToggle(false);
+          setEditedContent('');
+        }
+      }
+    }
+  }, [statusProps]);
 
   const submitEdit = () => {
     setEditToggle(!setEditToggle);
@@ -242,8 +279,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   };
 
   return (
-    <CommentWrapper>
-      <Comment>
+    <Wrapper>
+      <CommentWrapper>
         <CommentLeftWrapper>
           <ProfileImg src={DefaultProfileImage} alt="" />
           <CommentContentWrapper>
@@ -317,6 +354,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
                   onClick={() => {
                     handleOption({ action: 'edit', board_pk, comment_pk });
                     setOptionToggle(false);
+                    setEditedContent(content);
                     setEditToggle(!editToggle);
                   }}
                 >
@@ -356,8 +394,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
             </Option>
           </OptionWrapper>
         )}
-      </Comment>
-    </CommentWrapper>
+      </CommentWrapper>
+    </Wrapper>
   );
 };
 

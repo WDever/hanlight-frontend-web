@@ -6,8 +6,9 @@ export interface ErrorResponse {
 }
 
 export interface ErrorModel {
-  onError: boolean;
+  onError: number;
   code: number;
   message: string;
   name: string;
+  time: number | null;
 }

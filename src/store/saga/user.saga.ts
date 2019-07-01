@@ -25,7 +25,12 @@ import {
   PATCH_PASSWORD,
   PATCH_PASSWORD_FAILURE,
   PATCH_PASSWORD_SUCCESS,
+  PATCH_PHONE,
+  PATCH_PHONE_FAILURE,
+  PATCH_PHONE_SUCCESS,
   PatchPassword,
+  PatchPhone,
+  PatchPhoneParam,
   PatchPwParam,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
@@ -37,14 +42,13 @@ import {
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   RegisterParam,
-  userFailureActions,
+  SET_ERROR,
   VERIFY_PHONE,
   VERIFY_PHONE_FAILURE,
   VERIFY_PHONE_SUCCESS,
   VerifyPhone,
   VerifyPhoneParam,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const loginApi = (data: LoginParam) =>
   instance
@@ -61,8 +65,11 @@ function* loginApiSaga(action: Login) {
       console.log(response);
       yield put({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: LOGIN_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: LOGIN_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -81,8 +88,11 @@ function* idRecoverySaga(action: IdRecovery) {
       console.log(response);
       yield put({ type: ID_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: ID_RECOVERY_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: ID_RECOVERY_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -102,8 +112,11 @@ function* pwRecoverySaga(action: PwRecovery) {
       console.log(response);
       yield put({ type: PW_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: PW_RECOVERY_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: PW_RECOVERY_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -133,8 +146,11 @@ function* idExistSaga(action: IdExist) {
         payload: action.payload,
       });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: ID_EXIST_FAILURE, payload: action.payload });
+      yield put({
+        type: SET_ERROR,
+        name: ID_EXIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -154,8 +170,11 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
       console.log(response);
       yield put({ type: VERIFY_PHONE_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: VERIFY_PHONE_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: VERIFY_PHONE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -176,8 +195,11 @@ function* registerApiSaga(action: Register) {
       console.log(response);
       yield put({ type: REGISTER_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: REGISTER_FAILURE, paylaod: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: REGISTER_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -203,8 +225,11 @@ function* getUserApiSaga(action: GetUser) {
         },
       });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_USER_FAILURE, paylaod: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_USER_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -232,8 +257,43 @@ function* patchPasswordApiSaga(action: PatchPassword) {
         type: PATCH_PASSWORD_SUCCESS,
       });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: PATCH_PASSWORD_FAILURE, paylaod: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_PASSWORD_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const patchPhoneApi = (data: PatchPhoneParam) =>
+  instance
+    .patch(
+      '/api/user/phone',
+      {
+        code: data.code,
+      },
+      {
+        headers: {
+          access_token: data.accessToken,
+        },
+      },
+    )
+    .then((res: AxiosResponse) => res.data);
+function* patchPhoneApiSaga(action: PatchPhone) {
+  if (action.type) {
+    try {
+      const response = yield call(patchPhoneApi, action.payload);
+      console.log(response);
+      yield put({
+        type: PATCH_PHONE_SUCCESS,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_PHONE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -247,8 +307,7 @@ function* userSaga() {
   yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
   yield takeEvery(GET_USER, getUserApiSaga);
   yield takeEvery(PATCH_PASSWORD, patchPasswordApiSaga);
-
-  yield takeEvery(userFailureActions, ErrorSaga);
+  yield takeEvery(PATCH_PHONE, patchPhoneApiSaga);
 }
 
 export { userSaga };

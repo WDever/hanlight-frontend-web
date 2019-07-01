@@ -5,7 +5,7 @@ import {
   GET_TIMETABLE_FAILURE,
   GET_TIMETABLE_SUCCESS,
   GetTimetable,
-  timeTableFailureActions,
+  SET_ERROR,
 } from '../action';
 import { ErrorSaga } from './error.saga';
 
@@ -25,14 +25,15 @@ function* getTimetableApiSaga(action: GetTimetable) {
       console.log(response);
       yield put({ type: GET_TIMETABLE_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_TIMETABLE_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_TIMETABLE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
 
 export function* timeTableSaga() {
   yield takeEvery(GET_TIMETABLE, getTimetableApiSaga);
-
-  yield takeEvery(timeTableFailureActions, ErrorSaga);
 }

@@ -11,9 +11,8 @@ import {
   GetNoticeListParams,
   GetNoticePost,
   GetNoticePostParams,
-  noticeFailureActions,
+  SET_ERROR,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const getNoticeListApi = (data: GetNoticeListParams) =>
   instance
@@ -36,8 +35,11 @@ function* getNoticeListApiSaga(action: GetNoticeList) {
       console.log(response);
       yield put({ type: GET_NOTICE_LIST_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.response);
-      yield put({ type: GET_NOTICE_LIST_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_NOTICE_LIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -62,7 +64,11 @@ function* getNoticPostApiSaga(action: GetNoticePost) {
       console.log(response);
       yield put({ type: GET_NOTICE_POST_SUCCESS, payload: response });
     } catch (e) {
-      yield put({ type: GET_NOTICE_POST_FAILURE, payload: e.response });
+      yield put({
+        type: SET_ERROR,
+        name: GET_NOTICE_POST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
     }
   }
 }
@@ -70,6 +76,4 @@ function* getNoticPostApiSaga(action: GetNoticePost) {
 export function* noticeSaga() {
   yield takeEvery(GET_NOTICE_LIST, getNoticeListApiSaga);
   yield takeEvery(GET_NOTICE_POST, getNoticPostApiSaga);
-
-  yield takeEvery(noticeFailureActions, ErrorSaga);
 }

@@ -25,7 +25,7 @@ const InnerBox = styled.div`
 
 const LogoImg = styled.img`
   width: 5rem;
-  height: 1.875rem;
+  height: 1.775rem;
   cursor: pointer;
 `;
 
@@ -35,7 +35,6 @@ const BtnsWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  cursor: pointer;
 `;
 
 const StyledNavLink = styled(NavLink)<{ active: boolean }>`
@@ -44,6 +43,11 @@ const StyledNavLink = styled(NavLink)<{ active: boolean }>`
   font-size: 1rem;
   color: ${props => (props.active ? '#4460ff' : '#565656')};
   font-weight: ${props => (props.active ? 'bold' : 'none')};
+
+  &:hover {
+    color: #4460ff;
+    font-weight: bold;
+  }
 `;
 
 const Provider = styled.span`
@@ -51,18 +55,27 @@ const Provider = styled.span`
   font-size: 1.5rem;
 `;
 
-const Buttons = styled.span`
+const SpanWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
 `;
 
 const NameSpan = styled.span`
   font-family: inherit;
-  font-size: 1rem;
   font-weight: bold;
 `;
 
-const HeaderComponent: React.FC<
+const SpanBtn = styled.span`
+  font-family: inherit;
+  cursor: pointer;
+
+  &:hover {
+    color: #4460ff;
+    font-weight: bold;
+  }
+`;
+
+const DesktopHeaderComponent: React.FC<
   HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
 > = ({ name, history, location, resetUser }) => {
   const logout = () => {
@@ -115,16 +128,26 @@ const HeaderComponent: React.FC<
             대나무숲
           </StyledNavLink>
           <Provider>|</Provider>
-          <Buttons>
+          <SpanWrapper>
             <NameSpan>{name}</NameSpan>
             &nbsp;님
-          </Buttons>
-          <Buttons>정보 수정</Buttons>
-          <Buttons onClick={logout}>로그아웃</Buttons>
+          </SpanWrapper>
+          <SpanWrapper>
+            <StyledNavLink
+              exact={true}
+              to="/profile"
+              active={location.pathname.includes('/user/profile')}
+            >
+              정보 수정
+            </StyledNavLink>
+          </SpanWrapper>
+          <SpanWrapper onClick={logout}>
+            <SpanBtn>로그아웃</SpanBtn>
+          </SpanWrapper>
         </BtnsWrapper>
       </InnerBox>
     </HeaderWrapper>
   );
 };
 
-export default HeaderComponent;
+export default DesktopHeaderComponent;

@@ -11,7 +11,10 @@ class AutoLoginComponent extends React.Component<
 
     if (accessToken) {
       this.props.getUser(accessToken);
-    } else if (this.props.location.pathname !== '/error') {
+    } else if (
+      this.props.location.pathname !== '/error' &&
+      !this.props.location.pathname.includes('/service')
+    ) {
       this.props.history.push('/user/login');
     }
   }

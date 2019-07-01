@@ -1,4 +1,5 @@
 import { MainMealMethod, MainMealProps } from 'container/meal/main-meal';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,6 +18,11 @@ const ListWrapper = styled.div`
 `;
 
 const MoreBox = styled.div`
+  @media only screen and ${Device.laptop} {
+    width: 13.225rem;
+  }
+  width: 15.225rem;
+  height: 100%;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
   font-size: 1.3125rem;
@@ -24,8 +30,6 @@ const MoreBox = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  width: 15.875rem;
-  height: 20.1875rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
@@ -33,7 +37,7 @@ const MoreBox = styled.div`
 
 const MoreBtn = styled(Link)`
   text-decoration: none;
-  width: 9.7rem;
+  width: 68.626%;
   height: 2.775rem;
   border-radius: 35px;
   border: solid 6px #f03d5c;

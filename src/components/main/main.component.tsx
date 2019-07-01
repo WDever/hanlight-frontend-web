@@ -1,9 +1,10 @@
 import * as React from 'react';
 
 import BoardContainer from 'container/board/board.container';
-import ErrorContainer from 'container/error';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
+import ProfileContainer from 'container/profile';
+import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
 import MealPage from 'pages/meal/detail-meal';
@@ -47,13 +48,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     }
   }, [loginStatus]);
 
-  const ErrorComponents = () => (
-    <>
-      <ErrorContainer />
-      <FooterPage />
-    </>
-  );
-
   return loginStatus === 'success' ? (
     <>
       {location.pathname !== '/error' && (
@@ -65,10 +59,12 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
 
       <Switch>
         <Route exact={true} path="/" component={MainComponents} />
+        <Route exact={true} path="/calendar" component={CalendarPage} />
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
+        <Route exact={true} path="/profile" component={ProfileContainer} />
         <Redirect to="/error" />
       </Switch>
     </>

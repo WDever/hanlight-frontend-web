@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "한빛: HANLIGHT",
+  "name": "한세사이버보안고등학교 인트라넷 서비스",
   "icons": [
     {
       "src": "favicon.ico",

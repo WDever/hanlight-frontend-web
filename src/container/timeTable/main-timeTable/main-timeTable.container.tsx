@@ -23,7 +23,9 @@ export interface MainTimeTableMethod {
   getTimetableApi(param: string | null): void;
 }
 
-const MainTimeTableContainer: React.FC<MainTimeTableProps & MainTimeTableMethod> = ({
+const MainTimeTableContainer: React.FC<
+  MainTimeTableProps & MainTimeTableMethod
+> = ({
   timeTableList,
   getTimetableStatus,
   getTimetableApi,
@@ -43,7 +45,7 @@ const mapStateToProps = ({ user, timeTable }: AppState) => ({
   timeTableList: timeTable.timetable,
   getTimetableStatus: timeTable.getTimetableStatus,
   accessToken: user.accessToken,
-  name: user.data.name,
+  name: user.name,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({

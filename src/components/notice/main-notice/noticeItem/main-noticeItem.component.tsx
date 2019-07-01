@@ -22,7 +22,7 @@ const ItemBox = styled.div`
 
 const Flag = styled.div<{ read: boolean }>`
   display: inline-flex;
-  width: 0.75rem;
+  width: 1.55%;
   height: 100%;
   border-radius: 16px 0 0 16px;
   background-color: ${props => (props.read ? '#ff5677' : '#4470ff')};
@@ -41,7 +41,7 @@ const Date = styled.span`
   font-size: 0.875rem;
   font-weight: 300;
   margin-right: 1rem;
-  width: 8rem;
+  width: 16.6%;
 `;
 
 const NoticeItem: React.FC<NoticeItemProps> = ({

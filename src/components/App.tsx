@@ -9,6 +9,7 @@ import RecoveryPage from 'pages/auth/recovery';
 import RegisterPage from 'pages/auth/register';
 import FooterPage from 'pages/footer';
 import MainPage from 'pages/main';
+import servicePage from 'pages/service';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -34,6 +35,7 @@ const App: React.FC = () => (
       <Route exact={true} path="/user/register" component={RegisterPage} />
       <Route exact={true} path="/user/login" component={LoginPage} />
       <Route exact={true} path="/error" component={ErrorComponents} />
+      <Route path="/service" component={servicePage} />
       <Route path="/" component={MainPage} />
       <Redirect to="/error" />
     </Switch>

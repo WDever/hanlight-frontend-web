@@ -7,7 +7,7 @@ import {
 } from 'container/user/recovery/pwRecovery';
 import { useInputs } from 'lib/hooks';
 import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
-import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import { Buttons, Device, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
 import coloredCheckSvg from 'lib/svg/colored-check.svg';
 import coloredPwSvg from 'lib/svg/colored-password.svg';
 import disabledCheckSvg from 'lib/svg/disabled-check.svg';
@@ -26,6 +26,11 @@ const PwRecoveryWrapper = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+
+  @media ${Device.tablet} {
+    box-shadow: none;
+    width: 85%;
+  }
 `;
 
 const GreetingDiv = styled.div`
@@ -36,6 +41,10 @@ const GreetingDiv = styled.div`
   font-size: 1.5rem;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 1.25rem;
+  }
 `;
 
 const ColoredSpan = styled.span`
@@ -52,6 +61,10 @@ const InputWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  @media ${Device.tablet} {
+    height: unset;
+  }
 `;
 
 const Form = styled.form`
@@ -75,6 +88,8 @@ const RePwInput = styled(Inputs)<{ colored: boolean }>`
     no-repeat scroll 1.5rem;
   padding-left: 3rem;
 `;
+
+const Button = styled(Buttons)``;
 
 const PwRecoveryComponent: React.FC<
   PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
@@ -189,13 +204,16 @@ const PwRecoveryComponent: React.FC<
               />
             </InputsGroup>
           </InputWrapper>
-          <Buttons
+          <Button
             width="28.75rem"
             height="4.375rem"
-            active={!!(password.length && rePassword.length)}
+            active={
+              !!(password.length && rePassword.length) &&
+              patchPasswordStatus !== 'pending'
+            }
           >
             설정
-          </Buttons>
+          </Button>
         </Form>
       </PwRecoveryWrapper>
     </React.Fragment>

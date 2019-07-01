@@ -23,10 +23,12 @@ export interface CommentFormOwnProps {
 }
 
 const mapStateToProps = (
-  { board }: AppState,
+  { board, error }: AppState,
   ownProps: CommentFormOwnProps,
 ) => ({
   postBoardCommentStatus: board.postBoardCommentStatus,
+  errorCode: error.code,
+  errorMessage: error.message,
   ...ownProps,
 });
 

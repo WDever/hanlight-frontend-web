@@ -60,9 +60,9 @@ const mapStateToProps = ({ timeTable, user }: AppState) => ({
   timeTableList: timeTable.timetable,
   getTimetableStatus: timeTable.getTimetableStatus,
   accessToken: user.accessToken,
-  major: user.data.major,
-  grade: user.data.grade,
-  classNum: user.data.classNum,
+  major: user.major,
+  grade: user.grade,
+  classNum: user.classNum,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({

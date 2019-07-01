@@ -40,8 +40,8 @@ const FormContentWrapper = styled.div`
 
 const FormBody = styled.div`
   width: 100%;
-  margin-top: 2.25rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.75rem;
+  margin-bottom: 1.75rem;
 
   display: flex;
   align-items: center;
@@ -204,8 +204,6 @@ export default class BoardFormComponent extends React.Component<
           files: [],
           textAreaHeight: 52.8,
         });
-      } else if (this.props.postBoardStatus === 'failure') {
-        alert('게시물이 정상적으로 업로드되지 않았습니다.');
       }
     }
   }
