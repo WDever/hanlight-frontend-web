@@ -75,7 +75,7 @@ const SpanBtn = styled.span`
   }
 `;
 
-const HeaderComponent: React.FC<
+const DesktopHeaderComponent: React.FC<
   HeaderProps & { name: string | null } & HeaderMethod & RouteComponentProps
 > = ({ name, history, location, resetUser }) => {
   const logout = () => {
@@ -150,4 +150,4 @@ const HeaderComponent: React.FC<
   );
 };
 
-export default HeaderComponent;
+export default DesktopHeaderComponent;
