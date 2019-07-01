@@ -1,16 +1,14 @@
 export interface UserModel {
-  signKey: string;
   id: string;
+  signKey: string;
   accessToken: string;
-  data: {
-    type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-    admin: number;
-    name: string;
-    major: string | null;
-    grade: number | null;
-    classNum: number | null;
-    studentNum: number | null;
-  };
+  type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  admin: number;
+  name: string;
+  major: string | null;
+  grade: number | null;
+  classNum: number | null;
+  studentNum: number | null;
 
   verifyPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
   registerStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -37,4 +35,5 @@ export interface UserModel {
     | 'failure';
   getUserStatus: 'none' | 'pending' | 'success' | 'failure';
   patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
 }

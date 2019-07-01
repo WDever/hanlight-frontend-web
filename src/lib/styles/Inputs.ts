@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Device } from './Device';
 
 interface InputsSize {
   width: string | number;
@@ -30,6 +31,14 @@ export const Inputs = styled.input<InputsSize & { wrong?: boolean }>`
     color: #bebebe;
     font-weight: 500;
   }
+
+  @media ${Device.tablet} {
+    width: calc(100% - 3rem);
+  }
+  @media ${Device.mobileL} {
+    height: 3rem;
+    font-size: 1rem;
+  }
 `;
 
 export const InputsGroup = styled.div<InputsSize>`
@@ -39,4 +48,11 @@ export const InputsGroup = styled.div<InputsSize>`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+
+  @media ${Device.tablet} {
+    width: 100%;
+  }
+  @media ${Device.mobileL} {
+    height: 5rem;
+  }
 `;

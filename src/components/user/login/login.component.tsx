@@ -6,7 +6,7 @@ import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
-import { Buttons, Inputs, transitions } from 'lib/styles';
+import { Buttons, Device, Inputs, transitions } from 'lib/styles';
 import coloredIdSvg from 'lib/svg/colored-id.svg';
 import coloredPwSvg from 'lib/svg/colored-password.svg';
 import disabledIdSvg from 'lib/svg/disabled-id.svg';
@@ -23,17 +23,24 @@ interface LoginState {
 }
 
 const LoginWrapper = styled.div`
-  position: relative;
-  left: 55%;
-  width: 38.125rem;
-  height: 43.75rem;
+  width: 100%;
+  max-width: 38.125rem;
+  height: 90%;
+  max-height: 43.75rem;
   display: inline-flex;
   align-items: center;
   flex-direction: column;
   background-color: #ffffff;
+  border-radius: 3rem;
+  animation: ${transitions.fadeIn} 2.5s;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
-  animation: ${transitions.fadeIn} 2.5s;
+  @media ${Device.tablet} {
+    box-shadow: none;
+    width: 85%;
+    height: unset;
+    max-width: unset;
+  }
 `;
 
 const GreetingDiv = styled.div`
@@ -45,22 +52,25 @@ const GreetingDiv = styled.div`
   font-size: 2.25rem;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  margin-bottom: 2rem;
 `;
 
 const LoginImg = styled.img`
-  width: 12.5rem;
-  height: 12.5rem;
-  margin-bottom: 1rem;
-`;
+  width: 9.63rem;
+  height: 5.63rem;
+  margin-top: 4.5rem;
+  margin-bottom: 3.5rem;
 
-const LoginInputWrapper = styled.div`
-  width: 100%;
-  height: 55%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
+  @media ${Device.tablet} {
+    width: 14.63rem;
+    height: unset;
+    margin-top: 0;
+    margin-bottom: 6.5rem;
+  }
+
+  @media ${Device.mobileL} {
+    width: 7.63rem;
+    margin-top: 0;
+  }
 `;
 
 const LoginForm = styled.form`
@@ -70,16 +80,13 @@ const LoginForm = styled.form`
   align-items: center;
   width: 100%;
   height: 50%;
-`;
 
-const FindBtnsWrapper = styled.div`
-  font-family: 'Spoqa Han Sans';
-  width: 70%;
-  color: #6c63ff;
-  font-size: 1.25rem;
-  display: flex;
-  justify-content: space-around;
-  margin-top: 1rem;
+  @media ${Device.tablet} {
+    height: 21.875rem;
+  }
+  @media ${Device.mobileL} {
+    height: 13.475rem;
+  }
 `;
 
 const WrongLabel = styled.label`
@@ -88,12 +95,39 @@ const WrongLabel = styled.label`
   color: #ff0000;
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
+
+  @media ${Device.tablet} {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
+`;
+
+const LoginInputWrapper = styled.div`
+  width: 100%;
+  height: 58%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+
+  @media ${Device.tablet} {
+    width: 100%;
+    height: unset;
+  }
 `;
 
 const LoginInputId = styled(Inputs)<{ colored: boolean }>`
   background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
     no-repeat scroll 1.5rem;
   padding-left: 3rem;
+
+  @media ${Device.tablet} {
+    margin-bottom: 1rem;
+  }
 `;
 
 const LoginInputPw = styled(Inputs)<{ colored: boolean }>`
@@ -104,9 +138,27 @@ const LoginInputPw = styled(Inputs)<{ colored: boolean }>`
 
 const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
 
+const LoginBtn = styled(Buttons)``;
+
+const FindBtnsWrapper = styled.div`
+  font-family: 'Spoqa Han Sans';
+  width: 70%;
+  color: #6c63ff;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+
+  @media ${Device.tablet} {
+    width: 100%;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
+`;
+
 const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
   font-family: 'Spoqa Han Sans';
-  font-size: 1.25rem;
   color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
   font-weight: 500;
   background-color: transparent;
@@ -190,13 +242,13 @@ const LoginComponent: React.FC<
             </span>
           )}
         </WrongLabel>
-        <Buttons
+        <LoginBtn
           width="28.75rem"
           height="4.375rem"
           active={!!(id && password && loginStatus !== 'pending')}
         >
           로그인
-        </Buttons>
+        </LoginBtn>
       </LoginForm>
       <FindBtnsWrapper>
         <FindBtns to="/user/phone?type=recovery&key=id">ID 찾기</FindBtns>

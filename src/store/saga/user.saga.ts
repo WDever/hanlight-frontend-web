@@ -25,7 +25,12 @@ import {
   PATCH_PASSWORD,
   PATCH_PASSWORD_FAILURE,
   PATCH_PASSWORD_SUCCESS,
+  PATCH_PHONE,
+  PATCH_PHONE_FAILURE,
+  PATCH_PHONE_SUCCESS,
   PatchPassword,
+  PatchPhone,
+  PatchPhoneParam,
   PatchPwParam,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
@@ -261,6 +266,38 @@ function* patchPasswordApiSaga(action: PatchPassword) {
   }
 }
 
+const patchPhoneApi = (data: PatchPhoneParam) =>
+  instance
+    .patch(
+      '/api/user/phone',
+      {
+        code: data.code,
+      },
+      {
+        headers: {
+          access_token: data.accessToken,
+        },
+      },
+    )
+    .then((res: AxiosResponse) => res.data);
+function* patchPhoneApiSaga(action: PatchPhone) {
+  if (action.type) {
+    try {
+      const response = yield call(patchPhoneApi, action.payload);
+      console.log(response);
+      yield put({
+        type: PATCH_PHONE_SUCCESS,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_PHONE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* userSaga() {
   yield takeEvery(ID_RECOVERY, idRecoverySaga);
   yield takeEvery(PW_RECOVERY, pwRecoverySaga);
@@ -270,6 +307,7 @@ function* userSaga() {
   yield takeEvery(VERIFY_PHONE, verifyPhoneApiSaga);
   yield takeEvery(GET_USER, getUserApiSaga);
   yield takeEvery(PATCH_PASSWORD, patchPasswordApiSaga);
+  yield takeEvery(PATCH_PHONE, patchPhoneApiSaga);
 }
 
 export { userSaga };

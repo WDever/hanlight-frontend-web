@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Device } from './Device';
 
 interface ButtonsProps {
   width: string | number;
@@ -23,4 +24,13 @@ export const Buttons = styled.button<ButtonsProps>`
   outline: none;
   cursor: pointer;
   border: 0;
+
+  @media ${Device.tablet} {
+    width: 100%;
+    font-size: 1.65rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1.2rem;
+    height: 3.2rem;
+  }
 `;
