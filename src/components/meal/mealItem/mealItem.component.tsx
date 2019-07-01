@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled, { css } from 'styled-components';
 
 interface MealItemProps {
@@ -12,7 +13,7 @@ export const MealItemWrapper = styled.div<MealItemProps>`
   ${({ type }) =>
     type === 'main'
       ? css`
-          @media only screen and (max-width: 1024px) {
+          @media only screen and ${Device.laptop} {
             width: 13.225rem;
           }
           width: 15.225rem;

@@ -1,5 +1,6 @@
 import HomeTimeComponent from 'components/timer/homeTimer';
 import LunchTimeComponent from 'components/timer/lunchTimer';
+import { Device } from 'lib/styles';
 import EndImgSvg from 'lib/svg/end-time-illust.svg';
 import LunchImgSvg from 'lib/svg/jumsim-illust.svg';
 import * as React from 'react';
@@ -32,8 +33,6 @@ const TimeWrapper = styled.div`
 const EndTimeBackGroundImg = styled.img`
   height: 19.7rem;
   width: 34.21875rem;
-  /* max-width: inherit;
-  height: inherit; */
   z-index: 0;
   position: absolute;
 `;
@@ -47,7 +46,7 @@ const LunchTimeBackGroundImg = styled.img`
 `;
 
 const EndImgWrapper = styled.div`
-  @media only screen and (max-width: 1024px) {
+  @media only screen and ${Device.laptop} {
     max-width: 30.8rem;
   }
 

@@ -5,6 +5,7 @@ import {
   DetailCalendarMethod,
   DetailCalendarProps,
 } from 'container/calendar/detail-calendar';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled, { css } from 'styled-components';
@@ -66,10 +67,10 @@ const CalendarWrapper = styled.div<{ listLength: number }>`
   ${({ listLength }) =>
     listLength !== 0
       ? css`
-        @media only screen and (max-width: 1024px) {
-          grid-template-columns: repeat(4, 20%);
-          grid-column-gap: 5%;
-        }
+          @media only screen and ${Device.laptop} {
+            grid-template-columns: repeat(4, 20%);
+            grid-column-gap: 5%;
+          }
           width: 105%;
           display: grid;
           margin: 0 -1.05rem;

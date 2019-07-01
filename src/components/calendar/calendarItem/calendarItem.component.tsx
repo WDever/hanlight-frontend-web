@@ -1,4 +1,6 @@
 import * as React from 'react';
+
+import { Device } from 'lib/styles';
 import styled, { css } from 'styled-components';
 
 interface BoxProps {
@@ -18,12 +20,10 @@ interface ItemProps extends BoxProps {
 }
 
 const Box = styled.div<BoxProps>`
-  width: ${props => (props.type === 'main' ? '15.875rem' : '12.5rem')};
-  height: ${props => (props.type === 'main' ? '15.875rem' : '16.575rem')};
   ${({ type }) =>
     type === 'main'
       ? css`
-          @media only screen and (max-width: 1024px) {
+          @media only screen and ${Device.laptop} {
             width: 12.5rem;
             height: 12.5rem;
           }

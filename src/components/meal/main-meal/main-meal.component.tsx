@@ -1,4 +1,5 @@
 import { MainMealMethod, MainMealProps } from 'container/meal/main-meal';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
@@ -17,7 +18,7 @@ const ListWrapper = styled.div`
 `;
 
 const MoreBox = styled.div`
-  @media only screen and (max-width: 1024px) {
+  @media only screen and ${Device.laptop} {
     width: 13.225rem;
   }
   width: 15.225rem;
@@ -37,7 +38,6 @@ const MoreBox = styled.div`
 const MoreBtn = styled(Link)`
   text-decoration: none;
   width: 68.626%;
-  /* width: 9.7rem; */
   height: 2.775rem;
   border-radius: 35px;
   border: solid 6px #f03d5c;
