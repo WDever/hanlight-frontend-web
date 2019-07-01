@@ -26,12 +26,14 @@ const LoginWrapper = styled.div`
   position: relative;
   left: 55%;
   width: 38.125rem;
-  height: 43.75rem;
+  height: 90%;
+  max-height: 43.75rem;
   display: inline-flex;
   align-items: center;
   flex-direction: column;
   background-color: #ffffff;
   box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
+  border-radius: 3rem;
 
   animation: ${transitions.fadeIn} 2.5s;
 `;
@@ -45,18 +47,18 @@ const GreetingDiv = styled.div`
   font-size: 2.25rem;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  margin-bottom: 2rem;
 `;
 
 const LoginImg = styled.img`
-  width: 12.5rem;
-  height: 12.5rem;
-  margin-bottom: 1rem;
+  width: 9.63rem;
+  height: 5.63rem;
+  margin-top: 4.5rem;
+  margin-bottom: 3.5rem;
 `;
 
 const LoginInputWrapper = styled.div`
   width: 100%;
-  height: 55%;
+  height: 58%;
   display: flex;
   flex-direction: column;
   align-items: center;
