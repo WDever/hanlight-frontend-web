@@ -7,7 +7,7 @@ import {
   id as idRegExp,
   password as passwordRegExp,
 } from 'lib/RegExp/RegExp.json';
-import { Buttons, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
+import { Buttons, Device, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
 import coloredCheckSvg from 'lib/svg/colored-check.svg';
 import coloredIdSvg from 'lib/svg/colored-id.svg';
 import coloredPwSvg from 'lib/svg/colored-password.svg';
@@ -34,6 +34,12 @@ const RegisterWrapper = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
+
+  @media ${Device.tablet} {
+    box-shadow: none;
+    width: 85%;
+    height: unset;
+  }
 `;
 
 const GreetingDiv = styled.div`
@@ -46,6 +52,13 @@ const GreetingDiv = styled.div`
   font-weight: bold;
   color: #4470ff;
   margin-top: 3rem;
+
+  @media ${Device.tablet} {
+    font-size: 2rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1.25rem;
+  }
 `;
 
 const InputWrapper = styled.div`
@@ -64,6 +77,13 @@ const Form = styled.form`
   align-items: center;
   width: 100%;
   height: 80%;
+
+  @media ${Device.tablet} {
+    height: 30.375rem;
+  }
+  @media ${Device.mobileL} {
+    height: 21.625rem;
+  }
 `;
 
 const IdInput = styled(Inputs)<{ colored: boolean }>`
@@ -246,7 +266,10 @@ const RegisterComponent: React.FC<
           <Buttons
             width="28.75rem"
             height="4.375rem"
-            active={!!(id.length && password.length && rePassword.length)}
+            active={
+              !!(id.length && password.length && rePassword.length) &&
+              registerStatus !== 'pending'
+            }
           >
             회원가입
           </Buttons>

@@ -3,7 +3,7 @@ import * as React from 'react';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
-import ProfileContainer from 'container/user/profile';
+import ProfileContainer from 'container/profile';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
