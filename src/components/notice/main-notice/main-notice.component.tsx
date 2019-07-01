@@ -33,7 +33,7 @@ const Separator = styled.div`
 `;
 
 const BtnWrapper = styled.div`
-  margin-right: 5%;
+  margin: 0 5%;
   width: 18.4375rem;
   display: inline-flex;
   justify-content: center;
