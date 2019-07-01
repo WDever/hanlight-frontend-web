@@ -112,6 +112,11 @@ const ValueSpan = styled.span`
 const ValueInputWrapper = styled.div`
   width: 100%;
   display: flex;
+
+  form {
+    width: 100%;
+    display: flex;
+  }
 `;
 
 const ValueInput = styled.input`
@@ -186,7 +191,7 @@ const ProfileComponent: React.FC<
     }
   }, [patchPhoneStatus, patchPasswordStatus]);
 
-  const PatchPassword = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (
@@ -234,13 +239,15 @@ const ProfileComponent: React.FC<
             <Row>
               <AttributeSpan>비밀번호</AttributeSpan>
               <ValueInputWrapper>
-                <ValueInput
-                  type="password"
-                  placeholder="변경할 비밀번호를 입력해주세요."
-                  onChange={setPassword}
-                  value={password}
-                />
-                <ValueBtn onClick={PatchPassword}>수정</ValueBtn>
+                <form onSubmit={PatchPassword}>
+                  <ValueInput
+                    type="password"
+                    placeholder="변경할 비밀번호를 입력해주세요."
+                    onChange={setPassword}
+                    value={password}
+                  />
+                  <ValueBtn>수정</ValueBtn>
+                </form>
               </ValueInputWrapper>
             </Row>
             <Row>

@@ -25,7 +25,7 @@ const InnerBox = styled.div`
 
 const LogoImg = styled.img`
   width: 5rem;
-  height: 1.875rem;
+  height: 1.775rem;
   cursor: pointer;
 `;
 
