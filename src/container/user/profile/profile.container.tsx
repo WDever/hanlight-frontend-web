@@ -34,12 +34,12 @@ export interface ProfileMethod {
 
 const mapStateToProps = ({ user, error }: AppState) => ({
   accessToken: user.accessToken,
-  type: user.data.type,
-  major: user.data.major,
-  grade: user.data.grade,
-  classNum: user.data.classNum,
-  name: user.data.name,
-  id: user.data.id,
+  type: user.type,
+  major: user.major,
+  grade: user.grade,
+  classNum: user.classNum,
+  name: user.name,
+  id: user.id,
   patchPasswordStatus: user.patchPasswordStatus,
   patchPhoneStatus: user.patchPhoneStatus,
   errorCode: error.code,

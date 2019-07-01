@@ -44,7 +44,7 @@ const mapStateToProps = (
   ownProps: BoardCommentOwnProps,
 ) => ({
   accessToken: user.accessToken,
-  userType: user.data.type,
+  userType: user.type,
   ...ownProps,
 });
 

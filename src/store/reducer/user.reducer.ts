@@ -6,16 +6,13 @@ const initialState: UserModel = {
   signKey: '',
   id: '',
   accessToken: '',
-  data: {
-    id: '',
-    type: 'none',
-    admin: 0,
-    name: '',
-    major: null,
-    grade: null,
-    classNum: null,
-    studentNum: null,
-  },
+  type: 'none',
+  admin: 0,
+  name: '',
+  major: null,
+  grade: null,
+  classNum: null,
+  studentNum: null,
 
   verifyPhoneStatus: 'none',
   registerStatus: 'none',
@@ -43,9 +40,9 @@ export const userReducer = (
       case 'LOGIN_SUCCESS':
         draft.loginStatus = 'success';
         draft.accessToken = action.payload.accessToken;
-        draft.data = {
+        Object.assign(draft, {
           ...action.payload.user,
-        };
+        });
 
         console.log(action.payload);
         localStorage.setItem('accessToken', action.payload.accessToken);
@@ -135,7 +132,9 @@ export const userReducer = (
       case 'GET_USER_SUCCESS':
         draft.getUserStatus = 'success';
         draft.loginStatus = 'success';
-        draft.data = action.payload.user;
+        Object.assign(draft, {
+          ...action.payload.user,
+        });
         draft.accessToken = action.payload.token;
         break;
       case 'GET_USER_FAILURE':

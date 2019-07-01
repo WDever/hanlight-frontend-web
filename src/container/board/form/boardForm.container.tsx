@@ -23,7 +23,7 @@ export interface BoardFormMethod {
 const mapStateToProps = ({ user, board, error }: AppState) => ({
   accessToken: user.accessToken,
   postBoardStatus: board.postBoardStatus,
-  userType: user.data.type,
+  userType: user.type,
   errorCode: error.code,
   errorMessage: error.message,
 });

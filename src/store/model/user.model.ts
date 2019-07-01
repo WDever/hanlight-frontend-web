@@ -2,16 +2,13 @@ export interface UserModel {
   id: string;
   signKey: string;
   accessToken: string;
-  data: {
-    id: string;
-    type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-    admin: number;
-    name: string;
-    major: string | null;
-    grade: number | null;
-    classNum: number | null;
-    studentNum: number | null;
-  };
+  type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  admin: number;
+  name: string;
+  major: string | null;
+  grade: number | null;
+  classNum: number | null;
+  studentNum: number | null;
 
   verifyPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
   registerStatus: 'none' | 'pending' | 'success' | 'failure';

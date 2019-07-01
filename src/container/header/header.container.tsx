@@ -28,7 +28,7 @@ const HeaderContainer: React.FC<
 };
 
 const mapStateToProps = ({ user }: AppState) => ({
-  name: user.data.name,
+  name: user.name,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
