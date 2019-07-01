@@ -7,7 +7,7 @@ import AccountKit, {
 import {
   ProfileMethod,
   ProfileProps,
-} from 'container/user/profile/profile.container';
+} from 'container/profile/profile.container';
 import { useInput, usePrevious } from 'lib/hooks';
 import {
   password as passwordRegExp,
