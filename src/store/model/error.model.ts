@@ -10,4 +10,5 @@ export interface ErrorModel {
   code: number;
   message: string;
   name: string;
+  time: number | null;
 }

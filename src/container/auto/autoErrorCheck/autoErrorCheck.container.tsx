@@ -9,6 +9,7 @@ export interface AutoErrorCheckProps {
   code: number;
   message: string;
   name: string;
+  time: number | null;
 }
 
 const mapStateToProps = ({ error }: AppState) => ({
@@ -16,6 +17,7 @@ const mapStateToProps = ({ error }: AppState) => ({
   code: error.code,
   message: error.message,
   name: error.name,
+  time: error.time,
 });
 
 const AutoErrorCheckContainer = withRouter(
