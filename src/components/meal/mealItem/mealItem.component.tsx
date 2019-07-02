@@ -7,6 +7,7 @@ interface MealItemProps {
   today: boolean;
   item: boolean;
   type: 'main' | 'detail';
+  listLength: number;
 }
 
 export const MealItemWrapper = styled.div<MealItemProps>`
@@ -19,8 +20,10 @@ export const MealItemWrapper = styled.div<MealItemProps>`
           width: 15.225rem;
           height: 100%;
         `
-      : css`
-          width: 18%;
+      : css<{ listLength: number }>`
+          width: ${({ listLength }) =>
+            (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
+            100}%;
           height: 17.91875rem;
           max-width: 13.54375rem;
         `}
@@ -96,9 +99,15 @@ const MealItemComponent: React.FC<{
   date: string;
   day: string;
   today: boolean;
-}> = ({ item, date, day, today, type }) => {
+  listLength?: number;
+}> = ({ item, date, day, today, type, listLength = 5 }) => {
   return item instanceof Array ? (
-    <MealItemWrapper item={true} type={type} today={today}>
+    <MealItemWrapper
+      item={true}
+      type={type}
+      today={today}
+      listLength={listLength}
+    >
       <MealItemDay type={type}>{day}</MealItemDay>
       <MealItems type={type}>
         {item.map((meal, i) => (
@@ -108,7 +117,12 @@ const MealItemComponent: React.FC<{
       <MealDate type={type}>{date}</MealDate>
     </MealItemWrapper>
   ) : (
-    <MealItemWrapper item={false} today={today} type={type}>
+    <MealItemWrapper
+      item={false}
+      today={today}
+      type={type}
+      listLength={listLength}
+    >
       <MealNoItemWrapper>
         <MealNoItems type={type}>
           {item.split('\n').map((line, i) => (
