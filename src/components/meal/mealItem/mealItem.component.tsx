@@ -24,8 +24,8 @@ export const MealItemWrapper = styled.div<MealItemProps>`
           width: ${({ listLength }) =>
             (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
             100}%;
-          height: 17.91875rem;
-          max-width: 13.54375rem;
+          height: 17.92rem;
+          max-width: 13.54rem;
         `}
 
   font-family: 'Spoqa Han Sans';

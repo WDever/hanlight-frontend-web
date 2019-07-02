@@ -46,7 +46,8 @@ const MealWeekItems = styled.div<{ listLength: number }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: ${({ listLength }) => listLength * 20}%;
+  /* width: ${({ listLength }) => listLength * 20}%; */
+  width: calc(100% - ${({ listLength }) => ((5 - listLength) * 18)}% - ${({ listLength }) => (5 - listLength) * 2.5}%);
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
