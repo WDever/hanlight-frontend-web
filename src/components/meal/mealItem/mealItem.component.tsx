@@ -20,10 +20,9 @@ export const MealItemWrapper = styled.div<MealItemProps>`
           width: 15.225rem;
           height: 100%;
         `
-      : css<{ listLength: number }>`
-          width: ${({ listLength }) =>
-            (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
-            100}%;
+      : css`
+          width: 18%;
+          width: calc(18% + ${({ listLength }: MealItemProps) => ((5 - listLength) * 6)}%);
           height: 17.92rem;
           max-width: 13.54rem;
         `}
