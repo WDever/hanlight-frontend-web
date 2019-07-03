@@ -1,4 +1,5 @@
 import { HeaderMethod, HeaderProps } from 'container/header';
+import { Device } from 'lib/styles';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import * as React from 'react';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
@@ -13,6 +14,12 @@ const HeaderWrapper = styled.div`
   position: fixed;
   background-color: #ffffff;
   z-index: 10;
+
+  @media ${Device.tablet} {
+    position: relative;
+    border-bottom: 1px solid #e9e9e9;
+    box-shadow: none;
+  }
 `;
 
 const InnerBox = styled.div`
@@ -21,6 +28,11 @@ const InnerBox = styled.div`
   height: 100%;
   align-items: center;
   justify-content: space-between;
+
+  @media ${Device.tablet} {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 
 const LogoImg = styled.img`
@@ -35,6 +47,10 @@ const BtnsWrapper = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  @media ${Device.tablet} {
+    display: none;
+  }
 `;
 
 const StyledNavLink = styled(NavLink)<{ active: boolean }>`
@@ -75,9 +91,32 @@ const SpanBtn = styled.span`
   }
 `;
 
-const DesktopHeaderComponent: React.FC<
+const MenuIcon = styled.div`
+  display: none;
+
+  @media ${Device.tablet} {
+    width: 1.25rem;
+    height: 1rem;
+    position: absolute;
+    left: 1.15rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+`;
+
+const MenuSpan = styled.span`
+  content: ${' '};
+  width: 1.25rem;
+  height: 0.125rem;
+  background-color: #707070;
+`;
+
+const HeaderComponent: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
-> = ({ name, history, location, resetUser }) => {
+> = ({ name, history, location, resetUser, toggleMenu }) => {
   const logout = () => {
     resetUser();
     history.push('/user/login');
@@ -86,6 +125,11 @@ const DesktopHeaderComponent: React.FC<
   return (
     <HeaderWrapper>
       <InnerBox>
+        <MenuIcon onClick={() => toggleMenu(true)}>
+          <MenuSpan />
+          <MenuSpan style={{ width: '16px' }} />
+          <MenuSpan />
+        </MenuIcon>
         <LogoImg
           onClick={() => history.push('/')}
           src={LogoSvg}
@@ -150,4 +194,4 @@ const DesktopHeaderComponent: React.FC<
   );
 };
 
-export default DesktopHeaderComponent;
+export default HeaderComponent;

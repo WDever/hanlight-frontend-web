@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import HeaderMenuCompoent from 'components/header/menu';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import { MainMethod, MainProps } from 'container/main';
@@ -36,10 +37,13 @@ const MainComponents = () => (
 );
 
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
-  loginStatus,
   history,
-  resetUser,
   location,
+  match,
+  loginStatus,
+  resetUser,
+  toggleMenu,
+  toggleMenuStatus,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
@@ -49,10 +53,30 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   }, [loginStatus]);
 
   return loginStatus === 'success' ? (
-    <>
+    <div
+      style={
+        toggleMenuStatus
+          ? {
+              overflow: 'hidden',
+              position: 'fixed',
+              width: '100%',
+              height: '100%',
+            }
+          : undefined
+      }
+    >
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
+          {toggleMenuStatus && (
+            <HeaderMenuCompoent
+              history={history}
+              location={location}
+              match={match}
+              toggleMenu={toggleMenu}
+              logout={resetUser}
+            />
+          )}
           <Empty />
         </>
       )}
@@ -67,7 +91,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/profile" component={ProfileContainer} />
         <Redirect to="/error" />
       </Switch>
-    </>
+    </div>
   ) : (
     <></>
   );
