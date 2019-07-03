@@ -3,7 +3,7 @@ import { createStandardAction } from 'typesafe-actions';
 
 const TOGGLE_MENU = 'TOGGLE_MENU';
 
-class ToggleMenu implements Action {
+export class ToggleMenu implements Action {
   public readonly type = TOGGLE_MENU;
 
   public constructor(public payload: boolean) {}

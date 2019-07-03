@@ -3,6 +3,11 @@ import * as React from 'react';
 import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
+import {
+  HeaderMenuMethod,
+  HeaderMenuOwnProps,
+  HeaderMenuProps,
+} from 'container/header/menu/headerMenu.container';
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
@@ -26,6 +31,7 @@ const Wrapper = styled.div`
 
   transform: translateX(-100%);
   animation: slide-in 0.2s forwards;
+
   @keyframes slide-in {
     100% {
       transform: translateX(0%);
@@ -170,12 +176,9 @@ const DownSide = styled.div`
   height: calc(100% - 6.5rem);
 `;
 
-const HeaderMenuCompoent: React.FC<
-  {
-    toggleMenu(payload: boolean): void;
-    logout(): void;
-  } & RouteComponentProps
-> = ({ toggleMenu, logout, history }) => {
+const HeaderMenuComponent: React.FC<
+  HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
+> = ({ name, type, toggleMenu, logout, history }) => {
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -188,6 +191,20 @@ const HeaderMenuCompoent: React.FC<
     }
   };
 
+  const userType = (): string => {
+    if (type === 'student') {
+      return '학생';
+    } else if (type === 'teacher') {
+      return '선생님';
+    } else if (type === 'graduate') {
+      return '졸업생';
+    } else if (type === 'parent') {
+      return '부모님';
+    } else {
+      return '';
+    }
+  };
+
   return (
     <Wrapper>
       <LeftWrapper>
@@ -195,8 +212,8 @@ const HeaderMenuCompoent: React.FC<
           <Profile>
             <ProfileImg src={DefaultProfileImg} alt="" />
             <Info>
-              <Name>김우혁님, 안녕하세요 ✨</Name>
-              <UserType>학생</UserType>
+              <Name>{name}님, 안녕하세요 ✨</Name>
+              <UserType>{userType()}</UserType>
             </Info>
           </Profile>
           <CircleIcon
@@ -245,4 +262,4 @@ const HeaderMenuCompoent: React.FC<
   );
 };
 
-export default HeaderMenuCompoent;
+export default HeaderMenuComponent;

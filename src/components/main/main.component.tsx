@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-import HeaderMenuCompoent from 'components/header/menu';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
+import HeaderMenuContainer from 'container/header/menu';
 import { MainMethod, MainProps } from 'container/main';
 import ProfileContainer from 'container/profile';
 import CalendarPage from 'pages/calendar/detail-calendar';
@@ -42,7 +42,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   match,
   loginStatus,
   resetUser,
-  toggleMenu,
   toggleMenuStatus,
 }) => {
   useEffect(() => {
@@ -68,15 +67,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
-          {toggleMenuStatus && (
-            <HeaderMenuCompoent
-              history={history}
-              location={location}
-              match={match}
-              toggleMenu={toggleMenu}
-              logout={resetUser}
-            />
-          )}
+          {toggleMenuStatus && <HeaderMenuContainer logout={resetUser} />}
           <Empty />
         </>
       )}

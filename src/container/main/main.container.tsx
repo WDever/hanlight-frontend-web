@@ -1,15 +1,8 @@
 import MainComponent from 'components/main';
-import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
-import {
-  AppState,
-  userActions,
-  userReducerActions,
-  utilActions,
-  utilReducerActions,
-} from 'store';
+import { AppState, userActions, userReducerActions } from 'store';
 
 export interface MainProps {
   loginStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -18,7 +11,6 @@ export interface MainProps {
 
 export interface MainMethod {
   resetUser(): void;
-  toggleMenu(payload: boolean): void;
 }
 
 const mapStateToProps = ({ user, util }: AppState) => ({
@@ -26,11 +18,8 @@ const mapStateToProps = ({ user, util }: AppState) => ({
   toggleMenuStatus: util.toggleMenuStatus,
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<userReducerActions | utilReducerActions>,
-) => ({
+const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
-  toggleMenu: bindActionCreators(utilActions.toggleMenu, dispatch),
 });
 
 const MainCotainer = withRouter(
