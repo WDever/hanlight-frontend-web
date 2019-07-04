@@ -10,6 +10,8 @@ interface MealItemProps {
   listLength: number;
 }
 
+const mealItemWidthArr = [16.667, 21.044, 28.54, 44.326];
+
 export const MealItemWrapper = styled.div<MealItemProps>`
   ${({ type }) =>
     type === 'main'
@@ -21,8 +23,14 @@ export const MealItemWrapper = styled.div<MealItemProps>`
           height: 100%;
         `
       : css`
-          width: 18%;
-          width: calc(18% + ${({ listLength }: MealItemProps) => ((5 - listLength) * 6)}%);
+          width: 16.7%;
+          /* width: calc(18% + ${({ listLength }: MealItemProps) => ((5 - listLength) * 6)}%);
+          width: calc((100% - ${({ listLength }) => ((5 - listLength) * 18)}% - ${({ listLength }) => (5 - listLength) * 2.8}%) * (16.66 / 100));
+          width: calc((100% - ${({ listLength }) => ((5 - listLength) * 20.8)}%) / ${({ listLength }) => (listLength)});
+          width: calc(16.7% + ${({ listLength }) => (16.7 * (5 - listLength) / listLength)}%);
+          width: calc(16.7% + ${({ listLength }) => (20.8 * (5 - listLength) / listLength)}%); */
+          width: ${({ listLength }: MealItemProps) => mealItemWidthArr[5 - listLength]}%;
+          /* width: ${({ listLength }) => (20.8 * listLength)}%; */
           height: 17.92rem;
           max-width: 13.54rem;
         `}

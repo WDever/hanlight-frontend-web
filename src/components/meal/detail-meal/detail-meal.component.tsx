@@ -46,7 +46,8 @@ const MealWeekItems = styled.div<{ listLength: number }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: calc(100% - ${({ listLength }) => ((5 - listLength) * 18)}% - ${({ listLength }) => (5 - listLength) * 2.8}%);
+  /* width: calc(100% - ${({ listLength }) => ((5 - listLength) * 16.6)}% - ${({ listLength }) => (5 - listLength) * 4.2}%); */
+  width: calc(100% - ${({ listLength }) => ((5 - listLength) * 20.8)}%);
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -119,6 +120,13 @@ export default class DetailMealComponent extends React.Component<
               mealMoment.get('week') - week * 7 < 5
                 ? mealMoment.get('week') - week * 7
                 : 5;
+            console.log(mealMoment.get('month'));
+            console.log(mealMoment.get('week'));
+            console.log(mealMoment.get('d'));
+            console.log(moment().endOf('month'));
+            console.log(moment().endOf('month').get('date'));
+            console.log(moment().endOf('week'));
+            console.log(moment().endOf('week').get('date'));
             if (mealIndex > 0) {
               MealList[week].push(
                 <MealItemComponent
