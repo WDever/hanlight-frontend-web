@@ -1,3 +1,4 @@
+import { Device } from 'lib/styles';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -18,6 +19,10 @@ const ItemBox = styled.div`
   cursor: pointer;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
+
+  @media ${Device.tablet} {
+    height: 2rem;
+  }
 `;
 
 const Flag = styled.div<{ read: boolean }>`
@@ -32,6 +37,11 @@ const TitleBox = styled.span`
   width: 75%;
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
+
+  @media ${Device.tablet} {
+    font-size: 0.69rem;
+    margin-left: 0.75rem;
+  }
 `;
 
 const Date = styled.span`
@@ -42,6 +52,10 @@ const Date = styled.span`
   font-weight: 300;
   margin-right: 1rem;
   width: 16.6%;
+
+  @media ${Device.tablet} {
+    font-size: 0.625rem;
+  }
 `;
 
 const NoticeItem: React.FC<NoticeItemProps> = ({

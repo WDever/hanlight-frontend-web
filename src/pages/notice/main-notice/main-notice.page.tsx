@@ -1,6 +1,7 @@
 import MainNoticeContainer from 'container/notice/main-notice';
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const MainNoticeTemplate = styled.div`
@@ -9,6 +10,10 @@ const MainNoticeTemplate = styled.div`
   justify-content: center;
   align-items: flex-start;
   margin-bottom: 3rem;
+
+  @media ${Device.tablet} {
+    margin-bottom: 4rem;
+  }
 `;
 
 const MainNoticePage: React.FC = () => {

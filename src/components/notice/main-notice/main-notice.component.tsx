@@ -4,6 +4,7 @@ import {
   MainNoticeMethod,
   MainNoticeProps,
 } from 'container/notice/main-notice';
+import { Device } from 'lib/styles';
 import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import moment from 'moment';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -23,6 +24,11 @@ const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin: 2rem 0 1rem 0;
+
+  @media ${Device.tablet} {
+    font-size: 1rem;
+    margin: 0;
+  }
 `;
 
 const Separator = styled.div`
@@ -30,6 +36,10 @@ const Separator = styled.div`
   height: 100%;
   display: inline-flex;
   flex-direction: column;
+
+  @media ${Device.tablet} {
+    width: 100%;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -37,6 +47,10 @@ const BtnWrapper = styled.div`
   width: 18.4375rem;
   display: inline-flex;
   justify-content: center;
+
+  @media ${Device.tablet} {
+    display: none;
+  }
 `;
 
 const NoticeListWrapper = styled.div`
@@ -44,6 +58,10 @@ const NoticeListWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 5rem;
+
+  @media ${Device.tablet} {
+    margin-bottom: 0;
+  }
 `;
 
 const InnerWrapper = styled.div<{ length: number }>`
@@ -53,6 +71,10 @@ const InnerWrapper = styled.div<{ length: number }>`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  @media ${Device.tablet} {
+    height: 13.125rem;
+  }
 `;
 
 const BtnBackGroundImg = styled.img`
