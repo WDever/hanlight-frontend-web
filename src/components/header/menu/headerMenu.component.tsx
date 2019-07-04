@@ -21,6 +21,7 @@ import TimetableIcon from 'lib/svg/timetable-icon.svg';
 import { RouteComponentProps } from 'react-router';
 
 const Wrapper = styled.div`
+  display: none;
   position: absolute;
   width: 100%;
   height: 100%;
@@ -38,8 +39,10 @@ const Wrapper = styled.div`
     }
   }
 
-  display: flex;
-  justify-content: space-between;
+  @media ${Device.tablet} {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 const LeftWrapper = styled.div`

@@ -4,7 +4,6 @@ import {
   AutoErrorCheckMethod,
   AutoErrorCheckProps,
 } from 'container/auto/autoErrorCheck/autoErrorCheck.container';
-import moment from 'moment';
 import { RouteComponentProps } from 'react-router';
 
 const { useEffect } = React;
@@ -27,8 +26,8 @@ const AutoErrorCheckComponent: React.FC<
   }, []);
 
   useEffect(() => {
-    if (onError && time) {
-      if (!code && moment().unix() - time >= 5000) {
+    if (onError) {
+      if (!code) {
         alert(message);
       } else if (
         code === 400 ||
