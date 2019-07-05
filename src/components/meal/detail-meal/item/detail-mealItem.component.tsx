@@ -9,17 +9,14 @@ interface MealItemProps {
 }
 
 const ItemWrapper = styled.div<MealItemProps>`
-  width: ${({ listLength }) =>
-    (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
-    100}%;
-  height: 17.91875rem;
-  max-width: 13.54375rem;
-
+  width: 18%;
+  height: 17.9187rem;
+  max-width: 13.5437rem;
   font-family: 'Spoqa Han Sans';
   font-style: normal;
   font-stretch: normal;
+  border-radius: 2rem;
 
-  border-radius: 32px;
   ${({ today }) =>
     today
       ? css`

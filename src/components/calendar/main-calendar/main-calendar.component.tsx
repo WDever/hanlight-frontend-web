@@ -1,11 +1,12 @@
+import * as React from 'react';
+
 import {
   MainCalendarMethod,
   MainCalendarProps,
 } from 'container/calendar/main-calendar';
 import moment from 'moment';
-import * as React from 'react';
 import styled from 'styled-components';
-import CalendarItem from '../calendarItem';
+import MainCalendarItem from './item';
 
 const { useEffect } = React;
 
@@ -36,14 +37,13 @@ const MainCalendarComponent: React.FC<
             );
 
           return (
-            <CalendarItem
+            <MainCalendarItem
               year={item.year}
               month={item.month}
               day={item.date}
               contents={item.detail}
               today={today}
               key={index}
-              type="main"
             />
           );
         })
