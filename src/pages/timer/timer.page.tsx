@@ -27,14 +27,12 @@ const Wrapper = styled.div`
     width: 71%;
     height: 23rem;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
   }
   @media ${Device.mobileL} {
     width: 90%;
-    height: 18.75rem;
+    height: 19.75rem;
     flex-direction: column;
-    justify-content: space-around;
   }
 `;
 const TimerPage: React.FC = () => {

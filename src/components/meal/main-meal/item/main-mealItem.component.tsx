@@ -9,6 +9,7 @@ interface MealItemProps {
 }
 
 const ItemWrapper = styled.div<MealItemProps>`
+  position: relative;
   width: 15.225rem;
   height: 100%;
   font-family: 'Spoqa Han Sans';
@@ -16,9 +17,6 @@ const ItemWrapper = styled.div<MealItemProps>`
   font-stretch: normal;
   border-radius: 32px;
 
-  display: flex;
-  flex-direction: column;
-  justify-content: ${props => (props.item ? 'space-between' : 'flex-end')};
   ${({ today }) =>
     today
       ? css`
@@ -32,27 +30,41 @@ const ItemWrapper = styled.div<MealItemProps>`
           color: #000000;
         `}
   
-
-  @media ${Device.laptop} {
+  @media ${Device.laptopL} {
     width: 13.225rem;
   }
-  @media ${Device.tablet} {
-    width: 7.8rem;
-    margin-right: 1.35rem;
+  @media ${Device.laptop} {
     box-shadow: none;
+    ${({ today }) =>
+      !today &&
+      css`
+        border: solid 1px #e6e6e6;
+      `}
+    margin-right: 1.35rem;
+  }
+  @media ${Device.tablet} {
+    width: 11rem;
+    border-radius: 1rem;
+  }
+  @media ${Device.mobileL} {
+    width: 8rem;
   }
 `;
 
 const Day = styled.div`
-  height: 3rem;
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: bold;
   margin-left: 1.75rem;
 
   @media ${Device.tablet} {
-    margin-left: 0.93rem;
-    margin-top: 0.6rem;
+    margin-left: 1.13rem;
+    margin-top: 1rem;
+    font-size: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    margin-left: 0.95rem;
+    margin-top: 0.61rem;
     font-size: 0.875rem;
   }
 `;
@@ -61,23 +73,40 @@ const Items = styled.div`
   font-size: 1.125rem;
   height: 13rem;
   margin-left: 1.75rem;
+  margin-top: 0.75rem;
   display: flex;
   flex-direction: column;
+
+  @media ${Device.tablet} {
+    font-size: 0.93rem;
+    margin-left: 1.13rem;
+    margin-top: 0.81rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+    margin-left: 0.95rem;
+    margin-top: 0.7rem;
+    line-height: 1.33;
+  }
 `;
 
 const Date = styled.span`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 1.75rem;
-  margin-bottom: 1.125rem;
+  position: absolute;
+  right: 1.75rem;
+  bottom: 1.125rem;
   font-size: 1rem;
+
+  @media ${Device.tablet} {
+    display: none;
+  }
 `;
 
 const NoItemWrapper = styled.div`
+  position: relative;
+  height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  height: calc(50% + 2.1875rem);
+  justify-content: center;
+  align-items: center;
 `;
 
 const NoItem = styled.div`
@@ -86,6 +115,13 @@ const NoItem = styled.div`
   text-align: center;
   color: #000000;
   display: grid;
+
+  @media ${Device.tablet} {
+    font-size: 1.44rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1.1rem;
+  }
 `;
 
 const NoItemContent = styled.span`
@@ -97,9 +133,10 @@ const MainMealItem: React.FC<{
   date: string;
   day: string;
   today: boolean;
-}> = ({ today, item, date, day }) => {
+  style: React.CSSProperties;
+}> = ({ today, item, date, day, style }) => {
   return item instanceof Array ? (
-    <ItemWrapper item={true} today={today}>
+    <ItemWrapper style={style} item={true} today={today}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (
@@ -109,7 +146,7 @@ const MainMealItem: React.FC<{
       <Date>{date}</Date>
     </ItemWrapper>
   ) : (
-    <ItemWrapper item={false} today={today}>
+    <ItemWrapper style={style} item={false} today={today}>
       <NoItemWrapper>
         <NoItem>
           {item.split('\n').map((line, i) => (

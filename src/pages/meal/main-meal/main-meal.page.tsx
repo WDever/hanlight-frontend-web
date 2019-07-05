@@ -1,25 +1,67 @@
 import MealContainer from 'container/meal/main-meal';
 import { Device } from 'lib/styles';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const Template = styled.div`
+  width: 100%;
+  margin-bottom: 7.4rem;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+
+  @media ${Device.laptop} {
+    margin-bottom: 5.2rem;
+  }
+`;
+
+const TitleWrapper = styled.div`
+  max-width: 81rem;
+  width: 90%;
+  margin-bottom: 2.5rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  @media ${Device.tablet} {
+    margin-bottom: 1.45rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Title = styled.div`
-  max-width: 81rem;
-  width: 90%;
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
-  margin-bottom: 2.5rem;
 
   @media ${Device.tablet} {
+    font-size: 1.31rem;
+  }
+  @media ${Device.mobileL} {
     font-size: 1rem;
+  }
+`;
+
+const AllViewBtn = styled(Link)`
+  display: none;
+
+  @media ${Device.tablet} {
+    display: unset;
+    color: #6787ec;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-family: 'Spoqa Han Sans';
+    margin-right: 1.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
   }
 `;
 
@@ -30,17 +72,30 @@ const ListWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.laptop} {
     position: relative;
     flex: 1;
     overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+  &::-webkit-overflow-scrolling {
+    display: none;
   }
 `;
 
 const MainMealPage: React.FC = () => {
   return (
     <Template>
-      <Title>급식 정보</Title>
+      <TitleWrapper>
+        <Title>급식 정보</Title>
+        <AllViewBtn to="/meal">전체보기</AllViewBtn>
+      </TitleWrapper>
+
       <ListWrapper>
         <MealContainer />
       </ListWrapper>

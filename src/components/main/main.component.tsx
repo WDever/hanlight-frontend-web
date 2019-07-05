@@ -26,10 +26,7 @@ const Empty = styled.div`
   width: 100%;
 
   @media ${Device.tablet} {
-    height: 1.375rem;
-  }
-  @media ${Device.mobileL} {
-    height: 1.6rem;
+    display: none;
   }
 `;
 

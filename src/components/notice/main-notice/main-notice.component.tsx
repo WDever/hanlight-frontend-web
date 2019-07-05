@@ -24,20 +24,28 @@ const TitleWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  @media ${Device.tablet} {
+    margin-top: 1.375rem;
+    margin-bottom: 1.4375rem;
+  }
+  @media ${Device.mobileL} {
+    margin-top: 1.626rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
-  margin: 2rem 0 1rem 0;
 
   @media ${Device.tablet} {
     font-size: 1.33rem;
-    margin: 0;
   }
   @media ${Device.mobileL} {
     font-size: 1rem;
-    margin: 0;
   }
 `;
 
@@ -61,7 +69,8 @@ const MobileBtn = styled(Link)`
 `;
 
 const Separator = styled.div`
-  width: 48.2rem;
+  width: 60%;
+  max-width: 48.2rem;
   height: 100%;
   display: inline-flex;
   flex-direction: column;

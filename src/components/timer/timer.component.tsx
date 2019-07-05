@@ -22,7 +22,7 @@ const Timer = styled.div`
     justify-content: center;
   }
   @media ${Device.mobileL} {
-    height: 45%;
+    height: 43%;
   }
 `;
 
@@ -31,7 +31,7 @@ const HomeTimer = styled(Timer)`
   width: 45%;
 
   @media ${Device.tablet} {
-    height: 47%;
+    height: 44%;
   }
 `;
 
@@ -77,8 +77,8 @@ const HomeTimerImg = styled.img`
   left: 0;
 
   @media ${Device.tablet} {
-    width: 323.4px;
-    height: 177.9px;
+    width: 20.22rem;
+    height: 11.12rem;
   }
   @media ${Device.mobileL} {
     width: 68%;
