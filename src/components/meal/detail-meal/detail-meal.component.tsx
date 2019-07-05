@@ -46,12 +46,11 @@ const MealWeekItems = styled.div<{ listLength: number }>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  /* width: calc(100% - ${({ listLength }) => ((5 - listLength) * 16.6)}% - ${({ listLength }) => (5 - listLength) * 4.2}%); */
-  width: calc(100% - ${({ listLength }) => ((5 - listLength) * 20.8)}%);
+  width: 100%;
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
-const weeksString = ['첫', '두', '세', '네', '다섯'];
+const weeksString = ['첫', '두', '세', '네', '다섯', '여섯'];
 
 export default class DetailMealComponent extends React.Component<
   DetailMealProps & DetailMealMethod
@@ -66,7 +65,7 @@ export default class DetailMealComponent extends React.Component<
     getMeal({
       accessToken: this.props.accessToken,
       sort: 'month',
-      month: moment().get('month') + 1,
+      month: moment().get('month'),
     });
   }
 
@@ -120,13 +119,6 @@ export default class DetailMealComponent extends React.Component<
               mealMoment.get('week') - week * 7 < 5
                 ? mealMoment.get('week') - week * 7
                 : 5;
-            console.log(mealMoment.get('month'));
-            console.log(mealMoment.get('week'));
-            console.log(mealMoment.get('d'));
-            console.log(moment().endOf('month'));
-            console.log(moment().endOf('month').get('date'));
-            console.log(moment().endOf('week'));
-            console.log(moment().endOf('week').get('date'));
             if (mealIndex > 0) {
               MealList[week].push(
                 <MealItemComponent
@@ -156,6 +148,24 @@ export default class DetailMealComponent extends React.Component<
         });
     }
 
+    MealList.forEach((item, i, org) => {
+      if (item.length < 5) {
+        const InsertArr = Array(5 - item.length).fill(
+          <MealItemComponent
+            key={i}
+            type="detail"
+            item={'급식정보가\n없습니다'}
+            date={''}
+            today={false}
+            day={''}
+            visibility={false}
+          />,
+        );
+
+        org[i] = item.concat(InsertArr);
+      }
+    });
+
     return (
       <>
         {getMealMonthStatus === 'success' ? (
@@ -163,6 +173,7 @@ export default class DetailMealComponent extends React.Component<
             <Wrapper>
               <Title>급식 정보</Title>
               {MealList.map((_, i) => {
+                console.log(_);
                 if (MealList[i].length) {
                   return (
                     <MealWeekWrapper key={i}>
