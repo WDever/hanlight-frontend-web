@@ -128,11 +128,10 @@ const LunchContent = styled(Content)`
 `;
 
 const HomeContent = styled(Content)`
-  right: 2.58rem;
+  right: 0;
 
   @media ${Device.laptop} {
     top: 5rem;
-    right: 0;
   }
   @media ${Device.tablet} {
     top: unset;
@@ -215,8 +214,8 @@ const TimerComponent: React.FC = () => {
         <Title>점심시간까지 남은시간</Title>
         <LunchTimerImg src={LunchImgSvg} alt="" />
         <LunchContent>
-          <Time>{lunchHour}</Time>시&ensp;
-          <Time>{lunchMin}</Time>분&ensp;
+          <Time>{lunchHour}</Time>시&emsp;
+          <Time>{lunchMin}</Time>분&emsp;
           <Time>{lunchSec}</Time>초
         </LunchContent>
       </LunchTimer>
@@ -224,8 +223,8 @@ const TimerComponent: React.FC = () => {
         <Title>종례시간까지 남은시간</Title>
         <HomeTimerImg src={HomeImgSvg} alt="" />
         <HomeContent>
-          <Time>{homeHour}</Time>시&ensp;
-          <Time>{homeMin}</Time>분&ensp;
+          <Time>{homeHour}</Time>시&emsp;
+          <Time>{homeMin}</Time>분&emsp;
           <Time>{homeSec}</Time>초
         </HomeContent>
       </HomeTimer>
