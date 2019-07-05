@@ -17,15 +17,22 @@ const Timer = styled.div`
   @media ${Device.tablet} {
     width: 100%;
     max-width: unset;
-    height: 45%;
+    height: 35%;
     display: flex;
     justify-content: center;
+  }
+  @media ${Device.mobileL} {
+    height: 45%;
   }
 `;
 
 const LunchTimer = styled(Timer)``;
 const HomeTimer = styled(Timer)`
   width: 45%;
+
+  @media ${Device.tablet} {
+    height: 47%;
+  }
 `;
 
 const Title = styled.span`
@@ -39,8 +46,11 @@ const Title = styled.span`
     margin-top: 5%;
   }
   @media ${Device.tablet} {
-    font-size: 1rem;
+    font-size: 1.2rem;
     margin: 0;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1rem;
   }
 `;
 
@@ -51,9 +61,12 @@ const LunchTimerImg = styled.img`
   left: 0;
 
   @media ${Device.tablet} {
-    width: 52%;
+    width: 43%;
     left: 0.25rem;
     bottom: 0;
+  }
+  @media ${Device.mobileL} {
+    width: 52%;
   }
 `;
 
@@ -64,7 +77,12 @@ const HomeTimerImg = styled.img`
   left: 0;
 
   @media ${Device.tablet} {
+    width: 323.4px;
+    height: 177.9px;
+  }
+  @media ${Device.mobileL} {
     width: 68%;
+    height: unset;
     left: 1rem;
   }
 `;
@@ -81,6 +99,9 @@ const Content = styled.div`
     font-size: 1.2rem;
   }
   @media ${Device.tablet} {
+    font-size: 1rem;
+  }
+  @media ${Device.mobileL} {
     font-size: 0.875rem;
   }
 `;
@@ -94,12 +115,15 @@ const LunchContent = styled(Content)`
   }
   @media ${Device.tablet} {
     top: unset;
-    bottom: 3.2rem;
+    bottom: 3.875rem;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: baseline;
     left: 0;
+  }
+  @media ${Device.tablet} {
+    bottom: 3.2rem;
   }
 `;
 
@@ -112,13 +136,16 @@ const HomeContent = styled(Content)`
   }
   @media ${Device.tablet} {
     top: unset;
-    bottom: 3.4rem;
+    bottom: 6rem;
     width: 100%;
-    margin-bottom: 0.65rem;
     display: flex;
     justify-content: center;
     align-items: baseline;
     left: 0;
+  }
+  @media ${Device.mobileL} {
+    bottom: 3.4rem;
+    margin-bottom: 0.65rem;
   }
 `;
 
@@ -133,8 +160,11 @@ const Time = styled.span`
     font-size: 2.75rem;
   }
   @media ${Device.tablet} {
-    font-size: 1.5rem;
+    font-size: 1.8125rem;
     margin-right: 0.69rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1.5rem;
   }
 `;
 
