@@ -1,8 +1,8 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
-import EndImgSvg from 'lib/svg/end-time-illust.svg';
-import LunchImgSvg from 'lib/svg/jumsim-illust.svg';
+import HomeImgSvg from 'lib/svg/home-timer-illust.svg';
+import LunchImgSvg from 'lib/svg/lunch-timer-illust.svg';
 import moment from 'moment';
 import styled from 'styled-components';
 
@@ -13,6 +13,19 @@ const Timer = styled.div`
   width: 43%;
   max-width: 30rem;
   height: 100%;
+
+  @media ${Device.tablet} {
+    width: 100%;
+    max-width: unset;
+    height: 45%;
+    display: flex;
+    justify-content: center;
+  }
+`;
+
+const LunchTimer = styled(Timer)``;
+const HomeTimer = styled(Timer)`
+  width: 45%;
 `;
 
 const Title = styled.span`
@@ -25,13 +38,35 @@ const Title = styled.span`
     display: inline-block;
     margin-top: 5%;
   }
+  @media ${Device.tablet} {
+    font-size: 1rem;
+    margin: 0;
+  }
 `;
 
-const LeftTimerImg = styled.img`
+const LunchTimerImg = styled.img`
   position: absolute;
   width: 73%;
   bottom: 1rem;
   left: 0;
+
+  @media ${Device.tablet} {
+    width: 52%;
+    left: 0.25rem;
+    bottom: 0;
+  }
+`;
+
+const HomeTimerImg = styled.img`
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+
+  @media ${Device.tablet} {
+    width: 68%;
+    left: 1rem;
+  }
 `;
 
 const Content = styled.div`
@@ -45,23 +80,45 @@ const Content = styled.div`
   @media ${Device.laptop} {
     font-size: 1.2rem;
   }
+  @media ${Device.tablet} {
+    font-size: 0.875rem;
+  }
 `;
 
-const LeftContent = styled(Content)`
+const LunchContent = styled(Content)`
   left: 7.3rem;
 
   @media ${Device.laptop} {
     top: 5rem;
     left: 6rem;
   }
+  @media ${Device.tablet} {
+    top: unset;
+    bottom: 3.2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    left: 0;
+  }
 `;
 
-const RightContent = styled(Content)`
+const HomeContent = styled(Content)`
   right: 2.58rem;
 
   @media ${Device.laptop} {
     top: 5rem;
     right: 0;
+  }
+  @media ${Device.tablet} {
+    top: unset;
+    bottom: 3.4rem;
+    width: 100%;
+    margin-bottom: 0.65rem;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    left: 0;
   }
 `;
 
@@ -70,17 +127,15 @@ const Time = styled.span`
   font-size: 3.375rem;
   font-weight: bold;
   color: #4470ff;
+  margin-right: 0.77rem;
 
   @media ${Device.laptop} {
     font-size: 2.75rem;
   }
-`;
-
-const EndTimerImg = styled.img`
-  position: absolute;
-  width: 100%;
-  bottom: 0;
-  left: 0;
+  @media ${Device.tablet} {
+    font-size: 1.5rem;
+    margin-right: 0.69rem;
+  }
 `;
 
 const minute = 60;
@@ -126,24 +181,24 @@ const TimerComponent: React.FC = () => {
 
   return (
     <>
-      <Timer>
+      <LunchTimer>
         <Title>점심시간까지 남은시간</Title>
-        <LeftTimerImg src={LunchImgSvg} alt="" />
-        <LeftContent>
+        <LunchTimerImg src={LunchImgSvg} alt="" />
+        <LunchContent>
           <Time>{lunchHour}</Time>시&ensp;
           <Time>{lunchMin}</Time>분&ensp;
           <Time>{lunchSec}</Time>초
-        </LeftContent>
-      </Timer>
-      <Timer style={{ width: '45%' }}>
+        </LunchContent>
+      </LunchTimer>
+      <HomeTimer>
         <Title>종례시간까지 남은시간</Title>
-        <EndTimerImg src={EndImgSvg} alt="" />
-        <RightContent>
+        <HomeTimerImg src={HomeImgSvg} alt="" />
+        <HomeContent>
           <Time>{homeHour}</Time>시&ensp;
           <Time>{homeMin}</Time>분&ensp;
           <Time>{homeSec}</Time>초
-        </RightContent>
-      </Timer>
+        </HomeContent>
+      </HomeTimer>
     </>
   );
 };

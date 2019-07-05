@@ -20,6 +20,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 
   @media ${Device.tablet} {
+    height: 18.75rem;
     flex-direction: column;
   }
 `;

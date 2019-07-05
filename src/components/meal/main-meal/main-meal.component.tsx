@@ -3,10 +3,9 @@ import { Device } from 'lib/styles';
 import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
-import { MealItem } from 'store';
 import styled from 'styled-components';
 import MealListItem from '../mealItem';
-import { MealDate, MealItemWrapper } from '../mealItem';
+import MainMealItem from './item';
 
 const { useEffect } = React;
 
@@ -15,12 +14,14 @@ const ListWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 20.1875rem;
+
+  @media ${Device.tablet} {
+    width: unset;
+    height: 10.29rem;
+  }
 `;
 
 const MoreBox = styled.div`
-  @media only screen and ${Device.laptop} {
-    width: 13.225rem;
-  }
   width: 15.225rem;
   height: 100%;
   font-family: 'Spoqa Han Sans';
@@ -33,6 +34,13 @@ const MoreBox = styled.div`
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
+
+  @media ${Device.laptop} {
+    width: 13.225rem;
+  }
+  @media ${Device.tablet} {
+    display: none;
+  }
 `;
 
 const MoreBtn = styled(Link)`
@@ -73,24 +81,22 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
           const todayBool = index === 0;
           if (meal.detail === '주말' || meal.detail === 'X') {
             return (
-              <MealListItem
+              <MainMealItem
                 item={meal.detail === '주말' ? '주말이다' : '밥이 없다'}
                 date={dateString}
                 key={index}
                 day={days[dayIndex]}
                 today={todayBool}
-                type={'main'}
               />
             );
           } else {
             return (
-              <MealListItem
+              <MainMealItem
                 item={meal.detail.split(',')}
                 date={dateString}
                 key={index}
                 day={days[dayIndex]}
                 today={todayBool}
-                type={'main'}
               />
             );
           }

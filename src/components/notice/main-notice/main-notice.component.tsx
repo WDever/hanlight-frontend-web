@@ -20,14 +20,43 @@ const NoticeWrapper = styled.div`
   width: 90%;
 `;
 
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin: 2rem 0 1rem 0;
 
   @media ${Device.tablet} {
+    font-size: 1.33rem;
+    margin: 0;
+  }
+  @media ${Device.mobileL} {
     font-size: 1rem;
     margin: 0;
+  }
+`;
+
+const MobileBtn = styled(Link)`
+  display: none;
+
+  @media ${Device.tablet} {
+    display: unset;
+    color: #6787ec;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-family: 'Spoqa Han Sans';
+    margin-right: 1.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
   }
 `;
 
@@ -73,7 +102,10 @@ const InnerWrapper = styled.div<{ length: number }>`
   justify-content: space-around;
 
   @media ${Device.tablet} {
-    height: 13.125rem;
+    height: 19rem;
+  }
+  @media ${Device.mobileL} {
+    height: 14.24rem;
   }
 `;
 
@@ -138,7 +170,10 @@ class MainNoticeComponent extends React.Component<
     return (
       <NoticeWrapper>
         <Separator>
-          <Title>공지사항</Title>
+          <TitleWrapper>
+            <Title>공지사항</Title>
+            <MobileBtn to="/notice">전체보기 ></MobileBtn>
+          </TitleWrapper>
           <NoticeListWrapper>
             <InnerWrapper length={NoticeList.length}>
               {this.props.getNoticeListStatus === 'success' && NoticeList}

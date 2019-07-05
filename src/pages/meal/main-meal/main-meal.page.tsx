@@ -1,4 +1,5 @@
 import MealContainer from 'container/meal/main-meal';
+import { Device } from 'lib/styles';
 import * as React from 'react';
 import styled from 'styled-components';
 
@@ -16,6 +17,10 @@ const Title = styled.div`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
   margin-bottom: 2.5rem;
+
+  @media ${Device.tablet} {
+    font-size: 1rem;
+  }
 `;
 
 const ListWrapper = styled.div`
@@ -24,6 +29,12 @@ const ListWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
+
+  @media ${Device.tablet} {
+    position: relative;
+    flex: 1;
+    overflow-x: scroll;
+  }
 `;
 
 const MainMealPage: React.FC = () => {

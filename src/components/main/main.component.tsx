@@ -25,6 +25,9 @@ const Empty = styled.div`
   height: 3.75rem;
   width: 100%;
 
+  @media ${Device.tablet} {
+    height: 1.375rem;
+  }
   @media ${Device.mobileL} {
     height: 1.6rem;
   }

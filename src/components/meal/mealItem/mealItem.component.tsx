@@ -14,15 +14,19 @@ export const MealItemWrapper = styled.div<MealItemProps>`
   ${({ type }) =>
     type === 'main'
       ? css`
-          @media only screen and ${Device.laptop} {
+          @media ${Device.laptop} {
             width: 13.225rem;
+          }
+          @media ${Device.tablet} {
+            margin-right: 1.35rem;
           }
           width: 15.225rem;
           height: 100%;
         `
       : css<{ listLength: number }>`
           width: ${({ listLength }) =>
-            (233.28 / (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
+            (233.28 /
+              (window.innerWidth * (90 / 100) * ((listLength * 20) / 100))) *
             100}%;
           height: 17.91875rem;
           max-width: 13.54375rem;
