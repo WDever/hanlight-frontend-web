@@ -7,7 +7,7 @@ import {
 import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import DetailCalendarItem from './item';
 
 const { useEffect, useState } = React;
@@ -36,7 +36,7 @@ const TitleBar = styled.div`
 `;
 
 const DateBar = styled.div`
-  width: 16.6%;
+  width: 13.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -65,9 +65,11 @@ const Select = styled.select`
 
 const CalendarWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  grid-column-gap: 2.5%;
-  grid-row-gap: 4.4rem;
+    grid-template-columns: repeat(auto-fit,12.5rem);
+    grid-column-gap: 0.5rem;
+    grid-row-gap: 4.4rem;
+    justify-content: space-between;
+}
 
   p {
     font-size: 2rem;
