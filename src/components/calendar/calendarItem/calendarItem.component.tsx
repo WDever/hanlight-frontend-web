@@ -59,7 +59,7 @@ const Texts = styled.span<TextProps>`
   font-family: 'Spoqa Han Sans';
   font-weight: ${props => (props.content ? 'bold' : 'normal')};
   color: ${props => (props.content ? '#4470ff' : 'black')};
-  font-size: ${props => (props.content ? '1.5rem' : '1rem')};
+  font-size: ${props => (props.content ? '1.375rem' : '1rem')};
 `;
 
 const Colored = styled.span`
