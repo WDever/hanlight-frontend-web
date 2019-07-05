@@ -7,7 +7,6 @@ interface MealItemProps {
   today: boolean;
   item: boolean;
   type: 'main' | 'detail';
-  listLength: number;
   visibility: boolean;
 }
 
@@ -102,15 +101,13 @@ const MealItemComponent: React.FC<{
   date: string;
   day: string;
   today: boolean;
-  listLength?: number;
   visibility?: boolean;
-}> = ({ item, date, day, today, type, listLength = 5, visibility = true }) => {
+}> = ({ item, date, day, today, type, visibility = true }) => {
   return item instanceof Array ? (
     <MealItemWrapper
       item={true}
       type={type}
       today={today}
-      listLength={listLength}
       visibility={visibility}
     >
       <MealItemDay type={type}>{day}</MealItemDay>
@@ -126,7 +123,6 @@ const MealItemComponent: React.FC<{
       item={false}
       today={today}
       type={type}
-      listLength={listLength}
       visibility={visibility}
     >
       <MealNoItemWrapper>

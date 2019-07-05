@@ -41,7 +41,7 @@ const MealWeekString = styled.div`
   margin-bottom: 1.275rem;
 `;
 
-const MealWeekItems = styled.div<{ listLength: number }>`
+const MealWeekItems = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -180,7 +180,7 @@ export default class DetailMealComponent extends React.Component<
                       <MealWeekString>
                         {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                       </MealWeekString>
-                      <MealWeekItems listLength={MealList[i].length}>
+                      <MealWeekItems>
                         {MealList[i]}
                       </MealWeekItems>
                     </MealWeekWrapper>
