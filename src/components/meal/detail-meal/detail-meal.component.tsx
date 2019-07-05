@@ -128,7 +128,6 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
-                  listLength={weekLength}
                 />,
               );
             } else {
@@ -140,7 +139,6 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
-                  listLength={weekLength}
                 />,
               );
             }
