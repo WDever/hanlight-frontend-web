@@ -48,6 +48,7 @@ const TitleBox = styled.span`
   text-overflow: ellipsis;
 
   @media ${Device.mobileL} {
+    width: 70%;
     font-size: 0.75rem;
     margin-left: 1.5rem;
   }

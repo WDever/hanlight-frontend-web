@@ -4,7 +4,6 @@ import moment from 'moment';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import MealListItem from '../mealItem';
 import MainMealItem from './item';
 
 const { useEffect } = React;
