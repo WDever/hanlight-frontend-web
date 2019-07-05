@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import TimeTableItem from './timeTableItem';
 
 const TimeTable = styled.div`
-  max-width: 81rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -57,8 +56,7 @@ export default class MainTimeTableComponent extends React.Component<
     timeTableList: [],
   };
 
-  // public today: number = Number(moment().format('d'));
-  public today: number = 1;
+  public today: number = Number(moment().format('d'));
 
   public componentDidMount() {
     this.props.getTimetableApi(this.props.accessToken);
