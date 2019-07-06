@@ -22,11 +22,19 @@ const Wrapper = styled.div<{ today: boolean }>`
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
-  /* margin: 2.1875rem 1rem; */
 
   &:hover {
     box-shadow: 0 6px 30px 0 rgba(139, 139, 139, 0.16);
     border: none;
+  }
+
+  @media ${Device.mobileL} {
+    width: 6rem;
+    height: 8rem;
+
+    &:hover {
+      box-shadow: 0 10px 20px 0 rgba(101, 101, 101, 0.16);
+    }
   }
 `;
 

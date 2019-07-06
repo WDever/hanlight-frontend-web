@@ -65,15 +65,19 @@ const Select = styled.select`
 
 const CalendarWrapper = styled.div`
   display: grid;
-    grid-template-columns: repeat(auto-fit,12.5rem);
-    grid-column-gap: 0.5rem;
-    grid-row-gap: 4.4rem;
-    justify-content: space-between;
-}
+  grid-template-columns: repeat(auto-fit, 12.5rem);
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 4.4rem;
+  justify-content: space-between;
 
   p {
     font-size: 2rem;
     font-family: 'Spoqa Han Sans';
+  }
+
+  @media ${Device.mobileL} {
+    grid-template-columns: repeat(auto-fit, 6rem);
+    grid-column-gap: 0.25rem;
   }
 `;
 
