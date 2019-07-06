@@ -113,7 +113,6 @@ const NoItem = styled.div`
   font-size: 2.1875rem;
   font-weight: bold;
   text-align: center;
-  color: #000000;
   display: grid;
 
   @media ${Device.tablet} {
