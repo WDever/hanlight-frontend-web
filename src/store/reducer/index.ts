@@ -6,6 +6,7 @@ import { mealReducer } from './meal.reducer';
 import { notcieReducer } from './notice.reducer';
 import { timeTableReducer } from './timeTable.reducer';
 import { userReducer } from './user.reducer';
+import { utilReducer } from './util.reducer';
 
 const reducer = combineReducers({
   user: userReducer,
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   timeTable: timeTableReducer,
   error: errorReducer,
   board: boardReducer,
+  util: utilReducer,
 });
 
 export { reducer };

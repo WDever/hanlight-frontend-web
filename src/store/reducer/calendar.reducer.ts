@@ -24,7 +24,7 @@ export const calendarReducer = (
         break;
 
       case 'GET_CALENDAR_FAILURE':
-        draft.getCalendarRecentStatus = 'failure';
+        draft.getCalendarStatus = 'failure';
         break;
 
       case 'GET_CALENDAR_RECENT':

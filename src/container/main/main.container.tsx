@@ -1,45 +1,32 @@
 import MainComponent from 'components/main';
-import * as React from 'react';
 import { connect } from 'react-redux';
-import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import { AppState, userActions, userReducerActions } from 'store';
 
 export interface MainProps {
   loginStatus: 'none' | 'pending' | 'success' | 'failure';
+  toggleMenuStatus: boolean;
 }
 
 export interface MainMethod {
   resetUser(): void;
 }
 
-const MainContainer: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
-  location,
-  loginStatus,
-  match,
-  history,
-  resetUser,
-}) => (
-  <MainComponent
-    loginStatus={loginStatus}
-    history={history}
-    location={location}
-    match={match}
-    resetUser={resetUser}
-  />
-);
-
-const mapStateToProps = ({ user }: AppState) => ({
+const mapStateToProps = ({ user, util }: AppState) => ({
   loginStatus: user.loginStatus,
+  toggleMenuStatus: util.toggleMenuStatus,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
-export default withRouter(
+const MainCotainer = withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(MainContainer),
+  )(MainComponent),
 );
+
+export default MainCotainer;

@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import CalendarItem from 'components/calendar/calendarItem';
 import {
   DetailCalendarMethod,
   DetailCalendarProps,
@@ -8,7 +7,8 @@ import {
 import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import DetailCalendarItem from './item';
 
 const { useEffect, useState } = React;
 
@@ -36,7 +36,7 @@ const TitleBar = styled.div`
 `;
 
 const DateBar = styled.div`
-  width: 16.6%;
+  width: 13.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
@@ -63,33 +63,21 @@ const Select = styled.select`
   outline: none;
 `;
 
-const CalendarWrapper = styled.div<{ listLength: number }>`
-  ${({ listLength }) =>
-    listLength !== 0
-      ? css`
-          @media only screen and ${Device.laptop} {
-            grid-template-columns: repeat(4, 20%);
-            grid-column-gap: 5%;
-          }
-          width: 105%;
-          display: grid;
-          margin: 0 -1.05rem;
-          grid-template-columns: repeat(5, 20%);
-        `
-      : css`
-          width: 90%;
-          display: flex;
-          position: absolute;
-          justify-content: center;
-          align-items: center;
-          z-index: -2;
-        `}
-
-  min-height: 92%;
+const CalendarWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 12.5rem);
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 4.4rem;
+  justify-content: space-between;
 
   p {
     font-size: 2rem;
     font-family: 'Spoqa Han Sans';
+  }
+
+  @media ${Device.mobileL} {
+    grid-template-columns: repeat(auto-fit, 6rem);
+    grid-column-gap: 0.25rem;
   }
 `;
 
@@ -144,14 +132,13 @@ const DetailCalendarComponent: React.FC<
           moment().format('M.D') === `${selectedMonth}.${item.date}`;
 
         return (
-          <CalendarItem
+          <DetailCalendarItem
             year={moment().format('YYYY')}
             month={selectedMonth}
             day={item.date}
             contents={item.detail}
             today={today}
             key={i}
-            type="detail"
           />
         );
       })
@@ -181,9 +168,7 @@ const DetailCalendarComponent: React.FC<
         </DateBar>
       </TitleBar>
       {getCalendarStatus === 'success' && (
-        <CalendarWrapper listLength={calendar.length}>
-          {CalendarList}
-        </CalendarWrapper>
+        <CalendarWrapper>{CalendarList}</CalendarWrapper>
       )}
       {getCalendarStatus === 'pending' && (
         <p style={{ fontFamily: 'Spoqa Han Sans' }}>불러오는중 ... </p>

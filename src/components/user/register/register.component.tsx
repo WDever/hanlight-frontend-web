@@ -38,7 +38,6 @@ const RegisterWrapper = styled.div`
   @media ${Device.tablet} {
     box-shadow: none;
     width: 85%;
-    height: unset;
   }
 `;
 

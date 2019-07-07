@@ -1,9 +1,14 @@
-import DesktopHeaderComponent from 'components/header/desktop';
-import MobileHeaderComponent from 'components/header/mobile';
+import HeaderComponent from 'components/header';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, userActions, userReducerActions } from 'store';
+import {
+  AppState,
+  userActions,
+  userReducerActions,
+  utilActions,
+  utilReducerActions,
+} from 'store';
 
 export interface HeaderProps {
   name: string;
@@ -11,21 +16,25 @@ export interface HeaderProps {
 
 export interface HeaderMethod {
   resetUser(): void;
+  toggleMenu(payload: boolean): void;
 }
 
 const mapStateToProps = ({ user }: AppState) => ({
   name: user.name,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<userReducerActions | utilReducerActions>,
+) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
+  toggleMenu: bindActionCreators(utilActions.toggleMenu, dispatch),
 });
 
 const HeaderContainer = withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps,
-  )(window.innerWidth > 1024 ? DesktopHeaderComponent : MobileHeaderComponent),
+  )(HeaderComponent),
 );
 
 export default HeaderContainer;
