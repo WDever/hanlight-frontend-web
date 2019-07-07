@@ -28,12 +28,8 @@ const TitleWrapper = styled.div`
   margin-bottom: 2.5rem;
 
   @media ${Device.tablet} {
-    margin-top: 1.375rem;
-    margin-bottom: 1.4375rem;
-  }
-  @media ${Device.mobileL} {
     margin-top: 1.626rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
 `;
 
@@ -42,7 +38,7 @@ const Title = styled.span`
   font-size: 1.875rem;
 
   @media ${Device.tablet} {
-    font-size: 1.33rem;
+    font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
     font-size: 1rem;
@@ -56,7 +52,7 @@ const MobileBtn = styled(Link)`
     display: unset;
     color: #6787ec;
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-family: 'Spoqa Han Sans';
     margin-right: 1.5%;
     display: flex;
@@ -77,6 +73,7 @@ const Separator = styled.div`
 
   @media ${Device.tablet} {
     width: 100%;
+    max-width: unset;
   }
 `;
 

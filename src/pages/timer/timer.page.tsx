@@ -12,7 +12,7 @@ const Template = styled.div`
   margin-bottom: 7rem;
 
   @media ${Device.tablet} {
-    margin-bottom: 3.75rem;
+    margin-bottom: 3.4rem;
   }
 `;
 

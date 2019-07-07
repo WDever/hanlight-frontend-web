@@ -15,11 +15,9 @@ const ListWrapper = styled.div`
   width: 100%;
   height: 20.1875rem;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: unset;
     padding: 2px;
-  }
-  @media ${Device.tablet} {
     height: 14.17rem;
   }
   @media ${Device.mobileL} {
@@ -43,17 +41,15 @@ const MoreBox = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  @media ${Device.laptopL} {
-    width: 13.225rem;
-  }
   @media ${Device.laptop} {
-    border: solid 1px #e6e6e6;
-    margin-right: 1.35rem;
-    box-shadow: none;
+    width: 13.225rem;
   }
   @media ${Device.tablet} {
     width: 11rem;
     border-radius: 1rem;
+    border: solid 1px #e6e6e6;
+    margin-right: 1.35rem;
+    box-shadow: none;
   }
   @media ${Device.mobileL} {
     width: 8rem;
@@ -67,7 +63,7 @@ const OrderWrapper = styled.div`
   margin-top: 2.75rem;
 
   @media ${Device.tablet} {
-    font-size: 1rem;
+    font-size: 1.25rem;
     margin-top: 1rem;
   }
   @media ${Device.mobileL} {
@@ -83,7 +79,7 @@ const Order = styled.div`
   font-weight: normal;
 
   @media ${Device.tablet} {
-    font-size: 0.75rem;
+    font-size: 1rem;
   }
   @media ${Device.mobileL} {
     font-size: 0.625rem;
@@ -92,8 +88,8 @@ const Order = styled.div`
 `;
 
 const OrderImg = styled.img`
-  width: 75%;
-  bottom: 1.125rem;
+  width: 77%;
+  bottom: 1.48rem;
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];

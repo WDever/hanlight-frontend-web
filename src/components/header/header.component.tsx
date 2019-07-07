@@ -98,7 +98,7 @@ const MenuIcon = styled.div`
     width: 1.25rem;
     height: 1rem;
     position: absolute;
-    left: 1.15rem;
+    left: 5%;
 
     display: flex;
     flex-direction: column;

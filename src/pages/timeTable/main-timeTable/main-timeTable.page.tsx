@@ -10,20 +10,18 @@ const days = ['일', '월', '화', '수', '목', '금', '토'];
 const today = moment().get('d');
 
 const Template = styled.div`
+  width: 100%;
+  margin-bottom: 7.4rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 17.375rem;
-  margin-bottom: 7.4rem;
 
-  @media ${Device.laptop} {
-    height: 13.625rem;
-    margin-bottom: 5.1rem;
+  @media ${Device.tablet} {
+    align-items: flex-start;
+    margin-bottom: 5rem;
   }
   @media ${Device.mobileL} {
-    height: 9.625rem;
     margin-bottom: 3.7rem;
   }
 `;
@@ -38,11 +36,10 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.laptop} {
-    margin-bottom: 1.4rem;
-  }
   @media ${Device.tablet} {
-    font-size: 1.31rem;
+    margin-left: 5%;
+    margin-bottom: 1.125rem;
+    font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
     margin-bottom: 1rem;
@@ -65,7 +62,7 @@ const AllViewBtn = styled(Link)`
     display: unset;
     color: #6787ec;
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-family: 'Spoqa Han Sans';
     margin-right: 1.5%;
     display: flex;
@@ -78,24 +75,22 @@ const AllViewBtn = styled(Link)`
 `;
 
 const ListWrapper = styled.div`
-  max-width: 81rem;
   width: 90%;
+  max-width: 81rem;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
+    width: 95%;
+    max-width: unset;
+    margin-left: 5%;
     position: relative;
     overflow-x: scroll;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
 
     flex: 1;
-    justify-content: flex-start;
+    display: flex;
     align-items: flex-start;
-
-    -webkit-overflow-scrolling: touch;
   }
 
   &::-webkit-scrollbar {

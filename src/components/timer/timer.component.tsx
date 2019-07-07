@@ -31,7 +31,7 @@ const HomeTimer = styled(Timer)`
   width: 45%;
 
   @media ${Device.tablet} {
-    height: 44%;
+    height: 47%;
   }
 `;
 
@@ -40,13 +40,9 @@ const Title = styled.span`
   font-family: 'yg-jalnan';
   margin-left: 1rem;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     font-size: 1.5rem;
     display: inline-block;
-    margin-top: 5%;
-  }
-  @media ${Device.tablet} {
-    font-size: 1.2rem;
     margin: 0;
   }
   @media ${Device.mobileL} {
@@ -57,11 +53,12 @@ const Title = styled.span`
 const LunchTimerImg = styled.img`
   position: absolute;
   width: 73%;
+  max-height: 100%;
   bottom: 1rem;
   left: 0;
 
   @media ${Device.tablet} {
-    width: 43%;
+    width: 41%;
     left: 0.25rem;
     bottom: 0;
   }
@@ -73,6 +70,7 @@ const LunchTimerImg = styled.img`
 const HomeTimerImg = styled.img`
   position: absolute;
   width: 100%;
+  max-height: 100%;
   bottom: 0;
   left: 0;
 
@@ -95,9 +93,6 @@ const Content = styled.div`
   color: #000000;
   z-index: 1;
 
-  @media ${Device.laptop} {
-    font-size: 1.2rem;
-  }
   @media ${Device.tablet} {
     font-size: 1rem;
   }
@@ -109,33 +104,9 @@ const Content = styled.div`
 const LunchContent = styled(Content)`
   left: 7.3rem;
 
-  @media ${Device.laptop} {
-    top: 5rem;
-    left: 6rem;
-  }
   @media ${Device.tablet} {
     top: unset;
-    bottom: 3.875rem;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: baseline;
-    left: 0;
-  }
-  @media ${Device.tablet} {
-    bottom: 3.2rem;
-  }
-`;
-
-const HomeContent = styled(Content)`
-  right: 0;
-
-  @media ${Device.laptop} {
-    top: 5rem;
-  }
-  @media ${Device.tablet} {
-    top: unset;
-    bottom: 6rem;
+    bottom: 2.875rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -143,6 +114,23 @@ const HomeContent = styled(Content)`
     left: 0;
   }
   @media ${Device.mobileL} {
+    bottom: 3.2rem;
+  }
+`;
+
+const HomeContent = styled(Content)`
+  right: 0;
+
+  @media ${Device.tablet} {
+    top: 3rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    left: 0;
+  }
+  @media ${Device.mobileL} {
+    top: unset;
     bottom: 3.4rem;
     margin-bottom: 0.65rem;
   }
@@ -155,11 +143,8 @@ const Time = styled.span`
   color: #4470ff;
   margin-right: 0.77rem;
 
-  @media ${Device.laptop} {
-    font-size: 2.75rem;
-  }
   @media ${Device.tablet} {
-    font-size: 1.8125rem;
+    font-size: 1.69rem;
     margin-right: 0.69rem;
   }
   @media ${Device.mobileL} {

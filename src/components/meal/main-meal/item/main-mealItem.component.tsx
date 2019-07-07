@@ -30,10 +30,12 @@ const ItemWrapper = styled.div<MealItemProps>`
           color: #000000;
         `}
   
-  @media ${Device.laptopL} {
+  @media ${Device.laptop} {
     width: 13.225rem;
   }
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
+    width: 11rem;
+    border-radius: 1rem;
     box-shadow: none;
     ${({ today }) =>
       !today &&
@@ -41,10 +43,6 @@ const ItemWrapper = styled.div<MealItemProps>`
         border: solid 1px #e6e6e6;
       `}
     margin-right: 1.35rem;
-  }
-  @media ${Device.tablet} {
-    width: 11rem;
-    border-radius: 1rem;
   }
   @media ${Device.mobileL} {
     width: 8rem;
@@ -70,15 +68,16 @@ const Day = styled.div`
 `;
 
 const Items = styled.div`
-  font-size: 1.125rem;
   height: 13rem;
+  font-size: 1.125rem;
+  line-height: 1.5;
   margin-left: 1.75rem;
   margin-top: 0.75rem;
   display: flex;
   flex-direction: column;
 
   @media ${Device.tablet} {
-    font-size: 0.93rem;
+    line-height: 1.11;
     margin-left: 1.13rem;
     margin-top: 0.81rem;
   }
@@ -116,7 +115,7 @@ const NoItem = styled.div`
   display: grid;
 
   @media ${Device.tablet} {
-    font-size: 1.44rem;
+    font-size: 1.75rem;
   }
   @media ${Device.mobileL} {
     font-size: 1.1rem;

@@ -14,7 +14,7 @@ const TimeTable = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: unset;
     height: 100%;
   }
@@ -28,11 +28,11 @@ const NoBox = styled.div`
   background-color: #ffffff;
   border: solid 1px #b1b1b1;
 
-  @media ${Device.laptopL} {
+  @media ${Device.laptop} {
     width: 13%;
     height: 10rem;
   }
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: 7.05rem;
     height: 8.45rem;
     margin-right: 1.07rem;
@@ -56,7 +56,8 @@ export default class MainTimeTableComponent extends React.Component<
     timeTableList: [],
   };
 
-  public today: number = Number(moment().format('d'));
+  // public today: number = Number(moment().format('d'));
+  public today = 1;
 
   public componentDidMount() {
     this.props.getTimetableApi(this.props.accessToken);

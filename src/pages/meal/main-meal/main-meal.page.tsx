@@ -13,8 +13,8 @@ const Template = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media ${Device.laptop} {
-    margin-bottom: 5.2rem;
+  @media ${Device.tablet} {
+    margin-bottom: 5rem;
   }
 `;
 
@@ -27,7 +27,7 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
 
   @media ${Device.tablet} {
-    margin-bottom: 1.45rem;
+    margin-bottom: 1.39rem;
   }
   @media ${Device.mobileL} {
     margin-bottom: 1rem;
@@ -39,7 +39,7 @@ const Title = styled.div`
   font-size: 1.875rem;
 
   @media ${Device.tablet} {
-    font-size: 1.31rem;
+    font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
     font-size: 1rem;
@@ -53,7 +53,7 @@ const AllViewBtn = styled(Link)`
     display: unset;
     color: #6787ec;
     text-decoration: none;
-    font-size: 0.875rem;
+    font-size: 1rem;
     font-family: 'Spoqa Han Sans';
     margin-right: 1.5%;
     display: flex;
@@ -72,7 +72,10 @@ const ListWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
+    width: 95%;
+    max-width: unset;
+    margin-left: 5%;
     position: relative;
     flex: 1;
     overflow-x: scroll;

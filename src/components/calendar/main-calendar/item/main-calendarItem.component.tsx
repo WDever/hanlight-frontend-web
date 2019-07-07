@@ -5,17 +5,13 @@ import styled, { css } from 'styled-components';
 
 interface ItemProps {
   today: boolean;
-  year: string;
-  month: string;
-  day: string;
+  year: number;
+  month: number;
+  day: number;
   contents: string;
 }
 
 const Wrapper = styled.div<{ today: boolean }>`
-  @media ${Device.laptop} {
-    width: 12.5rem;
-    height: 12.5rem;
-  }
   width: 15.875rem;
   height: 15.875rem;
 
@@ -28,6 +24,28 @@ const Wrapper = styled.div<{ today: boolean }>`
   align-items: center;
   justify-content: center;
   border-radius: 1rem;
+
+  @media ${Device.laptop} {
+    width: 13.85rem;
+    height: 13.85rem;
+  }
+  @media ${Device.tablet} {
+    width: 11.85rem;
+    height: 11.85rem;
+    margin-right: 1.75rem;
+    ${({ today }) =>
+      today &&
+      css`
+        box-shadow: none;
+        border: solid 1px #4470ff;
+        background-color: #4470ff;
+      `}
+  }
+  @media ${Device.mobileL} {
+    width: 8.58rem;
+    height: 8.58rem;
+    margin-right: 1.29rem;
+  }
 `;
 
 const ContentsWrapper = styled.div`
@@ -37,31 +55,49 @@ const ContentsWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.tablet} {
+    height: 46%;
+  }
 `;
 
 const Title = styled.span`
   font-family: 'Spoqa Han Sans';
   font-weight: normal;
-  color: #000000;
+  color: inherit;
   font-size: 1rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.8125rem;
+  }
 `;
 
-const Content = styled.span`
+const Content = styled.span<{ today: boolean }>`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
   color: #4470ff;
   font-size: 1.5rem;
+
+  @media ${Device.tablet} {
+    color: ${props => (props.today ? '#ffffff' : '#4470ff')};
+    font-size: 1.25rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
 `;
 
-const Colored = styled.span`
-  color: #4470ff;
-`;
+const DateWrapper = styled.div<{ today: boolean }>`
+  color: #000000;
 
-const DateWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.tablet} {
+    color: ${props => (props.today ? '#ffffff' : '#000000')};
+  }
 `;
 
 const MainCalendarItem: React.FC<ItemProps> = ({
@@ -74,14 +110,16 @@ const MainCalendarItem: React.FC<ItemProps> = ({
   return (
     <Wrapper today={today}>
       <ContentsWrapper>
-        <DateWrapper>
+        <DateWrapper today={today}>
           <Title>{today ? '오늘은' : '다가오는'}</Title>
           <Title>
-            {year}년<Colored> {month}</Colored>월<Colored> {day}</Colored>일
+            {year}년 {month}월 {day}일
           </Title>
         </DateWrapper>
         {contents.split(/,|\s/g).map((content, i) => (
-          <Content key={i}>{content}</Content>
+          <Content key={i} today={today}>
+            {content}
+          </Content>
         ))}
       </ContentsWrapper>
     </Wrapper>

@@ -31,11 +31,11 @@ const ItemBox = styled.div<BoxProps>`
   align-items: center;
   justify-content: center;
 
-  @media ${Device.laptopL} {
+  @media ${Device.laptop} {
     width: 13%;
     height: 10rem;
   }
-  @media ${Device.laptop} {
+  @media ${Device.tablet} {
     width: 7.05rem;
     height: 8.45rem;
     margin-right: 1.07rem;
