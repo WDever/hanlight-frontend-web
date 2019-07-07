@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { Device } from './Device';
 
-export const WrongLabel = styled.label`
-  width: 27rem;
+export const WrongLabel = styled.span`
+  width: 28.75rem;
   color: #ff0000;
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;

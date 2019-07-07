@@ -48,10 +48,8 @@ const PhoneCheckWrapper = styled.div<PhoneCheckTypeProps>`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   @media ${Device.tablet} {
-    box-shadow: none;
     width: 85%;
     margin: 0;
   }
@@ -412,6 +410,7 @@ class PhoneCheckComponent extends React.Component<
             click={() => {
               this.props.resetError();
               this.props.resetUser();
+              history.push('/user/login');
             }}
           />
         )}
@@ -442,7 +441,7 @@ class PhoneCheckComponent extends React.Component<
             >
               <InputWrapper>
                 {type === 'register' ? (
-                  <InputGroup width="28.75rem" height="6.5rem">
+                  <InputGroup width="25.75rem" height="6.5rem">
                     {!signKey.checked && (
                       <WrongLabel>
                         형식이 잘못되었거나 존재하지 않는 회원가입 키 입니다!
@@ -488,7 +487,7 @@ class PhoneCheckComponent extends React.Component<
                 ) : (
                   <React.Fragment />
                 )}
-                <InputGroup width="28.75rem" height="6.5rem">
+                <InputGroup width="25.75rem" height="6.5rem">
                   {!tp.checked && (
                     <WrongLabel>
                       형식이 잘못되었거나 존재하지 않는 전화번호 입니다!

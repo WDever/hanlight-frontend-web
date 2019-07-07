@@ -25,10 +25,8 @@ const PwRecoveryWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   @media ${Device.tablet} {
-    box-shadow: none;
     width: 85%;
   }
 `;

@@ -33,10 +33,8 @@ const LoginWrapper = styled.div`
   background-color: #ffffff;
   border-radius: 3rem;
   animation: ${transitions.fadeIn} 2.5s;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
 
   @media ${Device.tablet} {
-    box-shadow: none;
     width: 85%;
     height: unset;
     max-width: unset;

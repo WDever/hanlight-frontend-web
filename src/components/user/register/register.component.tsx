@@ -28,7 +28,6 @@ interface RegisterState {
 const RegisterWrapper = styled.div`
   width: 38.125rem;
   height: 38rem;
-  box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.16);
   margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
@@ -36,7 +35,6 @@ const RegisterWrapper = styled.div`
   align-items: center;
 
   @media ${Device.tablet} {
-    box-shadow: none;
     width: 85%;
   }
 `;
@@ -102,6 +100,12 @@ const RePwInput = styled(Inputs)<{ colored: boolean }>`
       props.colored ? coloredCheckSvg : disabledCheckSvg})
     no-repeat scroll 1.5rem;
   padding-left: 3rem;
+`;
+
+const InputNameSpan = styled.span`
+  font-family: 'Spoqa Han Sans'
+  font-size: 1rem;
+  color: #000000;
 `;
 
 const RegisterComponent: React.FC<
@@ -215,7 +219,7 @@ const RegisterComponent: React.FC<
               )}
               <IdInput
                 wrong={!idValidation || idExistStatus === 'success-true'}
-                width="28.75rem"
+                width="25.75rem"
                 height="4.375rem"
                 active={!!id}
                 value={id}
@@ -231,7 +235,7 @@ const RegisterComponent: React.FC<
               {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
               <PwInput
                 wrong={!pwValidation}
-                width="28.75rem"
+                width="25.75rem"
                 height="4.375rem"
                 active={!!password}
                 value={password}
@@ -249,7 +253,7 @@ const RegisterComponent: React.FC<
               )}
               <RePwInput
                 wrong={!rpwValidation}
-                width="28.75rem"
+                width="25.75rem"
                 height="4.375rem"
                 active={!!rePassword}
                 value={rePassword}
