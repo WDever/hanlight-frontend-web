@@ -50,15 +50,12 @@ const Wrapper = styled.div<{ today: boolean }>`
 
 const ContentsWrapper = styled.div`
   width: 100%;
-  height: 40%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-
-  @media ${Device.tablet} {
-    height: 46%;
-  }
+  line-height: 1;
 `;
 
 const Title = styled.span`
@@ -75,8 +72,8 @@ const Title = styled.span`
 const Content = styled.span<{ today: boolean }>`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  color: #4470ff;
   font-size: 1.5rem;
+  color: #4470ff;
 
   @media ${Device.tablet} {
     color: ${props => (props.today ? '#ffffff' : '#4470ff')};
@@ -89,6 +86,8 @@ const Content = styled.span<{ today: boolean }>`
 
 const DateWrapper = styled.div<{ today: boolean }>`
   color: #000000;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 
   display: flex;
   flex-direction: column;
@@ -96,7 +95,11 @@ const DateWrapper = styled.div<{ today: boolean }>`
   align-items: center;
 
   @media ${Device.tablet} {
+    margin-bottom: 0.64rem;
     color: ${props => (props.today ? '#ffffff' : '#000000')};
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 0.15rem;
   }
 `;
 
