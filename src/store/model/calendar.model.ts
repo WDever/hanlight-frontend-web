@@ -1,12 +1,12 @@
 export interface CalendarItem {
-  date: string;
+  date: number;
   detail: string;
 }
 
 export interface CalendarRecentItem {
-  month: string;
-  year: string;
-  date: string;
+  month: number;
+  year: number;
+  date: number;
   detail: string;
 }
 

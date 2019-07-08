@@ -1,12 +1,11 @@
 import { MainMealMethod, MainMealProps } from 'container/meal/main-meal';
+import { usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
+import MealOrderIllust from 'lib/svg/meal-order-illust.svg';
 import moment from 'moment';
 import * as React from 'react';
-import { Link } from 'react-router-dom';
-import { MealItem } from 'store';
 import styled from 'styled-components';
-import MealListItem from '../mealItem';
-import { MealDate, MealItemWrapper } from '../mealItem';
+import MainMealItem from './item';
 
 const { useEffect } = React;
 
@@ -15,49 +14,100 @@ const ListWrapper = styled.div`
   justify-content: space-between;
   width: 100%;
   height: 20.1875rem;
+
+  @media ${Device.tabletL} {
+    width: unset;
+    padding: 2px;
+    height: 14.17rem;
+  }
+  @media ${Device.mobileL} {
+    height: 10.25rem;
+  }
 `;
 
 const MoreBox = styled.div`
-  @media only screen and ${Device.laptop} {
-    width: 13.225rem;
-  }
+  position: relative;
   width: 15.225rem;
   height: 100%;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  font-size: 1.3125rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+  font-size: 1.5rem;
   box-shadow: 0 40px 60px 0 rgba(101, 101, 101, 0.16);
   border-radius: 16px;
   background-color: #ffffff;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+
+  @media ${Device.laptop} {
+    width: 13.225rem;
+  }
+  @media ${Device.tabletL} {
+    width: 11rem;
+    border-radius: 1rem;
+    border: solid 1px #e6e6e6;
+    margin-right: 1.35rem;
+    box-shadow: none;
+  }
+  @media ${Device.mobileL} {
+    width: 8rem;
+  }
 `;
 
-const MoreBtn = styled(Link)`
-  text-decoration: none;
-  width: 68.626%;
-  height: 2.775rem;
-  border-radius: 35px;
-  border: solid 6px #f03d5c;
-  color: #f03d5c;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 0.9375rem;
-  cursor: pointer;
+const OrderWrapper = styled.div`
+  order: 0;
+  width: 100%;
+  text-align: center;
+  margin-top: 2.75rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+    margin-top: 1.125rem;
+  }
+`;
+
+const Order = styled.div`
+  margin-top: 0.75rem;
+  font-size: 1.125rem;
+  font-family: inherit;
+  font-weight: normal;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.625rem;
+    margin-top: 0.25rem;
+  }
+`;
+
+const OrderImg = styled.img`
+  width: 77%;
+  bottom: 1.48rem;
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
 
 const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
   getMeal,
+  getMealOrder,
+  getMealOrderStatus,
   mealWeekList,
+  mealOrder,
   getMealWeekStatus,
   accessToken,
 }) => {
+  useEffect(() => {
+    getMeal({ accessToken, sort: 'week' });
+    getMealOrder({ accessToken });
+  }, [accessToken]);
+
   const MealList =
     getMealWeekStatus === 'success'
       ? mealWeekList.slice(0, 3).map((val, index) => {
@@ -69,45 +119,77 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
             date: val.date,
           });
           const dayIndex = m.get('d');
-          const dateString = `${year}년 ${val.month}월 ${val.date}일`;
+          const dateString = `${val.month}월 ${val.date}일`;
           const todayBool = index === 0;
           if (meal.detail === '주말' || meal.detail === 'X') {
             return (
-              <MealListItem
+              <MainMealItem
+                style={{ order: index }}
                 item={meal.detail === '주말' ? '주말이다' : '밥이 없다'}
                 date={dateString}
                 key={index}
                 day={days[dayIndex]}
                 today={todayBool}
-                type={'main'}
               />
             );
           } else {
             return (
-              <MealListItem
+              <MainMealItem
+                style={{ order: index }}
                 item={meal.detail.split(',')}
                 date={dateString}
                 key={index}
                 day={days[dayIndex]}
                 today={todayBool}
-                type={'main'}
               />
             );
           }
         })
-      : [<MoreBox key={1} />, <MoreBox key={2} />, <MoreBox key={3} />];
-
-  useEffect(() => {
-    getMeal({ accessToken, sort: 'week' });
-  }, [accessToken]);
+      : [
+          <MoreBox style={{ order: 0 }} key={1} />,
+          <MoreBox style={{ order: 1 }} key={2} />,
+          <MoreBox style={{ order: 2 }} key={3} />,
+        ];
 
   return (
     <ListWrapper>
       {MealList}
       <MoreBox>
-        <span>급식 정보가</span>
-        <span>더 궁금하신가요?</span>
-        <MoreBtn to="/meal">더보기</MoreBtn>
+        <>
+          <OrderWrapper>
+            {getMealOrderStatus === 'success' && (
+              <>
+                <span>급식 순서</span>
+                <Order>
+                  {mealOrder.split('-').map((order, i) => {
+                    if (i === 0) {
+                      return (
+                        <>
+                          <span
+                            key={i}
+                            style={{ color: '#4470ff', fontWeight: 'bold' }}
+                          >
+                            {order}
+                          </span>
+                          &nbsp;-> &nbsp;
+                        </>
+                      );
+                    } else if (i === 1) {
+                      return (
+                        <>
+                          <span key={i}>{order}</span>&nbsp;->&nbsp;
+                        </>
+                      );
+                    } else {
+                      return <span key={i}>{order}</span>;
+                    }
+                  })}
+                </Order>
+              </>
+            )}
+          </OrderWrapper>
+          <OrderImg src={MealOrderIllust} alt="" />
+        </>
       </MoreBox>
     </ListWrapper>
   );

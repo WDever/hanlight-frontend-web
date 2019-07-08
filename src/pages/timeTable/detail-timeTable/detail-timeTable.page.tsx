@@ -1,4 +1,5 @@
 import TimeTableContainer from 'container/timeTable/detail-timeTable';
+import { Device } from 'lib/styles';
 import LeftSvg from 'lib/svg/left-illust.svg';
 import RightSvg from 'lib/svg/right-illust.svg';
 import * as React from 'react';
@@ -24,11 +25,19 @@ const Background = styled.div`
 
 const LeftImg = styled.img`
   z-index: -1;
+
+  @media ${Device.mobileL} {
+    display: none;
+  }
 `;
 
 const RightImg = styled.img`
   z-index: -1;
   margin-left: 3%;
+
+  @media ${Device.mobileL} {
+    display: none;
+  }
 `;
 
 const DetailTimeTablePage = () => {

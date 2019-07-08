@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="13.125" height="16" viewBox="0 0 13.125 16">
+    <defs>
+        <style>
+            .cls-1{fill:#465a61}.cls-2{fill:#3b4a51}.cls-3{fill:#596c76}.cls-4{fill:#d1effa}.cls-5{fill:#97e1ff}.cls-6{fill:#ffda2d}.cls-7{fill:#54e360}.cls-8{fill:#00cc71}.cls-9{fill:#fdbf00}
+        </style>
+    </defs>
+    <g id="logout" transform="translate(-46)">
+        <path id="패스_2228" d="M54.438 0v12.188l-.937.938h-6.563L46 12.188V0z" class="cls-1" data-name="패스 2228"/>
+        <path id="패스_2229" d="M185.219 0v12.188l-.937.938H181V0z" class="cls-2" data-name="패스 2229" transform="translate(-130.781)"/>
+        <path id="패스_2230" d="M136 60h2.813v.938H136z" class="cls-3" data-name="패스 2230" transform="translate(-87.188 -58.125)"/>
+        <path id="패스_2231" d="M181 60h1.406v.938H181z" class="cls-1" data-name="패스 2231" transform="translate(-130.781 -58.125)"/>
+        <path id="패스_2232" d="M46 390h8.438v3.813H46z" class="cls-4" data-name="패스 2232" transform="translate(0 -377.813)"/>
+        <path id="패스_2233" d="M181 390h4.219v3.813H181z" class="cls-5" data-name="패스 2233" transform="translate(-130.781 -377.813)"/>
+        <path id="패스_2234" d="M166 436h.938v.938H166z" class="cls-1" data-name="패스 2234" transform="translate(-116.25 -422.375)"/>
+        <path id="패스_2235" d="M181 436h.469v.938H181z" class="cls-2" data-name="패스 2235" transform="translate(-130.781 -422.375)"/>
+        <path id="패스_2236" d="M166.938 120.938v4.688h.938v.938H166V120h1.875v.938z" class="cls-6" data-name="패스 2236" transform="translate(-116.25 -116.25)"/>
+        <path id="패스_2237" d="M259.75 168.75v-.937H256v-1.875h3.75V165l2.813 1.875z" class="cls-7" data-name="패스 2237" transform="translate(-203.438 -159.844)"/>
+        <path id="패스_2238" d="M259.75 226.875v-.937H256V225h6.563z" class="cls-8" data-name="패스 2238" transform="translate(-203.438 -217.969)"/>
+        <path id="패스_2239" d="M181.469 120.938v4.688h.938v.938H181V120h1.406v.938z" class="cls-9" data-name="패스 2239" transform="translate(-130.781 -116.25)"/>
+    </g>
+</svg>

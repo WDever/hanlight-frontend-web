@@ -5,3 +5,4 @@ export * from './notice.action';
 export * from './meal.action';
 export * from './error.action';
 export * from './board.action';
+export * from './util.action';

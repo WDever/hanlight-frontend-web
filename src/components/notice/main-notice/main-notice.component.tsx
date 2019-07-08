@@ -4,6 +4,7 @@ import {
   MainNoticeMethod,
   MainNoticeProps,
 } from 'container/notice/main-notice';
+import { Device } from 'lib/styles';
 import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import moment from 'moment';
 import { Link, RouteComponentProps } from 'react-router-dom';
@@ -19,17 +20,61 @@ const NoticeWrapper = styled.div`
   width: 90%;
 `;
 
+const TitleWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+
+  @media ${Device.tabletL} {
+    margin-top: 1.626rem;
+    margin-bottom: 0;
+  }
+`;
+
 const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
-  margin: 2rem 0 1rem 0;
+
+  @media ${Device.tabletL} {
+    font-size: 1.5rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
+`;
+
+const MobileBtn = styled(Link)`
+  display: none;
+
+  @media ${Device.tabletL} {
+    display: unset;
+    color: #6787ec;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Spoqa Han Sans';
+    margin-right: 1.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
+  }
 `;
 
 const Separator = styled.div`
-  width: 48.2rem;
+  width: 60%;
+  max-width: 48.2rem;
   height: 100%;
   display: inline-flex;
   flex-direction: column;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    max-width: unset;
+  }
 `;
 
 const BtnWrapper = styled.div`
@@ -37,6 +82,10 @@ const BtnWrapper = styled.div`
   width: 18.4375rem;
   display: inline-flex;
   justify-content: center;
+
+  @media ${Device.tabletL} {
+    display: none;
+  }
 `;
 
 const NoticeListWrapper = styled.div`
@@ -44,6 +93,10 @@ const NoticeListWrapper = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 5rem;
+
+  @media ${Device.tabletL} {
+    margin-bottom: 0;
+  }
 `;
 
 const InnerWrapper = styled.div<{ length: number }>`
@@ -53,6 +106,13 @@ const InnerWrapper = styled.div<{ length: number }>`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
+
+  @media ${Device.tabletL} {
+    height: 19rem;
+  }
+  @media ${Device.mobileL} {
+    height: 14.24rem;
+  }
 `;
 
 const BtnBackGroundImg = styled.img`
@@ -92,31 +152,40 @@ class MainNoticeComponent extends React.Component<
   }
 
   public render() {
-    const NoticeList = this.props.noticeList.slice(0, 5).map(item => {
-      const date =
-        moment(item.createdAt).format('YYYY.MM.DD') ===
-        moment().format('YYYY.MM.DD')
-          ? moment(item.createdAt).format('H') === moment().format('H')
-            ? `${Number(moment().format('m')) -
-                Number(moment(item.createdAt).format('m'))}분전`
-            : `${Number(moment().format('H')) -
-                Number(moment(item.createdAt).format('H'))}시간전`
-          : moment(item.createdAt).format('YYYY.MM.DD');
+    const NoticeList = Array(5)
+      .fill(null)
+      .map((_, i) => {
+        if (this.props.noticeList[i]) {
+          const item = this.props.noticeList[i];
+          const date =
+            moment(item.createdAt).format('l') === moment().format('l')
+              ? moment(item.createdAt).get('hour') === moment().get('hour')
+                ? `${moment().get('minute') -
+                    moment(item.createdAt).get('minute')}분전`
+                : `${moment().get('hour') -
+                    moment(item.createdAt).get('hour')}시간전`
+              : moment(item.createdAt).format('l');
 
-      return (
-        <NoticeItem
-          title={item.title}
-          date={date}
-          read={!!item.read}
-          key={item.pk}
-          onClick={() => this.props.history.push(`/notice/${item.pk}`)}
-        />
-      );
-    });
+          return (
+            <NoticeItem
+              title={item.title}
+              date={date}
+              read={!!item.read}
+              key={i}
+              onClick={() => this.props.history.push(`/notice/${item.pk}`)}
+            />
+          );
+        } else {
+          return <NoticeItem read={false} key={i} />;
+        }
+      });
     return (
       <NoticeWrapper>
         <Separator>
-          <Title>공지사항</Title>
+          <TitleWrapper>
+            <Title>공지사항</Title>
+            <MobileBtn to="/notice">전체보기 ></MobileBtn>
+          </TitleWrapper>
           <NoticeListWrapper>
             <InnerWrapper length={NoticeList.length}>
               {this.props.getNoticeListStatus === 'success' && NoticeList}

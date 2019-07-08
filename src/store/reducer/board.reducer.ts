@@ -214,7 +214,7 @@ export const boardReducer = (
           const boardIndex = draft.board.findIndex(
             board => board.pk === action.payload.origin.board_pk,
           );
-          action.payload.err.response.data.name === 'NotFoundBoard'
+          action.payload.err.response.data.name === 'Not_Found_Board'
             ? draft.board.splice(boardIndex, 1)
             : draft.board[boardIndex].comment.splice(
                 draft.board[boardIndex].comment.findIndex(
@@ -249,7 +249,7 @@ export const boardReducer = (
           const boardIndex = draft.board.findIndex(
             board => board.pk === action.payload.origin.board_pk,
           );
-          action.payload.err.response.data.name === 'NotFoundBoard'
+          action.payload.err.response.data.name === 'Not_Found_Board'
             ? draft.board.splice(boardIndex, 1)
             : draft.board[boardIndex].comment.splice(
                 draft.board[boardIndex].comment.findIndex(

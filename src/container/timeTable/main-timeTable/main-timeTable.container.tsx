@@ -16,7 +16,6 @@ export interface MainTimeTableProps {
   ];
   getTimetableStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
-  name: string;
 }
 
 export interface MainTimeTableMethod {
@@ -25,19 +24,12 @@ export interface MainTimeTableMethod {
 
 const MainTimeTableContainer: React.FC<
   MainTimeTableProps & MainTimeTableMethod
-> = ({
-  timeTableList,
-  getTimetableStatus,
-  getTimetableApi,
-  accessToken,
-  name,
-}) => (
+> = ({ timeTableList, getTimetableStatus, getTimetableApi, accessToken }) => (
   <TimeTableComponent
     timeTableList={timeTableList}
     getTimetableStatus={getTimetableStatus}
     getTimetableApi={getTimetableApi}
     accessToken={accessToken}
-    name={name}
   />
 );
 
@@ -45,7 +37,6 @@ const mapStateToProps = ({ user, timeTable }: AppState) => ({
   timeTableList: timeTable.timetable,
   getTimetableStatus: timeTable.getTimetableStatus,
   accessToken: user.accessToken,
-  name: user.name,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({

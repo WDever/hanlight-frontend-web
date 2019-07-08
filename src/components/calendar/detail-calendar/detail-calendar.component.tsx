@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import CalendarItem from 'components/calendar/calendarItem';
 import {
   DetailCalendarMethod,
   DetailCalendarProps,
@@ -8,17 +7,27 @@ import {
 import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
+import DetailCalendarItem from './item';
 
 const { useEffect, useState } = React;
 
 const Wrapper = styled.div`
+  width: 90%;
+  max-width: 81rem;
+  min-height: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 81rem;
-  width: 90%;
-  min-height: 100%;
+
+  @media ${Device.tabletL} {
+    width: 80%;
+    max-width: unset;
+  }
+  @media ${Device.mobileL} {
+    width: 90%;
+  }
 `;
 
 const TitleBar = styled.div`
@@ -32,18 +41,35 @@ const TitleBar = styled.div`
   span {
     font-family: 'yg-jalnan';
     font-size: 2.25rem;
+
+    @media ${Device.tabletL} {
+      font-size: 1.82rem;
+    }
+    @media ${Device.mobileL} {
+      font-size: 1rem;
+    }
+  }
+  @media ${Device.tabletL} {
+    margin-bottom: 3.28rem;
+    margin-top: 2.81rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1.75rem;
+    margin-top: 1.75rem;
   }
 `;
 
 const DateBar = styled.div`
-  width: 16.6%;
+  width: 13.5rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
 
-  span {
-    font-family: 'yg-jalnan';
-    font-size: 1.125rem;
+  @media ${Device.tabletL} {
+    width: 11.58rem;
+  }
+  @media ${Device.mobileL} {
+    width: 6.125rem;
   }
 `;
 
@@ -61,35 +87,38 @@ const Select = styled.select`
   text-align-last: center;
   font-size: 1rem;
   outline: none;
+
+  @media ${Device.tabletL} {
+    width: 5.56rem;
+    height: 2.31rem;
+    font-size: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    width: 3rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
 `;
 
-const CalendarWrapper = styled.div<{ listLength: number }>`
-  ${({ listLength }) =>
-    listLength !== 0
-      ? css`
-          @media only screen and ${Device.laptop} {
-            grid-template-columns: repeat(4, 20%);
-            grid-column-gap: 5%;
-          }
-          width: 105%;
-          display: grid;
-          margin: 0 -1.05rem;
-          grid-template-columns: repeat(5, 20%);
-        `
-      : css`
-          width: 90%;
-          display: flex;
-          position: absolute;
-          justify-content: center;
-          align-items: center;
-          z-index: -2;
-        `}
-
-  min-height: 92%;
+const CalendarWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 12.5rem);
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 4.4rem;
+  justify-content: space-between;
 
   p {
     font-size: 2rem;
     font-family: 'Spoqa Han Sans';
+  }
+
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fit, 11.125rem);
+    grid-column-gap: 1.85rem;
+  }
+  @media ${Device.mobileL} {
+    grid-template-columns: repeat(auto-fit, 6rem);
+    grid-column-gap: 0.25rem;
   }
 `;
 
@@ -144,14 +173,13 @@ const DetailCalendarComponent: React.FC<
           moment().format('M.D') === `${selectedMonth}.${item.date}`;
 
         return (
-          <CalendarItem
-            year={moment().format('YYYY')}
+          <DetailCalendarItem
+            year={moment().get('year')}
             month={selectedMonth}
-            day={item.date}
+            date={item.date}
             contents={item.detail}
             today={today}
             key={i}
-            type="detail"
           />
         );
       })
@@ -181,9 +209,7 @@ const DetailCalendarComponent: React.FC<
         </DateBar>
       </TitleBar>
       {getCalendarStatus === 'success' && (
-        <CalendarWrapper listLength={calendar.length}>
-          {CalendarList}
-        </CalendarWrapper>
+        <CalendarWrapper>{CalendarList}</CalendarWrapper>
       )}
       {getCalendarStatus === 'pending' && (
         <p style={{ fontFamily: 'Spoqa Han Sans' }}>불러오는중 ... </p>

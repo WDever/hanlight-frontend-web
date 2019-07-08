@@ -8,46 +8,42 @@ import * as React from 'react';
 import styled from 'styled-components';
 import TimeTableItem from './timeTableItem';
 
-const Title = styled.div`
-  max-width: 81rem;
-  width: 90%;
-  font-family: 'yg-jalnan';
-  font-size: 1.875rem;
-  margin-bottom: 2rem;
-`;
-
-const Colored = styled.span`
-  color: #4470ff;
-`;
-
-const TimeTableWrapper = styled.div`
-  max-width: 81rem;
-  width: 90%;
+const TimeTable = styled.div`
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    width: unset;
+    height: 100%;
+  }
 `;
 
 const NoBox = styled.div`
-  @media ${Device.laptop} {
-    height: 8rem;
-  }
-
-  width: 11.34%;
-  height: 11rem;
-  font-size: 1.625rem;
-  border-radius: 32px;
+  width: 8.8rem;
+  max-width: 8.8rem;
+  height: 10.55rem;
+  border-radius: 2rem;
   background-color: #ffffff;
   border: solid 1px #b1b1b1;
-  color: black;
-  font-family: 'Spoqa Han Sans';
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+
+  @media ${Device.laptop} {
+    width: 13%;
+    height: 10rem;
+  }
+  @media ${Device.tabletL} {
+    width: 7.05rem;
+    height: 8.45rem;
+    margin-right: 1.07rem;
+    border-radius: 1rem;
+  }
+  @media ${Device.mobileL} {
+    width: 5.1rem;
+    height: 6.12rem;
+  }
 `;
 
-const days = ['일', '월', '화', '수', '목', '금', '토'];
 const hour = 3600;
 const minute = 60;
 
@@ -60,14 +56,14 @@ export default class MainTimeTableComponent extends React.Component<
     timeTableList: [],
   };
 
-  public today: number = Number(moment().format('d'));
+  public today: number = moment().get('day');
 
   public componentDidMount() {
     this.props.getTimetableApi(this.props.accessToken);
   }
 
   public render() {
-    const { timeTableList, getTimetableStatus, name } = this.props;
+    const { timeTableList } = this.props;
     const { today } = this;
 
     const TimeTableList = Array(7)
@@ -110,14 +106,6 @@ export default class MainTimeTableComponent extends React.Component<
         }
       });
 
-    return (
-      <>
-        <Title>
-          <Colored>{days[today]}요일</Colored> 시간표
-        </Title>
-
-        <TimeTableWrapper>{TimeTableList}</TimeTableWrapper>
-      </>
-    );
+    return <TimeTable>{TimeTableList}</TimeTable>;
   }
 }

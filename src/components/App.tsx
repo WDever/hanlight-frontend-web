@@ -11,12 +11,6 @@ import FooterPage from 'pages/footer';
 import MainPage from 'pages/main';
 import servicePage from 'pages/service';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
-
-const Base = styled.div`
-  width: 100%;
-  height: 100%;
-`;
 
 const ErrorComponents = () => (
   <>
@@ -26,7 +20,7 @@ const ErrorComponents = () => (
 );
 
 const App: React.FC = () => (
-  <Base>
+  <>
     <AutoLoginContainer />
     <AutoErrorCheckContainer />
     <Switch>
@@ -39,7 +33,7 @@ const App: React.FC = () => (
       <Route path="/" component={MainPage} />
       <Redirect to="/error" />
     </Switch>
-  </Base>
+  </>
 );
 
 export default App;
