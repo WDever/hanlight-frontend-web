@@ -17,7 +17,7 @@ const Footer = styled.footer`
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     height: 11.1rem;
   }
   @media ${Device.mobileL} {
@@ -33,7 +33,7 @@ const FooterWrapper = styled.div`
   max-width: 81rem;
   margin-bottom: 2.5rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 1.57rem;
   }
   @media ${Device.mobileL} {
@@ -49,7 +49,7 @@ const UpsideWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-top: 1.625rem;
   }
   @media ${Device.mobileL} {
@@ -75,7 +75,7 @@ const Email = styled.span`
   margin-top: 1.375rem;
   margin-bottom: 1.375rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
   }
@@ -105,7 +105,7 @@ const LinksWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11.375rem;
   }
   @media ${Device.mobileL} {
@@ -116,7 +116,7 @@ const LinksWrapper = styled.div`
 const LinkBtn = styled.img`
   width: 2.375rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 1.875rem;
   }
   @media ${Device.mobileL} {

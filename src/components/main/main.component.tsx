@@ -25,7 +25,7 @@ const Empty = styled.div`
   height: 3.75rem;
   width: 100%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;

@@ -4,6 +4,7 @@ import {
   NoticeListMethod,
   NoticeListProps,
 } from 'container/notice/detail-notice/detail-noticeList';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router';
@@ -69,6 +70,10 @@ const SearchButton = styled.button`
   color: #ffffff;
   background-color: #000000;
   cursor: pointer;
+
+  @media ${Device.tabletL} {
+    width: 3.64rem;
+  }
 `;
 
 const Table = styled.table`
@@ -76,6 +81,17 @@ const Table = styled.table`
   border-top: 2px solid #000000;
   text-align: center;
   font-size: 0.875rem;
+  table-layout: fixed;
+`;
+
+const PkCol = styled.col`
+  width: 5rem;
+`;
+
+const TitleCol = styled.col``;
+
+const DateCol = styled.col`
+  width: 7rem;
 `;
 
 const Tr = styled.tr<{ head?: boolean }>`
@@ -86,7 +102,16 @@ const Tr = styled.tr<{ head?: boolean }>`
 
 const TdTitle = styled.td<{ new: boolean }>`
   text-align: left;
-  color: ${props => (props.new ? '#4470ff' : 'initial')};
+  color: ${props => (props.new ? '#4470ff' : '#000000')};
+`;
+
+const TdTitleStr = styled.div<{ new: boolean }>`
+  max-width: ${props => (props.new ? '94%' : '100%')};
+  display: inline-block;
+  vertical-align: middle;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 `;
 
 const TdTitleNew = styled.span`
@@ -239,7 +264,7 @@ export default class NoticeListComponent extends React.Component<
                 <TdPkString>{notice.pk}</TdPkString>
               </TdPk>
               <TdTitle new={NEW}>
-                {notice.title}
+                <TdTitleStr new={NEW}>{notice.title}</TdTitleStr>
                 {NEW && <TdTitleNew>NEW</TdTitleNew>}
               </TdTitle>
               <TdCreatedAt>
@@ -282,6 +307,11 @@ export default class NoticeListComponent extends React.Component<
             </SearchWrapper>
           </BoardUpsideWrapper>
           <Table>
+            <colgroup>
+              <PkCol />
+              <TitleCol />
+              <DateCol />
+            </colgroup>
             <thead>
               <Tr head={true}>
                 <th>글번호</th>

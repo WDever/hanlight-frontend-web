@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
+import moment from 'moment';
 import styled from 'styled-components';
 
 interface ItemProps {
   today: boolean;
-  year: string;
+  year: number;
   month: string;
-  day: string;
+  date: number;
   contents: string;
 }
 
@@ -28,7 +29,7 @@ const Wrapper = styled.div<{ today: boolean }>`
     border: none;
   }
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11.125rem;
     height: 14.825rem;
   }
@@ -82,7 +83,7 @@ const DateWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 0.925rem;
   }
   @media ${Device.mobileL} {
@@ -94,16 +95,24 @@ const DetailCalendarItem: React.FC<ItemProps> = ({
   today,
   year,
   month,
-  day,
+  date,
   contents,
 }) => {
   return (
     <Wrapper today={today}>
       <ContentsWrapper>
         <DateWrapper>
-          <Title>{today ? '오늘은' : '다가오는'}</Title>
+          {moment({
+            year,
+            month: Number(month) - 1,
+            date,
+            hour: 23,
+            minute: 59,
+          }).unix() > moment().unix() && (
+            <Title>{today ? '오늘은' : '다가오는'}</Title>
+          )}
           <Title>
-            {year}년 {month}월 {day}일
+            {year}년 {month}월 {date}일
           </Title>
         </DateWrapper>
         {contents.split(/,|\s/g).map((content, i) => (

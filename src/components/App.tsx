@@ -11,7 +11,6 @@ import FooterPage from 'pages/footer';
 import MainPage from 'pages/main';
 import servicePage from 'pages/service';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import styled from 'styled-components';
 
 const ErrorComponents = () => (
   <>

@@ -2,15 +2,7 @@ import * as React from 'react';
 
 import { LoginMethod, LoginProps } from 'container/user/login';
 import { useInputs } from 'lib/hooks';
-import {
-  id as idRegExp,
-  password as passwordRegExp,
-} from 'lib/RegExp/RegExp.json';
-import { Buttons, Device, Inputs, transitions } from 'lib/styles';
-import coloredIdSvg from 'lib/svg/colored-id.svg';
-import coloredPwSvg from 'lib/svg/colored-password.svg';
-import disabledIdSvg from 'lib/svg/disabled-id.svg';
-import disabledPwSvg from 'lib/svg/disabled-password.svg';
+import { Button, Device, Input, transitions } from 'lib/styles';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import { NavLink, NavLinkProps, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
@@ -24,21 +16,12 @@ interface LoginState {
 
 const LoginWrapper = styled.div`
   width: 100%;
-  max-width: 38.125rem;
-  height: 90%;
-  max-height: 43.75rem;
   display: inline-flex;
   align-items: center;
   flex-direction: column;
   background-color: #ffffff;
   border-radius: 3rem;
   animation: ${transitions.fadeIn} 2.5s;
-
-  @media ${Device.tablet} {
-    width: 85%;
-    height: unset;
-    max-width: unset;
-  }
 `;
 
 const GreetingDiv = styled.div`
@@ -53,117 +36,104 @@ const GreetingDiv = styled.div`
 `;
 
 const LoginImg = styled.img`
-  width: 9.63rem;
-  height: 5.63rem;
-  margin-top: 4.5rem;
-  margin-bottom: 3.5rem;
-
-  @media ${Device.tablet} {
-    width: 14.63rem;
-    height: unset;
-    margin-top: 0;
-    margin-bottom: 6.5rem;
-  }
+  width: 5.95rem;
+  margin-bottom: 5.375rem;
 
   @media ${Device.mobileL} {
-    width: 7.63rem;
-    margin-top: 0;
+    width: 2.95rem;
+    margin-bottom: 2.5rem;
   }
 `;
 
 const LoginForm = styled.form`
+  border-bottom: solid 2px #d9d9d9;
+  padding-bottom: 3.25rem;
+
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: center;
-  width: 100%;
-  height: 50%;
 
-  @media ${Device.tablet} {
-    height: 21.875rem;
+  @media ${Device.tabletS} {
+    width: 90%;
   }
   @media ${Device.mobileL} {
-    height: 13.475rem;
+    border-bottom: solid 1px #d9d9d9;
+    padding-bottom: 1.25rem;
   }
 `;
 
-const WrongLabel = styled.label`
-  width: 27rem;
+const ErrorMessage = styled.div`
+  width: 100%;
+  max-width: 36.25rem;
   height: 3.125rem;
+  margin-top: 0.875rem;
+  margin-bottom: 2.75rem;
   color: #ff0000;
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
 
-  @media ${Device.tablet} {
-    width: 100%;
-    font-size: 1rem;
-  }
-
   @media ${Device.mobileL} {
-    font-size: 0.75rem;
+    height: 2rem;
+    font-size: 0.63rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.75rem;
   }
 `;
 
 const LoginInputWrapper = styled.div`
   width: 100%;
-  height: 58%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+`;
 
-  @media ${Device.tablet} {
-    width: 100%;
-    height: unset;
+const LoginInputId = styled(Input)`
+  margin-bottom: 1.375rem;
+
+  @media ${Device.tabletS} {
+    margin-bottom: 1.125rem;
   }
 `;
 
-const LoginInputId = styled(Inputs)<{ colored: boolean }>`
-  background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
-    no-repeat scroll 1.5rem;
-  padding-left: 3rem;
-
-  @media ${Device.tablet} {
-    margin-bottom: 1rem;
-  }
-`;
-
-const LoginInputPw = styled(Inputs)<{ colored: boolean }>`
-  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
-    no-repeat scroll 1.5rem;
-  padding-left: 3rem;
-`;
+const LoginInputPw = styled(Input)``;
 
 const NavLinkDiv = (props: NavLinkProps) => <NavLink {...props} />;
 
-const LoginBtn = styled(Buttons)``;
+const LoginBtn = styled(Button)``;
 
 const FindBtnsWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
-  width: 70%;
-  color: #6c63ff;
-  font-size: 1rem;
-  display: flex;
-  justify-content: space-around;
+  font-size: 1.125rem;
   margin-top: 1rem;
+  display: flex;
 
-  @media ${Device.tablet} {
-    width: 100%;
+  @media ${Device.tabletS} {
+    margin-top: 2.25rem;
   }
   @media ${Device.mobileL} {
-    font-size: 0.75rem;
+    font-size: 0.625rem;
+    margin-top: 0.5rem;
   }
 `;
 
-const FindBtns = styled(NavLinkDiv)<{ colored?: boolean }>`
+const FindBtn = styled(NavLinkDiv)`
+  padding: 0 2.31rem 0 2.31rem;
+  color: #a9a9a9;
   font-family: 'Spoqa Han Sans';
-  color: ${props => (props.colored ? '#4470ff' : '#a2a2a2')};
-  font-weight: 500;
+  white-space: nowrap;
   background-color: transparent;
   outline: none;
   border: none;
   cursor: pointer;
   text-decoration: none;
+
+  &:hover {
+    color: #4470ff;
+  }
+
+  @media ${Device.mobileL} {
+    padding: 0 1.03rem 0 1.03rem;
+  }
 `;
 
 const LoginComponent: React.FC<
@@ -173,27 +143,18 @@ const LoginComponent: React.FC<
     id: '',
     password: '',
   });
-  const [validation, setValidation] = useState(true);
 
   const { id, password } = inputs;
-
-  const idCheck = (str: string) => new RegExp(idRegExp).test(str);
-  const pwCheck = (str: string) => new RegExp(passwordRegExp).test(str);
 
   const submitLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (loginStatus !== 'pending' && id && password) {
-      if (idCheck(id) && pwCheck(password)) {
-        login({ id, password });
-      } else {
-        setValidation(false);
-      }
+      login({ id, password });
     }
   };
 
   useEffect(() => {
-    // after try to login
     if (loginStatus === 'success') {
       history.push('/');
     }
@@ -207,55 +168,49 @@ const LoginComponent: React.FC<
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
           <LoginInputId
-            width="25.75rem"
-            height="4.375rem"
-            active={!!id}
             type="id"
             placeholder="아이디"
             onChange={inputsChange}
             name="id"
             value={id}
-            colored={!!id}
+            wrong={loginStatus === 'failure'}
             autoComplete="off"
           />
           <LoginInputPw
-            width="25.75rem"
-            height="4.375rem"
-            active={!!password}
             type="password"
             placeholder="비밀번호"
             onChange={inputsChange}
             name="password"
             value={password}
-            colored={!!password}
+            wrong={loginStatus === 'failure'}
             autoComplete="off"
           />
         </LoginInputWrapper>
-        <WrongLabel>
-          {(loginStatus === 'failure' || !validation) && (
+        <ErrorMessage>
+          {loginStatus === 'failure' && (
             <span>
               한빛에 등록되지 않은 아이디이거나,
               <br />
               아이디 또는 비밀번호를 잘못 입력하셨습니다.
             </span>
           )}
-        </WrongLabel>
-        <LoginBtn
-          width="28.75rem"
-          height="4.375rem"
-          active={!!(id && password && loginStatus !== 'pending')}
-        >
+        </ErrorMessage>
+        <LoginBtn active={!!id && !!password && loginStatus !== 'pending'}>
           로그인
         </LoginBtn>
       </LoginForm>
       <FindBtnsWrapper>
-        <FindBtns to="/user/phone?type=recovery&key=id">ID 찾기</FindBtns>
-        <FindBtns to="/user/phone?type=recovery&key=password">
+        <FindBtn to="/user/phone?type=recovery&key=id">ID 찾기</FindBtn>
+        <FindBtn
+          style={{
+            borderLeft: 'solid 1px #e1e1e1',
+            borderRight: 'solid 1px #e1e1e1',
+          }}
+          to="/user/phone?type=recovery&key=password"
+        >
           비밀번호 찾기
-        </FindBtns>
-        <FindBtns colored={true} to="/user/phone?type=register">
-          회원가입
-        </FindBtns>
+        </FindBtn>
+        <FindBtn to="/user/phone?type=register">회원가입</FindBtn>
       </FindBtnsWrapper>
     </LoginWrapper>
   );

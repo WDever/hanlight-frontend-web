@@ -4,24 +4,27 @@ import AccountKit, {
   ChildrenParams,
   FbAccountKitResType,
 } from 'components/facebook-account-kit';
+import ModalError from 'components/modal/error';
+import ModalPhoneCheck from 'components/modal/phoneCheck';
+import ModalRecovery from 'components/modal/recovery';
 import { PhoneCheckMethod, PhoneCheckProps } from 'container/user/phoneCheck';
 import {
   id as idRegExp,
   signKey as signKeyRegExp,
   tp as tpRegExp,
 } from 'lib/RegExp/RegExp.json';
-import { Buttons, Device, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
-import coloredIdSvg from 'lib/svg/colored-id.svg';
-import coloredPhoneSvg from 'lib/svg/colored-phone.svg';
-import coloredSignKeySvg from 'lib/svg/colored-signKey.svg';
-import disabledIdSvg from 'lib/svg/disabled-id.svg';
-import disabledPhoneSvg from 'lib/svg/disabled-phone.svg';
-import disabledSignKeySvg from 'lib/svg/disabled-signKey.svg';
+import {
+  Button,
+  Device,
+  Input,
+  InputsGroup,
+  WrongMessageWrapper,
+} from 'lib/styles';
+import HanlightLogo from 'lib/svg/hanlight-logo.svg';
 import queryString from 'query-string';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import uuid from 'uuid';
-import Modal from '../../modal';
 
 export type GetCodeStatus =
   | 'none'
@@ -35,56 +38,60 @@ interface PhoneCheckTypeProps {
 }
 
 const PhoneCheckWrapper = styled.div<PhoneCheckTypeProps>`
-  width: ${props =>
-    props.component_type === 'recovery' && props.component_key === 'id'
-      ? 38.1875
-      : 38.125}rem;
-  height: ${props =>
-    props.component_type === 'recovery' && props.component_key === 'id'
-      ? '24.5625'
-      : '31.875'}rem;
-  margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 85%;
     margin: 0;
-  }
-  @media ${Device.mobileL} {
-    height: 25rem;
   }
 `;
 
 const GreetingDiv = styled.div`
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.5rem;
-  font-family: Spoqa Han Sans;
-  font-weight: bold;
-  margin-top: 3rem;
+  margin-bottom: 2.56rem;
 
-  @media ${Device.tablet} {
-    font-size: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const HanlightLogoImg = styled.img`
+  width: 5.95rem;
+  margin-bottom: 0.75rem;
+
+  @media ${Device.mobileL} {
+    width: 2.95rem;
   }
+`;
+
+const Title = styled.span`
+  font-family: 'Spoqa Han Sans';
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #000000;
+
   @media ${Device.mobileL} {
     font-size: 1.25rem;
   }
 `;
 
 const InputWrapper = styled.div`
-  width: 87.5%;
+  margin-bottom: 2rem;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletS} {
     width: 100%;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1rem;
   }
 `;
 
@@ -94,16 +101,10 @@ const Form = styled.form<PhoneCheckTypeProps>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${props =>
-    props.component_type === 'register' ||
-    (props.component_type === 'recovery' && props.component_key === 'password')
-      ? 76
-      : 70}%;
 `;
 
 const TermsBtnWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
-  width: 28.125rem;
   color: black;
   font-size: 1rem;
   display: flex;
@@ -112,39 +113,25 @@ const TermsBtnWrapper = styled.div`
   align-items: center;
   margin-bottom: 3rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 100%;
   }
 `;
 
-const ColoredSpan = styled.span`
-  color: #4470ff;
-`;
-
-const Input = styled(Inputs)`
-  padding-left: 3rem;
-`;
-
 const InputGroup = styled(InputsGroup)``;
 
-const PhoneInput = styled(Input)<{ colored: boolean }>`
-  background: url(${props =>
-      props.colored ? coloredPhoneSvg : disabledPhoneSvg})
-    no-repeat scroll 1.5rem;
-`;
+const InputName = styled.span`
+  width: 100%;
+  max-width: 36.25rem;
+  margin-left: 0.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-family: 'Spoqa Han Sans';
 
-const IdInput = styled(Input)<{ colored: boolean }>`
-  background: url(${props => (props.colored ? coloredIdSvg : disabledIdSvg)})
-    no-repeat scroll 1.5rem;
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
 `;
-
-const SignKeyInput = styled(Input)<{ colored: boolean }>`
-  background: url(${props =>
-      props.colored ? coloredSignKeySvg : disabledSignKeySvg})
-    no-repeat scroll 1.5rem;
-`;
-
-const Button = styled(Buttons)``;
 
 class PhoneCheckComponent extends React.Component<
   PhoneCheckProps & PhoneCheckMethod & RouteComponentProps,
@@ -375,10 +362,8 @@ class PhoneCheckComponent extends React.Component<
     return (
       <React.Fragment>
         {idRecoveryStatus === 'success' && (
-          <Modal
-            width="50.25rem"
-            height="24.625rem"
-            type="recoveryId"
+          <ModalRecovery
+            type={'id'}
             id={recoveryId}
             click={() => {
               this.props.resetUser();
@@ -388,10 +373,7 @@ class PhoneCheckComponent extends React.Component<
         )}
         {(pwRecoveryStatus === 'success' ||
           verifyPhoneStatus === 'success') && (
-          <Modal
-            width="50.25rem"
-            height="24.625rem"
-            type="phoneCheck"
+          <ModalPhoneCheck
             click={() => {
               type === 'recovery'
                 ? history.push('/user/recovery/password')
@@ -402,10 +384,7 @@ class PhoneCheckComponent extends React.Component<
         {(idRecoveryStatus === 'failure' ||
           pwRecoveryStatus === 'failure' ||
           verifyPhoneStatus === 'failure') && (
-          <Modal
-            width="50.25rem"
-            height="24.625rem"
-            type="error"
+          <ModalError
             message={errorMessage}
             click={() => {
               this.props.resetError();
@@ -417,20 +396,12 @@ class PhoneCheckComponent extends React.Component<
         {query.validation ? (
           <PhoneCheckWrapper component_type={type} component_key={key}>
             <GreetingDiv>
-              {type === 'register' && (
-                <React.Fragment>
-                  <ColoredSpan>등록키</ColoredSpan>
-                  와&nbsp;
-                </React.Fragment>
-              )}
-              {type === 'recovery' && key === 'password' && (
-                <React.Fragment>
-                  <ColoredSpan>아이디</ColoredSpan>
-                  와&nbsp;
-                </React.Fragment>
-              )}
-              <ColoredSpan>전화번호</ColoredSpan>
-              를&nbsp; 입력해주세요
+              <HanlightLogoImg src={HanlightLogo} />
+              <Title>
+                {type === 'register' && '회원가입'}
+                {type === 'recovery' && key === 'id' && '아이디 찾기'}
+                {type === 'recovery' && key === 'password' && '비밀번호 찾기'}
+              </Title>
             </GreetingDiv>
             <Form
               component_type={type}
@@ -441,71 +412,58 @@ class PhoneCheckComponent extends React.Component<
             >
               <InputWrapper>
                 {type === 'register' ? (
-                  <InputGroup width="25.75rem" height="6.5rem">
-                    {!signKey.checked && (
-                      <WrongLabel>
-                        형식이 잘못되었거나 존재하지 않는 회원가입 키 입니다!
-                      </WrongLabel>
-                    )}
-                    <SignKeyInput
+                  <InputGroup>
+                    <InputName>회원가입 키</InputName>
+                    <Input
                       wrong={!signKey.checked}
-                      width="25.75rem"
-                      height="4.375rem"
-                      active={!!signKey.value}
                       value={signKey.value}
                       type="text"
                       placeholder="제공된 핀 번호를 입력해주세요"
                       name="signKey"
                       autoComplete="off"
                       onChange={handleInputs}
-                      colored={!!signKey.value}
                     />
+                    <WrongMessageWrapper>
+                      {!signKey.checked &&
+                        '회원사입 키가 올바른 형식이 아닙니다.'}
+                    </WrongMessageWrapper>
                   </InputGroup>
                 ) : (
                   <React.Fragment />
                 )}
                 {type === 'recovery' && key === 'password' ? (
-                  <InputGroup width="28.75rem" height="6.5rem">
-                    {!id.checked && (
-                      <WrongLabel>
-                        형식이 잘못되었거나 존재하지 않는 아이디 입니다!
-                      </WrongLabel>
-                    )}
-                    <IdInput
+                  <InputGroup>
+                    <InputName>아이디</InputName>
+                    <Input
                       wrong={!id.checked}
-                      width="25.75rem"
-                      height="4.375rem"
                       value={id.value}
                       name="id"
                       onChange={handleInputs}
                       placeholder="아이디"
                       autoComplete="off"
-                      active={!!id.value}
-                      colored={!!id.value}
                     />
+                    <WrongMessageWrapper>
+                      {!id.checked &&
+                        '형식이 잘못되었거나 존재하지 않는 아이디 입니다!'}
+                    </WrongMessageWrapper>
                   </InputGroup>
                 ) : (
                   <React.Fragment />
                 )}
-                <InputGroup width="25.75rem" height="6.5rem">
-                  {!tp.checked && (
-                    <WrongLabel>
-                      형식이 잘못되었거나 존재하지 않는 전화번호 입니다!
-                    </WrongLabel>
-                  )}
-                  <PhoneInput
+                <InputGroup>
+                  <InputName>전화번호</InputName>
+                  <Input
                     wrong={!tp.checked}
-                    width="25.75rem"
-                    height="4.375rem"
-                    active={!!tp.value}
                     value={tp.value}
                     type="tel"
                     name="tp"
                     autoComplete="off"
                     placeholder="휴대폰 번호를 - 빼고 입력해주세요."
                     onChange={handleInputs}
-                    colored={!!tp.value}
                   />
+                  <WrongMessageWrapper>
+                    {!tp.checked && '전화번호가 올바른 형식이 아닙니다.'}
+                  </WrongMessageWrapper>
                 </InputGroup>
               </InputWrapper>
               <TermsBtnWrapper>
@@ -524,8 +482,6 @@ class PhoneCheckComponent extends React.Component<
                   >
                     {(p: ChildrenParams) => (
                       <Button
-                        width="28.75rem"
-                        height="4.375rem"
                         active={
                           verifyPhoneStatus !== 'pending' &&
                           idRecoveryStatus !== 'pending' &&
@@ -533,14 +489,12 @@ class PhoneCheckComponent extends React.Component<
                         }
                         {...p}
                       >
-                        인증
+                        인증하기
                       </Button>
                     )}
                   </AccountKit>
                 ) : (
-                  <Button width="28.75rem" height="4.375rem" active={false}>
-                    인증
-                  </Button>
+                  <Button active={false}>인증하기</Button>
                 )}
               </TermsBtnWrapper>
             </Form>

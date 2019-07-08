@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 80%;
     max-width: unset;
   }
@@ -42,14 +42,14 @@ const TitleBar = styled.div`
     font-family: 'yg-jalnan';
     font-size: 2.25rem;
 
-    @media ${Device.tablet} {
+    @media ${Device.tabletL} {
       font-size: 1.82rem;
     }
     @media ${Device.mobileL} {
       font-size: 1rem;
     }
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 3.28rem;
     margin-top: 2.81rem;
   }
@@ -65,7 +65,7 @@ const DateBar = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11.58rem;
   }
   @media ${Device.mobileL} {
@@ -88,7 +88,7 @@ const Select = styled.select`
   font-size: 1rem;
   outline: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 5.56rem;
     height: 2.31rem;
     font-size: 1.125rem;
@@ -112,7 +112,7 @@ const CalendarWrapper = styled.div`
     font-family: 'Spoqa Han Sans';
   }
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     grid-template-columns: repeat(auto-fit, 11.125rem);
     grid-column-gap: 1.85rem;
   }
@@ -174,9 +174,9 @@ const DetailCalendarComponent: React.FC<
 
         return (
           <DetailCalendarItem
-            year={moment().format('YYYY')}
+            year={moment().get('year')}
             month={selectedMonth}
-            day={item.date}
+            date={item.date}
             contents={item.detail}
             today={today}
             key={i}

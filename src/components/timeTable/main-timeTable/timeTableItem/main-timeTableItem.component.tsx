@@ -35,7 +35,7 @@ const ItemBox = styled.div<BoxProps>`
     width: 13%;
     height: 10rem;
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 7.05rem;
     height: 8.45rem;
     margin-right: 1.07rem;
@@ -54,7 +54,7 @@ const Title = styled.span<{ active: boolean }>`
   font-weight: normal;
   font-size: 1.125rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 0.875rem;
   }
   @media ${Device.mobileL} {
@@ -67,7 +67,7 @@ const Content = styled.span<{ active: boolean }>`
   font-weight: bold;
   font-size: 1.75rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.25rem;
   }
   @media ${Device.mobileL} {

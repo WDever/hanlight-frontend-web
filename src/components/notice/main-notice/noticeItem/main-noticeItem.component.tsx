@@ -3,8 +3,8 @@ import * as React from 'react';
 import styled from 'styled-components';
 
 interface NoticeItemProps {
-  title: string;
-  date: string | number;
+  title?: string;
+  date?: string | number;
   read: boolean;
   onClick?: () => void;
 }
@@ -24,7 +24,7 @@ const ItemBox = styled.div<{ read: boolean }>`
     #ffffff 0%
   );
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     height: 3rem;
     border-radius: 0.75rem;
     background: linear-gradient(
@@ -63,7 +63,7 @@ const Date = styled.span`
   margin-right: 1rem;
   width: 16.6%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 0.82rem;
   }
   @media ${Device.mobileL} {

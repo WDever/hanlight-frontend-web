@@ -1,69 +1,80 @@
 import * as React from 'react';
 
-import Modal from 'components/modal';
+import ModalRecovery from 'components/modal/recovery';
 import {
   PwRecoveryMethod,
   PwRecoveryProps,
 } from 'container/user/recovery/pwRecovery';
 import { useInputs } from 'lib/hooks';
 import { password as passwordRegExp } from 'lib/RegExp/RegExp.json';
-import { Buttons, Device, Inputs, InputsGroup, WrongLabel } from 'lib/styles';
-import coloredCheckSvg from 'lib/svg/colored-check.svg';
-import coloredPwSvg from 'lib/svg/colored-password.svg';
-import disabledCheckSvg from 'lib/svg/disabled-check.svg';
-import disabledPwSvg from 'lib/svg/disabled-password.svg';
+import {
+  Button,
+  Device,
+  Input,
+  InputsGroup,
+  WrongMessageWrapper,
+} from 'lib/styles';
+import HanlightLogo from 'lib/svg/hanlight-logo.svg';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
 const { useState, useEffect } = React;
 
 const PwRecoveryWrapper = styled.div`
-  width: 38.125rem;
-  height: 32.25rem;
-  margin-top: 1rem;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 85%;
   }
 `;
 
 const GreetingDiv = styled.div`
   width: 100%;
+  margin-bottom: 2.56rem;
+
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  font-size: 1.5rem;
+  align-items: center;
+`;
+
+const HanlightLogoImg = styled.img`
+  width: 5.95rem;
+  margin-bottom: 0.75rem;
+
+  @media ${Device.mobileL} {
+    width: 2.95rem;
+  }
+`;
+
+const Title = styled.span`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
+  font-size: 1.5rem;
+  color: #000000;
 
   @media ${Device.mobileL} {
     font-size: 1.25rem;
   }
 `;
 
-const ColoredSpan = styled.span`
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: inherit;
-  color: #4470ff;
-`;
-
 const InputWrapper = styled.div`
   width: 100%;
-  height: 60%;
+  margin-bottom: 3.625rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     height: unset;
   }
 `;
+
+const InputGroup = styled(InputsGroup)``;
 
 const Form = styled.form`
   display: flex;
@@ -71,23 +82,21 @@ const Form = styled.form`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 70%;
 `;
 
-const PwInput = styled(Inputs)<{ colored: boolean }>`
-  background: url(${props => (props.colored ? coloredPwSvg : disabledPwSvg)})
-    no-repeat scroll 1.5rem;
-  padding-left: 3rem;
-`;
+const InputName = styled.span`
+  width: 100%;
+  max-width: 36.25rem;
+  margin-left: 0.25rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+  font-family: 'Spoqa Han Sans';
 
-const RePwInput = styled(Inputs)<{ colored: boolean }>`
-  background: url(${props =>
-      props.colored ? coloredCheckSvg : disabledCheckSvg})
-    no-repeat scroll 1.5rem;
-  padding-left: 3rem;
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+    margin-bottom: 0.25rem;
+  }
 `;
-
-const Button = styled(Buttons)``;
 
 const PwRecoveryComponent: React.FC<
   PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
@@ -147,13 +156,11 @@ const PwRecoveryComponent: React.FC<
     [],
   );
 
-  return accessToken.length ? (
+  return (
     <React.Fragment>
       {patchPasswordStatus === 'success' && (
-        <Modal
-          width="50.25rem"
-          height="24.625rem"
-          type="recoveryPw"
+        <ModalRecovery
+          type="password"
           click={() => {
             resetUser();
             history.push('/user/login');
@@ -163,48 +170,44 @@ const PwRecoveryComponent: React.FC<
 
       <PwRecoveryWrapper>
         <GreetingDiv>
-          <ColoredSpan>재설정</ColoredSpan>
-          할&nbsp;
-          <ColoredSpan>비밀번호</ColoredSpan>를 입력해주세요
+          <HanlightLogoImg src={HanlightLogo} alt="" />
+          <Title>비밀번호 재설정</Title>
         </GreetingDiv>
+
         <Form onSubmit={recoverySubmit}>
           <InputWrapper>
-            <InputsGroup width="28.75rem" height="6.5rem">
-              {!pwValidation && <WrongLabel>형식이 잘못되었습니다!</WrongLabel>}
-              <PwInput
+            <InputGroup>
+              <InputName>비밀번호</InputName>
+              <Input
                 type="password"
                 wrong={!pwValidation}
-                width="28.75rem"
-                height="4.375rem"
                 value={password}
                 name="password"
                 onChange={setInputs}
-                placeholder="새 비밀번호"
-                active={!!password}
-                colored={!!password}
+                placeholder="8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)"
               />
-            </InputsGroup>
-            <InputsGroup width="28.75rem" height="6.5rem">
-              {!rpwValidation && (
-                <WrongLabel>비밀번호가 일치하지 않습니다.</WrongLabel>
-              )}
-              <RePwInput
+              <WrongMessageWrapper>
+                {!pwValidation &&
+                  '8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)를 사용해주세요'}
+              </WrongMessageWrapper>
+            </InputGroup>
+            <InputGroup>
+              <InputName>비밀번호 확인</InputName>
+
+              <Input
                 type="password"
                 wrong={!rpwValidation}
-                width="28.75rem"
-                height="4.375rem"
                 value={rePassword}
                 name="rePassword"
                 onChange={setInputs}
                 placeholder="확인"
-                active={!!rePassword}
-                colored={!!rePassword}
               />
-            </InputsGroup>
+              <WrongMessageWrapper>
+                {!rpwValidation && '비밀번호가 일치하지 않습니다.'}
+              </WrongMessageWrapper>
+            </InputGroup>
           </InputWrapper>
           <Button
-            width="28.75rem"
-            height="4.375rem"
             active={
               !!(password.length && rePassword.length) &&
               patchPasswordStatus !== 'pending'
@@ -215,8 +218,6 @@ const PwRecoveryComponent: React.FC<
         </Form>
       </PwRecoveryWrapper>
     </React.Fragment>
-  ) : (
-    <></>
   );
 };
 

@@ -39,7 +39,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: flex;
     justify-content: space-between;
   }
@@ -50,7 +50,7 @@ const LeftWrapper = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 70%;
   }
   @media ${Device.mobileL} {
@@ -77,7 +77,7 @@ const Profile = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 3.25rem;
     margin-left: 1.25rem;
   }
@@ -99,7 +99,7 @@ const Name = styled.span`
   font-family: inherit;
   font-weight: bold;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.25rem;
   }
   @media ${Device.mobileL} {
@@ -108,7 +108,7 @@ const Name = styled.span`
 `;
 
 const UserType = styled.span`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
   }
   @media ${Device.mobileL} {
@@ -130,7 +130,7 @@ const ItemWrapper = styled.div`
   width: 66%;
   margin-top: 1rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-left: 1.375rem;
   }
   @media ${Device.mobileL} {
@@ -155,7 +155,7 @@ const ItemSpan = styled.span`
   font-family: inherit;
   font-weight: bold;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
     margin-left: 1.25rem;
   }
@@ -166,7 +166,7 @@ const ItemSpan = styled.span`
 `;
 
 const ItemIcon = styled.img`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 1.25rem;
   }
   @media ${Device.mobileL} {

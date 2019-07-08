@@ -29,7 +29,7 @@ const Wrapper = styled.div<{ today: boolean }>`
     width: 13.85rem;
     height: 13.85rem;
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11.85rem;
     height: 11.85rem;
     margin-right: 1.75rem;
@@ -75,7 +75,7 @@ const Content = styled.span<{ today: boolean }>`
   font-size: 1.5rem;
   color: #4470ff;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     color: ${props => (props.today ? '#ffffff' : '#4470ff')};
     font-size: 1.25rem;
   }
@@ -94,7 +94,7 @@ const DateWrapper = styled.div<{ today: boolean }>`
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 0.64rem;
     color: ${props => (props.today ? '#ffffff' : '#000000')};
   }
