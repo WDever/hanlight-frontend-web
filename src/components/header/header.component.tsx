@@ -15,7 +15,7 @@ const HeaderWrapper = styled.div`
   background-color: #ffffff;
   z-index: 10;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     position: relative;
     border-bottom: 1px solid #e9e9e9;
     box-shadow: none;
@@ -29,7 +29,7 @@ const InnerBox = styled.div`
   align-items: center;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 100%;
     justify-content: center;
   }
@@ -48,7 +48,7 @@ const BtnsWrapper = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;
@@ -94,7 +94,7 @@ const SpanBtn = styled.span`
 const MenuIcon = styled.div`
   display: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 1.25rem;
     height: 1rem;
     position: absolute;

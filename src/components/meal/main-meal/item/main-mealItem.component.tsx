@@ -33,7 +33,7 @@ const ItemWrapper = styled.div<MealItemProps>`
   @media ${Device.laptop} {
     width: 13.225rem;
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11rem;
     border-radius: 1rem;
     box-shadow: none;
@@ -55,7 +55,7 @@ const Day = styled.div`
   font-weight: bold;
   margin-left: 1.75rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-left: 1.13rem;
     margin-top: 1rem;
     font-size: 1.125rem;
@@ -76,7 +76,7 @@ const Items = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     line-height: 1.11;
     margin-left: 1.13rem;
     margin-top: 0.81rem;
@@ -95,7 +95,7 @@ const Date = styled.span`
   bottom: 1.125rem;
   font-size: 1rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;
@@ -114,7 +114,7 @@ const NoItem = styled.div`
   text-align: center;
   display: grid;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.75rem;
   }
   @media ${Device.mobileL} {

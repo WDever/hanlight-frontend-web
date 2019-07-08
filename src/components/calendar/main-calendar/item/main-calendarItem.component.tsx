@@ -29,7 +29,7 @@ const Wrapper = styled.div<{ today: boolean }>`
     width: 13.85rem;
     height: 13.85rem;
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11.85rem;
     height: 11.85rem;
     margin-right: 1.75rem;
@@ -50,15 +50,12 @@ const Wrapper = styled.div<{ today: boolean }>`
 
 const ContentsWrapper = styled.div`
   width: 100%;
-  height: 40%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-
-  @media ${Device.tablet} {
-    height: 46%;
-  }
+  line-height: 1;
 `;
 
 const Title = styled.span`
@@ -75,10 +72,10 @@ const Title = styled.span`
 const Content = styled.span<{ today: boolean }>`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  color: #4470ff;
   font-size: 1.5rem;
+  color: #4470ff;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     color: ${props => (props.today ? '#ffffff' : '#4470ff')};
     font-size: 1.25rem;
   }
@@ -89,14 +86,20 @@ const Content = styled.span<{ today: boolean }>`
 
 const DateWrapper = styled.div<{ today: boolean }>`
   color: #000000;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
+    margin-bottom: 0.64rem;
     color: ${props => (props.today ? '#ffffff' : '#000000')};
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 0.15rem;
   }
 `;
 

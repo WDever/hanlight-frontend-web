@@ -11,7 +11,7 @@ const Template = styled.div`
   align-items: center;
   margin-bottom: 7rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 3.4rem;
   }
 `;
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 71%;
     height: 23rem;
     flex-direction: column;

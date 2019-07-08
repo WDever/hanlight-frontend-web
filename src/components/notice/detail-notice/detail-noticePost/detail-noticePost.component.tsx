@@ -89,12 +89,9 @@ const BoardTitleDate = styled.p`
 `;
 
 const BoardContent = styled.div`
-  width: 40%;
-  margin-bottom: 7rem;
-`;
-
-const BoardContentString = styled.p`
-  word-break: break-word;
+  ul {
+    list-style: circle;
+  }
 `;
 
 export default class NoticePostComponent extends React.Component<
@@ -170,9 +167,9 @@ export default class NoticePostComponent extends React.Component<
               </BoardTitleDate>
             </BoardTitleWrapper>
             <BoardContent>
-              {(notice.content || '').split('\\n').map((val, i) => (
-                <BoardContentString key={i}>{val}</BoardContentString>
-              ))}
+              {notice.content && (
+                <div dangerouslySetInnerHTML={{ __html: notice.content }} />
+              )}
             </BoardContent>
           </Board>
         </Notice>

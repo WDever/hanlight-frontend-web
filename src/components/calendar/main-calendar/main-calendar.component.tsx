@@ -18,7 +18,7 @@ const CalendarWrapper = styled.div`
   align-items: center;
   z-index: 1;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: unset;
   }
 `;

@@ -13,7 +13,7 @@ const Template = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 5rem;
   }
 `;
@@ -26,7 +26,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 1.39rem;
   }
   @media ${Device.mobileL} {
@@ -38,7 +38,7 @@ const Title = styled.div`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
@@ -49,7 +49,7 @@ const Title = styled.div`
 const AllViewBtn = styled(Link)`
   display: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: unset;
     color: #6787ec;
     text-decoration: none;
@@ -72,7 +72,7 @@ const ListWrapper = styled.div`
   display: flex;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 95%;
     max-width: unset;
     margin-left: 5%;

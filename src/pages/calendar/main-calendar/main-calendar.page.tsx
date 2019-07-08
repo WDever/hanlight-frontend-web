@@ -11,7 +11,7 @@ const Template = styled.div`
   width: 100%;
   margin-bottom: 2.75rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     align-items: flex-start;
   }
 `;
@@ -25,7 +25,7 @@ const TitleWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 1.37rem;
     margin-left: 5%;
   }
@@ -38,7 +38,7 @@ const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
@@ -49,7 +49,7 @@ const Title = styled.span`
 const AllViewBtn = styled(Link)`
   display: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: unset;
     color: #6787ec;
     text-decoration: none;
@@ -70,7 +70,7 @@ const Wrapper = styled.div`
   max-width: 81rem;
   height: 100%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 95%;
     max-width: unset;
     margin-left: 5%;
