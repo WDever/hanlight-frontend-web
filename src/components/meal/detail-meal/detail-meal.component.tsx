@@ -41,12 +41,12 @@ const MealWeekString = styled.div`
   margin-bottom: 1.275rem;
 `;
 
-const MealWeekItems = styled.div<{ listLength: number }>`
+const MealWeekItems = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  width: ${({ listLength }) => listLength * 20}%;
+  width: 100%;
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -65,7 +65,7 @@ export default class DetailMealComponent extends React.Component<
     getMeal({
       accessToken: this.props.accessToken,
       sort: 'month',
-      month: moment().get('month') + 1,
+      month: moment().get('month'),
     });
   }
 
@@ -115,10 +115,6 @@ export default class DetailMealComponent extends React.Component<
             const todayBool = moment().get('date') === mealMoment.get('date');
             const day = days[mealMoment.get('d')];
             const week = Math.ceil(date / 7) - 1;
-            const weekLength =
-              mealMoment.get('week') - week * 7 < 5
-                ? mealMoment.get('week') - week * 7
-                : 5;
             if (mealIndex > 0) {
               MealList[week].push(
                 <DetailMealItem
@@ -127,7 +123,6 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
-                  listLength={weekLength}
                 />,
               );
             } else {
@@ -138,13 +133,30 @@ export default class DetailMealComponent extends React.Component<
                   date={dateString}
                   today={todayBool}
                   day={day}
-                  listLength={weekLength}
                 />,
               );
             }
           }
         });
     }
+
+    MealList.forEach((item, i, org) => {
+      if (item.length < 5) {
+        const InsertArr = Array(5 - item.length).fill(
+          <MealItemComponent
+            key={i}
+            type="detail"
+            item={'급식정보가\n없습니다'}
+            date={''}
+            today={false}
+            day={''}
+            visibility={false}
+          />,
+        );
+
+        org[i] = item.concat(InsertArr);
+      }
+    });
 
     return (
       <>
@@ -153,15 +165,14 @@ export default class DetailMealComponent extends React.Component<
             <Wrapper>
               <Title>급식 정보</Title>
               {MealList.map((_, i) => {
+                console.log(_);
                 if (MealList[i].length) {
                   return (
                     <MealWeekWrapper key={i}>
                       <MealWeekString>
                         {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                       </MealWeekString>
-                      <MealWeekItems listLength={MealList[i].length}>
-                        {MealList[i]}
-                      </MealWeekItems>
+                      <MealWeekItems>{MealList[i]}</MealWeekItems>
                     </MealWeekWrapper>
                   );
                 }
