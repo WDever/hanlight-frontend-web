@@ -11,6 +11,7 @@ import {
   GET_MEAL_WEEK_SUCCESS,
   GetMeal,
   GetMealOrder,
+  GetMealOrderParams,
   GetMealParams,
   SET_ERROR,
 } from '../action';
@@ -52,20 +53,19 @@ function* getMealApiSaga(action: GetMeal) {
   }
 }
 
-const getMealOrderApi = (data: string) =>
+const getMealOrderApi = (data: GetMealOrderParams) =>
   instance
     .get('/api/meal/order', {
       headers: {
-        access_token: data,
+        access_token: data.accessToken,
       },
     })
-    .then(res => res);
+    .then(res => res.data);
 
 function* getMealOrderApiSaga(action: GetMealOrder) {
   if (action.type) {
     try {
       const response = yield call(getMealOrderApi, action.payload);
-      console.log(response);
       yield put({ type: GET_MEAL_ORDER_SUCCESS, payload: response });
     } catch (e) {
       yield put({

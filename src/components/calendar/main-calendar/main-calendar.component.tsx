@@ -1,21 +1,26 @@
+import * as React from 'react';
+
 import {
   MainCalendarMethod,
   MainCalendarProps,
 } from 'container/calendar/main-calendar';
+import { Device } from 'lib/styles';
 import moment from 'moment';
-import * as React from 'react';
 import styled from 'styled-components';
-import CalendarItem from '../calendarItem';
+import MainCalendarItem from './item';
 
 const { useEffect } = React;
 
 const CalendarWrapper = styled.div`
-  max-width: 81rem;
-  width: 90%;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 1;
+
+  @media ${Device.tablet} {
+    width: unset;
+  }
 `;
 
 const MainCalendarComponent: React.FC<
@@ -30,20 +35,21 @@ const MainCalendarComponent: React.FC<
     getCalendarRecentStatus === 'success'
       ? calendarList.slice(0, 4).map((item, index) => {
           const today =
-            moment().format('YYYY.MM.DD') ===
-            moment(`${item.year}.${item.month}.${item.date}`).format(
-              'YYYY.MM.DD',
-            );
+            moment().format('l') ===
+            moment({
+              year: item.year,
+              month: item.month - 1,
+              date: item.date,
+            }).format('l');
 
           return (
-            <CalendarItem
+            <MainCalendarItem
               year={item.year}
               month={item.month}
               day={item.date}
               contents={item.detail}
               today={today}
               key={index}
-              type="main"
             />
           );
         })

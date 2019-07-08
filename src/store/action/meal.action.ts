@@ -17,6 +17,10 @@ export interface GetMealParams {
   month?: number;
 }
 
+export interface GetMealOrderParams {
+  accessToken: string;
+}
+
 export interface GetMealResType {
   success: boolean;
   data: {
@@ -60,7 +64,7 @@ export class GetMealMonthFailure implements Action {
 export class GetMealOrder implements Action {
   public readonly type = GET_MEAL_ORDER;
 
-  public constructor(public payload: string) {}
+  public constructor(public payload: GetMealOrderParams) {}
 }
 
 export class GetMealOrderSuccess implements Action {
@@ -75,7 +79,7 @@ export class GetMealOrderFailure implements Action {
 
 export const mealActions = {
   getMeal: createStandardAction(GET_MEAL)<GetMealParams>(),
-  getMealOrder: createStandardAction(GET_MEAL_ORDER)<string>(),
+  getMealOrder: createStandardAction(GET_MEAL_ORDER)<GetMealOrderParams>(),
 };
 
 export type mealReducerActions =

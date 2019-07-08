@@ -2,8 +2,10 @@ import * as React from 'react';
 
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
+import HeaderMenuContainer from 'container/header/menu';
 import { MainMethod, MainProps } from 'container/main';
 import ProfileContainer from 'container/profile';
+import { Device } from 'lib/styles';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
@@ -22,6 +24,10 @@ const { useEffect } = React;
 const Empty = styled.div`
   height: 3.75rem;
   width: 100%;
+
+  @media ${Device.tablet} {
+    display: none;
+  }
 `;
 
 const MainComponents = () => (
@@ -36,10 +42,12 @@ const MainComponents = () => (
 );
 
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
-  loginStatus,
   history,
-  resetUser,
   location,
+  match,
+  loginStatus,
+  resetUser,
+  toggleMenuStatus,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
@@ -49,10 +57,22 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   }, [loginStatus]);
 
   return loginStatus === 'success' ? (
-    <>
+    <div
+      style={
+        toggleMenuStatus
+          ? {
+              overflow: 'hidden',
+              position: 'fixed',
+              width: '100%',
+              height: '100%',
+            }
+          : undefined
+      }
+    >
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
+          {toggleMenuStatus && <HeaderMenuContainer logout={resetUser} />}
           <Empty />
         </>
       )}
@@ -67,7 +87,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/profile" component={ProfileContainer} />
         <Redirect to="/error" />
       </Switch>
-    </>
+    </div>
   ) : (
     <></>
   );

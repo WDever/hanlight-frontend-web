@@ -1,10 +1,10 @@
 import * as React from 'react';
 
-import MealItemComponent from 'components/meal/mealItem';
 import { DetailMealMethod, DetailMealProps } from 'container/meal/detail-meal';
 import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
+import DetailMealItem from './item';
 
 const Meal = styled.div`
   width: 100%;
@@ -117,9 +117,8 @@ export default class DetailMealComponent extends React.Component<
             const week = Math.ceil(date / 7) - 1;
             if (mealIndex > 0) {
               MealList[week].push(
-                <MealItemComponent
+                <DetailMealItem
                   key={date}
-                  type="detail"
                   item={meals[mealIndex].detail.split(',')}
                   date={dateString}
                   today={todayBool}
@@ -128,9 +127,8 @@ export default class DetailMealComponent extends React.Component<
               );
             } else {
               MealList[week].push(
-                <MealItemComponent
+                <DetailMealItem
                   key={date}
-                  type="detail"
                   item={'급식정보가\n없습니다'}
                   date={dateString}
                   today={todayBool}
