@@ -143,9 +143,8 @@ export default class DetailMealComponent extends React.Component<
     MealList.forEach((item, i, org) => {
       if (item.length < 5) {
         const InsertArr = Array(5 - item.length).fill(
-          <MealItemComponent
+          <DetailMealItem
             key={i}
-            type="detail"
             item={'급식정보가\n없습니다'}
             date={''}
             today={false}

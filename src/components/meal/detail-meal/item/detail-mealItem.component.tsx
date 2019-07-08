@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 interface MealItemProps {
   today: boolean;
   item: boolean;
-  listLength: number;
+  visibility: boolean;
 }
 
 const ItemWrapper = styled.div<MealItemProps>`
@@ -33,6 +33,7 @@ const ItemWrapper = styled.div<MealItemProps>`
   display: flex;
   flex-direction: column;
   justify-content: ${props => (props.item ? 'space-between' : 'flex-end')};
+  visibility: ${props => (props.visibility ? 'visible' : 'hidden')};
 `;
 
 const Day = styled.div`
@@ -85,9 +86,10 @@ const DetailMealItem: React.FC<{
   day: string;
   today: boolean;
   listLength?: number;
-}> = ({ item, date, day, today, listLength = 5 }) => {
+  visibility?: boolean
+}> = ({ item, date, day, today, listLength = 5, visibility = true }) => {
   return item instanceof Array ? (
-    <ItemWrapper item={true} today={today} listLength={listLength}>
+    <ItemWrapper item={true} today={today} visibility={visibility}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (
@@ -97,7 +99,7 @@ const DetailMealItem: React.FC<{
       <Date>{date}</Date>
     </ItemWrapper>
   ) : (
-    <ItemWrapper item={false} today={today} listLength={listLength}>
+    <ItemWrapper item={false} today={today} visibility={visibility}>
       <NoItemWrapper>
         <NoItems>
           {item.split('\n').map((line, i) => (
