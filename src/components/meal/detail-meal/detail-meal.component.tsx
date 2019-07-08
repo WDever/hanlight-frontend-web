@@ -50,7 +50,7 @@ const MealWeekItems = styled.div`
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
-const weeksString = ['첫', '두', '세', '네', '다섯', '여섯'];
+const weeksString = ['첫', '두', '세', '네', '다섯'];
 
 export default class DetailMealComponent extends React.Component<
   DetailMealProps & DetailMealMethod
@@ -174,9 +174,7 @@ export default class DetailMealComponent extends React.Component<
                       <MealWeekString>
                         {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                       </MealWeekString>
-                      <MealWeekItems>
-                        {MealList[i]}
-                      </MealWeekItems>
+                      <MealWeekItems>{MealList[i]}</MealWeekItems>
                     </MealWeekWrapper>
                   );
                 }
