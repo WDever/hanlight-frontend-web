@@ -26,6 +26,9 @@ const Title = styled.span`
   font-size: 1.8125rem;
   white-space: nowrap;
 
+  @media ${Device.tabletL} {
+    margin-top: 2.7rem;
+  }
   @media ${Device.mobileL} {
     margin-top: 1.81rem;
     margin-bottom: 1.25rem;
@@ -186,7 +189,7 @@ const DetailTimeTableComponent: React.FC<
         <thead>
           <tr>
             <Th now={false}>
-              <Img src={LogoSvg} alt="logo" />
+              <Img src={LogoSvg} alt='logo' />
             </Th>
             {days.map((day, j) => (
               <Th key={j} now={moment().get('d') === j + 1}>

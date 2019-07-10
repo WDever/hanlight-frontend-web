@@ -26,6 +26,10 @@ const Wrapper = styled.div`
 const Notice = styled.div`
   width: 80%;
   max-width: 74.65rem;
+
+  @media ${Device.mobileL} {
+    width: 90%;
+  }
 `;
 
 const BoardUpsideWrapper = styled.div`
@@ -36,6 +40,15 @@ const BoardUpsideWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: flex-end;
+
+  @media ${Device.tabletL} {
+    margin-top: 6.59rem;
+    margin-bottom: 2.01rem;
+  }
+  @media ${Device.mobileL} {
+    margin-top: 2.78rem;
+    margin-bottom: 1.03rem;
+  }
 `;
 
 const TitleWrapper = styled.div``;
@@ -44,13 +57,24 @@ const Title = styled.div`
   font-size: 1.75rem;
   font-family: 'yg-jalnan';
   font-weight: bold;
+  white-space: nowrap;
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
 `;
 
 const TitleSub = styled.div`
   font-size: 1rem;
+
+  @media ${Device.tabletS} {
+    display: none;
+  }
 `;
 
-const SearchWrapper = styled.div``;
+const SearchWrapper = styled.div`
+  display: flex;
+`;
 
 const SearchInput = styled.input`
   width: 12.23rem;
@@ -59,6 +83,17 @@ const SearchInput = styled.input`
   opacity: 0.5;
   border: solid 1px #bebebe;
   font-size: 1.12rem;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    max-width: 13.39rem;
+    line-height: 2.9rem;
+    border: solid 0.5px #bebebe;
+  }
+  @media ${Device.mobileL} {
+    width: 6.82rem;
+    line-height: 1.4rem;
+  }
 `;
 
 const SearchButton = styled.button`
@@ -73,6 +108,13 @@ const SearchButton = styled.button`
 
   @media ${Device.tabletL} {
     width: 3.64rem;
+    height: 3rem;
+    font-size: 1.1rem;
+  }
+  @media ${Device.mobileL} {
+    width: 1.85rem;
+    height: 1.5rem;
+    font-size: 0.63rem;
   }
 `;
 
@@ -82,59 +124,115 @@ const Table = styled.table`
   text-align: center;
   font-size: 0.875rem;
   table-layout: fixed;
+
+  @media ${Device.tabletL} {
+    font-size: 1.1rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.63rem;
+  }
 `;
 
 const PkCol = styled.col`
-  width: 5rem;
+  width: 4.525rem;
+
+  @media ${Device.mobileL} {
+    width: 2.875rem;
+  }
 `;
 
 const TitleCol = styled.col``;
 
 const DateCol = styled.col`
   width: 7rem;
+
+  @media ${Device.mobileL} {
+    width: 4rem;
+  }
 `;
 
 const Tr = styled.tr<{ head?: boolean }>`
   height: 3.5rem;
   border: ${props => (props.head ? 'none' : 'solid 1px #d1d1d1')};
   cursor: pointer;
+
+  th {
+    font-weight: normal;
+  }
+
+  @media ${Device.mobileL} {
+    height: 3rem;
+  }
 `;
 
 const TdTitle = styled.td<{ new: boolean }>`
   text-align: left;
   color: ${props => (props.new ? '#4470ff' : '#000000')};
+  vertical-align: middle;
+  white-space: nowrap;
 `;
 
-const TdTitleStr = styled.div<{ new: boolean }>`
-  max-width: ${props => (props.new ? '94%' : '100%')};
+const TdTitleStr = styled.span<{ new: boolean }>`
+  max-width: ${props => (props.new ? '90%' : '100%')};
+  line-height: calc(1.5rem + 2px);
   display: inline-block;
   vertical-align: middle;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  margin-left: 0.5rem;
+
+  @media ${Device.tabletL} {
+    max-width: ${props => (props.new ? '85%' : '100%')};
+  }
+  @media ${Device.tabletS} {
+    max-width: ${props => (props.new ? '80%' : '100%')};
+  }
+  @media ${Device.mobileL} {
+    line-height: calc(1rem + 2px);
+    margin-left: 0;
+  }
+  @media ${Device.mobileS} {
+    max-width: ${props => (props.new ? '84%' : '100%')};
+  }
 `;
 
 const TdTitleNew = styled.span`
   color: #ff4444;
+  line-height: calc(1.5rem + 2px);
   margin-left: 0.5rem;
+
+  @media ${Device.mobileL} {
+    line-height: calc(1rem + 2px);
+    margin-left: 0.25rem;
+  }
 `;
 
-const TdPk = styled.td`
-  width: 4.25rem;
-`;
+const TdPk = styled.td``;
 
 const TdPkString = styled.p`
   width: 3rem;
   line-height: 1.5rem;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   border: solid 1px #4470ff;
-  font-size: 0.75rem;
+  font-size: inherit;
   color: #003cff;
   margin: auto;
+
+  @media ${Device.mobileL} {
+    width: 1.6rem;
+    line-height: 1rem;
+    font-size: 0.5rem;
+  }
 `;
 
 const TdCreatedAt = styled.td`
   width: 8rem;
+  line-height: calc(1.5rem + 2px);
+
+  @media ${Device.mobileL} {
+    line-height: calc(1rem + 2px);
+  }
 `;
 
 const PageNavigationWrapper = styled.div`
@@ -153,6 +251,14 @@ const PageNavigation = styled.div`
 
   display: flex;
   justify-content: center;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    font-size: 1.1rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.63rem;
+  }
 `;
 
 const Page = styled(Link)<{ current: boolean }>`
