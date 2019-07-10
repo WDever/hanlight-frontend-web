@@ -189,7 +189,7 @@ const ValueInputWrapper = styled.div`
   }
 `;
 
-const ValueInput = styled.input`
+const ValueInput = styled.input<{ wrong: boolean }>`
   width: 100%;
   border: 0;
   border-radius: 0;
@@ -204,6 +204,10 @@ const ValueInput = styled.input`
   }
   @media ${Device.mobileL} {
     font-size: 0.75rem;
+  }
+
+  &:focus {
+    border-bottom: solid 1px ${({ wrong }) => (wrong ? '#4470ff' : '#ff0000')};
   }
 `;
 
@@ -286,11 +290,14 @@ const ProfileComponent: React.FC<
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      new RegExp(passwordRegExp).test(password) &&
-      patchPasswordStatus !== 'pending'
-    ) {
-      patchPassword({ accessToken, password });
+    if (new RegExp(passwordRegExp).test(password)) {
+      if (patchPasswordStatus !== 'pending') {
+        patchPassword({ accessToken, password });
+      }
+    } else {
+      alert(
+        '비밀번호는 8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)만을 사용하실 수 있습니다.',
+      );
     }
   };
 
@@ -334,9 +341,11 @@ const ProfileComponent: React.FC<
                 <form onSubmit={PatchPassword}>
                   <ValueInput
                     type='password'
+                    autoComplete='false'
                     placeholder='변경할 비밀번호를 입력해주세요.'
                     onChange={setPassword}
                     value={password}
+                    wrong={new RegExp(passwordRegExp).test(password)}
                   />
                   <ValueBtn>수정</ValueBtn>
                 </form>
@@ -349,6 +358,7 @@ const ProfileComponent: React.FC<
                   value={tp}
                   onChange={setTp}
                   placeholder='예) 01012345678'
+                  wrong={new RegExp(tpRegExp).test(tp)}
                 />
                 <AccountKit
                   appId='265056484381541'

@@ -159,6 +159,7 @@ const lunch = 12 * hour + 30 * minute;
 const home = 16 * hour + 10 * minute;
 
 const TimerComponent: React.FC = () => {
+  const [mount, setMount] = useState<boolean>(false);
   const [lunchHour, setLunchHour] = useState<string>('00');
   const [lunchMin, setLunchMin] = useState<string>('00');
   const [lunchSec, setLunchSec] = useState<string>('00');
@@ -185,6 +186,7 @@ const TimerComponent: React.FC = () => {
     setHomeHour(formatTwoDigit(Math.floor(remainHomeSum / 3600)));
     setHomeMin(formatTwoDigit(Math.floor((remainHomeSum % 3600) / 60)));
     setHomeSec(formatTwoDigit(Math.floor(remainHomeSum % 60)));
+    setMount(true);
   };
 
   useEffect(() => {
@@ -193,11 +195,11 @@ const TimerComponent: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
+  return mount ? (
     <>
       <LunchTimer>
         <Title>점심시간까지 남은시간</Title>
-        <LunchTimerImg src={LunchImgSvg} alt="" />
+        <LunchTimerImg src={LunchImgSvg} alt='' />
         <LunchContent>
           <Time>{lunchHour}</Time>시&emsp;
           <Time>{lunchMin}</Time>분&emsp;
@@ -206,7 +208,7 @@ const TimerComponent: React.FC = () => {
       </LunchTimer>
       <HomeTimer>
         <Title>종례시간까지 남은시간</Title>
-        <HomeTimerImg src={HomeImgSvg} alt="" />
+        <HomeTimerImg src={HomeImgSvg} alt='' />
         <HomeContent>
           <Time>{homeHour}</Time>시&emsp;
           <Time>{homeMin}</Time>분&emsp;
@@ -214,6 +216,8 @@ const TimerComponent: React.FC = () => {
         </HomeContent>
       </HomeTimer>
     </>
+  ) : (
+    <></>
   );
 };
 
