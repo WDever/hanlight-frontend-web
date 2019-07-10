@@ -5,6 +5,7 @@ import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
 import DetailMealItem from './item';
+import { Device } from 'lib/styles';
 
 const Meal = styled.div`
   width: 100%;
@@ -15,12 +16,12 @@ const Meal = styled.div`
 `;
 
 const Wrapper = styled.div`
+  width: 100%;
+  min-height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  max-width: 81rem;
-  width: 90%;
-  min-height: 100%;
 `;
 
 const Title = styled.div`
@@ -29,16 +30,53 @@ const Title = styled.div`
   font-size: 2.5rem;
   margin-bottom: 3.7rem;
   margin-top: 2.5rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.81rem;
+    margin-top: 2.6rem;
+    margin-bottom: 1.8rem;
+  }
 `;
 
 const MealWeekWrapper = styled.div`
-  height: 22rem;
+  width: 90%;
+  max-width: 81rem;
+  height: 100%;
   margin-bottom: 5rem;
+
+  @media ${Device.tabletL} {
+    width: 95%;
+    max-width: unset;
+    margin-left: 5%;
+    margin-bottom: 2.5rem;
+    position: relative;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+  &::-webkit-overflow-scrolling {
+    display: none;
+  }
 `;
 
 const MealWeekString = styled.div`
+  width: 90%;
+  max-width: 81rem;
   font-size: 1.5rem;
   margin-bottom: 1.275rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.19rem;
+    margin-bottom: 1.125rem;
+  }
 `;
 
 const MealWeekItems = styled.div`
@@ -47,6 +85,11 @@ const MealWeekItems = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 100%;
+
+  @media ${Device.tabletL} {
+    width: unset;
+    height: 100%;
+  }
 `;
 
 const days = ['일', '월', '화', '수', '목', '금', '토'];
@@ -160,12 +203,14 @@ export default class DetailMealComponent extends React.Component<
                 console.log(_);
                 if (MealList[i].length) {
                   return (
-                    <MealWeekWrapper key={i}>
+                    <>
                       <MealWeekString>
                         {moment().get('month') + 1}월 {weeksString[i]} 번째 주
                       </MealWeekString>
-                      <MealWeekItems>{MealList[i]}</MealWeekItems>
-                    </MealWeekWrapper>
+                      <MealWeekWrapper key={i}>
+                        <MealWeekItems>{MealList[i]}</MealWeekItems>
+                      </MealWeekWrapper>
+                    </>
                   );
                 }
                 return <></>;

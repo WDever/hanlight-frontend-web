@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import styled, { css } from 'styled-components';
+import { Device } from 'lib/styles';
 
 interface MealItemProps {
   today: boolean;
@@ -33,6 +34,15 @@ const ItemWrapper = styled.div<MealItemProps>`
   display: flex;
   flex-direction: column;
   justify-content: ${props => (props.item ? 'space-between' : 'flex-end')};
+
+  @media ${Device.tabletL} {
+    width: 11.625rem;
+    height: 15.625rem;
+    margin-right: 1.75rem;
+    box-shadow: none;
+    border-radius: 1rem;
+    border: ${({ today }) => !today && 'solid 1px #aaaaaa'};
+  }
 `;
 
 const Day = styled.div`
@@ -41,14 +51,24 @@ const Day = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
   margin-left: 1.75rem;
+
+  @media ${Device.tabletL} {
+    margin-left: 1.4rem;
+  }
 `;
 
 const Items = styled.div`
-  font-size: 1.1rem;
   height: 11rem;
+  font-size: 1.1rem;
+  line-height: 1.5;
   margin-left: 1.75rem;
   display: flex;
   flex-direction: column;
+
+  @media ${Device.tabletL} {
+    line-height: 1.2;
+    margin-left: 1.4rem;
+  }
 `;
 
 const Date = styled.span`
@@ -67,11 +87,11 @@ const NoItemWrapper = styled.div`
   height: calc(50% + 2.1875rem);
 `;
 
-const NoItems = styled.div`
+const NoItems = styled.div<{ today: boolean }>`
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
-  color: #414141;
+  color: ${({ today }) => (today ? '#ffffff' : '#414141')};
   display: grid;
 `;
 
@@ -99,7 +119,7 @@ const DetailMealItem: React.FC<{
   ) : (
     <ItemWrapper item={false} today={today} listLength={listLength}>
       <NoItemWrapper>
-        <NoItems>
+        <NoItems today={today}>
           {item.split('\n').map((line, i) => (
             <NoItem key={i}>{line}</NoItem>
           ))}
