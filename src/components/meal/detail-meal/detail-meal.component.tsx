@@ -65,7 +65,7 @@ export default class DetailMealComponent extends React.Component<
     getMeal({
       accessToken: this.props.accessToken,
       sort: 'month',
-      month: moment().get('month'),
+      month: moment().get('month') + 1,
     });
   }
 
@@ -140,21 +140,13 @@ export default class DetailMealComponent extends React.Component<
         });
     }
 
-    MealList.forEach((item, i, org) => {
+    MealList.forEach((item, i, arr) => {
       if (item.length < 5) {
         const InsertArr = Array(5 - item.length).fill(
-          <MealItemComponent
-            key={i}
-            type="detail"
-            item={'급식정보가\n없습니다'}
-            date={''}
-            today={false}
-            day={''}
-            visibility={false}
-          />,
+          <DetailMealItem key={i} item={''} date={''} today={false} day={''} />,
         );
 
-        org[i] = item.concat(InsertArr);
+        arr[i] = item.concat(InsertArr);
       }
     });
 
