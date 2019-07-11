@@ -43,6 +43,11 @@ const ItemWrapper = styled.div<MealItemProps>`
     border-radius: 1rem;
     border: ${({ today }) => !today && 'solid 1px #aaaaaa'};
   }
+  @media ${Device.mobileL} {
+    width: 7.3rem;
+    height: 9.43rem;
+    margin-right: 1.1rem;
+  }
 `;
 
 const Day = styled.div`
@@ -54,6 +59,11 @@ const Day = styled.div`
 
   @media ${Device.tabletL} {
     margin-left: 1.4rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+    margin-left: 0.875rem;
+    margin-top: 0.8rem;
   }
 `;
 
@@ -69,6 +79,10 @@ const Items = styled.div`
     line-height: 1.2;
     margin-left: 1.4rem;
   }
+  @media ${Device.mobileL} {
+    font-size: 0.625rem;
+    margin-left: 0.875rem;
+  }
 `;
 
 const Date = styled.span`
@@ -78,6 +92,12 @@ const Date = styled.span`
   margin-bottom: 1.125rem;
   font-size: 1rem;
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 0.625rem;
+    margin-right: 0.93rem;
+    margin-bottom: 0.71rem;
+  }
 `;
 
 const NoItemWrapper = styled.div`
@@ -85,6 +105,10 @@ const NoItemWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: calc(50% + 2.1875rem);
+
+  @media ${Device.mobileL} {
+    height: calc(50% + 1.375rem);
+  }
 `;
 
 const NoItems = styled.div<{ today: boolean }>`
@@ -93,6 +117,10 @@ const NoItems = styled.div<{ today: boolean }>`
   text-align: center;
   color: ${({ today }) => (today ? '#ffffff' : '#414141')};
   display: grid;
+
+  @media ${Device.mobileL} {
+    font-size: 0.9rem;
+  }
 `;
 
 const NoItem = styled.span`

@@ -37,6 +37,11 @@ const Title = styled.div`
     margin-top: 2.6rem;
     margin-bottom: 1.8rem;
   }
+  @media ${Device.mobileL} {
+    font-size: 1.25rem;
+    margin-top: 1.71rem;
+    margin-bottom: 1.14rem;
+  }
 `;
 
 const MealWeekWrapper = styled.div`
@@ -87,6 +92,10 @@ const MealWeekString = styled.div`
   @media ${Device.tabletL} {
     font-size: 1.19rem;
     margin-bottom: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+    margin-bottom: 0.7rem;
   }
 `;
 
