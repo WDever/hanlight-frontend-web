@@ -42,7 +42,7 @@ const BoardUpsideWrapper = styled.div`
   align-items: flex-end;
 
   @media ${Device.tabletL} {
-    margin-top: 6.59rem;
+    margin-top: 3.53rem;
     margin-bottom: 2.01rem;
   }
   @media ${Device.mobileL} {
