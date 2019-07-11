@@ -105,9 +105,10 @@ const DetailMealItem: React.FC<{
   day: string;
   today: boolean;
   listLength?: number;
-}> = ({ item, date, day, today, listLength = 5 }) => {
+  _ref?(ref: HTMLDivElement | null): void;
+}> = ({ _ref, item, date, day, today, listLength = 5 }) => {
   return item instanceof Array ? (
-    <ItemWrapper item={true} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={true} today={today} listLength={listLength}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (
@@ -117,7 +118,7 @@ const DetailMealItem: React.FC<{
       <Date>{date}</Date>
     </ItemWrapper>
   ) : (
-    <ItemWrapper item={false} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={false} today={today} listLength={listLength}>
       <NoItemWrapper>
         <NoItems today={today}>
           {item.split('\n').map((line, i) => (
