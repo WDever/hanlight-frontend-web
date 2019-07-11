@@ -16,7 +16,6 @@ const HeaderWrapper = styled.div`
   z-index: 10;
 
   @media ${Device.tabletL} {
-    position: relative;
     border-bottom: 1px solid #e9e9e9;
     box-shadow: none;
   }
@@ -133,40 +132,40 @@ const HeaderComponent: React.FC<
         <LogoImg
           onClick={() => history.push('/')}
           src={LogoSvg}
-          alt="Hanlight Logo"
+          alt='Hanlight Logo'
         />
         <BtnsWrapper>
           <StyledNavLink
             exact={true}
-            to="/notice"
+            to='/notice'
             active={location.pathname.includes('/notice')}
           >
             공지사항
           </StyledNavLink>
           <StyledNavLink
             exact={true}
-            to="/meal"
+            to='/meal'
             active={location.pathname.includes('/meal')}
           >
             급식
           </StyledNavLink>
           <StyledNavLink
             exact={true}
-            to="/timetable"
+            to='/timetable'
             active={location.pathname.includes('/timetable')}
           >
             시간표
           </StyledNavLink>
           <StyledNavLink
             exact={true}
-            to="/calendar"
+            to='/calendar'
             active={location.pathname.includes('/calendar')}
           >
             학사일정
           </StyledNavLink>
           <StyledNavLink
             exact={true}
-            to="/board"
+            to='/board'
             active={location.pathname.includes('/board')}
           >
             대나무숲
@@ -179,7 +178,7 @@ const HeaderComponent: React.FC<
           <SpanWrapper>
             <StyledNavLink
               exact={true}
-              to="/profile"
+              to='/profile'
               active={location.pathname.includes('/user/profile')}
             >
               정보 수정
