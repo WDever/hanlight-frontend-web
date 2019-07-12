@@ -6,7 +6,6 @@ import { Device } from 'lib/styles';
 interface MealItemProps {
   today: boolean;
   item: boolean;
-  visibility: boolean;
 }
 
 const ItemWrapper = styled.div<MealItemProps>`
@@ -136,7 +135,7 @@ const DetailMealItem: React.FC<{
   _ref?(ref: HTMLDivElement | null): void;
 }> = ({ _ref, item, date, day, today, listLength = 5 }) => {
   return item instanceof Array ? (
-    <ItemWrapper ref={_ref} item={true} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={true} today={today}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (
@@ -146,7 +145,7 @@ const DetailMealItem: React.FC<{
       <Date>{date}</Date>
     </ItemWrapper>
   ) : (
-    <ItemWrapper ref={_ref} item={false} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={false} today={today}>
       <NoItemWrapper>
         <NoItems today={today}>
           {item.split('\n').map((line, i) => (
