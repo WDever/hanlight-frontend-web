@@ -66,7 +66,7 @@ const ErrorComponent: React.FC<
 > = ({ onError, code, name, message, history, resetError }) => {
   const toPrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    history.goBack();
+    history.go(-2);
   };
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const ErrorComponent: React.FC<
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>
         </LeftWrapper>
-        <ErrorImg src={Illust} alt="" />
+        <ErrorImg src={Illust} alt='' />
       </Center>
     </Wrapper>
   );

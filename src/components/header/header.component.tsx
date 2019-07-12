@@ -16,7 +16,6 @@ const HeaderWrapper = styled.div`
   z-index: 10;
 
   @media ${Device.tabletL} {
-    position: relative;
     border-bottom: 1px solid #e9e9e9;
     box-shadow: none;
   }

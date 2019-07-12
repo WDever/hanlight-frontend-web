@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.651" height="16" viewBox="0 0 17.651 16">
+    <defs>
+        <style>
+            .cls-1{fill:#d77258}.cls-2{fill:#dedfe8}.cls-3{fill:#d14f4e}.cls-4{fill:#c9c7d7}
+        </style>
+    </defs>
+    <g id="XMLID_994_" transform="translate(0 -16.833)">
+        <path id="XMLID_998_" d="M0 32.833l8.825-16 8.825 16z" class="cls-1"/>
+        <path id="XMLID_43_" d="M155.908 144.6h-2.163l-.216-5.191h2.6z" class="cls-2" transform="translate(-146.002 -116.569)"/>
+        <path id="XMLID_40_" d="M0 0h2.163v1.73H0z" class="cls-2" transform="translate(7.744 29.332)"/>
+        <path id="XMLID_1003_" d="M180 16.833v16h8.825z" class="cls-3" transform="translate(-171.175)"/>
+        <path id="XMLID_1006_" d="M0 0h1.082v1.73H0z" class="cls-4" transform="translate(8.825 29.332)"/>
+        <path id="XMLID_1009_" d="M180 139.412v5.188h1.082l.216-5.191z" class="cls-4" transform="translate(-171.175 -116.569)"/>
+    </g>
+</svg>

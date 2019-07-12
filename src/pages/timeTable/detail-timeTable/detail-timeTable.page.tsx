@@ -21,6 +21,10 @@ const Background = styled.div`
   align-items: flex-end;
   z-index: -1;
   overflow-x: hidden;
+
+  @media ${Device.tabletL} {
+    display: none;
+  }
 `;
 
 const LeftImg = styled.img`
@@ -45,8 +49,8 @@ const DetailTimeTablePage = () => {
     <>
       <Template>
         <Background>
-          <LeftImg src={LeftSvg} alt="left illust" />
-          <RightImg src={RightSvg} alt="right illust" />
+          <LeftImg src={LeftSvg} alt='left illust' />
+          <RightImg src={RightSvg} alt='right illust' />
         </Background>
         <TimeTableContainer />
       </Template>

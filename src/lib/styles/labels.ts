@@ -10,6 +10,10 @@ export const WrongMessageWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
 
+  @media ${Device.tabletS} {
+    width: calc(100% - 2.5rem);
+    max-width: 36.25rem;
+  }
   @media ${Device.mobileL} {
     height: 0.93rem;
     font-size: 0.625rem;

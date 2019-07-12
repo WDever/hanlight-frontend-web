@@ -7,6 +7,7 @@ import {
 import moment from 'moment';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
+import { Device } from 'lib/styles';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -24,26 +25,58 @@ const Wrapper = styled.div`
 const Notice = styled.div`
   width: 80%;
   max-width: 74.65rem;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const BoardUpsideWrapper = styled.div`
+  width: 100%;
   margin-top: 2.5rem;
+  margin-bottom: 1.35rem;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: flex-end;
+  align-items: center;
+
+  @media ${Device.tabletL} {
+    width: 80%;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 1.56rem;
+    margin-top: 3.53rem;
+    border-bottom: solid 1px #707070;
+  }
+  @media ${Device.mobileL} {
+    width: 90%;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 0.78rem;
+    margin-top: 1.75rem;
+    margin-bottom: 1.53rem;
+  }
 `;
 
-const TitleWrapper = styled.div``;
-
-const Title = styled.div`
+const Title = styled.span`
   font-size: 1.75rem;
   font-family: 'yg-jalnan';
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
 `;
 
-const SearchWrapper = styled.div``;
+const SearchWrapper = styled.div`
+  @media ${Device.tabletL} {
+    display: none;
+  }
+`;
 
 const SearchInput = styled.input`
   width: 12.23rem;
@@ -65,32 +98,89 @@ const SearchButton = styled.button`
   cursor: pointer;
 `;
 
+const ListShortCut = styled.span`
+  display: none;
+
+  @media ${Device.tabletL} {
+    color: #000000;
+    font-family: 'Spoqa Han Sans';
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: unset;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
+`;
+
 const Board = styled.div`
   width: 100%;
+
+  @media ${Device.tabletL} {
+    width: 80%;
+  }
+  @media ${Device.mobileL} {
+    width: 90%;
+  }
 `;
 
 const BoardTitleWrapper = styled.div`
   width: 100%;
   font-size: 1.125rem;
   border-bottom: solid 1px #000000;
-  margin-bottom: 2.625rem;
+  margin-bottom: 2.61rem;
+  padding-bottom: 0.83rem;
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media ${Device.tabletL} {
+    padding-bottom: 0.52rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1.98rem
+    padding-bottom: 0.4rem;
+  }
 `;
 
-const BoardTitle = styled.p`
+const BoardTitle = styled.span`
   font-weight: bold;
+  font-size: inherit;
+
+  @media ${Device.tabletL} {
+    font-size: 1.25rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.82rem;
+  }
 `;
 
-const BoardTitleDate = styled.p`
+const BoardTitleDate = styled.span`
   color: #565656;
+  margin-left: 0.25rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.68rem;
+  }
 `;
 
 const BoardContent = styled.div`
+  font-size: 1rem;
+  line-height: 1.5;
   ul {
     list-style: circle;
+  }
+  p {
+    margin: 0;
+  }
+
+  @media ${Device.tabletL} {
+    font-size: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
   }
 `;
 
@@ -151,13 +241,14 @@ export default class NoticePostComponent extends React.Component<
       <Wrapper>
         <Notice>
           <BoardUpsideWrapper>
-            <TitleWrapper>
-              <Title>공지사항</Title>
-            </TitleWrapper>
+            <Title>공지사항</Title>
             <SearchWrapper>
               <SearchInput onChange={this.handleInput} />
               <SearchButton onClick={this.search}>검색</SearchButton>
             </SearchWrapper>
+            <ListShortCut onClick={() => this.props.history.push('/notice')}>
+              목록 >
+            </ListShortCut>
           </BoardUpsideWrapper>
           <Board>
             <BoardTitleWrapper>

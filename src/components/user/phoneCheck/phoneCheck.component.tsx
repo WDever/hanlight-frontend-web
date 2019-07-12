@@ -425,7 +425,7 @@ class PhoneCheckComponent extends React.Component<
                     />
                     <WrongMessageWrapper>
                       {!signKey.checked &&
-                        '회원사입 키가 올바른 형식이 아닙니다.'}
+                        '회원가입 키가 올바른 형식이 아닙니다.'}
                     </WrongMessageWrapper>
                   </InputGroup>
                 ) : (

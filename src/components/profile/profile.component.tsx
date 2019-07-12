@@ -17,12 +17,13 @@ import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
 import uuid from 'uuid';
+import { Device } from 'lib/styles';
 
 const { useEffect } = React;
 
 const Wrapper = styled.div`
   width: 100%;
-  min-height: 100%;
+  min-height: calc(100vh);
   background-color: #e9ebee;
   padding-top: 1.5rem;
   font-family: 'Spoqa Han Sans';
@@ -30,6 +31,11 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+
+  @media ${Device.tabletS} {
+    padding: 0;
+    background-color: #ffffff;
+  }
 `;
 
 const ProfileWrapper = styled.div`
@@ -40,11 +46,23 @@ const ProfileWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  @media ${Device.tabletS} {
+    width: 100%;
+    height: 100%;
+    border: none;
+    box-shadow: none;
+  }
 `;
 
 const Profile = styled.div`
   width: 42.75rem;
   height: 42.125rem;
+
+  @media ${Device.tabletS} {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const TopWrapper = styled.div`
@@ -53,6 +71,13 @@ const TopWrapper = styled.div`
 
   display: flex;
   justify-content: center;
+
+  @media ${Device.tabletS} {
+    border-bottom: 2px solid #dadada;
+  }
+  @media ${Device.mobileL} {
+    height: 8.25rem;
+  }
 `;
 
 const Top = styled.div`
@@ -64,22 +89,45 @@ const Top = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.tabletS} {
+    height: unset;
+    margin: 0;
+  }
 `;
 
 const TopImg = styled.img`
   width: 7.5rem;
   height: 7.5rem;
+
+  @media ${Device.tabletS} {
+    width: 6.25rem;
+    height: 6.25rem;
+  }
+  @media ${Device.mobileL} {
+    width: 4rem;
+    height: 4rem;
+  }
 `;
 
 const TopName = styled.span`
   font-family: inherit;
   font-size: 1.25rem;
+
+  @media ${Device.tabletS} {
+    font-size: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+  }
 `;
 
 const Bottom = styled.div`
   padding: 2rem;
-  width: calc(100% - 4rem);
-  height: calc(100% - 4rem - 14rem);
+
+  @media ${Device.tabletS} {
+    padding: 2.2rem;
+  }
 `;
 
 const Title = styled.span`
@@ -87,9 +135,17 @@ const Title = styled.span`
   font-size: 1.125rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
+
+  @media ${Device.tabletS} {
+    font-size: 1.25rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+  }
 `;
 
 const Row = styled.div`
+  width: 100%;
   margin-top: 1.5rem;
 
   display: flex;
@@ -101,12 +157,26 @@ const AttributeSpan = styled.span`
   margin-bottom: 0.25rem;
   font-family: inherit;
   font-size: 0.875rem;
+
+  @media ${Device.tabletS} {
+    font-size: 1rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.813rem;
+  }
 `;
 
 const ValueSpan = styled.span`
   font-size: 0.82rem;
   font-family: inherit;
   color: #000000;
+
+  @media ${Device.tabletS} {
+    font-size: 0.93rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
 `;
 
 const ValueInputWrapper = styled.div`
@@ -119,13 +189,26 @@ const ValueInputWrapper = styled.div`
   }
 `;
 
-const ValueInput = styled.input`
-  width: 35.37rem;
+const ValueInput = styled.input<{ wrong: boolean }>`
+  width: 100%;
   border: 0;
+  border-radius: 0;
   border-bottom: solid 1px #c7c7c7;
+  padding: 0;
   font-size: 0.82rem;
   font-family: inherit;
   color: #000000;
+
+  @media ${Device.tabletS} {
+    font-size: 0.93rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
+
+  &:focus {
+    border-bottom: solid 1px ${({ wrong }) => (wrong ? '#4470ff' : '#ff0000')};
+  }
 `;
 
 const ValueBtn = styled.button`
@@ -134,12 +217,25 @@ const ValueBtn = styled.button`
   margin-left: 0.8rem;
   padding: 0;
   border: 0;
-  border-radius: 8px;
+  border-radius: 0.5rem;
   background-color: #4470ff;
   color: #ffffff;
   font-size: 0.82rem;
   font-family: inherit;
+  font-weight: bold;
   cursor: pointer;
+
+  @media ${Device.tabletS} {
+    width: 4rem;
+    height: 2.25rem;
+    font-size: 0.875rem;
+  }
+  @media ${Device.mobileL} {
+    width: 3rem;
+    height: 1.5rem;
+    margin-left: 0.6rem;
+    font-size: 0.69rem;
+  }
 `;
 
 const ProfileComponent: React.FC<
@@ -194,11 +290,14 @@ const ProfileComponent: React.FC<
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (
-      new RegExp(passwordRegExp).test(password) &&
-      patchPasswordStatus !== 'pending'
-    ) {
-      patchPassword({ accessToken, password });
+    if (new RegExp(passwordRegExp).test(password)) {
+      if (patchPasswordStatus !== 'pending') {
+        patchPassword({ accessToken, password });
+      }
+    } else {
+      alert(
+        '비밀번호는 8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)만을 사용하실 수 있습니다.',
+      );
     }
   };
 
@@ -216,7 +315,7 @@ const ProfileComponent: React.FC<
         <Profile>
           <TopWrapper>
             <Top>
-              <TopImg src={DefaultProfileImg} alt="" />
+              <TopImg src={DefaultProfileImg} alt='' />
               <TopName>{name}</TopName>
             </Top>
           </TopWrapper>
@@ -241,10 +340,12 @@ const ProfileComponent: React.FC<
               <ValueInputWrapper>
                 <form onSubmit={PatchPassword}>
                   <ValueInput
-                    type="password"
-                    placeholder="변경할 비밀번호를 입력해주세요."
+                    type='password'
+                    autoComplete='false'
+                    placeholder='변경할 비밀번호를 입력해주세요.'
                     onChange={setPassword}
                     value={password}
+                    wrong={new RegExp(passwordRegExp).test(password)}
                   />
                   <ValueBtn>수정</ValueBtn>
                 </form>
@@ -256,16 +357,17 @@ const ProfileComponent: React.FC<
                 <ValueInput
                   value={tp}
                   onChange={setTp}
-                  placeholder="예) 01012345678"
+                  placeholder='예) 01012345678'
+                  wrong={new RegExp(tpRegExp).test(tp)}
                 />
                 <AccountKit
-                  appId="265056484381541"
+                  appId='265056484381541'
                   csrf={uuid.v4()}
                   debug={true}
-                  version="v1.1"
+                  version='v1.1'
                   phoneNumber={tp}
                   onResponse={FbResponseHandle}
-                  language="ko_KR"
+                  language='ko_KR'
                   validation={() =>
                     patchPasswordStatus !== 'pending' &&
                     new RegExp(tpRegExp).test(tp)
