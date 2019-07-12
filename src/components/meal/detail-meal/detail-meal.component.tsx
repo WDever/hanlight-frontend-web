@@ -1,12 +1,11 @@
 import * as React from 'react';
-import ReactDOM from 'react-dom';
 
 import { DetailMealMethod, DetailMealProps } from 'container/meal/detail-meal';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import { MealItem } from 'store';
 import styled from 'styled-components';
 import DetailMealItem from './item';
-import { Device } from 'lib/styles';
 
 const Meal = styled.div`
   width: 100%;
