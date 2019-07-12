@@ -417,10 +417,10 @@ class PhoneCheckComponent extends React.Component<
                     <Input
                       wrong={!signKey.checked}
                       value={signKey.value}
-                      type='text'
-                      placeholder='제공된 핀 번호를 입력해주세요'
-                      name='signKey'
-                      autoComplete='off'
+                      type="text"
+                      placeholder="제공된 핀 번호를 입력해주세요"
+                      name="signKey"
+                      autoComplete="off"
                       onChange={handleInputs}
                     />
                     <WrongMessageWrapper>
@@ -437,10 +437,10 @@ class PhoneCheckComponent extends React.Component<
                     <Input
                       wrong={!id.checked}
                       value={id.value}
-                      name='id'
+                      name="id"
                       onChange={handleInputs}
-                      placeholder='아이디'
-                      autoComplete='off'
+                      placeholder="아이디"
+                      autoComplete="off"
                     />
                     <WrongMessageWrapper>
                       {!id.checked &&
@@ -455,10 +455,10 @@ class PhoneCheckComponent extends React.Component<
                   <Input
                     wrong={!tp.checked}
                     value={tp.value}
-                    type='tel'
-                    name='tp'
-                    autoComplete='off'
-                    placeholder='휴대폰 번호를 - 빼고 입력해주세요.'
+                    type="tel"
+                    name="tp"
+                    autoComplete="off"
+                    placeholder="휴대폰 번호를 - 빼고 입력해주세요."
                     onChange={handleInputs}
                   />
                   <WrongMessageWrapper>
@@ -469,13 +469,13 @@ class PhoneCheckComponent extends React.Component<
               <TermsBtnWrapper>
                 {typingCheck() ? (
                   <AccountKit
-                    appId='265056484381541'
+                    appId="265056484381541"
                     csrf={uuid.v4()}
                     debug={true}
-                    version='v1.1'
+                    version="v1.1"
                     phoneNumber={tp.value}
                     onResponse={handleFbResponse}
-                    language='ko_KR'
+                    language="ko_KR"
                     validation={() =>
                       query.validation && pendingCheck() && handleChecked()
                     }
