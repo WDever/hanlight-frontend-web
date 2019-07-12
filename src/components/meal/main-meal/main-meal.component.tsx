@@ -15,7 +15,7 @@ const ListWrapper = styled.div`
   width: 100%;
   height: 20.1875rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: unset;
     padding: 2px;
     height: 14.17rem;
@@ -44,7 +44,7 @@ const MoreBox = styled.div`
   @media ${Device.laptop} {
     width: 13.225rem;
   }
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 11rem;
     border-radius: 1rem;
     border: solid 1px #e6e6e6;
@@ -62,7 +62,7 @@ const OrderWrapper = styled.div`
   text-align: center;
   margin-top: 2.75rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.25rem;
     margin-top: 1rem;
   }
@@ -78,7 +78,7 @@ const Order = styled.div`
   font-family: inherit;
   font-weight: normal;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
   }
   @media ${Device.mobileL} {

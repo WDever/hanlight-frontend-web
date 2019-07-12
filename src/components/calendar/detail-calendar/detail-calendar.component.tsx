@@ -13,12 +13,21 @@ import DetailCalendarItem from './item';
 const { useEffect, useState } = React;
 
 const Wrapper = styled.div`
+  width: 90%;
+  max-width: 81rem;
+  min-height: 100%;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  max-width: 81rem;
-  width: 90%;
-  min-height: 100%;
+
+  @media ${Device.tabletL} {
+    width: 80%;
+    max-width: unset;
+  }
+  @media ${Device.mobileL} {
+    width: 90%;
+  }
 `;
 
 const TitleBar = styled.div`
@@ -32,6 +41,21 @@ const TitleBar = styled.div`
   span {
     font-family: 'yg-jalnan';
     font-size: 2.25rem;
+
+    @media ${Device.tabletL} {
+      font-size: 1.82rem;
+    }
+    @media ${Device.mobileL} {
+      font-size: 1rem;
+    }
+  }
+  @media ${Device.tabletL} {
+    margin-bottom: 3.28rem;
+    margin-top: 2.81rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1.75rem;
+    margin-top: 1.75rem;
   }
 `;
 
@@ -41,9 +65,11 @@ const DateBar = styled.div`
   justify-content: space-between;
   align-items: flex-end;
 
-  span {
-    font-family: 'yg-jalnan';
-    font-size: 1.125rem;
+  @media ${Device.tabletL} {
+    width: 11.58rem;
+  }
+  @media ${Device.mobileL} {
+    width: 6.125rem;
   }
 `;
 
@@ -61,6 +87,17 @@ const Select = styled.select`
   text-align-last: center;
   font-size: 1rem;
   outline: none;
+
+  @media ${Device.tabletL} {
+    width: 5.56rem;
+    height: 2.31rem;
+    font-size: 1.125rem;
+  }
+  @media ${Device.mobileL} {
+    width: 3rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const CalendarWrapper = styled.div`
@@ -75,6 +112,10 @@ const CalendarWrapper = styled.div`
     font-family: 'Spoqa Han Sans';
   }
 
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fit, 11.125rem);
+    grid-column-gap: 1.85rem;
+  }
   @media ${Device.mobileL} {
     grid-template-columns: repeat(auto-fit, 6rem);
     grid-column-gap: 0.25rem;
@@ -133,9 +174,9 @@ const DetailCalendarComponent: React.FC<
 
         return (
           <DetailCalendarItem
-            year={moment().format('YYYY')}
+            year={moment().get('year')}
             month={selectedMonth}
-            day={item.date}
+            date={item.date}
             contents={item.detail}
             today={today}
             key={i}

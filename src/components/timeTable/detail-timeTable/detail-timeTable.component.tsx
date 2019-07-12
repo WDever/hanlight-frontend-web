@@ -2,6 +2,7 @@ import {
   DetailTimeTableMethod,
   DetailTimeTableProps,
 } from 'container/timeTable/detail-timeTable';
+import { Device } from 'lib/styles';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import moment from 'moment';
 import * as React from 'react';
@@ -19,12 +20,20 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.span`
-  font-size: 1.8125rem;
   margin-top: 5.2rem;
   margin-bottom: 2.775rem;
   font-family: 'yg-jalnan';
   font-size: 1.8125rem;
   white-space: nowrap;
+
+  @media ${Device.tabletL} {
+    margin-top: 2.7rem;
+  }
+  @media ${Device.mobileL} {
+    margin-top: 1.81rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+  }
 `;
 
 const Table = styled.table`
@@ -35,6 +44,10 @@ const Table = styled.table`
   border-spacing: 0.35rem 0.1px;
   font-size: 1.2rem;
   font-family: 'Spoqa Han Sans';
+
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
+  }
 `;
 
 const Th = styled.th<{ now: boolean }>`
@@ -42,6 +55,11 @@ const Th = styled.th<{ now: boolean }>`
   height: 6.2rem;
   border: solid 1px #f3efef;
   background-color: ${props => (props.now ? '#e2f2ff' : 'none')};
+
+  @media ${Device.mobileL} {
+    width: 3.23rem;
+    height: 2.73rem;
+  }
 `;
 
 const Td = styled.td<{ now: boolean }>`
@@ -51,16 +69,24 @@ const Td = styled.td<{ now: boolean }>`
   background-color: ${props => (props.now ? '#52a9ff' : 'none')};
   color: ${props => (props.now ? '#ffffff' : 'initial')};
   font-weight: ${props => (props.now ? 'bold' : 'none')};
+
+  @media ${Device.mobileL} {
+    width: 3.23rem;
+    height: 2.73rem;
+  }
 `;
 
 const Time = styled.span`
   font-size: 0.6875rem;
   font-weight: normal;
+
+  @media ${Device.mobileL} {
+    display: none;
+  }
 `;
 
 const Img = styled.img`
-  width: 3.8rem;
-  height: 2.0125rem;
+  width: 65%;
 `;
 
 const hour = 3600;
@@ -163,7 +189,7 @@ const DetailTimeTableComponent: React.FC<
         <thead>
           <tr>
             <Th now={false}>
-              <Img src={LogoSvg} alt="logo" />
+              <Img src={LogoSvg} alt='logo' />
             </Th>
             {days.map((day, j) => (
               <Th key={j} now={moment().get('d') === j + 1}>

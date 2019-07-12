@@ -27,7 +27,7 @@ const TitleWrapper = styled.div`
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-top: 1.626rem;
     margin-bottom: 0;
   }
@@ -37,7 +37,7 @@ const Title = styled.span`
   font-family: 'yg-jalnan';
   font-size: 1.875rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.5rem;
   }
   @media ${Device.mobileL} {
@@ -48,7 +48,7 @@ const Title = styled.span`
 const MobileBtn = styled(Link)`
   display: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: unset;
     color: #6787ec;
     text-decoration: none;
@@ -71,7 +71,7 @@ const Separator = styled.div`
   display: inline-flex;
   flex-direction: column;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 100%;
     max-width: unset;
   }
@@ -83,7 +83,7 @@ const BtnWrapper = styled.div`
   display: inline-flex;
   justify-content: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;
@@ -94,7 +94,7 @@ const NoticeListWrapper = styled.div`
   width: 100%;
   margin-bottom: 5rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 0;
   }
 `;
@@ -107,7 +107,7 @@ const InnerWrapper = styled.div<{ length: number }>`
   align-items: center;
   justify-content: space-around;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     height: 19rem;
   }
   @media ${Device.mobileL} {
@@ -152,27 +152,33 @@ class MainNoticeComponent extends React.Component<
   }
 
   public render() {
-    const NoticeList = this.props.noticeList.slice(0, 5).map(item => {
-      const date =
-        moment(item.createdAt).format('YYYY.MM.DD') ===
-        moment().format('YYYY.MM.DD')
-          ? moment(item.createdAt).format('H') === moment().format('H')
-            ? `${Number(moment().format('m')) -
-                Number(moment(item.createdAt).format('m'))}분전`
-            : `${Number(moment().format('H')) -
-                Number(moment(item.createdAt).format('H'))}시간전`
-          : moment(item.createdAt).format('YYYY.MM.DD');
+    const NoticeList = Array(5)
+      .fill(null)
+      .map((_, i) => {
+        if (this.props.noticeList[i]) {
+          const item = this.props.noticeList[i];
+          const date =
+            moment(item.createdAt).format('l') === moment().format('l')
+              ? moment(item.createdAt).get('hour') === moment().get('hour')
+                ? `${moment().get('minute') -
+                    moment(item.createdAt).get('minute')}분전`
+                : `${moment().get('hour') -
+                    moment(item.createdAt).get('hour')}시간전`
+              : moment(item.createdAt).format('l');
 
-      return (
-        <NoticeItem
-          title={item.title}
-          date={date}
-          read={!!item.read}
-          key={item.pk}
-          onClick={() => this.props.history.push(`/notice/${item.pk}`)}
-        />
-      );
-    });
+          return (
+            <NoticeItem
+              title={item.title}
+              date={date}
+              read={!!item.read}
+              key={i}
+              onClick={() => this.props.history.push(`/notice/${item.pk}`)}
+            />
+          );
+        } else {
+          return <NoticeItem read={false} key={i} />;
+        }
+      });
     return (
       <NoticeWrapper>
         <Separator>

@@ -17,7 +17,7 @@ const Template = styled.div`
   flex-direction: column;
   align-items: center;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     align-items: flex-start;
     margin-bottom: 5rem;
   }
@@ -36,7 +36,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: space-between;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-left: 5%;
     margin-bottom: 1.125rem;
     font-size: 1.5rem;
@@ -50,7 +50,7 @@ const TitleWrapper = styled.div`
 const TitleDay = styled.span`
   color: #4470ff;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;
@@ -58,7 +58,7 @@ const TitleDay = styled.span`
 const AllViewBtn = styled(Link)`
   display: none;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: unset;
     color: #6787ec;
     text-decoration: none;
@@ -79,7 +79,7 @@ const ListWrapper = styled.div`
   max-width: 81rem;
   height: 100%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 95%;
     max-width: unset;
     margin-left: 5%;

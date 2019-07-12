@@ -11,7 +11,7 @@ const MainNoticeTemplate = styled.div`
   align-items: flex-start;
   margin-bottom: 3rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-bottom: 4rem;
   }
 `;

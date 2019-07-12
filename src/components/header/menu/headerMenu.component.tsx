@@ -19,6 +19,7 @@ import LogoutIcon from 'lib/svg/logout-icon.svg';
 import MealIcon from 'lib/svg/meal-icon.svg';
 import TimetableIcon from 'lib/svg/timetable-icon.svg';
 import { RouteComponentProps } from 'react-router';
+import NoticeIcon from 'lib/svg/notice-icon.svg';
 
 const Wrapper = styled.div`
   display: none;
@@ -39,7 +40,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     display: flex;
     justify-content: space-between;
   }
@@ -50,7 +51,7 @@ const LeftWrapper = styled.div`
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 70%;
   }
   @media ${Device.mobileL} {
@@ -77,7 +78,7 @@ const Profile = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 3.25rem;
     margin-left: 1.25rem;
   }
@@ -99,7 +100,7 @@ const Name = styled.span`
   font-family: inherit;
   font-weight: bold;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.25rem;
   }
   @media ${Device.mobileL} {
@@ -108,7 +109,7 @@ const Name = styled.span`
 `;
 
 const UserType = styled.span`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
   }
   @media ${Device.mobileL} {
@@ -129,8 +130,10 @@ const CircleIcon = styled.img`
 const ItemWrapper = styled.div`
   width: 66%;
   margin-top: 1rem;
+  position: absolute;
+  z-index: 1;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     margin-left: 1.375rem;
   }
   @media ${Device.mobileL} {
@@ -145,7 +148,7 @@ const Item = styled.button`
   margin: 0;
   border: 0;
   border-bottom: solid 0.5px #e8e8e8;
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0);
 
   display: flex;
   align-items: center;
@@ -155,7 +158,7 @@ const ItemSpan = styled.span`
   font-family: inherit;
   font-weight: bold;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
     margin-left: 1.25rem;
   }
@@ -166,7 +169,7 @@ const ItemSpan = styled.span`
 `;
 
 const ItemIcon = styled.img`
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 1.25rem;
   }
   @media ${Device.mobileL} {
@@ -213,7 +216,7 @@ const HeaderMenuComponent: React.FC<
       <LeftWrapper>
         <Upside>
           <Profile>
-            <ProfileImg src={DefaultProfileImg} alt="" />
+            <ProfileImg src={DefaultProfileImg} alt='' />
             <Info>
               <Name>{name}님, 안녕하세요 ✨</Name>
               <UserType>{userType()}</UserType>
@@ -222,41 +225,45 @@ const HeaderMenuComponent: React.FC<
           <CircleIcon
             src={Circle1}
             style={{ top: '-50%', left: '54%' }}
-            alt=""
+            alt=''
           />
-          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt="" />
+          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt='' />
         </Upside>
         <DownSide>
           <ItemWrapper>
-            <Item name="timetable" onClick={handleShortCut}>
-              <ItemIcon src={TimetableIcon} alt="" />
+            <Item name='notice' onClick={handleShortCut}>
+              <ItemIcon src={NoticeIcon} alt='' />
+              <ItemSpan>공지사항</ItemSpan>
+            </Item>
+            <Item name='timetable' onClick={handleShortCut}>
+              <ItemIcon src={TimetableIcon} alt='' />
               <ItemSpan>시간표</ItemSpan>
             </Item>
-            <Item name="calendar" onClick={handleShortCut}>
-              <ItemIcon src={CalendarIcon} alt="" />
+            <Item name='calendar' onClick={handleShortCut}>
+              <ItemIcon src={CalendarIcon} alt='' />
               <ItemSpan>학사일정</ItemSpan>
             </Item>
-            <Item name="board" onClick={handleShortCut}>
-              <ItemIcon src={BambooIcon} alt="" />
+            <Item name='board' onClick={handleShortCut}>
+              <ItemIcon src={BambooIcon} alt='' />
               <ItemSpan>대나무숲</ItemSpan>
             </Item>
-            <Item name="meal" onClick={handleShortCut}>
-              <ItemIcon src={MealIcon} alt="" />
+            <Item name='meal' onClick={handleShortCut}>
+              <ItemIcon src={MealIcon} alt='' />
               <ItemSpan>급식표</ItemSpan>
             </Item>
-            <Item name="profile" onClick={handleShortCut}>
-              <ItemIcon src={InfoEditIcon} alt="" />
+            <Item name='profile' onClick={handleShortCut}>
+              <ItemIcon src={InfoEditIcon} alt='' />
               <ItemSpan>정보수정</ItemSpan>
             </Item>
-            <Item name="logout" onClick={handleShortCut}>
-              <ItemIcon src={LogoutIcon} alt="" />
+            <Item name='logout' onClick={handleShortCut}>
+              <ItemIcon src={LogoutIcon} alt='' />
               <ItemSpan>로그아웃</ItemSpan>
             </Item>
           </ItemWrapper>
           <CircleIcon
             src={Circle3}
             style={{ width: '100%', bottom: 0 }}
-            alt=""
+            alt=''
           />
         </DownSide>
       </LeftWrapper>

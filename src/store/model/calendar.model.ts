@@ -1,5 +1,5 @@
 export interface CalendarItem {
-  date: string;
+  date: number;
   detail: string;
 }
 

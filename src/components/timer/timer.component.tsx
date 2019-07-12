@@ -14,7 +14,7 @@ const Timer = styled.div`
   max-width: 30rem;
   height: 100%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 100%;
     max-width: unset;
     height: 35%;
@@ -30,7 +30,7 @@ const LunchTimer = styled(Timer)``;
 const HomeTimer = styled(Timer)`
   width: 45%;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     height: 47%;
   }
 `;
@@ -40,7 +40,7 @@ const Title = styled.span`
   font-family: 'yg-jalnan';
   margin-left: 1rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.5rem;
     display: inline-block;
     margin: 0;
@@ -57,7 +57,7 @@ const LunchTimerImg = styled.img`
   bottom: 1rem;
   left: 0;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 41%;
     left: 0.25rem;
     bottom: 0;
@@ -74,7 +74,7 @@ const HomeTimerImg = styled.img`
   bottom: 0;
   left: 0;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     width: 20.22rem;
     height: 11.12rem;
   }
@@ -93,7 +93,7 @@ const Content = styled.div`
   color: #000000;
   z-index: 1;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1rem;
   }
   @media ${Device.mobileL} {
@@ -104,7 +104,7 @@ const Content = styled.div`
 const LunchContent = styled(Content)`
   left: 7.3rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     top: unset;
     bottom: 2.875rem;
     width: 100%;
@@ -121,7 +121,7 @@ const LunchContent = styled(Content)`
 const HomeContent = styled(Content)`
   right: 0;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     top: 3rem;
     width: 100%;
     display: flex;
@@ -143,7 +143,7 @@ const Time = styled.span`
   color: #4470ff;
   margin-right: 0.77rem;
 
-  @media ${Device.tablet} {
+  @media ${Device.tabletL} {
     font-size: 1.69rem;
     margin-right: 0.69rem;
   }
@@ -159,6 +159,7 @@ const lunch = 12 * hour + 30 * minute;
 const home = 16 * hour + 10 * minute;
 
 const TimerComponent: React.FC = () => {
+  const [mount, setMount] = useState<boolean>(false);
   const [lunchHour, setLunchHour] = useState<string>('00');
   const [lunchMin, setLunchMin] = useState<string>('00');
   const [lunchSec, setLunchSec] = useState<string>('00');
@@ -169,9 +170,9 @@ const TimerComponent: React.FC = () => {
   const formatTwoDigit = (x: number): string => ('0' + x).slice(-2);
 
   const computeTime = () => {
-    const hour = Number(moment().format('H')) * 3600;
-    const min = Number(moment().format('m')) * 60;
-    const sec = Number(moment().format('s'));
+    const hour = moment().get('hour') * 3600;
+    const min = moment().get('minute') * 60;
+    const sec = moment().get('second');
 
     const sum = hour + min + sec;
 
@@ -185,6 +186,7 @@ const TimerComponent: React.FC = () => {
     setHomeHour(formatTwoDigit(Math.floor(remainHomeSum / 3600)));
     setHomeMin(formatTwoDigit(Math.floor((remainHomeSum % 3600) / 60)));
     setHomeSec(formatTwoDigit(Math.floor(remainHomeSum % 60)));
+    setMount(true);
   };
 
   useEffect(() => {
@@ -193,11 +195,11 @@ const TimerComponent: React.FC = () => {
     return () => clearInterval(interval);
   }, []);
 
-  return (
+  return mount ? (
     <>
       <LunchTimer>
         <Title>점심시간까지 남은시간</Title>
-        <LunchTimerImg src={LunchImgSvg} alt="" />
+        <LunchTimerImg src={LunchImgSvg} alt='' />
         <LunchContent>
           <Time>{lunchHour}</Time>시&emsp;
           <Time>{lunchMin}</Time>분&emsp;
@@ -206,7 +208,7 @@ const TimerComponent: React.FC = () => {
       </LunchTimer>
       <HomeTimer>
         <Title>종례시간까지 남은시간</Title>
-        <HomeTimerImg src={HomeImgSvg} alt="" />
+        <HomeTimerImg src={HomeImgSvg} alt='' />
         <HomeContent>
           <Time>{homeHour}</Time>시&emsp;
           <Time>{homeMin}</Time>분&emsp;
@@ -214,6 +216,8 @@ const TimerComponent: React.FC = () => {
         </HomeContent>
       </HomeTimer>
     </>
+  ) : (
+    <></>
   );
 };
 

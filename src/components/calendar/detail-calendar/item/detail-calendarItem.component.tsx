@@ -1,13 +1,14 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
+import moment from 'moment';
 import styled from 'styled-components';
 
 interface ItemProps {
   today: boolean;
-  year: string;
+  year: number;
   month: string;
-  day: string;
+  date: number;
   contents: string;
 }
 
@@ -28,6 +29,10 @@ const Wrapper = styled.div<{ today: boolean }>`
     border: none;
   }
 
+  @media ${Device.tabletL} {
+    width: 11.125rem;
+    height: 14.825rem;
+  }
   @media ${Device.mobileL} {
     width: 6rem;
     height: 8rem;
@@ -40,10 +45,9 @@ const Wrapper = styled.div<{ today: boolean }>`
 
 const ContentsWrapper = styled.div`
   width: 100%;
-  height: 40%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 
@@ -52,40 +56,63 @@ const Title = styled.span`
   font-weight: normal;
   color: #000000;
   font-size: 1rem;
+  line-height: 1.5;
+
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
+  }
 `;
 
 const Content = styled.span`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  color: #4470ff;
   font-size: 1.5rem;
-`;
-
-const Colored = styled.span`
   color: #4470ff;
+
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
+  }
 `;
 
 const DateWrapper = styled.div`
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    margin-bottom: 0.925rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 0.33rem;
+  }
 `;
 
 const DetailCalendarItem: React.FC<ItemProps> = ({
   today,
   year,
   month,
-  day,
+  date,
   contents,
 }) => {
   return (
     <Wrapper today={today}>
       <ContentsWrapper>
         <DateWrapper>
-          <Title>{today ? '오늘은' : '다가오는'}</Title>
+          {moment({
+            year,
+            month: Number(month) - 1,
+            date,
+            hour: 23,
+            minute: 59,
+          }).unix() > moment().unix() && (
+            <Title>{today ? '오늘은' : '다가오는'}</Title>
+          )}
           <Title>
-            {year}년<Colored> {month}</Colored>월<Colored> {day}</Colored>일
+            {year}년 {month}월 {date}일
           </Title>
         </DateWrapper>
         {contents.split(/,|\s/g).map((content, i) => (
