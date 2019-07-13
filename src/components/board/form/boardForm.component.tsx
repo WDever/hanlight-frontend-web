@@ -97,6 +97,11 @@ const FormImageEmpty = styled.label`
   margin-right: 1rem;
   border: 1px dashed #9a9a9a;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 `;
 
 const FormImageEmptyPlus = styled.span`
@@ -109,6 +114,11 @@ const FormImageEmptyPlus = styled.span`
   border-radius: 2px;
   left: 40px;
   top: 4.2px;
+
+  @media ${Device.mobileL} {
+    top: -15%;
+    left: 50%;
+  }
 
   &::before {
     display: block;
@@ -135,6 +145,11 @@ const FormPreviewWrapper = styled.div<{ src: string }>`
   background-blend-mode: multiply;
   position: relative;
   margin-right: 1rem;
+
+  @media ${Device.mobileL} {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 `;
 
 const FormPreviewButton = styled.span`
@@ -143,12 +158,24 @@ const FormPreviewButton = styled.span`
   width: 16px;
   height: 16px;
 
+  @media ${Device.mobileL} {
+    width: 100%;
+    height: 100%;
+  }
+
   &::before,
   &::after {
     position: absolute;
     content: ' ';
     height: 16px;
     width: 2px;
+
+    @media ${Device.mobileL} {
+      height: 60%;
+      left: 24px;
+      top: 10px
+    }
+
     left: 7px;
     border-radius: 1rem;
     background-color: #ffffff;
@@ -173,6 +200,11 @@ const FormButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.mobileL} {
+    height: 1.75rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const FormImgLabel = styled.label`
@@ -189,6 +221,20 @@ const FormImgLabel = styled.label`
   padding-left: 1.5rem;
   text-align: center;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 4.75rem;
+    background: none;
+    padding: 0;
+
+    ::before {
+      display: inline-block;
+      vertical-align: middle;
+      content: url(${PictureIcon});
+      zoom: 0.45;
+      margin-right: 0.28rem;
+    }
+  }
 `;
 
 const FormSubmitButton = styled.button`
@@ -201,6 +247,11 @@ const FormSubmitButton = styled.button`
   background-color: #4470ff;
   color: #e9ebee;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 4.75rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const MAX_CONTENT_SIZE = 600;

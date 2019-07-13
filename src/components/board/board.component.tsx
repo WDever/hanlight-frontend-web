@@ -59,6 +59,10 @@ const Feeds = styled.div`
     margin-right: 0;
   }
 
+  @media ${Device.mobileL} {
+    min-width: 425px;
+  }
+
   width: 55%;
   min-width: 475px;
   max-width: 800px;
