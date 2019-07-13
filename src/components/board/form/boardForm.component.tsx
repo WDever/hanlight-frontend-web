@@ -4,6 +4,7 @@ import {
   BoardFormMethod,
   BoardFormProps,
 } from 'container/board/form/boardForm.container';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled from 'styled-components';
@@ -14,6 +15,10 @@ const FormTitle = styled.div`
   border-bottom: solid 1px #d1d1d1;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+
+  @media ${Device.tabletS} {
+    display: none;
+  }
 `;
 
 const FormWrapper = styled.div`
@@ -24,12 +29,21 @@ const FormWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
   margin-bottom: 1rem;
 
+  @media ${Device.tabletS} {
+    margin-bottom: 0;
+    border: solid 1px #e7e7e7;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 const FormContentWrapper = styled.div`
+  @media ${Device.tabletS} {
+    width: 91.146%;
+  }
+
   width: 97%;
 
   display: flex;
@@ -39,6 +53,10 @@ const FormContentWrapper = styled.div`
 `;
 
 const FormBody = styled.div`
+  @media ${Device.tabletS} {
+    margin-top: 1.25rem;
+  }
+
   width: 100%;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -65,6 +83,10 @@ const FormImageWrapper = styled.div`
   display: flex;
   padding-bottom: 0.75rem;
   border-bottom: solid 1px #e5e5e5;
+
+  @media ${Device.tabletS} {
+    border: none;
+  }
 `;
 
 const FormImageEmpty = styled.label`

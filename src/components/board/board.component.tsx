@@ -4,6 +4,7 @@ import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
 import { usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
 
@@ -35,6 +36,10 @@ const BoardWrapper = styled.div`
   height: 100%;
   padding-top: 1.5rem;
 
+  @media ${Device.tabletS} {
+    padding: 0;
+  }
+
   display: flex;
   justify-content: center;
 `;
@@ -49,6 +54,11 @@ const Deem = styled.div`
 `;
 
 const Feeds = styled.div`
+  @media ${Device.tabletS} {
+    width: 100%;
+    margin-right: 0;
+  }
+
   width: 55%;
   min-width: 475px;
   max-width: 800px;

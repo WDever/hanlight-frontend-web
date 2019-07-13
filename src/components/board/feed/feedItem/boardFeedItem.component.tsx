@@ -3,6 +3,7 @@ import * as React from 'react';
 import BoardCommentContainer from 'container/board/comment';
 import BoardReportContainer from 'container/board/report';
 import { usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -24,6 +25,13 @@ const FeedWrapper = styled.div`
   position: relative;
   margin-bottom: 1rem;
 
+  @media ${Device.tabletS} {
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 2.875rem;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +39,11 @@ const FeedWrapper = styled.div`
 
 const Feed = styled.div`
   width: 93%;
+
+  @media ${Device.tabletS} {
+    width: 91.146%;
+  }
+
   font-family: 'Spoqa Han Sans';
   margin-top: 1.125rem;
   position: relative;
