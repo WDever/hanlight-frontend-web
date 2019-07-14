@@ -37,7 +37,10 @@ interface PropsType extends initialFuncProps, OptionsType {
   onResponse(params: FbAccountKitResType): void;
 }
 
-const initializeAccountKit = (props: initialFuncProps, callback: Function) => {
+const initializeAccountKit = (
+  props: initialFuncProps,
+  callback: () => void,
+) => {
   (cb => {
     const tag = document.createElement('script');
     tag.setAttribute(

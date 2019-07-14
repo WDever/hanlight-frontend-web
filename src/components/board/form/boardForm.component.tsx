@@ -4,6 +4,7 @@ import {
   BoardFormMethod,
   BoardFormProps,
 } from 'container/board/form/boardForm.container';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled from 'styled-components';
@@ -14,6 +15,10 @@ const FormTitle = styled.div`
   border-bottom: solid 1px #d1d1d1;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+
+  @media ${Device.tabletL} {
+    display: none;
+  }
 `;
 
 const FormWrapper = styled.div`
@@ -24,12 +29,21 @@ const FormWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
   margin-bottom: 1rem;
 
+  @media ${Device.tabletL} {
+    margin-bottom: 0;
+    border: solid 1px #e7e7e7;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
 `;
 
 const FormContentWrapper = styled.div`
+  @media ${Device.tabletL} {
+    width: 91.146%;
+  }
+
   width: 97%;
 
   display: flex;
@@ -39,6 +53,16 @@ const FormContentWrapper = styled.div`
 `;
 
 const FormBody = styled.div`
+  @media ${Device.tabletL} {
+    margin-top: 1.25rem;
+  }
+
+  @media ${Device.mobileL} {
+    img {
+      width: 2rem;
+    }
+  }
+
   width: 100%;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -58,6 +82,10 @@ const FormBodyText = styled.textarea<{ height: number }>`
   border: 0;
   box-sizing: border-box;
   outline: none;
+
+  @media ${Device.mobileL} {
+    min-height: 2rem;
+  }
 `;
 
 const FormImageWrapper = styled.div`
@@ -65,6 +93,10 @@ const FormImageWrapper = styled.div`
   display: flex;
   padding-bottom: 0.75rem;
   border-bottom: solid 1px #e5e5e5;
+
+  @media ${Device.tabletL} {
+    border: none;
+  }
 `;
 
 const FormImageEmpty = styled.label`
@@ -75,6 +107,11 @@ const FormImageEmpty = styled.label`
   margin-right: 1rem;
   border: 1px dashed #9a9a9a;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 `;
 
 const FormImageEmptyPlus = styled.span`
@@ -88,6 +125,12 @@ const FormImageEmptyPlus = styled.span`
   left: 40px;
   top: 4.2px;
 
+  @media ${Device.mobileL} {
+    top: -29%;
+    left: 50%;
+    height: 15px;
+  }
+
   &::before {
     display: block;
     content: '';
@@ -99,6 +142,11 @@ const FormImageEmptyPlus = styled.span`
     margin-top: -1px;
     border-radius: 2px;
     background-color: #9a9a9a;
+
+    @media ${Device.mobileL} {
+      left: -6.75px;
+      width: 15px;
+    }
   }
 `;
 
@@ -113,6 +161,11 @@ const FormPreviewWrapper = styled.div<{ src: string }>`
   background-blend-mode: multiply;
   position: relative;
   margin-right: 1rem;
+
+  @media ${Device.mobileL} {
+    width: 3.125rem;
+    height: 3.125rem;
+  }
 `;
 
 const FormPreviewButton = styled.span`
@@ -121,12 +174,24 @@ const FormPreviewButton = styled.span`
   width: 16px;
   height: 16px;
 
+  @media ${Device.mobileL} {
+    width: 100%;
+    height: 100%;
+  }
+
   &::before,
   &::after {
     position: absolute;
     content: ' ';
     height: 16px;
     width: 2px;
+
+    @media ${Device.mobileL} {
+      height: 60%;
+      left: 24px;
+      top: 10px;
+    }
+
     left: 7px;
     border-radius: 1rem;
     background-color: #ffffff;
@@ -151,6 +216,11 @@ const FormButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.mobileL} {
+    height: 1.75rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const FormImgLabel = styled.label`
@@ -167,6 +237,20 @@ const FormImgLabel = styled.label`
   padding-left: 1.5rem;
   text-align: center;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 4.75rem;
+    background: none;
+    padding: 0;
+
+    ::before {
+      display: inline-block;
+      vertical-align: middle;
+      content: url(${PictureIcon});
+      zoom: 0.45;
+      margin-right: 0.28rem;
+    }
+  }
 `;
 
 const FormSubmitButton = styled.button`
@@ -179,6 +263,11 @@ const FormSubmitButton = styled.button`
   background-color: #4470ff;
   color: #e9ebee;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    width: 4.75rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const MAX_CONTENT_SIZE = 600;
@@ -193,7 +282,7 @@ export default class BoardFormComponent extends React.Component<
   } = {
     content: '',
     files: [],
-    textAreaHeight: 52.8,
+    textAreaHeight: 0,
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -202,7 +291,7 @@ export default class BoardFormComponent extends React.Component<
         this.setState({
           content: '',
           files: [],
-          textAreaHeight: 52.8,
+          textAreaHeight: 0,
         });
       }
     }

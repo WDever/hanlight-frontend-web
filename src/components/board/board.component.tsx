@@ -4,6 +4,7 @@ import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
 import { usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
 
@@ -27,6 +28,10 @@ const Wrapper = styled.div`
 
   display: flex;
   justify-content: center;
+
+  @media ${Device.tabletL} {
+    max-width: 768px;
+  }
 `;
 
 const BoardWrapper = styled.div`
@@ -34,6 +39,10 @@ const BoardWrapper = styled.div`
   max-width: 1220px;
   height: 100%;
   padding-top: 1.5rem;
+
+  @media ${Device.tabletL} {
+    padding: 0;
+  }
 
   display: flex;
   justify-content: center;
@@ -49,9 +58,16 @@ const Deem = styled.div`
 `;
 
 const Feeds = styled.div`
+  @media ${Device.tabletL} {
+    width: 100%;
+    margin-right: 0;
+  }
+
+  @media ${Device.mobileL} {
+    min-width: unset;
+  }
+
   width: 55%;
-  min-width: 475px;
-  max-width: 800px;
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
@@ -99,7 +115,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         resetError();
       }
     };
-  }, []);
+  }, [errorCode, resetError]);
 
   useEffect(() => {
     if (prevStatusProps) {
@@ -115,7 +131,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         }
       }
     }
-  }, [statusProps]);
+  }, [errorCode, errorMessage, prevStatusProps, statusProps]);
 
   return (
     <Templete>
@@ -140,7 +156,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
               errorMessage={errorMessage}
             />
           </Feeds>
-          {window.innerWidth > 1024 && <BoardRolePage />}
+          <BoardRolePage />
         </BoardWrapper>
       </Wrapper>
     </Templete>
