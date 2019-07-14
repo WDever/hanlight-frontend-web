@@ -28,6 +28,10 @@ const Wrapper = styled.div`
 
   display: flex;
   justify-content: center;
+
+  @media ${Device.tabletL} {
+    max-width: 768px;
+  }
 `;
 
 const BoardWrapper = styled.div`
@@ -36,7 +40,7 @@ const BoardWrapper = styled.div`
   height: 100%;
   padding-top: 1.5rem;
 
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     padding: 0;
   }
 
@@ -54,18 +58,16 @@ const Deem = styled.div`
 `;
 
 const Feeds = styled.div`
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     width: 100%;
     margin-right: 0;
   }
 
   @media ${Device.mobileL} {
-    min-width: 425px;
+    min-width: unset;
   }
 
   width: 55%;
-  min-width: 475px;
-  max-width: 800px;
   display: flex;
   flex-direction: column;
   margin-right: 1.25rem;
@@ -113,7 +115,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         resetError();
       }
     };
-  }, []);
+  }, [errorCode, resetError]);
 
   useEffect(() => {
     if (prevStatusProps) {
@@ -129,7 +131,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         }
       }
     }
-  }, [statusProps]);
+  }, [errorCode, errorMessage, prevStatusProps, statusProps]);
 
   return (
     <Templete>
@@ -154,7 +156,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
               errorMessage={errorMessage}
             />
           </Feeds>
-          {window.innerWidth > 1024 && <BoardRolePage />}
+          <BoardRolePage />
         </BoardWrapper>
       </Wrapper>
     </Templete>

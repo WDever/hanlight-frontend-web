@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { ErrorMethod, ErrorProps } from 'container/error/error.container';
+import { Device } from 'lib/styles';
 import Illust from 'lib/svg/error-illust.svg';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
@@ -22,6 +23,13 @@ const Center = styled.div`
   height: 18.75rem;
 
   display: flex;
+
+  @media ${Device.tabletL} {
+    flex-direction: column-reverse;
+    height: 100%;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 `;
 
 const LeftWrapper = styled.div`
@@ -29,11 +37,20 @@ const LeftWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-start;
+
+  @media ${Device.tabletL} {
+    align-items: center;
+    height: 35%;
+  }
 `;
 
 const ErrorImg = styled.img`
   width: 100%;
   object-fit: contain;
+
+  @media ${Device.tabletL} {
+    width: 50%;
+  }
 `;
 
 const Title = styled.p`
@@ -47,6 +64,10 @@ const Content = styled.span`
   font-size: 1.25rem;
   font-family: inherit;
   color: #a8a8a8;
+
+  @media ${Device.tabletL} {
+    width: 56%;
+  }
 `;
 
 const Button = styled.button`
@@ -87,7 +108,7 @@ const ErrorComponent: React.FC<
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>
         </LeftWrapper>
-        <ErrorImg src={Illust} alt='' />
+        <ErrorImg src={Illust} alt="" />
       </Center>
     </Wrapper>
   );

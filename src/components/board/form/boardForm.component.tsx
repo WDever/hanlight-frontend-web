@@ -16,7 +16,7 @@ const FormTitle = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     display: none;
   }
 `;
@@ -29,7 +29,7 @@ const FormWrapper = styled.div`
   font-family: 'Spoqa Han Sans';
   margin-bottom: 1rem;
 
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     margin-bottom: 0;
     border: solid 1px #e7e7e7;
   }
@@ -40,7 +40,7 @@ const FormWrapper = styled.div`
 `;
 
 const FormContentWrapper = styled.div`
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     width: 91.146%;
   }
 
@@ -53,8 +53,14 @@ const FormContentWrapper = styled.div`
 `;
 
 const FormBody = styled.div`
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     margin-top: 1.25rem;
+  }
+
+  @media ${Device.mobileL} {
+    img {
+      width: 2rem;
+    }
   }
 
   width: 100%;
@@ -76,6 +82,10 @@ const FormBodyText = styled.textarea<{ height: number }>`
   border: 0;
   box-sizing: border-box;
   outline: none;
+
+  @media ${Device.mobileL} {
+    min-height: 2rem;
+  }
 `;
 
 const FormImageWrapper = styled.div`
@@ -84,7 +94,7 @@ const FormImageWrapper = styled.div`
   padding-bottom: 0.75rem;
   border-bottom: solid 1px #e5e5e5;
 
-  @media ${Device.tabletS} {
+  @media ${Device.tabletL} {
     border: none;
   }
 `;
@@ -116,8 +126,9 @@ const FormImageEmptyPlus = styled.span`
   top: 4.2px;
 
   @media ${Device.mobileL} {
-    top: -15%;
+    top: -29%;
     left: 50%;
+    height: 15px;
   }
 
   &::before {
@@ -131,6 +142,11 @@ const FormImageEmptyPlus = styled.span`
     margin-top: -1px;
     border-radius: 2px;
     background-color: #9a9a9a;
+
+    @media ${Device.mobileL} {
+      left: -6.75px;
+      width: 15px;
+    }
   }
 `;
 
@@ -173,7 +189,7 @@ const FormPreviewButton = styled.span`
     @media ${Device.mobileL} {
       height: 60%;
       left: 24px;
-      top: 10px
+      top: 10px;
     }
 
     left: 7px;
@@ -266,7 +282,7 @@ export default class BoardFormComponent extends React.Component<
   } = {
     content: '',
     files: [],
-    textAreaHeight: 52.8,
+    textAreaHeight: 0,
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -275,7 +291,7 @@ export default class BoardFormComponent extends React.Component<
         this.setState({
           content: '',
           files: [],
-          textAreaHeight: 52.8,
+          textAreaHeight: 0,
         });
       }
     }
