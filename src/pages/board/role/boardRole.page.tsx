@@ -9,7 +9,9 @@ const Wrapper = styled.div`
   width: 35%;
   max-width: 32.5rem;
   min-width: 23.5rem;
-  height: 630px;
+  height: calc(85vh);
+  min-height: 32rem;
+  max-height: 39.375rem;
   top: 5.25rem;
   position: sticky;
 

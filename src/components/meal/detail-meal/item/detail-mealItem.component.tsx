@@ -16,6 +16,7 @@ const ItemWrapper = styled.div<MealItemProps>`
   font-style: normal;
   font-stretch: normal;
   border-radius: 2rem;
+  position: relative;
 
   ${({ today }) =>
     today

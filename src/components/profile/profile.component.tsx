@@ -13,11 +13,11 @@ import {
   password as passwordRegExp,
   tp as tpRegExp,
 } from 'lib/RegExp/RegExp.json';
+import { Device } from 'lib/styles';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
 import uuid from 'uuid';
-import { Device } from 'lib/styles';
 
 const { useEffect } = React;
 
@@ -315,7 +315,7 @@ const ProfileComponent: React.FC<
         <Profile>
           <TopWrapper>
             <Top>
-              <TopImg src={DefaultProfileImg} alt='' />
+              <TopImg src={DefaultProfileImg} alt="" />
               <TopName>{name}</TopName>
             </Top>
           </TopWrapper>
@@ -340,9 +340,9 @@ const ProfileComponent: React.FC<
               <ValueInputWrapper>
                 <form onSubmit={PatchPassword}>
                   <ValueInput
-                    type='password'
-                    autoComplete='false'
-                    placeholder='변경할 비밀번호를 입력해주세요.'
+                    type="password"
+                    autoComplete="false"
+                    placeholder="변경할 비밀번호를 입력해주세요."
                     onChange={setPassword}
                     value={password}
                     wrong={new RegExp(passwordRegExp).test(password)}
@@ -357,17 +357,17 @@ const ProfileComponent: React.FC<
                 <ValueInput
                   value={tp}
                   onChange={setTp}
-                  placeholder='예) 01012345678'
+                  placeholder="예) 01012345678"
                   wrong={new RegExp(tpRegExp).test(tp)}
                 />
                 <AccountKit
-                  appId='265056484381541'
+                  appId="265056484381541"
                   csrf={uuid.v4()}
                   debug={true}
-                  version='v1.1'
+                  version="v1.1"
                   phoneNumber={tp}
                   onResponse={FbResponseHandle}
-                  language='ko_KR'
+                  language="ko_KR"
                   validation={() =>
                     patchPasswordStatus !== 'pending' &&
                     new RegExp(tpRegExp).test(tp)
