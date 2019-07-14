@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="78" height="78" viewBox="0 0 78 78">
-    <defs>
-        <style>
-            .cls-1{fill:#f6faff}
-        </style>
-    </defs>
-    <circle id="타원_267" cx="39" cy="39" r="39" class="cls-1" data-name="타원 267"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="78" height="78"><circle cx="39" cy="39" r="39" data-name="타원 267" fill="#f6faff"/></svg>

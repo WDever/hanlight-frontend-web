@@ -3,10 +3,12 @@ import * as React from 'react';
 import BoardCommentContainer from 'container/board/comment';
 import BoardReportContainer from 'container/board/report';
 import { usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
 import EditIcon from 'lib/svg/edit-icon.svg';
+import EmptyLikeIcon from 'lib/svg/Empty-like.svg';
 import LeftArrow from 'lib/svg/left-arrow.svg';
 import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
@@ -24,6 +26,17 @@ const FeedWrapper = styled.div`
   position: relative;
   margin-bottom: 1rem;
 
+  @media ${Device.tabletL} {
+    margin: 0;
+    border: none;
+    border-bottom: 1px solid #dbdbdb;
+    padding-bottom: 2.875rem;
+  }
+
+  @media ${Device.mobileL} {
+    padding-bottom: 1.375rem;
+  }
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -31,6 +44,12 @@ const FeedWrapper = styled.div`
 
 const Feed = styled.div`
   width: 93%;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    align-items: center;
+  }
+
   font-family: 'Spoqa Han Sans';
   margin-top: 1.125rem;
   position: relative;
@@ -46,10 +65,24 @@ const FeedHeadWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    width: 91.5%;
+  }
 `;
 const FeedHeadLeftWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+
+  img {
+    @media ${Device.tabletL} {
+      width: 3.5rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 2rem;
+    }
+  }
 `;
 const FeedHeadLeftString = styled.div`
   margin-left: 0.75rem;
@@ -58,15 +91,41 @@ const FeedHeadName = styled.p`
   font-size: 0.875rem;
   color: #443898;
   margin: 0;
+
+  @media ${Device.tabletL} {
+    font-size: 1.125rem;
+    color: black;
+    font-weight: bold;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
 `;
 const FeedHeadDate = styled.p`
   font-size: 0.75rem;
   color: #616770;
   margin: 0;
+
+  @media ${Device.tabletL} {
+    font-size: 0.9275rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+  }
 `;
 const FeedHeadOptionBtn = styled.img`
   width: 20px;
   cursor: pointer;
+
+  @media ${Device.tabletL} {
+    width: 17.5px;
+  }
+
+  @media ${Device.mobileL} {
+    width: 12.6px;
+  }
 `;
 
 const FeedOptionWrapper = styled.div`
@@ -97,10 +156,20 @@ const FeedOptionImg = styled.img`
 
 const FeedBody = styled.div`
   width: 100%;
+
+  @media ${Device.tabletL} {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const FeedContentWrapper = styled.div`
   margin-bottom: 0.625rem;
+
+  @media ${Device.tabletL} {
+    width: 91.5%;
+  }
 `;
 
 const FeedContent = styled.span`
@@ -109,6 +178,14 @@ const FeedContent = styled.span`
   color: #1d2129;
   display: block;
   word-break: break-word;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+  }
 `;
 
 const FeedImgContainer = styled.div`
@@ -117,6 +194,16 @@ const FeedImgContainer = styled.div`
   max-height: 40.25rem;
   position: relative;
   margin-bottom: 0.875rem;
+
+  @media ${Device.tabletL} {
+    width: 91.5%;
+    height: 31.25rem;
+  }
+
+  @media ${Device.mobileL} {
+    width: 100%;
+    height: 21.25rem;
+  }
 `;
 
 const FeedImgWrapper = styled.div<{ rows: number }>`
@@ -129,6 +216,11 @@ const FeedImgWrapper = styled.div<{ rows: number }>`
     props.rows >= 4 ? '50% 50%' : 'auto auto'};
   grid-template-rows: ${props =>
     props.rows === 3 ? '60% auto' : props.rows >= 4 ? '50% 50%' : 'unset'};
+
+  @media ${Device.tabletL} {
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+  }
 `;
 
 const FeedImg = styled.img<{ rows: number }>`
@@ -158,9 +250,13 @@ const FeedMoreImgSpan = styled.span`
 const FeedImgToggleWrapper = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  top: 20%;
   display: flex;
   z-index: 3;
+
+  @media ${Device.mobileL} {
+    top: -20%;
+  }
 `;
 
 const FeedImgToggle = styled.img`
@@ -288,12 +384,36 @@ const EditButton = styled.button`
 const LikeWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media ${Device.tabletL} {
+    width: 100%;
+    align-items: center;
+  }
 `;
 
 const LikeView = styled.div`
   font-size: 0.82rem;
   color: #414141;
   margin-bottom: 1rem;
+
+  @media ${Device.tabletL} {
+    width: 91.5%;
+    font-size: 1rem;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+
+    img {
+      width: 14px;
+      height: 14px;
+    }
+  }
 `;
 
 const LikeBtnWrapper = styled.div`
@@ -314,6 +434,24 @@ const LikeBtn = styled.button<{ clicked: boolean }>`
   background-color: #ffffff;
   padding: 0;
   cursor: pointer;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+
+    img {
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+
+    img {
+      width: 14px;
+      height: 14px;
+    }
+  }
 `;
 
 type status = 'none' | 'pending' | 'success' | 'failure';
@@ -413,7 +551,16 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
         setOptionToggle(false);
       }
     }
-  }, [statusProps]);
+  }, [
+    activeReport,
+    board.pk,
+    deemBoard,
+    editing,
+    imgToggle.toggle,
+    prevStatusProps,
+    reportToggle,
+    statusProps,
+  ]);
 
   const GetBoardComments = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -433,7 +580,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
       setEditing(false);
       deemBoard(false);
     }
-  }, [patchBoardStatus]);
+  }, [deemBoard, editing, patchBoardStatus]);
 
   return (
     <FeedWrapper key={board.pk}>
@@ -657,7 +804,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <LikeWrapper>
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
-              <span>{board.likeCount}명</span>
+              <span> 좋아요 {board.likeCount}명</span>
             </LikeView>
             <LikeBtnWrapper>
               <LikeBtn
@@ -670,7 +817,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                 clicked={board.isLiked}
               >
                 <img
-                  src={LikeIcon}
+                  src={board.isLiked ? LikeIcon : EmptyLikeIcon}
                   style={{ marginRight: '0.375rem' }}
                   alt=""
                 />

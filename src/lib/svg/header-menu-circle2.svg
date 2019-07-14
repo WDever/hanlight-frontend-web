@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="48.953" height="52.5" viewBox="0 0 48.953 52.5">
-    <defs>
-        <style>
-            .cls-1{fill:#faf6ff}
-        </style>
-    </defs>
-    <path id="교차_3" d="M191.424 82.5a34.065 34.065 0 0 1 43.53-49.076V82.5z" class="cls-1" data-name="교차 3" transform="translate(-186 -30)"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="48.953" height="52.5"><path d="M5.424 52.5a34.065 34.065 0 0 1 43.53-49.076V52.5z" data-name="교차 3" fill="#faf6ff"/></svg>

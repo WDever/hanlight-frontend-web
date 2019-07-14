@@ -1,4 +1,5 @@
 import { useInput, usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
@@ -56,6 +57,14 @@ const CommentContentWrapper = styled.div`
 const ProfileImg = styled.img`
   width: 2.5rem;
   margin-right: 0.75rem;
+
+  @media ${Device.tabletL} {
+    width: 3.3rem;
+  }
+
+  @media ${Device.mobileL} {
+    width: 2rem;
+  }
 `;
 
 const CommentBody = styled.div`
@@ -67,6 +76,14 @@ const CommentName = styled.span`
   font-size: 0.81rem;
   margin-right: 0.3rem;
   color: #443898;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+  }
 `;
 
 const CommentContent = styled.span`
@@ -78,6 +95,19 @@ const CommentContent = styled.span`
 
   border-radius: 8px;
   background-color: #f2f3f5;
+
+  @media ${Device.tabletL} {
+    height: 2.25rem;
+    display: flex;
+    align-items: center;
+    padding: 0.375rem 12px;
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const Form = styled.form`
@@ -156,10 +186,19 @@ const CommentLikeBtnWrapper = styled.div<{ isLiked: boolean }>`
   span {
     font-size: 0.75rem;
     color: #616770;
+
+    @media ${Device.tabletL} {
+      font-size: 0.875rem;
+    }
+
+    @media ${Device.mobileL} {
+      font-size: 0.625rem;
+    }
   }
 
   ${CommentLikeBtn} {
-    color: ${props => (props.isLiked ? '#0055ff' : '#616770')};
+    color: #0055ff;
+    font-weight: ${props => (props.isLiked ? 'bold' : '300')};
   }
 `;
 
@@ -167,11 +206,35 @@ const CommentLikeWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-left: 0.25rem;
+
+  img {
+    width: 12px;
+    height: 12.5px;
+
+    @media ${Device.tabletL} {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 0.75rem;
+      height: 0.75rem;
+    }
+  }
 `;
+
 const CommetLikeCount = styled.span`
   font-size: 0.75rem;
   color: #000000;
   margin-left: 0.25rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.875rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.5625rem;
+  }
 `;
 
 interface CommentItemProps {
@@ -303,11 +366,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper>
-                  <img
-                    src={LikeIcon}
-                    style={{ width: '12.9px', height: '12.5px' }}
-                    alt=""
-                  />
+                  <img src={LikeIcon} alt="" />
                   <CommetLikeCount>{likeCount}</CommetLikeCount>
                 </CommentLikeWrapper>
               </CommentBody>

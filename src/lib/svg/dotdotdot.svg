@@ -1,15 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
-    <defs>
-        <style>
-            .cls-1{fill:none}.cls-2{fill:#818181}
-        </style>
-    </defs>
-    <g id="dotdotdot" transform="translate(-1351 -509)">
-        <path id="사각형_709" d="M0 0h20v20H0z" class="cls-1" data-name="사각형 709" transform="translate(1351 509)"/>
-        <g id="그룹_187" data-name="그룹 187" transform="translate(1)">
-            <path id="패스_1090" d="M2.5 0A2.5 2.5 0 1 1 0 2.5 2.5 2.5 0 0 1 2.5 0z" class="cls-2" data-name="패스 1090" transform="translate(1351 517)"/>
-            <circle id="타원_227" cx="2.5" cy="2.5" r="2.5" class="cls-2" data-name="타원 227" transform="translate(1358 517)"/>
-            <circle id="타원_228" cx="2.5" cy="2.5" r="2.5" class="cls-2" data-name="타원 228" transform="translate(1365 517)"/>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"><defs><style>.cls-2{fill:#818181}</style></defs><g id="dotdotdot" transform="translate(-1351 -509)"><path id="사각형_709" d="M0 0h20v20H0z" data-name="사각형 709" transform="translate(1351 509)" fill="none"/><g id="그룹_187" data-name="그룹 187" transform="translate(1)"><path id="패스_1090" d="M2.5 0A2.5 2.5 0 1 1 0 2.5 2.5 2.5 0 0 1 2.5 0z" class="cls-2" data-name="패스 1090" transform="translate(1351 517)"/><circle id="타원_227" cx="2.5" cy="2.5" r="2.5" class="cls-2" data-name="타원 227" transform="translate(1358 517)"/><circle id="타원_228" cx="2.5" cy="2.5" r="2.5" class="cls-2" data-name="타원 228" transform="translate(1365 517)"/></g></g></svg>

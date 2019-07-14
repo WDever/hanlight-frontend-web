@@ -7,6 +7,7 @@ import {
 } from 'container/board/comment';
 import CommentFormContainer from 'container/board/comment/commentForm';
 import { usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import moment from 'moment';
 import 'moment/locale/ko';
 import styled from 'styled-components';
@@ -14,11 +15,23 @@ import CommentItem from './commentItem';
 
 const FeedCommentWrapper = styled.div`
   width: 100%;
+
+  @media ${Device.tabletL} {
+    width: 91.5%;
+  }
 `;
 
 const FeedCommentTittle = styled.p`
   font-size: 0.875rem;
   color: #1d2129;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+  }
 `;
 
 const CommentAllBtn = styled.button`
@@ -30,6 +43,14 @@ const CommentAllBtn = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
+
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.6875rem;
+  }
 `;
 
 const BoardCommentComponent: React.FC<

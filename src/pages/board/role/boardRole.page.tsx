@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import Role1 from 'lib/svg/1-role.svg';
 import Role2 from 'lib/svg/2-role.svg';
 import Role3 from 'lib/svg/3-role.svg';
@@ -18,6 +19,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media ${Device.tabletL} {
+    display: none;
+  }
 `;
 
 const Role = styled.div`
