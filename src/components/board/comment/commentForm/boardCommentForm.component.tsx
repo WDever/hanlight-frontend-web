@@ -6,6 +6,7 @@ import {
   CommentFormProps,
 } from 'container/board/comment/commentForm/boardCommentForm.container';
 import { useInput } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import styled from 'styled-components';
 
@@ -15,12 +16,31 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    height: 3.5rem;
+    margin: 1rem 0;
+  }
+
+  @media ${Device.mobileL} {
+    height: 2rem;
+    min-height: 2rem;
+    margin: 0.625rem 0;
+  }
 `;
 
 const ProfileImg = styled.img`
   width: 2.5rem;
   margin-right: 0.75rem;
   vertical-align: middle;
+
+  @media ${Device.tabletL} {
+    width: 3.6rem;
+  }
+
+  @media ${Device.mobileL} {
+    width: 2rem;
+  }
 `;
 
 const Form = styled.form`
@@ -39,6 +59,11 @@ const Form = styled.form`
     margin-bottom: 0.5rem;
     font-size: 0.8125rem;
     text-indent: 0.5rem;
+
+    @media ${Device.tabletL} {
+      height: 100%;
+      flex: 1;
+    }
   }
 
   button {
@@ -54,6 +79,16 @@ const Form = styled.form`
     cursor: pointer;
     outline: none;
     border: none;
+
+    @media ${Device.tabletL} {
+      margin-left: 1.25rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 3rem;
+      height: 1.75rem;
+      margin-left: 0.5rem;
+    }
   }
 `;
 
@@ -64,8 +99,8 @@ const CommentFormComponent: React.FC<
 
   const PostComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (content && postBoardCommentStatus !== 'pending') {
-      postBoardComment({ accessToken, board_pk, content });
+    if (content.trim().length && postBoardCommentStatus !== 'pending') {
+      postBoardComment({ accessToken, board_pk, content: content.trim() });
       setContent('');
     }
   };

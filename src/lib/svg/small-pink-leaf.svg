@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="367.525" height="540.813" viewBox="0 0 367.525 540.813">
-    <defs>
-        <style>
-            .cls-1{fill:#ff6584}.cls-2{fill:none;stroke:#fff;stroke-width:4px;opacity:.4}
-        </style>
-    </defs>
-    <g id="leaf" transform="translate(1.561 -2681.535)">
-        <g id="그룹_126" data-name="그룹 126">
-            <path id="패스_939" d="M9945 3059.65s28.188-92.449 192.057-143.951 147.483-140.459 168.552-138.118-4.875 414.355-360.608 540.768c.099 0-.001-258.699-.001-258.699z" class="cls-1" data-name="패스 939" transform="translate(-9945 -96)"/>
-            <path id="패스_940" d="M9945 3085.875s81.067-101.12 262.527-168.994" class="cls-2" data-name="패스 940" transform="translate(-9945)"/>
-        </g>
-    </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="367.525" height="540.813"><g data-name="그룹 126"><path d="M1.561 282.115s28.188-92.449 192.057-143.951S341.101-2.295 362.17.046 357.295 414.401 1.562 540.814c.099 0-.001-258.699-.001-258.699z" data-name="패스 939" fill="#ff6584"/><path d="M1.561 404.34s81.067-101.12 262.527-168.994" data-name="패스 940" fill="none" stroke="#fff" stroke-width="4" opacity=".4"/></g></svg>

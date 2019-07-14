@@ -22,9 +22,10 @@ export default class BoardFeedComponent extends React.Component<
     if (
       this.props.boardApiStatus.getBoardStatus !== 'none' &&
       this.props.boardApiStatus.getBoardStatus !== 'pending' &&
-      document.documentElement.scrollTop +
-        document.documentElement.clientHeight ===
-        document.documentElement.scrollHeight &&
+      document.body.scrollHeight -
+        window.innerHeight -
+        (document.documentElement.scrollTop || document.body.scrollTop) <
+        100 &&
       Math.ceil(this.props.boardCount / 10) !== this.state.page
     ) {
       this.setState({

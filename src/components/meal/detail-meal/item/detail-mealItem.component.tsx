@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import styled, { css } from 'styled-components';
 import { Device } from 'lib/styles';
+import styled, { css } from 'styled-components';
 
 interface MealItemProps {
   today: boolean;
   item: boolean;
-  listLength: number;
 }
 
 const ItemWrapper = styled.div<MealItemProps>`
@@ -17,6 +16,7 @@ const ItemWrapper = styled.div<MealItemProps>`
   font-style: normal;
   font-stretch: normal;
   border-radius: 2rem;
+  position: relative;
 
   ${({ today }) =>
     today
@@ -132,11 +132,10 @@ const DetailMealItem: React.FC<{
   date: string;
   day: string;
   today: boolean;
-  listLength?: number;
   _ref?(ref: HTMLDivElement | null): void;
-}> = ({ _ref, item, date, day, today, listLength = 5 }) => {
+}> = ({ _ref, item, date, day, today }) => {
   return item instanceof Array ? (
-    <ItemWrapper ref={_ref} item={true} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={true} today={today}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (
@@ -146,7 +145,7 @@ const DetailMealItem: React.FC<{
       <Date>{date}</Date>
     </ItemWrapper>
   ) : (
-    <ItemWrapper ref={_ref} item={false} today={today} listLength={listLength}>
+    <ItemWrapper ref={_ref} item={false} today={today}>
       <NoItemWrapper>
         <NoItems today={today}>
           {item.split('\n').map((line, i) => (

@@ -88,6 +88,7 @@ export const boardReducer = (
           action.payload.err.response &&
           action.payload.err.response.data.code === 404
         ) {
+          alert('존재하지 않는 게시글 입니다.');
           draft.board.splice(
             draft.board.findIndex(
               board => board.pk === action.payload.origin.board_pk,
@@ -112,6 +113,7 @@ export const boardReducer = (
           action.payload.err.response &&
           action.payload.err.response.data.code === 404
         ) {
+          alert('존재하지 않는 게시글 입니다.');
           draft.board.splice(
             draft.board.findIndex(
               board => board.pk === action.payload.origin.board_pk,
@@ -145,6 +147,7 @@ export const boardReducer = (
           action.payload.err.response &&
           action.payload.err.response.data.code === 404
         ) {
+          alert('존재하지 않는 게시글 입니다.');
           draft.board.splice(
             draft.board.findIndex(
               board => board.pk === action.payload.origin.board_pk,
@@ -179,6 +182,7 @@ export const boardReducer = (
           action.payload.err.response &&
           action.payload.err.response.data.code === 404
         ) {
+          alert('존재하지 않는 댓글 입니다.');
           draft.board.splice(
             draft.board.findIndex(
               board => board.pk === action.payload.origin.board_pk,
@@ -214,14 +218,18 @@ export const boardReducer = (
           const boardIndex = draft.board.findIndex(
             board => board.pk === action.payload.origin.board_pk,
           );
-          action.payload.err.response.data.name === 'Not_Found_Board'
-            ? draft.board.splice(boardIndex, 1)
-            : draft.board[boardIndex].comment.splice(
-                draft.board[boardIndex].comment.findIndex(
-                  comment => comment.pk === action.payload.origin.comment_pk,
-                ),
-                1,
-              );
+          if (action.payload.err.response.data.name === 'Not_Found_Board') {
+            alert('존재하지 않는 게시글 입니다.');
+            draft.board.splice(boardIndex, 1);
+          } else {
+            alert('존재하지 않는 댓글 입니다.');
+            draft.board[boardIndex].comment.splice(
+              draft.board[boardIndex].comment.findIndex(
+                comment => comment.pk === action.payload.origin.comment_pk,
+              ),
+              1,
+            );
+          }
         }
         break;
 
@@ -249,14 +257,18 @@ export const boardReducer = (
           const boardIndex = draft.board.findIndex(
             board => board.pk === action.payload.origin.board_pk,
           );
-          action.payload.err.response.data.name === 'Not_Found_Board'
-            ? draft.board.splice(boardIndex, 1)
-            : draft.board[boardIndex].comment.splice(
-                draft.board[boardIndex].comment.findIndex(
-                  comment => comment.pk === action.payload.origin.comment_pk,
-                ),
-                1,
-              );
+          if (action.payload.err.response.data.name === 'Not_Found_Board') {
+            alert('존재하지 않는 게시글 입니다.');
+            draft.board.splice(boardIndex, 1);
+          } else {
+            alert('존재하지 않는 댓글 입니다.');
+            draft.board[boardIndex].comment.splice(
+              draft.board[boardIndex].comment.findIndex(
+                comment => comment.pk === action.payload.origin.comment_pk,
+              ),
+              1,
+            );
+          }
         }
         break;
 
@@ -276,6 +288,7 @@ export const boardReducer = (
             board => board.pk === action.payload.origin.board_pk,
           );
           if (action.payload.origin.comment_pk) {
+            alert('존재하지 않는 댓글 입니다.');
             draft.board[boardIndex].comment.splice(
               draft.board[boardIndex].comment.findIndex(
                 comment => comment.pk === action.payload.origin.comment_pk,
@@ -283,6 +296,7 @@ export const boardReducer = (
               1,
             );
           } else {
+            alert('존재하지 않는 게시글 입니다.');
             draft.board.splice(boardIndex, 1);
           }
         }
@@ -292,12 +306,10 @@ export const boardReducer = (
         break;
 
       case 'LIKE':
-        draft.likeStatus = 'pending';
-        break;
-      case 'LIKE_SUCCESS':
         {
-          draft.likeStatus = 'success';
-          const board = draft.board.find(
+          draft.likeStatus = 'pending';
+
+          const board = state.board.find(
             board => board.pk === action.payload.board_pk,
           );
 
@@ -323,6 +335,10 @@ export const boardReducer = (
             }
           }
         }
+
+        break;
+      case 'LIKE_SUCCESS':
+        draft.likeStatus = 'success';
         break;
       case 'LIKE_FAILURE':
         draft.likeStatus = 'failure';
@@ -334,6 +350,7 @@ export const boardReducer = (
             board => board.pk === action.payload.origin.board_pk,
           );
           if (action.payload.origin.comment_pk) {
+            alert('존재하지 않는 댓글 입니다.');
             draft.board[boardIndex].comment.splice(
               draft.board[boardIndex].comment.findIndex(
                 comment => comment.pk === action.payload.origin.comment_pk,
@@ -341,7 +358,37 @@ export const boardReducer = (
               1,
             );
           } else {
+            alert('존재하지 않는 게시글 입니다.');
             draft.board.splice(boardIndex, 1);
+          }
+        } else if (
+          action.payload.err.response &&
+          action.payload.err.response.data.code !== 404
+        ) {
+          const board = draft.board.find(
+            board => board.pk === action.payload.origin.board_pk,
+          );
+
+          if (action.payload.origin.type === 'board' && board) {
+            if (board.isLiked) {
+              board.likeCount -= 1;
+            } else {
+              board.likeCount += 1;
+            }
+            board.isLiked = !board.isLiked;
+          } else if (action.payload.origin.type === 'comment' && board) {
+            const comment = board.comment.find(
+              comment => comment.pk === action.payload.origin.comment_pk,
+            );
+
+            if (comment) {
+              if (comment.isLiked) {
+                comment.likeCount -= 1;
+              } else {
+                comment.likeCount += 1;
+              }
+              comment.isLiked = !comment.isLiked;
+            }
           }
         }
         break;
