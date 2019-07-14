@@ -99,8 +99,8 @@ const CommentFormComponent: React.FC<
 
   const PostComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (content && postBoardCommentStatus !== 'pending') {
-      postBoardComment({ accessToken, board_pk, content });
+    if (content.trim().length && postBoardCommentStatus !== 'pending') {
+      postBoardComment({ accessToken, board_pk, content: content.trim() });
       setContent('');
     }
   };

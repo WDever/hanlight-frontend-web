@@ -22,7 +22,7 @@ import {
 } from 'lib/styles';
 import HanlightLogo from 'lib/svg/hanlight-logo.svg';
 import queryString from 'query-string';
-import { RouteComponentProps } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import uuid from 'uuid';
 
@@ -131,6 +131,26 @@ const InputName = styled.span`
   @media ${Device.mobileL} {
     font-size: 0.75rem;
   }
+`;
+
+const TermWrapper = styled.div`
+  color: #8e8e8e;
+  font-family: 'Spoqa Han Sans';
+  font-size: 0.9rem;
+
+  @media ${Device.tabletS} {
+    font-size: 0.8rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.5rem;
+  }
+`;
+
+const TermShortCut = styled(Link)`
+  text-decoration: underline;
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
 `;
 
 class PhoneCheckComponent extends React.Component<
@@ -495,6 +515,19 @@ class PhoneCheckComponent extends React.Component<
                   </AccountKit>
                 ) : (
                   <Button active={false}>인증하기</Button>
+                )}
+                {type === 'register' && (
+                  <TermWrapper>
+                    <span>전화번호 인증 시&nbsp;</span>
+                    <TermShortCut to="/service/termsofuse">
+                      이용 약관
+                    </TermShortCut>
+                    과&nbsp;
+                    <TermShortCut to="/service/privacypolicy">
+                      개인정보처리방침
+                    </TermShortCut>
+                    <span>에 동의하게 됩니다.</span>
+                  </TermWrapper>
                 )}
               </TermsBtnWrapper>
             </Form>

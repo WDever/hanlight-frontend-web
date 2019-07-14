@@ -309,7 +309,7 @@ export const boardReducer = (
         {
           draft.likeStatus = 'pending';
 
-          const board = draft.board.find(
+          const board = state.board.find(
             board => board.pk === action.payload.board_pk,
           );
 

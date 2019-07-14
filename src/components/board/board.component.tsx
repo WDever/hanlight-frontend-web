@@ -115,7 +115,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         resetError();
       }
     };
-  }, [errorCode, resetError]);
+  }, []);
 
   useEffect(() => {
     if (prevStatusProps) {

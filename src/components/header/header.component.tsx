@@ -8,9 +8,9 @@ import styled from 'styled-components';
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: center;
+  box-shadow: 0 6px 40px 0 rgba(129, 129, 129, 0.1);
   width: 100%;
   height: 3.75rem;
-  box-shadow: 0 6px 40px 0 rgba(129, 129, 129, 0.1);
   position: fixed;
   background-color: #ffffff;
   z-index: 10;

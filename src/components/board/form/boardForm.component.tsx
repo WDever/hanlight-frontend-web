@@ -318,7 +318,7 @@ export default class BoardFormComponent extends React.Component<
     ) {
       Array.from(files)
         .filter(file => {
-          if (file.size > 1048576) {
+          if (file.size > 1024 * 1024 * 5) {
             alert(`${file.name} 파일이 용량이 커서 업로드할 수 없습니다.`);
           } else {
             return true;

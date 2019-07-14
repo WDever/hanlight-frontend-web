@@ -207,15 +207,15 @@ const FeedImgContainer = styled.div`
 `;
 
 const FeedImgWrapper = styled.div<{ rows: number }>`
+  position: relative;
   width: 100%;
   height: 100%;
   display: grid;
   grid-column-gap: 4px;
   grid-row-gap: 4px;
-  grid-template-columns: ${props =>
-    props.rows >= 4 ? '50% 50%' : 'auto auto'};
-  grid-template-rows: ${props =>
-    props.rows === 3 ? '60% auto' : props.rows >= 4 ? '50% 50%' : 'unset'};
+  grid-template-columns: 50% 50%;
+  grid-template-rows: ${({ rows }) =>
+    rows <= 2 ? '100%' : rows === 3 ? '60% 40%' : '50% 50%'};
 
   @media ${Device.tabletL} {
     grid-column-gap: 0;
@@ -250,13 +250,10 @@ const FeedMoreImgSpan = styled.span`
 const FeedImgToggleWrapper = styled.div`
   position: absolute;
   width: 100%;
-  top: 20%;
+  height: 100%;
+  top: 0;
   display: flex;
   z-index: 3;
-
-  @media ${Device.mobileL} {
-    top: -20%;
-  }
 `;
 
 const FeedImgToggle = styled.img`
