@@ -491,7 +491,7 @@ class PhoneCheckComponent extends React.Component<
                   <AccountKit
                     appId="265056484381541"
                     csrf={uuid.v4()}
-                    debug={true}
+                    debug={false}
                     version="v1.1"
                     phoneNumber={tp.value}
                     onResponse={handleFbResponse}

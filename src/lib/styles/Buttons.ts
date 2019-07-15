@@ -12,6 +12,7 @@ export const Button = styled.button<{ active: boolean }>`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
   color: #ffffff;
+  cursor: pointer;
 
   display: flex;
   justify-content: center;
