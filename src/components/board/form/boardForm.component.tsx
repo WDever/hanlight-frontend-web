@@ -7,7 +7,7 @@ import {
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const FormTitle = styled.div`
   width: 100%;
@@ -253,14 +253,14 @@ const FormImgLabel = styled.label`
   }
 `;
 
-const FormSubmitButton = styled.button`
+const FormSubmitButton = styled.button<{ pending: boolean }>`
   width: 6.875rem;
   height: 100%;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
   border-radius: 1rem;
   font-weight: bold;
   border: 0;
-  background-color: #4470ff;
+  background-color: ${props => (props.pending ? '#365bd1' : '#4470ff')};
   color: #e9ebee;
   cursor: pointer;
 
@@ -411,7 +411,11 @@ export default class BoardFormComponent extends React.Component<
                     accept="image/jpeg,image/x-png"
                   />
                 </div>
-                <FormSubmitButton onClick={this.handleSubmit}>
+                <FormSubmitButton
+                  onClick={this.handleSubmit}
+                  disabled={this.props.postBoardStatus === 'pending'}
+                  pending={this.props.postBoardStatus === 'pending'}
+                >
                   작성
                 </FormSubmitButton>
               </FormButtonWrapper>

@@ -7,6 +7,7 @@ import {
   errorActions,
   errorReducerActions,
   ErrorResponse,
+  userActions,
 } from 'store';
 
 export interface AutoErrorCheckProps {
@@ -19,6 +20,7 @@ export interface AutoErrorCheckProps {
 
 export interface AutoErrorCheckMethod {
   setError: (payload: ErrorResponse) => void;
+  resetUser(): void;
 }
 
 const mapStateToProps = ({ error }: AppState) => ({
@@ -31,6 +33,7 @@ const mapStateToProps = ({ error }: AppState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions>) => ({
   setError: bindActionCreators(errorActions.setError, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 const AutoErrorCheckContainer = withRouter(

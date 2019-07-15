@@ -10,7 +10,16 @@ const { useEffect } = React;
 
 const AutoErrorCheckComponent: React.FC<
   AutoErrorCheckProps & AutoErrorCheckMethod & RouteComponentProps
-> = ({ history, location, onError, code, message, time, setError }) => {
+> = ({
+  history,
+  location,
+  onError,
+  code,
+  message,
+  time,
+  setError,
+  resetUser,
+}) => {
   useEffect(() => {
     const isIE = navigator.userAgent.toLowerCase().indexOf('msie') != -1;
 
@@ -36,6 +45,9 @@ const AutoErrorCheckComponent: React.FC<
         code >= 500
       ) {
         history.push('/error');
+      } else if (code === 401) {
+        resetUser();
+        history.push('/user/login');
       }
     }
   }, [onError]);
