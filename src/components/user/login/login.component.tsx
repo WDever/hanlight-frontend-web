@@ -36,8 +36,8 @@ const GreetingDiv = styled.div`
 `;
 
 const LoginImg = styled.img`
-  width: 5.95rem;
-  margin-bottom: 5.375rem;
+  width: 6.95rem;
+  margin-bottom: 4.375rem;
 
   @media ${Device.mobileL} {
     width: 2.95rem;
