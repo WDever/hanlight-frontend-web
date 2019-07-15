@@ -115,12 +115,15 @@ const LinksWrapper = styled.div`
 
 const LinkBtn = styled.img`
   width: 2.375rem;
+  height: 2.375rem;
 
   @media ${Device.tabletL} {
     width: 1.875rem;
+    height: 1.875rem;
   }
   @media ${Device.mobileL} {
     width: 1.25rem;
+    height: 1.25rem;
   }
 `;
 
