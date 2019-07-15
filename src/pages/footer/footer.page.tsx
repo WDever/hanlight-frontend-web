@@ -151,7 +151,7 @@ const FooterPage: React.FC = () => {
               src={FbLogoSvg}
               alt="facebook logo"
               onClick={() =>
-                window.open('https://web.facebook.com/pg/한빛-176560256619015/')
+                window.open('https://web.facebook.com/한빛-176560256619015/')
               }
             />
             <LinkBtn
