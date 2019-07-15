@@ -16,7 +16,7 @@ const Wrapper = styled.div<{ today: boolean }>`
   height: 15.875rem;
 
   box-shadow: ${props =>
-    props.today ? 'inset 0 6px 30px 0 rgba(139, 139, 139, 0.16)' : 'none'};
+    props.today ? '0 6px 30px 0 rgba(139, 139, 139, 0.16)' : 'none'};
   border: ${props => (props.today ? 'none' : 'solid 1px #b9b9b9')};
   background-color: #ffffff;
   display: flex;
