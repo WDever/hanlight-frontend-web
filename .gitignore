@@ -24,4 +24,4 @@ yarn-error.log*
 
 /.vscode
 
-src/lib/baseUrl/*.ts
+/src/lib/baseUrl/
