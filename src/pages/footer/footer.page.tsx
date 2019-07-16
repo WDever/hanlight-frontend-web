@@ -173,7 +173,7 @@ const FooterPage: React.FC = () => {
           </LinksWrapper>
         </UpsideWrapper>
         <CopyRight>
-          Copyright COPYTRIGHT HANSEI CYBER SECURITY HIGHSCHOOL. ALL RIGHT
+          Copyright COPYRIGHT HANSEI CYBER SECURITY HIGHSCHOOL. ALL RIGHT
           REVERSED
         </CopyRight>
       </FooterWrapper>
