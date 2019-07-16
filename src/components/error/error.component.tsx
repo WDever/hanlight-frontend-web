@@ -15,6 +15,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    margin-bottom: 3rem;
+  }
 `;
 
 const Center = styled.div`
@@ -40,7 +44,7 @@ const LeftWrapper = styled.div`
 
   @media ${Device.tabletL} {
     align-items: center;
-    height: 35%;
+    height: 45%;
   }
 `;
 
@@ -49,7 +53,11 @@ const ErrorImg = styled.img`
   object-fit: contain;
 
   @media ${Device.tabletL} {
-    width: 50%;
+    width: 40%;
+  }
+
+  @media ${Device.mobileL} {
+    width: 60%;
   }
 `;
 
@@ -58,6 +66,10 @@ const Title = styled.p`
   font-family: inherit;
   color: #000000;
   margin: 0;
+
+  @media ${Device.mobileL} {
+    font-size: 1.75rem;
+  }
 `;
 
 const Content = styled.span`
@@ -67,6 +79,11 @@ const Content = styled.span`
 
   @media ${Device.tabletL} {
     width: 56%;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -80,6 +97,10 @@ const Button = styled.button`
   font-family: inherit;
   color: #ef3c5b;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    min-height: 2rem;
+  }
 `;
 
 const ErrorComponent: React.FC<
@@ -99,11 +120,17 @@ const ErrorComponent: React.FC<
       <Center>
         <LeftWrapper>
           <Title>
-            {onError ? `${code} - ${name}` : '404 - Page Not Found'}
+            {onError
+              ? code === 503
+                ? `${code} - 점검중`
+                : `${code} - ${name}`
+              : '404 - Page Not Found'}
           </Title>
           <Content>
             {onError
-              ? message
+              ? code === 503
+                ? '점검중'
+                : message
               : '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 옳바른지 확인해주세요.'}
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>

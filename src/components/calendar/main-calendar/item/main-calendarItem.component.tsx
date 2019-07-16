@@ -72,7 +72,8 @@ const Title = styled.span`
 const Content = styled.span<{ today: boolean }>`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1rem;
+  margin-top: 3px;
   color: #4470ff;
 
   @media ${Device.tabletL} {

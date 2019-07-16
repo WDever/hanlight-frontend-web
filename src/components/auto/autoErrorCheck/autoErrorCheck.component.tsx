@@ -48,6 +48,8 @@ const AutoErrorCheckComponent: React.FC<
       } else if (code === 401) {
         resetUser();
         history.push('/user/login');
+      } else if (code === 503) {
+        history.push('/error');
       }
     }
   }, [onError]);
