@@ -21,7 +21,7 @@ const AutoErrorCheckComponent: React.FC<
   resetUser,
 }) => {
   useEffect(() => {
-    const isIE = navigator.userAgent.toLowerCase().indexOf('msie') != -1;
+    const isIE = navigator.userAgent.toLowerCase().indexOf('msie') !== -1;
 
     if (isIE) {
       setError({
@@ -49,6 +49,12 @@ const AutoErrorCheckComponent: React.FC<
         resetUser();
         history.push('/user/login');
       } else if (code === 503) {
+        setError({
+          code: 503,
+          message: '점검중',
+          description: '서버 / 디비 에러',
+          name: 'SERVER / DB ERROR',
+        });
         history.push('/error');
       }
     }

@@ -120,17 +120,11 @@ const ErrorComponent: React.FC<
       <Center>
         <LeftWrapper>
           <Title>
-            {onError
-              ? code === 503
-                ? `${code} - 점검중`
-                : `${code} - ${name}`
-              : '404 - Page Not Found'}
+            {onError ? `${code} - ${name}` : '404 - Page Not Found'}
           </Title>
           <Content>
             {onError
-              ? code === 503
-                ? '점검중'
-                : message
+              ? message
               : '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 옳바른지 확인해주세요.'}
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>
