@@ -40,7 +40,6 @@ function* getMealApiSaga(action: GetMeal) {
         yield put({ type: GET_MEAL_MONTH_SUCCESS, payload: response });
       }
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name:
@@ -68,7 +67,6 @@ function* getMealOrderApiSaga(action: GetMealOrder) {
       const response = yield call(getMealOrderApi, action.payload);
       yield put({ type: GET_MEAL_ORDER_SUCCESS, payload: response });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_MEAL_ORDER_FAILURE,

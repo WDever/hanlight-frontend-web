@@ -73,7 +73,6 @@ function* getBoardApiSaga(action: GetBoard) {
        
       yield put({ type: GET_BOARD_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         payload: { err: e, origin: action.payload },
@@ -105,7 +104,6 @@ function* postBoardApiSaga(action: PostBoard) {
        
       yield put({ type: POST_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         payload: { err: e, origin: action.payload },
@@ -137,7 +135,6 @@ function* patchBoardApiSaga(action: PatchBoard) {
        
       yield put({ type: PATCH_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: PATCH_BOARD_FAILURE,
@@ -165,7 +162,6 @@ function* deleteBoardApiSaga(action: DeleteBoard) {
        
       yield put({ type: DELETE_BOARD_SUCCESS, payload: action.payload });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: DELETE_BOARD_FAILURE,
@@ -197,7 +193,6 @@ function* getBoardCommentApiSaga(action: GetBoardComment) {
         payload: { ...response.data, board_pk: action.payload.board_pk },
       });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: yield put({
@@ -238,7 +233,6 @@ function* postBoardCommentApiSaga(action: PostBoardComment) {
         },
       });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: POST_BOARD_COMMENT_FAILURE,
@@ -277,7 +271,6 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
         },
       });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: PATCH_BOARD_COMMENT_FAILURE,
@@ -309,7 +302,6 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
         payload: action.payload,
       });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: DELETE_BOARD_COMMENT_FAILURE,
@@ -342,7 +334,6 @@ function* likeApiSaga(action: Like) {
        
       yield put({ type: LIKE_SUCCESS, payload: action.payload });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: LIKE_FAILURE,
@@ -376,7 +367,6 @@ function* reportApiSaga(action: Report) {
        
       yield put({ type: REPORT_SUCCESS });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: REPORT_FAILURE,
