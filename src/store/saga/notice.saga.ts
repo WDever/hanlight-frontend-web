@@ -34,6 +34,7 @@ function* getNoticeListApiSaga(action: GetNoticeList) {
       const response = yield call(getNoticeListApi, action.payload);
       yield put({ type: GET_NOTICE_LIST_SUCCESS, payload: response });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_NOTICE_LIST_FAILURE,
@@ -62,6 +63,7 @@ function* getNoticPostApiSaga(action: GetNoticePost) {
       const response = yield call(getNoticePostApi, action.payload);
       yield put({ type: GET_NOTICE_POST_SUCCESS, payload: response });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_NOTICE_POST_FAILURE,

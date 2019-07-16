@@ -41,6 +41,7 @@ function* getCalendarApiSaga(action: GetCalendar) {
       const response = yield call(getCalendarApi, action.payload);
       yield put({ type: GET_CALENDAR_SUCCESS, payload: response });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_CALENDAR_FAILURE,
@@ -56,6 +57,7 @@ function* getCalendarRecentApiSaga(action: GetCalendarRecent) {
       const response = yield call(getCalendarRecentApi, action.payload);
       yield put({ type: GET_CALENDAR_RECENT_SUCCESS, payload: response });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_CALENDAR_RECENT_FAILURE,

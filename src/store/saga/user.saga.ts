@@ -64,6 +64,7 @@ function* loginApiSaga(action: Login) {
       const response = yield call(loginApi, action.payload);
       yield put({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: LOGIN_FAILURE,
@@ -87,6 +88,7 @@ function* idRecoverySaga(action: IdRecovery) {
 
       yield put({ type: ID_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: ID_RECOVERY_FAILURE,
@@ -111,6 +113,7 @@ function* pwRecoverySaga(action: PwRecovery) {
 
       yield put({ type: PW_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: PW_RECOVERY_FAILURE,
@@ -145,6 +148,7 @@ function* idExistSaga(action: IdExist) {
         payload: action.payload,
       });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: ID_EXIST_FAILURE,
@@ -169,6 +173,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
 
       yield put({ type: VERIFY_PHONE_SUCCESS, payload: response.data });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: VERIFY_PHONE_FAILURE,
@@ -194,6 +199,7 @@ function* registerApiSaga(action: Register) {
 
       yield put({ type: REGISTER_SUCCESS, payload: response.data });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: REGISTER_FAILURE,
@@ -224,6 +230,7 @@ function* getUserApiSaga(action: GetUser) {
         },
       });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: GET_USER_FAILURE,
@@ -256,6 +263,7 @@ function* patchPasswordApiSaga(action: PatchPassword) {
         type: PATCH_PASSWORD_SUCCESS,
       });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: PATCH_PASSWORD_FAILURE,
@@ -288,6 +296,7 @@ function* patchPhoneApiSaga(action: PatchPhone) {
         type: PATCH_PHONE_SUCCESS,
       });
     } catch (e) {
+      console.log(e.response);
       yield put({
         type: SET_ERROR,
         name: PATCH_PHONE_FAILURE,
