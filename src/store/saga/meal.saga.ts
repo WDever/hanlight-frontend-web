@@ -33,7 +33,7 @@ function* getMealApiSaga(action: GetMeal) {
   if (action.type) {
     try {
       const response = yield call(getMealApi, action.payload);
-      console.log(response);
+
       if (action.payload.sort === 'week') {
         yield put({ type: GET_MEAL_WEEK_SUCCESS, payload: response });
       } else {

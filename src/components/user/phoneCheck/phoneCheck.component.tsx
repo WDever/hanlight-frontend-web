@@ -347,7 +347,6 @@ class PhoneCheckComponent extends React.Component<
         pwRecovery({ code: this.codeRef, id: id.value });
       }
     } else if (this.getCodeStatus === 'BAD_PARAMS') {
-      console.log(res);
       alert('핸드폰 인증 실패 (BAD_PARAMS)');
     }
   };

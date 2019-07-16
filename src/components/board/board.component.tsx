@@ -111,7 +111,6 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   useEffect(() => {
     return () => {
       if (errorCode < 500) {
-        console.log(errorCode);
         resetError();
       }
     };
