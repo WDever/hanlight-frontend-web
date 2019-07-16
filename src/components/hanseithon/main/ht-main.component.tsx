@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
 import AcceptPage from 'pages/hanseithon/main/acceptPage';
 import { useDispatch, useSelector } from 'react-redux';
@@ -91,12 +92,16 @@ const Exaplain = styled.span`
 
 const SponsorWrapper = styled.div`
   width: 100%;
-  height: 15.375rem;
   background-color: #000000;
+  height: 18.5rem;
   color: #ffffff;
   font-family: 'Opne Sans';
   display: flex;
   justify-content: center;
+
+  @media ${Device.tabletL} {
+    height: 15.375rem;
+  }
 `;
 
 const SponsorSeparator = styled.div`
