@@ -9,6 +9,7 @@ import { Device } from 'lib/styles';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
+import HanseiThonPage from 'pages/hanseithon';
 import MealPage from 'pages/meal/detail-meal';
 import MainMealPage from 'pages/meal/main-meal';
 import NoticePage from 'pages/notice/detail-notice';
@@ -74,14 +75,15 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       )}
 
       <Switch>
-        <Route exact={true} path='/' component={MainComponents} />
-        <Route exact={true} path='/calendar' component={CalendarPage} />
-        <Route exact={true} path='/meal' component={MealPage} />
-        <Route exact={true} path='/timetable' component={TimeTablePage} />
-        <Route path='/notice' component={NoticePage} />
-        <Route exact={true} path='/board' component={BoardContainer} />
-        <Route exact={true} path='/profile' component={ProfileContainer} />
-        <Redirect to='/error' />
+        <Route exact={true} path="/" component={MainComponents} />
+        <Route exact={true} path="/calendar" component={CalendarPage} />
+        <Route exact={true} path="/meal" component={MealPage} />
+        <Route exact={true} path="/timetable" component={TimeTablePage} />
+        <Route path="/notice" component={NoticePage} />
+        <Route exact={true} path="/board" component={BoardContainer} />
+        <Route exact={true} path="/profile" component={ProfileContainer} />
+        <Route exact={true} path="/hanseithon" component={HanseiThonPage} />
+        <Redirect to="/error" />
       </Switch>
     </div>
   ) : (

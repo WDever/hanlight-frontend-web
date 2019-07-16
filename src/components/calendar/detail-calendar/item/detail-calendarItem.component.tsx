@@ -66,7 +66,7 @@ const Title = styled.span`
 const Content = styled.span`
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: #4470ff;
 
   @media ${Device.mobileL} {

@@ -15,6 +15,10 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.tabletL} {
+    margin-bottom: 3rem;
+  }
 `;
 
 const Center = styled.div`
@@ -40,7 +44,7 @@ const LeftWrapper = styled.div`
 
   @media ${Device.tabletL} {
     align-items: center;
-    height: 35%;
+    height: 45%;
   }
 `;
 
@@ -49,7 +53,11 @@ const ErrorImg = styled.img`
   object-fit: contain;
 
   @media ${Device.tabletL} {
-    width: 50%;
+    width: 40%;
+  }
+
+  @media ${Device.mobileL} {
+    width: 60%;
   }
 `;
 
@@ -58,6 +66,10 @@ const Title = styled.p`
   font-family: inherit;
   color: #000000;
   margin: 0;
+
+  @media ${Device.mobileL} {
+    font-size: 1.75rem;
+  }
 `;
 
 const Content = styled.span`
@@ -67,6 +79,11 @@ const Content = styled.span`
 
   @media ${Device.tabletL} {
     width: 56%;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -80,6 +97,10 @@ const Button = styled.button`
   font-family: inherit;
   color: #ef3c5b;
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    min-height: 2rem;
+  }
 `;
 
 const ErrorComponent: React.FC<
