@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import AcceptPageComponent from 'components/hanseithon/main/acceptPage';
+import AcceptPageContainer from 'container/hanseithon/main/acceptPage';
 import styled from 'styled-components';
 
 const Template = styled.div`
@@ -14,7 +14,7 @@ const Template = styled.div`
 const AcceptPage: React.FC = () => {
   return (
     <Template>
-      <AcceptPageComponent />
+      <AcceptPageContainer />
     </Template>
   );
 };

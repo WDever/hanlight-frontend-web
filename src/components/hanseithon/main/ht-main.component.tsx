@@ -1,9 +1,9 @@
 import * as React from 'react';
 
+import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import { Device } from 'lib/styles';
 import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
 import AcceptPage from 'pages/hanseithon/main/acceptPage';
-import { useDispatch, useSelector } from 'react-redux';
 import { AppState, DEEM_BOARD, DeemBoard } from 'store';
 import styled from 'styled-components';
 
@@ -92,6 +92,7 @@ const Content = styled.div`
   margin-top: 1.5rem;
   width: 30rem;
   word-break: keep-all;
+  line-height: 1.47;
 
   @media ${Device.tabletL} {
     width: unset;
@@ -100,8 +101,6 @@ const Content = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  margin-top: 1.5rem;
-  margin-left: 9.125rem;
   display: flex;
 
   @media ${Device.tabletL} {
@@ -133,12 +132,11 @@ const Exaplain = styled.span`
   font-family: 'Opne Sans';
   font-size: 0.6875rem;
   margin-top: 1.25rem;
-  margin-left: 9.125rem;
+  margin-bottom: 0.5rem;
 
   @media ${Device.tabletL} {
     margin-top: 0.5rem;
     font-size: 0.625rem;
-    margin-left: unset;
   }
 `;
 
@@ -164,13 +162,19 @@ const Sponsors = styled.div`
   height: 50%;
   width: 100%;
   display: flex;
-  /* justify-content: space-between; */
 
   div {
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     margin-right: 12rem;
+
+    font-size: 1.25rem;
+
+    @media ${Device.tabletL} {
+      margin-right: 0;
+      font-size: 11px;
+    }
 
     @media ${Device.mobileL} {
       margin-right: 0;
@@ -195,34 +199,47 @@ const SponsorInnerWrapper = styled.div`
 
 const SponsorTitle = styled.div`
   font-family: inherit;
-  font-size: 1.125rem;
+  font-size: 1.875rem;
   font-weight: bold;
   margin-top: 1.5rem;
   margin-bottom: 3.125rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.125rem;
+  }
 `;
 
-const Separator = styled.div`
+const LeftSeparator = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
 
-const HTMainComponent: React.FC = () => {
-  const dispatch = useDispatch();
-  const deemBoardStatus = useSelector<AppState, boolean>(
-    state => state.board.deemBoardStatus,
-  );
+const RightSeparator = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-left: 9.1625rem;
 
+  @media ${Device.tabletL} {
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+`;
+
+const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
+  deem,
+  deemStatus,
+}) => {
   return (
     <>
-      {deemBoardStatus && <AcceptPage />}
+      {deemStatus && <AcceptPage />}
       <Wrapper>
         <TitleWrapper>
           <TitleImg src={TitleMainImg} alt="Main Title" />
           <Title>오빠, 쉬면서 하자</Title>
         </TitleWrapper>
         <ContentWrapper>
-          <Separator>
+          <LeftSeparator>
             <ContentTitleWrapper>
               <b>쉬어가는 한세톤 : 休</b>
               <span>Hansei thon : 休</span>
@@ -235,21 +252,19 @@ const HTMainComponent: React.FC = () => {
               맛있다고 생각합니다 팥빙수는 특히 엔젤리너스의 팥빙수가 엄청나게
               맛있더라구요 꿀팁입니다. 감사합니다.
             </Content>
-          </Separator>
-          <Separator>
+          </LeftSeparator>
+          <RightSeparator>
             <ButtonWrapper>
               <button
                 style={{ marginRight: '1.25rem' }}
-                onClick={() =>
-                  dispatch<DeemBoard>({ type: DEEM_BOARD, payload: true })
-                }
+                onClick={() => deem(true)}
               >
                 참가신청 해臝
               </button>
               <button>참가현황 봐臝</button>
             </ButtonWrapper>
             <Exaplain>臝(라) : 자유와 해방을 뜻함</Exaplain>
-          </Separator>
+          </RightSeparator>
         </ContentWrapper>
       </Wrapper>
       <SponsorWrapper>

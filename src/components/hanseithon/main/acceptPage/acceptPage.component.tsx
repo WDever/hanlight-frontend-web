@@ -1,10 +1,9 @@
 import * as React from 'react';
 
+import { AcceptPageMethod } from 'container/hanseithon/main/acceptPage';
 import { Device } from 'lib/styles';
 import TitleImg from 'lib/svg/white-hanlight-title-logo.svg';
-import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
-import { DEEM_BOARD, DeemBoard } from 'store';
 import styled from 'styled-components';
 
 const { useState } = React;
@@ -113,7 +112,7 @@ const Form = styled.form<{ checked: boolean }>`
     @media ${Device.tabletL} {
       width: 7.5rem;
       height: 2rem;
-    font-size: 11px;
+      font-size: 11px;
     }
   }
 
@@ -131,18 +130,18 @@ const Form = styled.form<{ checked: boolean }>`
   }
 `;
 
-const AcceptPageComponent: React.FC<RouteComponentProps> = ({
+const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
   history,
   location,
   match,
+  deem,
 }) => {
-  const dispatch = useDispatch();
   const [checked, setChecked] = useState<boolean>(false);
 
   const submitCaution = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    dispatch<DeemBoard>({ type: DEEM_BOARD, payload: false });
+    deem(false);
     history.push('/hanseithon/join');
   };
 
