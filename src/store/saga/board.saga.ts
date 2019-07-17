@@ -70,10 +70,9 @@ function* getBoardApiSaga(action: GetBoard) {
   if (action.type) {
     try {
       const response = yield call(getBoardApi, action.payload);
-      console.log(response);
+       
       yield put({ type: GET_BOARD_SUCCESS, payload: response.data });
     } catch (e) {
-      console.log(e.response);
       yield put({
         type: SET_ERROR,
         payload: { err: e, origin: action.payload },
@@ -102,7 +101,7 @@ function* postBoardApiSaga(action: PostBoard) {
   if (action.type) {
     try {
       const response = yield call(postBoardApi, action.payload);
-      console.log(response);
+       
       yield put({ type: POST_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
       yield put({
@@ -133,7 +132,7 @@ function* patchBoardApiSaga(action: PatchBoard) {
   if (action.type) {
     try {
       const response = yield call(patchBoardApi, action.payload);
-      console.log(response);
+       
       yield put({ type: PATCH_BOARD_SUCCESS, payload: response.data.board });
     } catch (e) {
       yield put({
@@ -160,7 +159,7 @@ function* deleteBoardApiSaga(action: DeleteBoard) {
   if (action.type) {
     try {
       const response = yield call(deleteBoardApi, action.payload);
-      console.log(response);
+       
       yield put({ type: DELETE_BOARD_SUCCESS, payload: action.payload });
     } catch (e) {
       yield put({
@@ -188,7 +187,7 @@ function* getBoardCommentApiSaga(action: GetBoardComment) {
   if (action.type) {
     try {
       const response = yield call(getBoardCommentApi, action.payload);
-      console.log(response);
+       
       yield put({
         type: GET_BOARD_COMMENT_SUCCESS,
         payload: { ...response.data, board_pk: action.payload.board_pk },
@@ -225,7 +224,7 @@ function* postBoardCommentApiSaga(action: PostBoardComment) {
   if (action.type) {
     try {
       const response = yield call(postBoardCommentApi, action.payload);
-      console.log(response);
+       
       yield put({
         type: POST_BOARD_COMMENT_SUCCESS,
         payload: {
@@ -263,7 +262,7 @@ function* patchBoardCommentApiSaga(action: PatchBoardComment) {
   if (action.type) {
     try {
       const response = yield call(patchBoardCommentApi, action.payload);
-      console.log(response);
+       
       yield put({
         type: PATCH_BOARD_COMMENT_SUCCESS,
         payload: response.data,
@@ -297,7 +296,7 @@ function* deleteBoardCommentApiSaga(action: DeleteBoardComment) {
   if (action.type) {
     try {
       const response = yield call(deleteBoardCommentApi, action.payload);
-      console.log(response);
+       
       yield put({
         type: DELETE_BOARD_COMMENT_SUCCESS,
         payload: action.payload,
@@ -332,7 +331,7 @@ function* likeApiSaga(action: Like) {
   if (action.type) {
     try {
       const response = yield call(likeApi, action.payload);
-      console.log(response);
+       
       yield put({ type: LIKE_SUCCESS, payload: action.payload });
     } catch (e) {
       yield put({
@@ -365,7 +364,7 @@ function* reportApiSaga(action: Report) {
   if (action.type) {
     try {
       const response = yield call(reportApi, action.payload);
-      console.log(response);
+       
       yield put({ type: REPORT_SUCCESS });
     } catch (e) {
       yield put({

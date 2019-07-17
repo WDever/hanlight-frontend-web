@@ -83,6 +83,7 @@ const SearchInput = styled.input`
   opacity: 0.5;
   border: solid 1px #bebebe;
   font-size: 1.12rem;
+  border-radius: 0;
 
   @media ${Device.tabletL} {
     width: 100%;

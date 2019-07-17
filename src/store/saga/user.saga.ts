@@ -62,7 +62,6 @@ function* loginApiSaga(action: Login) {
   if (action.type) {
     try {
       const response = yield call(loginApi, action.payload);
-      console.log(response);
       yield put({ type: LOGIN_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -85,7 +84,7 @@ function* idRecoverySaga(action: IdRecovery) {
   if (action.type) {
     try {
       const response = yield call(idRecoveryApi, action.payload);
-      console.log(response);
+
       yield put({ type: ID_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -109,7 +108,7 @@ function* pwRecoverySaga(action: PwRecovery) {
   if (action.type) {
     try {
       const response = yield call(pwRecoveryApi, action.payload);
-      console.log(response);
+
       yield put({ type: PW_RECOVERY_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -138,7 +137,7 @@ function* idExistSaga(action: IdExist) {
         key: 'id',
         value: action.payload.id,
       });
-      console.log(response);
+
       yield put({
         type: response.data.exist
           ? ID_EXIST_SUCCESS_TRUE
@@ -167,7 +166,7 @@ function* verifyPhoneApiSaga(action: VerifyPhone) {
   if (action.type) {
     try {
       const response = yield call(verifyPhoneApi, action.payload);
-      console.log(response);
+
       yield put({ type: VERIFY_PHONE_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -192,7 +191,7 @@ function* registerApiSaga(action: Register) {
   if (action.type) {
     try {
       const response = yield call(registerApi, action.payload);
-      console.log(response);
+
       yield put({ type: REGISTER_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -216,7 +215,7 @@ function* getUserApiSaga(action: GetUser) {
   if (action.type) {
     try {
       const response = yield call(getUserApi, action.payload);
-      console.log(response);
+
       yield put({
         type: GET_USER_SUCCESS,
         payload: {
@@ -252,7 +251,7 @@ function* patchPasswordApiSaga(action: PatchPassword) {
   if (action.type) {
     try {
       const response = yield call(patchPasswordApi, action.payload);
-      console.log(response);
+
       yield put({
         type: PATCH_PASSWORD_SUCCESS,
       });
@@ -284,7 +283,7 @@ function* patchPhoneApiSaga(action: PatchPhone) {
   if (action.type) {
     try {
       const response = yield call(patchPhoneApi, action.payload);
-      console.log(response);
+
       yield put({
         type: PATCH_PHONE_SUCCESS,
       });
