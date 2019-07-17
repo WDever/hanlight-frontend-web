@@ -20,8 +20,8 @@ const Wrapper = styled.div`
 const OptionBtn = styled.img`
   display: none;
   width: 1.25rem;
-  height: 1.875rem;
   cursor: pointer;
+  margin-bottom: 1rem;
 `;
 
 const CommentWrapper = styled.div`
@@ -396,12 +396,6 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
         </CommentLeftWrapper>
         <OptionBtn
           src={Dotdotdot}
-          style={{
-            width: '20px',
-            height: '30px',
-            cursor: 'pointer',
-            marginBottom: '1rem',
-          }}
           alt="comment option"
           onClick={() => setOptionToggle(!optionToggle)}
         />
