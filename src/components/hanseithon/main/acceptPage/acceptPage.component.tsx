@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import TitleImg from 'lib/svg/white-hanlight-title-logo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -16,24 +17,40 @@ const Wrapper = styled.div`
 `;
 
 const TitleWrapper = styled.div`
-  width: 11.7rem;
+  width: 19.1rem;
   font-family: 'Nanum Myeongjo';
   color: #ffffff;
-  margin-top: 1.5rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
+  margin-top: 2.875rem;
+
+  @media ${Device.tabletL} {
+    width: 11.7rem;
+    margin-top: 1.5rem;
+    align-items: flex-end;
+  }
 
   img {
-    width: 4.375rem;
+    width: 6rem;
+
+    @media ${Device.tabletL} {
+      width: 4.375rem;
+      width: 11.7rem;
+      margin-top: 1.5rem;
+    }
   }
 
   span {
     font-family: inherit;
-    font-size: 17px;
+    font-size: 2.25rem;
     font-weight: bold;
     margin-bottom: 5px;
     word-break: keep-all;
+
+    @media ${Device.tabletL} {
+      font-size: 17px;
+    }
   }
 `;
 
@@ -44,13 +61,21 @@ const ContentWrapper = styled.div`
   div {
     font-family: inherit;
     font-weight: bold;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
     margin: 2.25rem 0 1rem 0;
+
+    @media ${Device.tabletL} {
+      font-size: 0.75rem;
+    }
   }
 
   p {
     font-family: inherit;
-    font-size: 0.6rem;
+    font-size: 1rem;
+
+    @media ${Device.tabletL} {
+      font-size: 0.6rem;
+    }
   }
 `;
 
@@ -64,30 +89,45 @@ const Form = styled.form<{ checked: boolean }>`
 
   label {
     font-family: inherit;
-    font-size: 0.75rem;
+    font-size: 1.25rem;
     display: flex;
     align-items: center;
+
+    @media ${Device.tabletL} {
+      font-size: 0.75rem;
+    }
   }
 
   button {
-    width: 7.5rem;
-    height: 2rem;
+    width: 10rem;
+    height: 3rem;
     border-radius: 1.75rem;
     background-color: #ef0058;
     outline: none;
     border: none;
+    font-size: 1.125rem;
     font-family: inherit;
-    font-size: 11px;
     color: #ffffff;
     margin-top: 1.5rem;
+
+    @media ${Device.tabletL} {
+      width: 7.5rem;
+      height: 2rem;
+    font-size: 11px;
+    }
   }
 
   input {
-    width: 0.875rem;
-    height: 0.875rem;
+    width: 1.75rem;
+    height: 1.75rem;
     border-radius: 0.25rem;
     appearance: checkbox;
     margin-left: 0.5rem;
+
+    @media ${Device.tabletL} {
+      width: 0.875rem;
+      height: 0.875rem;
+    }
   }
 `;
 
@@ -103,7 +143,7 @@ const AcceptPageComponent: React.FC<RouteComponentProps> = ({
     e.preventDefault();
 
     dispatch<DeemBoard>({ type: DEEM_BOARD, payload: false });
-    history.push('/hanseithon/team');
+    history.push('/hanseithon/join');
   };
 
   return (

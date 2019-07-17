@@ -1,22 +1,21 @@
 import * as React from 'react';
 
-import AcceptPageComponent from 'components/hanseithon/main/acceptPage';
+import JoinComponent from 'components/hanseithon/join';
 import styled from 'styled-components';
 
 const Template = styled.div`
   width: 100%;
-  position: absolute;
-  z-index: 10;
+  height: 100%;
   display: flex;
   justify-content: center;
 `;
 
-const AcceptPage: React.FC = () => {
+const JoinPage: React.FC = () => {
   return (
     <Template>
-      <AcceptPageComponent />
+      <JoinComponent />
     </Template>
   );
 };
 
-export default AcceptPage;
+export default JoinPage;

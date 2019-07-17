@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import JoinPage from 'pages/hanseithon/join';
 import MainPage from 'pages/hanseithon/main';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
@@ -24,6 +25,7 @@ const HanseiThonComponent: React.FC = () => {
     <>
       {deemBoardStatus && <Deem />}
       <Switch>
+        <Route exact={true} path="/hanseithon/join" component={JoinPage} />
         <Route exact={true} path="/hanseithon" component={MainPage} />
       </Switch>
     </>
