@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import JoinComponent from 'components/hanseithon/join';
+import JoinContainer from 'container/hanseithon/join';
 import styled from 'styled-components';
 
 const Template = styled.div`
@@ -13,7 +13,7 @@ const Template = styled.div`
 const JoinPage: React.FC = () => {
   return (
     <Template>
-      <JoinComponent />
+      <JoinContainer />
     </Template>
   );
 };

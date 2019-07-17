@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import { Deem } from 'components/hanseithon';
+import { HTJoinMethod, HTJoinProps } from 'container/hanseithon/join';
 import { Device } from 'lib/styles';
 import JoinTeamImg from 'lib/svg/join-team.svg';
 import MatchTeamImg from 'lib/svg/match-team.svg';
+import HTModalPage from 'pages/hanseithon/modal';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -25,7 +28,7 @@ const CreateBtn = styled.button`
   background-color: #bdbdbd;
 
   @media ${Device.tabletL} {
-    margin-top: 1.5rem;
+    margin-top: 2.25rem;
   }
 `;
 
@@ -54,6 +57,7 @@ const Form = styled.div`
   }
 
   @media ${Device.tabletL} {
+    position: initial;
     flex-direction: column;
     align-items: center;
     width: 100%;
@@ -72,7 +76,9 @@ const Form = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin: 0 1.5rem;
+
+    margin-right: 1.5rem;
+    margin-left: 1.5rem;
 
     font-family: 'yg-jalnan';
     font-size: 1.75rem;
@@ -81,7 +87,9 @@ const Form = styled.div`
       width: 10.625rem;
       height: 13.625rem;
       font-size: 0.875rem;
-      margin: 10rem;
+
+      margin-right: unset;
+      margin-left: unset;
     }
   }
 `;
@@ -110,21 +118,49 @@ const MatchTeam = styled.img`
   }
 `;
 
-const JoinComponent: React.FC = () => {
+const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
+  modal,
+  modalType,
+  deem,
+  deemStatus,
+}) => {
   return (
-    <Wrapper>
-      <Form>
-        <CreateBtn>팀 생성</CreateBtn>
-        <CommonBtn last={false}>
-          팀 참가
-          <JoinTeam src={JoinTeamImg} alt="join team" />
-        </CommonBtn>
-        <CommonBtn last={true}>
-          팀 매칭
-          <MatchTeam src={MatchTeamImg} alt="match team" />
-        </CommonBtn>
-      </Form>
-    </Wrapper>
+    <>
+      {deemStatus && <Deem />}
+      {modalType !== 'none' && <HTModalPage />}
+      <Wrapper>
+        <Form>
+          <CreateBtn
+            onClick={() => {
+              modal('create');
+              deem(true);
+            }}
+          >
+            팀 생성
+          </CreateBtn>
+          <CommonBtn
+            last={false}
+            onClick={() => {
+              modal('join');
+              deem(true);
+            }}
+          >
+            팀 참가
+            <JoinTeam src={JoinTeamImg} alt="join team" />
+          </CommonBtn>
+          <CommonBtn
+            last={true}
+            onClick={() => {
+              modal('match');
+              deem(true);
+            }}
+          >
+            팀 매칭
+            <MatchTeam src={MatchTeamImg} alt="match team" />
+          </CommonBtn>
+        </Form>
+      </Wrapper>
+    </>
   );
 };
 

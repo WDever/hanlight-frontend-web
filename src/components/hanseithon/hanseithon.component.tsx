@@ -6,7 +6,7 @@ import MainPage from 'pages/hanseithon/main';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Deem = styled.div`
+export const Deem = styled.div`
   width: 100%;
   height: 92.6%;
   opacity: 0.8;

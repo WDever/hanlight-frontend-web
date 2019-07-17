@@ -3,6 +3,7 @@ import { HanseithonModel, hanseithonReducerActions } from 'store';
 
 const initialState: HanseithonModel = {
   deemStatus: false,
+  modalType: 'none',
 };
 
 export const hanseithonReducer = (
@@ -13,6 +14,10 @@ export const hanseithonReducer = (
     switch (action.type) {
       case 'DEEM':
         draft.deemStatus = action.payload;
+        break;
+
+      case 'MODAL':
+        draft.modalType = action.payload;
         break;
 
       default:
