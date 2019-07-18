@@ -3,8 +3,10 @@ import * as React from 'react';
 import { Deem } from 'components/hanseithon';
 import { HTJoinMethod, HTJoinProps } from 'container/hanseithon/join';
 import { Device } from 'lib/styles';
+import CreateBackImg from 'lib/svg/create-team-back.svg';
 import JoinTeamImg from 'lib/svg/join-team.svg';
 import MatchTeamImg from 'lib/svg/match-team.svg';
+import CreateTeamBtnImg from 'lib/svg/create-team-btn.svg';
 import HTModalPage from 'pages/hanseithon/modal';
 import styled from 'styled-components';
 
@@ -25,11 +27,22 @@ const Wrapper = styled.div`
 
 const CreateBtn = styled.button`
   color: #ffffff;
+
   background-color: #bdbdbd;
+  background-image: url(${CreateBackImg});
+  background-size: cover;
 
   @media ${Device.tabletL} {
     margin-top: 2.25rem;
   }
+`;
+
+const CreateBtnImg = styled.img`
+  margin-top: 8rem;
+  margin-bottom: 5.825rem;
+
+  /* position: absolute;
+  z-index: 5; */
 `;
 
 const CommonBtn = styled.button<{ last: boolean }>`
@@ -137,6 +150,7 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
             }}
           >
             팀 생성
+            <CreateBtnImg src={CreateTeamBtnImg} alt="create button" />
           </CreateBtn>
           <CommonBtn
             last={false}
