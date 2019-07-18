@@ -51,15 +51,18 @@ export const hanseithonReducer = (
         draft.putTeamStatus = 'pending';
         break;
 
-      case 'PUT_TEAM_SUCCESS':
+      case 'PUT_TEAM_SUCCESS': {
         draft.putTeamStatus = 'success';
 
-        const seletedTeam = state.teams.find(
+        const seletedTeam = draft.teams.find(
           item => item.pk === action.payload.pk,
         );
 
-        draft.team = seletedTeam === undefined ? state.team : seletedTeam;
+        console.log(seletedTeam);
+
+        draft.team = seletedTeam === undefined ? draft.team : seletedTeam;
         break;
+      }
 
       case 'PUT_TEAM_FAILURE':
         draft.putTeamStatus = 'failure';
@@ -105,15 +108,15 @@ export const hanseithonReducer = (
         break;
 
       case 'POST_TEAM_MATCH':
-        draft.postTeamStatus = 'pending';
+        draft.postTeamMatchStatus = 'pending';
         break;
 
       case 'POST_TEAM_MATCH_SUCCESS':
-        draft.postTeamStatus = 'success';
+        draft.postTeamMatchStatus = 'success';
         break;
 
       case 'POST_TEAM_MATCH_FAILURE':
-        draft.postTeamStatus = 'failure';
+        draft.postTeamMatchStatus = 'failure';
         break;
 
       case 'RESET_STATUS':

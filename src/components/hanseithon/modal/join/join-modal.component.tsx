@@ -168,6 +168,11 @@ const JoinTeamModal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (putTeamStatus === 'success') {
       modal('join-success');
+    } else if (putTeamStatus === 'failure') {
+      alert(errMessage);
+      deem(false);
+      modal('none');
+      resetStatus();
     }
   }, [putTeamStatus]);
 

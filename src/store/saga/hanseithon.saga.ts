@@ -54,7 +54,10 @@ function* putTeamApiSaga(action: PutTeam) {
     try {
       const response = yield call(putTeamApi, action.payload);
 
-      yield put({ type: PUT_TEAM_SUCCESS, payload: response.data });
+      yield put({
+        type: PUT_TEAM_SUCCESS,
+        payload: { ...response.data, pk: action.payload.team_pk },
+      });
     } catch (e) {
       yield put({
         type: SET_ERROR,

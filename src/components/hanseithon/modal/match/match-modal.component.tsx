@@ -10,11 +10,18 @@ import {
   TitleWrapper,
 } from '../ht-modal.component';
 
+const { useEffect } = React;
+
 const MatchTeamModal: React.FC<ModalProps> = ({
   changeSelect,
   postTeamMatch,
   data,
   accessToken,
+  postMatchTeamStatus,
+  errMessage,
+  deem,
+  modal,
+  resetStatus,
 }) => {
   const [introduction, setIntrodiction] = useInput('');
 
@@ -28,6 +35,21 @@ const MatchTeamModal: React.FC<ModalProps> = ({
       introduction,
     });
   };
+
+  useEffect(() => {
+    console.log(postMatchTeamStatus);
+    if (postMatchTeamStatus === 'success') {
+      alert('매칭에 참가하셨습니다.');
+      deem(false);
+      modal('none');
+      resetStatus();
+    } else if (postMatchTeamStatus === 'failure') {
+      alert(errMessage);
+      deem(false);
+      modal('none');
+      resetStatus();
+    }
+  }, [postMatchTeamStatus]);
 
   return (
     <TeamBox>
