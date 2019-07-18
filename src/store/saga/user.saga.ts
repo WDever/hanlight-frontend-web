@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance } from 'lib/baseUrl';
+import { instance, hanseithonInstance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   ExistParam,
@@ -48,6 +48,7 @@ import {
   VERIFY_PHONE_SUCCESS,
   VerifyPhone,
   VerifyPhoneParam,
+  PostTeamParams,
 } from '../action';
 
 const loginApi = (data: LoginParam) =>
