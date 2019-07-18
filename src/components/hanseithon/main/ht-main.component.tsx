@@ -405,7 +405,9 @@ const HTMainComponent: React.FC<
             <ButtonWrapper>
               <button
                 style={{ marginRight: '1.25rem' }}
-                onClick={() => deem(true)}
+                onClick={() =>
+                  alert('7월 19일 아침에 오픈하겠습니다. 죄송합니다.')
+                }
               >
                 참가신청 해臝
               </button>
