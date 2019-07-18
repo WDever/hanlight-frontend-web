@@ -9,6 +9,7 @@ import styled from 'styled-components';
 const { useState } = React;
 
 const Wrapper = styled.div`
+  position: relative;
   width: 88%;
   display: flex;
   flex-direction: column;
@@ -153,6 +154,32 @@ const Form = styled.form<{ checked: boolean }>`
   }
 `;
 
+const XButton = styled.span`
+  position: absolute;
+  right: 0;
+  top: 3rem;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: ' ';
+    height: 30px;
+    width: 2px;
+    border-radius: 1.25rem;
+    background-color: #ffffff;
+  }
+`;
+
 const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
   history,
   location,
@@ -178,6 +205,12 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
 
   return (
     <Wrapper>
+      <XButton
+        onClick={() => {
+          agree(false);
+          deem(false);
+        }}
+      />
       <TitleWrapper>
         <img src={TitleImg} alt="Accept Title" />
         <span>
