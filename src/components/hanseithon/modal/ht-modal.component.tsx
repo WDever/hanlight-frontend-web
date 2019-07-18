@@ -360,7 +360,14 @@ const CreateTeamModal: React.FC<HTModalMethod & ModalProps> = ({
               <option>디자인</option>
             </select>
           </label>
-          <button style={{ marginTop: '0.9375rem' }}>생성 시작</button>
+          <button
+            style={{ marginTop: '0.9375rem' }}
+            onClick={(e: React.MouseEvent<HTMLButtonElement>) =>
+              e.preventDefault()
+            }
+          >
+            생성 시작
+          </button>
         </TeamForm>
       </CreateTeamWrapper>
     </CreateTeamBox>
@@ -381,7 +388,7 @@ const MatchTeamModal: React.FC<HTModalMethod & ModalProps> = ({
   const handleSubmit = () => {
     deem(false);
     modal('none');
-  }
+  };
 
   return (
     <MatchTeamBox>

@@ -6,7 +6,7 @@ import styled from 'styled-components';
 const Template = styled.div`
   width: 100%;
   position: absolute;
-  z-index: 10;
+  z-index: 9;
   display: flex;
   justify-content: center;
 `;

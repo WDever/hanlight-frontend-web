@@ -9,10 +9,10 @@ import styled from 'styled-components';
 
 export const Deem = styled.div`
   width: 100%;
-  height: 92.6%;
+  height: 100%;
   opacity: 0.8;
   background-color: #171717;
-  position: absolute;
+  position: fixed;
   z-index: 2;
 `;
 
