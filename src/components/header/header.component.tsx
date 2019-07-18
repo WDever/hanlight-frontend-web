@@ -137,6 +137,13 @@ const HeaderComponent: React.FC<
         <BtnsWrapper>
           <StyledNavLink
             exact={true}
+            to="/hanseithon"
+            active={location.pathname.includes('/hanseithon')}
+          >
+            한세톤
+          </StyledNavLink>
+          <StyledNavLink
+            exact={true}
             to="/notice"
             active={location.pathname.includes('/notice')}
           >
