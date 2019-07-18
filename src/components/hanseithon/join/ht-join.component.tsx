@@ -18,8 +18,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  @media ${Device.tabletL} {
-    width: 88%;
+  @media ${Device.mobileL} {
     flex-direction: column;
     justify-content: unset;
   }
@@ -32,7 +31,12 @@ const CreateBtn = styled.button`
   background-image: url(${CreateBackImg});
   background-size: cover;
 
-  @media ${Device.tabletL} {
+  span {
+    position: absolute;
+    top: 1.625rem;
+  }
+
+  @media ${Device.mobileL} {
     margin-top: 2.25rem;
   }
 `;
@@ -40,14 +44,26 @@ const CreateBtn = styled.button`
 const CreateBtnImg = styled.img`
   margin-top: 8rem;
   margin-bottom: 5.825rem;
+
+  @media ${Device.tabletL} {
+    margin: auto;
+
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 `;
 
 const CommonBtn = styled.button<{ last: boolean }>`
   background-color: #ffffff;
 
-  @media ${Device.tabletL} {
+  @media ${Device.mobileL} {
     margin-top: 2rem;
     margin-bottom: ${props => (props.last ? '3.125rem' : '')};
+  }
+
+  span {
+    position: absolute;
+    top: 1.625rem;
   }
 `;
 
@@ -66,7 +82,7 @@ const Form = styled.div`
     top: 9.5rem;
   }
 
-  @media ${Device.tabletL} {
+  @media ${Device.mobileL} {
     position: initial;
     flex-direction: column;
     align-items: center;
@@ -94,6 +110,12 @@ const Form = styled.div`
     font-size: 1.75rem;
 
     @media ${Device.tabletL} {
+      font-size: 14px;
+      width: 12.5rem;
+      height: 16rem;
+    }
+
+    @media ${Device.mobileL} {
       width: 10.625rem;
       height: 13.625rem;
       font-size: 0.875rem;
@@ -109,8 +131,8 @@ const JoinTeam = styled.img`
   width: 14.5rem;
 
   @media ${Device.tabletL} {
-    width: 8rem;
-    height: 7.25rem;
+    height: 53%;
+    width: unset;
 
     margin-top: 1.5rem;
   }
@@ -121,8 +143,8 @@ const MatchTeam = styled.img`
   width: 15.5rem;
 
   @media ${Device.tabletL} {
-    width: 7.2rem;
-    height: 7rem;
+    width: unset;
+    height: 49%;
 
     margin-top: 2.5rem;
   }
@@ -146,7 +168,7 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
               deem(true);
             }}
           >
-            팀 생성
+            <span>팀 생성</span>
             <CreateBtnImg src={CreateTeamBtnImg} alt="create button" />
           </CreateBtn>
           <CommonBtn
@@ -156,7 +178,7 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
               deem(true);
             }}
           >
-            팀 참가
+            <span>팀 참가</span>
             <JoinTeam src={JoinTeamImg} alt="join team" />
           </CommonBtn>
           <CommonBtn
@@ -166,7 +188,7 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
               deem(true);
             }}
           >
-            팀 매칭
+            <span>팀 매칭</span>
             <MatchTeam src={MatchTeamImg} alt="match team" />
           </CommonBtn>
         </Form>

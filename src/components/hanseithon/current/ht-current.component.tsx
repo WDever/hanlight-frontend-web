@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { HTCurrentMethod, HTCurrentProps } from 'container/hanseithon/current';
+import { Device } from 'lib/styles';
 import { CategoryType } from 'store';
 import styled from 'styled-components';
 import HTCurrentItem from './currentItem';
@@ -22,6 +23,10 @@ const CategoryWrapper = styled.div`
   border: solid 1px #e8e8e8;
 
   margin-top: 1.5rem;
+
+  @media ${Device.mobileL} {
+    height: 2.25rem;
+  }
 `;
 
 const CategoryBox = styled.div<{ active: boolean }>`
@@ -39,6 +44,10 @@ const CategoryBox = styled.div<{ active: boolean }>`
   align-items: center;
 
   background-color: ${props => (props.active ? '#000000' : '#ffffff')};
+
+  @media ${Device.mobileL} {
+    font-size: 1.12rem;
+  }
 `;
 
 const ListWrapper = styled.div`
@@ -52,6 +61,19 @@ const ListWrapper = styled.div`
 
   margin-top: 2.5rem;
   margin-bottom: 3rem;
+
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fit, 9.33rem);
+    grid-column-gap: 1.41rem;
+    grid-row-gap: 1.62rem;
+  }
+
+  @media ${Device.mobileL} {
+    grid-row-gap: 1.49rem;
+
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const HTCurrentComponent: React.FC<HTCurrentMethod & HTCurrentProps> = ({
@@ -60,6 +82,7 @@ const HTCurrentComponent: React.FC<HTCurrentMethod & HTCurrentProps> = ({
   getTeamStatus,
   accessToken,
   modal,
+  setTeamPk,
 }) => {
   const [category, setCategory] = useState<CategoryType>('l');
   const TeamsList =
@@ -71,8 +94,10 @@ const HTCurrentComponent: React.FC<HTCurrentMethod & HTCurrentProps> = ({
               name={item.name}
               leaderName={item.leader_name}
               teamMember={item.teamMember}
+              team_pk={item.pk}
               category={category}
               modal={modal}
+              setTeamPk={setTeamPk}
             />
           );
         })

@@ -20,6 +20,7 @@ export interface HTCurrentProps {
 export interface HTCurrentMethod {
   getTeam(payload: GetTeamParams): void;
   modal(payload: ModalTypes): void;
+  setTeamPk(payload: number): void;
 }
 
 export interface HTCurrentOwnProps {}
@@ -35,6 +36,7 @@ const mapDispatchToProps = (
 ) => ({
   getTeam: bindActionCreators(hanseithonActions.getTeam, dispatch),
   modal: bindActionCreators(hanseithonActions.modal, dispatch),
+  setTeamPk: bindActionCreators(hanseithonActions.setTeamPk, dispatch),
 });
 
 const HTCurrentContainer = connect(
