@@ -58,10 +58,10 @@ const ContentWrapper = styled.div`
 
   display: flex;
   justify-content: flex-start;
-  flex-direction: column;
 
   @media ${Device.mobileL} {
     width: 90%;
+    flex-direction: column;
   }
 `;
 
