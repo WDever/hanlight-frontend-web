@@ -29,6 +29,8 @@ export interface HanseithonModel {
   putTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   postTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   getTeamStatus: 'none' | 'pending' | 'success' | 'failure';
+  postMatchTeamStatus: 'none' | 'pending' | 'success' | 'failure';
 
   teams: TeamType[];
+  teamPk: number;
 }
