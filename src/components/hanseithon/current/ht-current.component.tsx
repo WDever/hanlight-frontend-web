@@ -68,7 +68,7 @@ const CurrentCategoryBox = styled.div<{ active: boolean }>`
   background-color: ${props => (props.active ? '#000000' : '#ffffff')};
 
   @media ${Device.mobileL} {
-    font-size: 1.12rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -134,30 +134,20 @@ const HTCurrentComponent: React.FC<
         })
       : [];
 
-  // const MatchList =
-  //   getTeamMatchStatus === 'success'
-  //     ? match.map((item, i) => {
-  //         return (
-  //           <HTCurrentItem
-  //             key={i}
-  //             name={item.name}
-  //             category={category}
-  //             modal={modal}
-  //             setTeamPk={setTeamPk}
-  //           />
-  //         );
-  //       })
-  //     : [];
-  const MatchList: JSX.Element[] = [
-    <MatchItemComponent
-      name={'이예준'}
-      studentId={'U3215'}
-      position={'개발'}
-      introduction={
-        '아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요아뇽하세요'
-      }
-    />,
-  ];
+  const MatchList =
+    getTeamMatchStatus === 'success'
+      ? match.map((item, i) => {
+          return (
+            <MatchItemComponent
+              key={i}
+              name={item.name}
+              studentId={item.studentId}
+              position={item.position}
+              introduction={item.introduction}
+            />
+          );
+        })
+      : [];
 
   useEffect(() => {
     if (category === 'l' || category === 'g') {
