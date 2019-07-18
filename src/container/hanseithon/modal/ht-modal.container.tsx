@@ -11,6 +11,7 @@ import {
   PostTeamMatchParams,
   PostTeamParams,
   PutTeamParams,
+  TeamType,
   userReducerActions,
 } from 'store';
 
@@ -22,6 +23,8 @@ export interface HTModalProps {
   postTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   postMatchTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   errMessage: string;
+  teams: TeamType[];
+  team: TeamType;
 }
 
 export interface HTModalMethod {
@@ -33,8 +36,6 @@ export interface HTModalMethod {
   resetStatus(): void;
 }
 
-export interface HTModalOwnProps {}
-
 const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   modalType: hanseithon.modalType,
   accessToken: user.accessToken,
@@ -43,6 +44,8 @@ const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   postTeamStatus: hanseithon.postTeamStatus,
   postMatchTeamStatus: hanseithon.postMatchTeamStatus,
   errMessage: error.message,
+  teams: hanseithon.teams,
+  team: hanseithon.team,
 });
 
 const mapDispatchToProps = (

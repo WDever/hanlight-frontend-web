@@ -11,6 +11,16 @@ const initialState: HanseithonModel = {
   postMatchTeamStatus: 'none',
   teams: [],
   teamPk: 0,
+  team: {
+    pk: 0,
+    name: '',
+    leader_name: '',
+    category: 'none',
+    createAt: '',
+    code: 0,
+
+    teamMember: [],
+  },
 };
 
 export const hanseithonReducer = (
@@ -41,6 +51,12 @@ export const hanseithonReducer = (
 
       case 'PUT_TEAM_SUCCESS':
         draft.putTeamStatus = 'success';
+
+        const seletedTeam = state.teams.find(
+          item => item.pk === action.payload.pk,
+        );
+
+        draft.team = seletedTeam === undefined ? state.team : seletedTeam;
         break;
 
       case 'PUT_TEAM_FAILURE':

@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { instance, hanseithonInstance } from 'lib/baseUrl';
+import { hanseithonInstance, instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   ExistParam,
@@ -32,13 +32,14 @@ import {
   PatchPhone,
   PatchPhoneParam,
   PatchPwParam,
+  PostTeamParams,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
   PW_RECOVERY_SUCCESS,
   PwRecovery,
   PwRecoveryParam,
-  Register,
   REGISTER,
+  Register,
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   RegisterParam,
@@ -48,7 +49,6 @@ import {
   VERIFY_PHONE_SUCCESS,
   VerifyPhone,
   VerifyPhoneParam,
-  PostTeamParams,
 } from '../action';
 
 const loginApi = (data: LoginParam) =>

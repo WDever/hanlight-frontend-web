@@ -411,7 +411,7 @@ const HTMainComponent: React.FC<
               </button>
               <button
                 onClick={() => {
-                  history.push('/hanseithonn/currennt');
+                  history.push('/hanseithon/current');
                 }}
               >
                 참가현황 봐臝
