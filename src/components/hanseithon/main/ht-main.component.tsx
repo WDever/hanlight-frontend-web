@@ -4,9 +4,12 @@ import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import { Device } from 'lib/styles';
 import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
 import AcceptPage from 'pages/hanseithon/main/acceptPage';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logos from 'lib/sponsor/logos.svg';
+
+const { useEffect } = React;
 
 const Wrapper = styled.div`
   margin-bottom: 4.375rem;
@@ -169,13 +172,6 @@ const Sponsors = styled.div`
   }
 `;
 
-const SponsorInnerWrapper = styled.div`
-  height: 100%;
-  width: 33%;
-  display: flex;
-  justify-content: space-between;
-`;
-
 const SponsorTitle = styled.div`
   font-family: inherit;
   font-size: 1.875rem;
@@ -294,6 +290,31 @@ const ContentCol = styled.col`
   width: 65%;
 `;
 
+const CurrnetLink = styled(Link)`
+  width: 11.25rem;
+  height: 3.5rem;
+  border-radius: 3.93rem;
+  background-color: #000000;
+  color: #ffffff;
+  font-family: 'Opne Sans';
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+
+  text-decoration: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media ${Device.mobileL} {
+    width: 7.5rem;
+    height: 2.25rem;
+    font-size: 0.69rem;
+  }
+`;
+
 const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
   deem,
   deemStatus,
@@ -301,6 +322,8 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
   const [rightTableToggle, setRightTableToggle] = React.useState<boolean>(
     false,
   );
+
+  useEffect(() => () => deem(false), []);
 
   return (
     <>
@@ -337,13 +360,14 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
             <ButtonWrapper>
               <button
                 style={{ marginRight: '1.25rem' }}
-                onClick={() => alert('18시부터 신청가능합니다.')}
+                onClick={() => deem(true)}
               >
                 참가신청 해臝
               </button>
-              <button onClick={() => alert('18시부터 현황을 볼 수 있습니다.')}>
+              {/* <button onClick={() => alert('18시부터 현황을 볼 수 있습니다.')}>
                 참가현황 봐臝
-              </button>
+              </button> */}
+              <CurrnetLink to="/hanseithon/current">참가현황 봐臝</CurrnetLink>
             </ButtonWrapper>
           </RightSeparator>
         </ContentWrapper>

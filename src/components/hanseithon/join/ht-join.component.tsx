@@ -152,7 +152,7 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
           <CommonBtn
             last={false}
             onClick={() => {
-              modal('join');
+              modal('current');
               deem(true);
             }}
           >

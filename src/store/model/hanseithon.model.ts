@@ -1,4 +1,4 @@
-export type ModalTypes = 'none' | 'create' | 'join' | 'match' | 'join-success' | 'create-success';
+export type ModalTypes = 'none' | 'create' | 'join' | 'match' | 'join-success' | 'create-success' | 'current';
 
 export type CategoryType = string | 'l' | 'g';
 
@@ -14,7 +14,7 @@ export interface TeamMemberType {
 export interface TeamType {
   pk: number;
   name: string;
-  leaderName: string;
+  leader_name: string;
   category: CategoryType;
   createAt: string;
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import HTCurrentContainer from 'container/hanseithon/current';
 import { HTModalMethod, HTModalProps } from 'container/hanseithon/modal';
 import { useInput, useInputs } from 'lib/hooks';
 import { Device } from 'lib/styles';
@@ -165,9 +166,10 @@ const JoinTeamModal: React.FC<HTModalMethod & ModalProps> = ({
   postTeamMatch,
   changeSelect,
   data,
-  accessToken
+  accessToken,
+  deem,
+  modal,
 }) => {
-  const [keyValidation, setKeyValidation] = useState<boolean>(true);
   const [code, setCode] = useInput('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -175,6 +177,8 @@ const JoinTeamModal: React.FC<HTModalMethod & ModalProps> = ({
 
     const { job } = data;
     putTeam({ accessToken, posiotion: job, code: Number(code) });
+    deem(false);
+    modal('none');
   };
 
   return (
@@ -196,7 +200,6 @@ const JoinTeamModal: React.FC<HTModalMethod & ModalProps> = ({
           <JoinKeyLabel>
             참가 키
             <input type="text" placeholder="ex) FFFFFFFFF" onChange={setCode} />
-            {!keyValidation && <span>올바르지 않은 참가 키 입니다.</span>}
           </JoinKeyLabel>
           <button>참가</button>
         </JoinTeamForm>
@@ -328,6 +331,7 @@ const CreateTeamWrapper = styled.div`
 const CreateTeamModal: React.FC<HTModalMethod & ModalProps> = ({
   changeSelect,
   postTeam,
+  deem,
 }) => {
   return (
     <CreateTeamBox>
@@ -370,7 +374,15 @@ const MatchTeamWrapper = CreateTeamWrapper;
 const MatchTeamModal: React.FC<HTModalMethod & ModalProps> = ({
   changeSelect,
   postTeamMatch,
+  data,
+  deem,
+  modal,
 }) => {
+  const handleSubmit = () => {
+    deem(false);
+    modal('none');
+  }
+
   return (
     <MatchTeamBox>
       <MatchTeamWrapper>
@@ -646,6 +658,21 @@ const CreateSuccessModal: React.FC = () => {
   );
 };
 
+const CurrentBox = styled.div`
+  width: 85%;
+  max-height: 36rem;
+
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  top: 10%;
+
+  background-color: #ffffff;
+
+  overflow-y: scroll;
+`;
+
 export interface DataType {
   job: JobType;
   category: CategoryType;
@@ -653,8 +680,8 @@ export interface DataType {
 
 export interface ModalProps {
   data: DataType;
-  changeSelect(e: React.ChangeEvent<HTMLSelectElement>): void;
   accessToken: string;
+  changeSelect(e: React.ChangeEvent<HTMLSelectElement>): void;
 }
 
 const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
@@ -663,6 +690,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   putTeam,
   postTeamMatch,
   accessToken,
+  deem,
+  modal,
 }) => {
   const [data, setData] = useState<DataType>({
     job: '기획',
@@ -681,6 +710,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   if (modalType === 'create') {
     return (
       <CreateTeamModal
+        modal={modal}
+        deem={deem}
         data={data}
         changeSelect={changeSelect}
         postTeam={postTeam}
@@ -692,6 +723,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   } else if (modalType === 'join') {
     return (
       <JoinTeamModal
+        modal={modal}
+        deem={deem}
         data={data}
         changeSelect={changeSelect}
         postTeam={postTeam}
@@ -703,6 +736,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   } else if (modalType === 'match') {
     return (
       <MatchTeamModal
+        modal={modal}
+        deem={deem}
         data={data}
         changeSelect={changeSelect}
         postTeam={postTeam}
@@ -715,6 +750,12 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
     return <JoinSuccessModal />;
   } else if (modalType === 'create-success') {
     return <CreateSuccessModal />;
+  } else if (modalType === 'current') {
+    return (
+      <CurrentBox>
+        <HTCurrentContainer />
+      </CurrentBox>
+    );
   } else {
     return <></>;
   }

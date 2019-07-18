@@ -6,6 +6,7 @@ import {
   GetTeamParams,
   hanseithonActions,
   hanseithonReducerActions,
+  ModalTypes,
   TeamType,
   userReducerActions,
 } from 'store';
@@ -18,6 +19,7 @@ export interface HTCurrentProps {
 
 export interface HTCurrentMethod {
   getTeam(payload: GetTeamParams): void;
+  modal(payload: ModalTypes): void;
 }
 
 export interface HTCurrentOwnProps {}
@@ -32,6 +34,7 @@ const mapDispatchToProps = (
   dispatch: Dispatch<hanseithonReducerActions | userReducerActions>,
 ) => ({
   getTeam: bindActionCreators(hanseithonActions.getTeam, dispatch),
+  modal: bindActionCreators(hanseithonActions.modal, dispatch),
 });
 
 const HTCurrentContainer = connect(

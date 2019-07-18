@@ -1,7 +1,18 @@
 import HTModalComponent from 'components/hanseithon/modal';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, ModalTypes, CategoryType, JobType, hanseithonReducerActions, hanseithonActions, userReducerActions, PostTeamParams, PutTeamParams, PostTeamMatchParams } from 'store';
+import {
+  AppState,
+  CategoryType,
+  hanseithonActions,
+  hanseithonReducerActions,
+  JobType,
+  ModalTypes,
+  PostTeamMatchParams,
+  PostTeamParams,
+  PutTeamParams,
+  userReducerActions,
+} from 'store';
 
 export interface HTModalProps {
   modalType: ModalTypes;
@@ -12,6 +23,8 @@ export interface HTModalMethod {
   postTeam(payload: PostTeamParams): void;
   putTeam(payload: PutTeamParams): void;
   postTeamMatch(payload: PostTeamMatchParams): void;
+  deem(payload: boolean): void;
+  modal(payload: ModalTypes): void;
 }
 
 export interface HTModalOwnProps {}
@@ -21,10 +34,14 @@ const mapStateToProps = ({ hanseithon, user }: AppState) => ({
   accessToken: user.accessToken,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<hanseithonReducerActions | userReducerActions>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<hanseithonReducerActions | userReducerActions>,
+) => ({
   postTeam: bindActionCreators(hanseithonActions.postTeam, dispatch),
   putTeam: bindActionCreators(hanseithonActions.putTeam, dispatch),
   postTeamMatch: bindActionCreators(hanseithonActions.postMatchTeam, dispatch),
+  deem: bindActionCreators(hanseithonActions.deem, dispatch),
+  modal: bindActionCreators(hanseithonActions.modal, dispatch),
 });
 
 const HTModalContainer = connect(
