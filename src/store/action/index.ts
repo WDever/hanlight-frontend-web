@@ -6,3 +6,4 @@ export * from './meal.action';
 export * from './error.action';
 export * from './board.action';
 export * from './util.action';
+export * from './hanseithon.action';
