@@ -152,7 +152,7 @@ export class PutTeam implements Action {
 export class PutTeamSuccess implements Action {
   public readonly type = PUT_TEAM_SUCCESS;
 
-  public constructor(public payload: PutTeamResType) {}
+  public constructor(public payload: PutTeamResType & { pk: number; }) {}
 }
 
 export class PutTeamFailure implements Action {

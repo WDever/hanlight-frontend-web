@@ -23,12 +23,15 @@ export interface HTCurrentMethod {
   setTeamPk(payload: number): void;
 }
 
-export interface HTCurrentOwnProps {}
+export interface HTCurrentOwnProps {
+  isModal: boolean;
+}
 
-const mapStateToProps = ({ hanseithon, user }: AppState) => ({
+const mapStateToProps = ({ hanseithon, user }: AppState, ownProps: HTCurrentOwnProps) => ({
   accessToken: user.accessToken,
   teams: hanseithon.teams,
   getTeamStatus: hanseithon.getTeamStatus,
+  ...ownProps
 });
 
 const mapDispatchToProps = (

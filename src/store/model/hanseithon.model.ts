@@ -17,6 +17,7 @@ export interface TeamType {
   leader_name: string;
   category: CategoryType;
   createAt: string;
+  code: number;
 
   teamMember: TeamMemberType[];
 }
@@ -31,6 +32,7 @@ export interface HanseithonModel {
   getTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   postMatchTeamStatus: 'none' | 'pending' | 'success' | 'failure';
 
+  team: TeamType;
   teams: TeamType[];
   teamPk: number;
 }
