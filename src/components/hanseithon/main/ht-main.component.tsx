@@ -16,7 +16,11 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+
+  @media ${Device.tabletS} {
+    align-items: center;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -61,10 +65,10 @@ const ContentWrapper = styled.div`
 
   display: flex;
   justify-content: flex-start;
-  flex-direction: column;
 
   @media ${Device.mobileL} {
     width: 90%;
+    flex-direction: column;
   }
 `;
 
@@ -98,11 +102,10 @@ const ContentTitleWrapper = styled.span`
 const Content = styled.div`
   font-family: inherit;
   font-size: 0.94rem;
-  line-height: 1.5;
+  line-height: 1.9;
   margin-top: 1.5rem;
   width: 30rem;
   word-break: keep-all;
-  line-height: 1.47;
   color: #000000;
 
   @media ${Device.mobileL} {
@@ -226,7 +229,7 @@ const TimetableBtnWrapper = styled.div`
 const TimetableTitle = styled.p`
   font-size: 1.81rem;
   font-weight: 800;
-  font-family: OpenSans;
+  font-family: 'Open Sans';
   margin-top: 1.37rem;
   margin-bottom: 1.49rem;
 
@@ -244,7 +247,7 @@ const TimetableBtn = styled.button<{ clicked: boolean }>`
   border: solid 1px #e8e8e8;
   background-color: ${({ clicked }) => (clicked ? '#000000' : '#ffffff')};
   font-size: 1.18rem;
-  font-family: 'OpenSans';
+  font-family: 'Open Sans';
   font-weight: bold;
   color: ${({ clicked }) => (clicked ? '#ffffff' : '#000000')};
   cursor: pointer;
@@ -265,7 +268,7 @@ const Timetable = styled.table`
     width: 100%;
     height: 3.96rem;
     border: solid 1px #e8e8e8;
-    font-family: OpenSans;
+    font-family: 'Open Sans';
     text-align: center;
 
     @media ${Device.mobileL} {
@@ -465,10 +468,6 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
                 </tr>
                 <tr>
                   <td>13:00 ~ 13:30</td>
-                  <td>이벤트 타임</td>
-                </tr>
-                <tr>
-                  <td>13:30 ~ 13:30</td>
                   <td>이벤트 타임</td>
                 </tr>
                 <tr>

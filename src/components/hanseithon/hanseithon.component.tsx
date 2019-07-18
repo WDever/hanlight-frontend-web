@@ -33,7 +33,7 @@ const HanseiThonComponent: React.FC<HanseiThonProps> = ({
           component={HTCurrentPage}
         />
         <Route exact={true} path="/hanseithon" component={MainPage} />
-        <Redirect to="/hanseithon" />
+        <Redirect to="/error" />
       </Switch>
     </>
   );
