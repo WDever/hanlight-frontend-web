@@ -4,9 +4,9 @@ import { Deem } from 'components/hanseithon';
 import { HTJoinMethod, HTJoinProps } from 'container/hanseithon/join';
 import { Device } from 'lib/styles';
 import CreateBackImg from 'lib/svg/create-team-back.svg';
+import CreateTeamBtnImg from 'lib/svg/create-team-btn.svg';
 import JoinTeamImg from 'lib/svg/join-team.svg';
 import MatchTeamImg from 'lib/svg/match-team.svg';
-import CreateTeamBtnImg from 'lib/svg/create-team-btn.svg';
 import HTModalPage from 'pages/hanseithon/modal';
 import styled from 'styled-components';
 
@@ -40,9 +40,6 @@ const CreateBtn = styled.button`
 const CreateBtnImg = styled.img`
   margin-top: 8rem;
   margin-bottom: 5.825rem;
-
-  /* position: absolute;
-  z-index: 5; */
 `;
 
 const CommonBtn = styled.button<{ last: boolean }>`
