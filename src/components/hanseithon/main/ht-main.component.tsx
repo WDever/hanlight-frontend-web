@@ -444,10 +444,6 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
                   <td>이벤트 타임</td>
                 </tr>
                 <tr>
-                  <td>13:30 ~ 13:30</td>
-                  <td>이벤트 타임</td>
-                </tr>
-                <tr>
                   <td>13:30 ~ 14:30</td>
                   <td>자율 개발</td>
                 </tr>
