@@ -49,15 +49,18 @@ export const hanseithonReducer = (
         draft.putTeamStatus = 'pending';
         break;
 
-      case 'PUT_TEAM_SUCCESS':
+      case 'PUT_TEAM_SUCCESS': {
         draft.putTeamStatus = 'success';
 
-        const seletedTeam = state.teams.find(
+        const seletedTeam = draft.teams.find(
           item => item.pk === action.payload.pk,
         );
+        
+        console.log(seletedTeam);
 
-        draft.team = seletedTeam === undefined ? state.team : seletedTeam;
+        draft.team = seletedTeam === undefined ? draft.team : seletedTeam;
         break;
+      }
 
       case 'PUT_TEAM_FAILURE':
         draft.putTeamStatus = 'failure';

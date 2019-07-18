@@ -144,7 +144,6 @@ const CreateSuccessModal: React.FC<CreateSuccessProps> = ({
           {teamName}님의 팀 생성이 완료 되었습니다
           <div>
             <span>팀 참가 코드 : {code}</span>
-            {`dhwi`}
           </div>
           <p>
             팀원이 팀 참가를 선택한 후,

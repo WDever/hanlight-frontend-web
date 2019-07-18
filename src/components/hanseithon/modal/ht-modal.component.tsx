@@ -217,7 +217,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   resetStatus,
   errMessage,
   teams,
-  team
+  team,
 }) => {
   const [data, setData] = useState<DataType>({
     job: '기획',
@@ -232,25 +232,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
       [name]: value,
     });
   };
-
-  useEffect(() => {
-    if (postMatchTeamStatus === 'failure' || putTeamStatus === 'failure') {
-      alert(errMessage);
-      deem(false);
-      modal('none');
-      resetStatus();
-    } else if (
-      postMatchTeamStatus === 'success' ||
-      putTeamStatus === 'success'
-    ) {
-      alert('성공했습니다');
-      deem(false);
-      modal('none');
-      resetStatus();
-    }
-  });
-
-  if (modalType === 'create') {
+if (modalType === 'create') {
     return (
       <CreateTeamModal
         modal={modal}
