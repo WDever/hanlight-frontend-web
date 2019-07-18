@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+
+  @media ${Device.tabletS} {
+    align-items: center;
+  }
 `;
 
 const TitleWrapper = styled.div`
