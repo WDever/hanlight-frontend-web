@@ -22,6 +22,7 @@ const HanseiThonComponent: React.FC<HanseiThonProps> = ({ deemStatus }) => {
       <Switch>
         <Route exact={true} path="/hanseithon/join" component={JoinPage} />
         <Route exact={true} path="/hanseithon" component={MainPage} />
+        <Redirect to="/error" />
       </Switch>
     </>
   );
