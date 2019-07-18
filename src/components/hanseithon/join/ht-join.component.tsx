@@ -136,7 +136,6 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
 }) => {
   return (
     <>
-      {deemStatus && <Deem />}
       {modalType !== 'none' && <HTModalPage />}
       <Wrapper>
         <Form>
