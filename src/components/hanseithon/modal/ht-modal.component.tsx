@@ -91,6 +91,23 @@ const JoinTeamForm = styled.form`
     }
   }
 
+  select {
+    width: 5.375rem;
+    height: 1.9375rem;
+
+    background-color: #ffffff;
+    border-radius: 0;
+    border-radius: 4px;
+    border: solid 1px #707070;
+
+    font-family: inherit;
+    font-size: 0.875rem;
+
+    @media ${Device.tabletL} {
+      height: 1.6875rem;
+    }
+  }
+
   span {
     font-size: 0.8125rem;
     color: #ff0000;
@@ -155,10 +172,11 @@ const JoinTeamModal: React.FC = () => {
         <JoinTeamForm style={{ marginTop: '1.125rem' }}>
           <JoinJobLabel>
             직군
-            <input
-              type="text"
-              placeholder="ex) 백엔드 개발자 , 프론트 개발자 , 디자이너 , 기획자"
-            />
+            <select>
+              <option>기획</option>
+              <option>개발</option>
+              <option>디자인</option>
+            </select>
           </JoinJobLabel>
           <JoinKeyLabel>
             참가 키
@@ -195,13 +213,13 @@ const TeamForm = styled.form`
     }
 
     select {
+      width: 5.375rem;
       height: 1.9375rem;
 
       background-color: #ffffff;
-      border: none;
       border-radius: 0;
-      border-top: 1px solid #e9e9e9;
-      border-bottom: 1px solid #e9e9e9;
+      border-radius: 4px;
+      border: solid 1px #707070;
 
       font-family: inherit;
       font-size: 0.875rem;
@@ -314,7 +332,11 @@ const CreateTeamModal: React.FC = () => {
           </label>
           <label>
             팀장 직군
-            <input type="text" placeholder="직군" />
+            <select>
+              <option>기획</option>
+              <option>개발</option>
+              <option>디자인</option>
+            </select>
           </label>
           <button style={{ marginTop: '0.9375rem' }}>생성 시작</button>
         </TeamForm>
@@ -345,7 +367,11 @@ const MatchTeamModal: React.FC = () => {
           </label>
           <label>
             직군
-            <input type="text" placeholder="직군" />
+            <select>
+              <option>기획</option>
+              <option>개발</option>
+              <option>디자인</option>
+            </select>
           </label>
           <label>
             자기소개
