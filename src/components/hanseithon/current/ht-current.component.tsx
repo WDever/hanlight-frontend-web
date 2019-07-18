@@ -5,6 +5,7 @@ import { Device } from 'lib/styles';
 import { CategoryType } from 'store';
 import styled from 'styled-components';
 import HTCurrentItem from './currentItem';
+import MatchItemComponent from './matchItem/ht-matchItem.component';
 
 const { useEffect, useState } = React;
 
@@ -67,7 +68,7 @@ const CurrentCategoryBox = styled.div<{ active: boolean }>`
   background-color: ${props => (props.active ? '#000000' : '#ffffff')};
 
   @media ${Device.mobileL} {
-    font-size: 1.12rem;
+    font-size: 0.7rem;
   }
 `;
 
@@ -75,7 +76,7 @@ const ListWrapper = styled.div`
   width: 100%;
 
   display: grid;
-  grid-template-columns: repeat(auto-fit, 14.25rem);
+  grid-template-columns: repeat(auto-fill, 14.25rem);
   grid-column-gap: 0.5rem;
   grid-row-gap: 2.5rem;
   justify-content: space-between;
@@ -84,14 +85,13 @@ const ListWrapper = styled.div`
   margin-bottom: 3rem;
 
   @media ${Device.tabletL} {
-    grid-template-columns: repeat(auto-fit, 9.33rem);
+    grid-template-columns: repeat(auto-fill, 9.33rem);
     grid-column-gap: 1.41rem;
     grid-row-gap: 1.62rem;
   }
 
   @media ${Device.mobileL} {
     grid-row-gap: 1.49rem;
-    justify-content: center;
 
     margin-top: 1.25rem;
     margin-bottom: 1.5rem;
@@ -104,8 +104,11 @@ const HTCurrentComponent: React.FC<
   HTCurrentMethod & HTCurrentProps & { isModal?: boolean }
 > = ({
   teams,
+  match,
   getTeam,
+  getMatch,
   getTeamStatus,
+  getTeamMatchStatus,
   accessToken,
   modal,
   setTeamPk,
@@ -132,18 +135,15 @@ const HTCurrentComponent: React.FC<
       : [];
 
   const MatchList =
-    getTeamStatus === 'success'
-      ? teams.map((item, i) => {
+    getTeamMatchStatus === 'success'
+      ? match.map((item, i) => {
           return (
-            <HTCurrentItem
+            <MatchItemComponent
               key={i}
               name={item.name}
-              leaderName={item.leader_name}
-              teamMember={item.teamMember}
-              team_pk={item.pk}
-              category={category}
-              modal={modal}
-              setTeamPk={setTeamPk}
+              studentId={item.studentId}
+              position={item.position}
+              introduction={item.introduction}
             />
           );
         })
@@ -152,8 +152,8 @@ const HTCurrentComponent: React.FC<
   useEffect(() => {
     if (category === 'l' || category === 'g') {
       getTeam({ accessToken, category });
-    } else if (category === 'match-i' || category === 'match-g') {
-      // 매칭 요청
+    } else if (category === 'match-l' || category === 'match-g') {
+      getMatch({ accessToken, category: category === 'match-l' ? 'l' : 'g' });
     }
   }, [category]);
 
@@ -205,7 +205,7 @@ const HTCurrentComponent: React.FC<
         )}
       </CategoryWrapper>
       <ListWrapper>
-        {category === 'i' || category === 'g' ? TeamsList : MatchList}
+        {category === 'l' || category === 'g' ? TeamsList : MatchList}
       </ListWrapper>
     </Wrapper>
   );

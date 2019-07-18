@@ -211,13 +211,13 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   deem,
   modal,
   teamPk,
-  postMatchTeamStatus,
+  postTeamMatchStatus,
   postTeamStatus,
   putTeamStatus,
   resetStatus,
   errMessage,
   teams,
-  team
+  team,
 }) => {
   const [data, setData] = useState<DataType>({
     job: '기획',
@@ -234,19 +234,23 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   };
 
   useEffect(() => {
-    if (postMatchTeamStatus === 'failure' || putTeamStatus === 'failure') {
+    if (postTeamMatchStatus === 'failure' || putTeamStatus === 'failure') {
       alert(errMessage);
       deem(false);
       modal('none');
       resetStatus();
-    } else if (
-      postMatchTeamStatus === 'success' ||
-      putTeamStatus === 'success'
-    ) {
-      alert('성공했습니다');
+    } else if (putTeamStatus === 'success') {
+      alert('해당 팀에 성공적으로 들어갔습니다!');
       deem(false);
       modal('none');
       resetStatus();
+    } else if (postTeamStatus === 'success') {
+      alert('팀 생성에 성공했습니다!');
+      deem(false);
+      modal('none');
+      resetStatus();
+    } else if (postTeamMatchStatus === 'success') {
+      alert('매칭 신청이 완료되었습니다!');
     }
   });
 
@@ -263,7 +267,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}
@@ -282,7 +286,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}
@@ -301,7 +305,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}

@@ -127,12 +127,12 @@ const HTCurrentItemComponent: React.FC<Props> = ({
   setTeamPk,
 }) => {
   return (
-    <Box active={teamMember.length === 5}>
+    <Box active={teamMember.length === 4}>
       <Img src={category === 'l' ? LImgSvg : GImgSvg} alt="Team" />
       <ContentWrapper>
         <b>{name}</b>
         <span>{leaderName}</span>
-        <p>정원: 5명 / {5 - teamMember.length}명 신청 가능</p>
+        <p>정원: 4명 / {4 - teamMember.length}명 신청 가능</p>
       </ContentWrapper>
       <button
         onClick={() => {
@@ -140,7 +140,7 @@ const HTCurrentItemComponent: React.FC<Props> = ({
           setTeamPk(team_pk);
         }}
       >
-        {teamMember.length === 5 ? '마감' : '참가'}
+        {teamMember.length === 4 ? '마감' : '참가'}
       </button>
     </Box>
   );

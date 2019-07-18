@@ -8,6 +8,7 @@ import CreateTeamBtnImg from 'lib/svg/create-team-btn.svg';
 import JoinTeamImg from 'lib/svg/join-team.svg';
 import MatchTeamImg from 'lib/svg/match-team.svg';
 import HTModalPage from 'pages/hanseithon/modal';
+import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -152,12 +153,15 @@ const MatchTeam = styled.img`
   }
 `;
 
-const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
-  modal,
-  modalType,
-  deem,
-  deemStatus,
-}) => {
+const JoinComponent: React.FC<
+  HTJoinProps & HTJoinMethod & RouteComponentProps
+> = ({ modal, modalType, deem, deemStatus, agreeStatus, history }) => {
+  React.useEffect(() => {
+    if (!agreeStatus) {
+      history.push('/hanseithon');
+    }
+  }, []);
+
   return (
     <>
       {modalType !== 'none' && <HTModalPage />}
