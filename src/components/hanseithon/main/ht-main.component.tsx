@@ -4,7 +4,7 @@ import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import { Device } from 'lib/styles';
 import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
 import AcceptPage from 'pages/hanseithon/main/acceptPage';
-import { Link } from 'react-router-dom';
+import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logos from 'lib/sponsor/logos.svg';
@@ -18,8 +18,8 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: flex-start;
 
-  @media ${Device.tabletS} {
-    align-items: center;
+  @media ${Device.tabletL} {
+    width: 100%;
   }
 `;
 
@@ -30,15 +30,25 @@ const TitleWrapper = styled.div`
   align-items: flex-end;
   margin: 3.8rem 0;
 
+  @media ${Device.tabletL} {
+    margin: 0;
+    margin-left: 5%;
+    margin-top: 3.1rem;
+    margin-bottom: 1.73rem;
+  }
   @media ${Device.mobileL} {
     width: 90%;
-    margin: 2.18rem 0;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
   }
 `;
 
 const TitleImg = styled.img`
   width: 20rem;
 
+  @media ${Device.tabletL} {
+    width: 11.07rem;
+  }
   @media ${Device.mobileL} {
     width: 7.06rem;
   }
@@ -53,6 +63,10 @@ const Title = styled.span`
   margin-left: 3rem;
   line-height: 1.34;
 
+  @media ${Device.tabletL} {
+    font-size: 2.31rem;
+    margin-left: 2.38rem;
+  }
   @media ${Device.mobileL} {
     font-size: 1.81rem;
     margin-left: 0.81rem;
@@ -66,9 +80,12 @@ const ContentWrapper = styled.div`
   display: flex;
   justify-content: flex-start;
 
+  @media ${Device.tabletL} {
+    margin-left: 5%;
+    flex-direction: column;
+  }
   @media ${Device.mobileL} {
     width: 90%;
-    flex-direction: column;
   }
 `;
 
@@ -84,6 +101,9 @@ const ContentTitleWrapper = styled.span`
     font-size: 2.5rem;
     margin-bottom: 3px;
 
+    @media ${Device.tabletL} {
+      font-size: 1.5rem;
+    }
     @media ${Device.mobileL} {
       font-size: 1.25rem;
     }
@@ -93,6 +113,9 @@ const ContentTitleWrapper = styled.span`
     font-family: inherit;
     font-size: 1rem;
 
+    @media ${Device.tabletL} {
+      font-size: 0.94rem;
+    }
     @media ${Device.mobileL} {
       font-size: 0.75rem;
     }
@@ -129,6 +152,11 @@ const ButtonWrapper = styled.div`
     border: none;
     cursor: pointer;
 
+    @media ${Device.tabletL} {
+      width: 8.75rem;
+      height: 2.72rem;
+      font-size: 0.75rem;
+    }
     @media ${Device.mobileL} {
       width: 7.5rem;
       height: 2.25rem;
@@ -182,6 +210,9 @@ const SponsorTitle = styled.div`
   margin-top: 1.5rem;
   margin-bottom: 3rem;
 
+  @media ${Device.tabletL} {
+    font-size: 1.5rem;
+  }
   @media ${Device.mobileL} {
     font-size: 1.125rem;
     margin-bottom: 2.31rem;
@@ -221,6 +252,9 @@ const TimetableBtnWrapper = styled.div`
   width: 100%;
   height: 3.73rem;
 
+  @media ${Device.tabletL} {
+    height: 2.71rem;
+  }
   @media ${Device.mobileL} {
     height: 2.25rem;
   }
@@ -233,6 +267,9 @@ const TimetableTitle = styled.p`
   margin-top: 1.37rem;
   margin-bottom: 1.49rem;
 
+  @media ${Device.tabletL} {
+    margin-left: 5%;
+  }
   @media ${Device.mobileL} {
     font-size: 1.25rem;
     margin-left: 5%;
@@ -271,6 +308,9 @@ const Timetable = styled.table`
     font-family: 'Open Sans';
     text-align: center;
 
+    @media ${Device.tabletL} {
+      height: 3.1rem;
+    }
     @media ${Device.mobileL} {
       height: 2.25rem;
     }
@@ -280,6 +320,9 @@ const Timetable = styled.table`
     }
   }
 
+  @media ${Device.tabletL} {
+    font-size: 1.06rem;
+  }
   @media ${Device.mobileL} {
     font-size: 0.69rem;
   }
@@ -318,10 +361,9 @@ const CurrnetLink = styled(Link)`
   }
 `;
 
-const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
-  deem,
-  deemStatus,
-}) => {
+const HTMainComponent: React.FC<
+  HTMainMethod & HTMainProps & RouteComponentProps
+> = ({ history, deem, deemStatus }) => {
   const [rightTableToggle, setRightTableToggle] = React.useState<boolean>(
     false,
   );
@@ -355,7 +397,7 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
                 반복되는 지루한 일상에서 탈피하여 에어배드에서 쉬다 가세요.
               </span>
               <p>참가 신청 : 18일 18시부터</p>
-              <p>시간 참가 마감 : 22일 오후 11시 59분까지</p>
+              <p>참가 신청 마감 시간 : 22일 오후 11시 59분까지</p>
             </Content>
           </LeftSeparator>
           <RightSeparator>
@@ -367,10 +409,13 @@ const HTMainComponent: React.FC<HTMainMethod & HTMainProps> = ({
               >
                 참가신청 해臝
               </button>
-              {/* <button onClick={() => alert('18시부터 현황을 볼 수 있습니다.')}>
+              <button
+                onClick={() => {
+                  history.push('/hanseithonn/currennt');
+                }}
+              >
                 참가현황 봐臝
-              </button> */}
-              <CurrnetLink to="/hanseithon/current">참가현황 봐臝</CurrnetLink>
+              </button>
             </ButtonWrapper>
           </RightSeparator>
         </ContentWrapper>
