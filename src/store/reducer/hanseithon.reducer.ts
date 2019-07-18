@@ -8,7 +8,8 @@ const initialState: HanseithonModel = {
   putTeamStatus: 'none',
   postTeamStatus: 'none',
   getTeamStatus: 'none',
-  postMatchTeamStatus: 'none',
+  getTeamMatchStatus: 'none',
+  postTeamMatchStatus: 'none',
   teams: [],
   teamPk: 0,
   team: {
@@ -21,6 +22,7 @@ const initialState: HanseithonModel = {
 
     teamMember: [],
   },
+  match: [],
 };
 
 export const hanseithonReducer = (
@@ -55,7 +57,7 @@ export const hanseithonReducer = (
         const seletedTeam = draft.teams.find(
           item => item.pk === action.payload.pk,
         );
-        
+
         console.log(seletedTeam);
 
         draft.team = seletedTeam === undefined ? draft.team : seletedTeam;
@@ -94,22 +96,33 @@ export const hanseithonReducer = (
         draft.getTeamStatus = 'failure';
         break;
 
+      case 'GET_TEAM_MATCH':
+        draft.getTeamMatchStatus = 'pending';
+        break;
+      case 'GET_TEAM_MATCH_SUCCESS':
+        draft.getTeamMatchStatus = 'success';
+        draft.match = action.payload.match;
+        break;
+      case 'GET_TEAM_MATCH_FAILURE':
+        draft.getTeamMatchStatus = 'failure';
+        break;
+
       case 'POST_TEAM_MATCH':
-        draft.postMatchTeamStatus = 'pending';
+        draft.postTeamMatchStatus = 'pending';
         break;
 
       case 'POST_TEAM_MATCH_SUCCESS':
-        draft.postMatchTeamStatus = 'success';
+        draft.postTeamMatchStatus = 'success';
         break;
 
       case 'POST_TEAM_MATCH_FAILURE':
-        draft.postMatchTeamStatus = 'failure';
+        draft.postTeamMatchStatus = 'failure';
         break;
 
       case 'RESET_STATUS':
         draft.putTeamStatus = 'none';
         draft.postTeamStatus = 'none';
-        draft.postMatchTeamStatus = 'none';
+        draft.postTeamMatchStatus = 'none';
         break;
 
       default:

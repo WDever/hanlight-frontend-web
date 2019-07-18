@@ -211,7 +211,7 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   deem,
   modal,
   teamPk,
-  postMatchTeamStatus,
+  postTeamMatchStatus,
   postTeamStatus,
   putTeamStatus,
   resetStatus,
@@ -232,7 +232,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
       [name]: value,
     });
   };
-if (modalType === 'create') {
+
+  if (modalType === 'create') {
     return (
       <CreateTeamModal
         modal={modal}
@@ -245,7 +246,7 @@ if (modalType === 'create') {
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}
@@ -264,7 +265,7 @@ if (modalType === 'create') {
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}
@@ -283,7 +284,7 @@ if (modalType === 'create') {
         accessToken={accessToken}
         teamPk={teamPk}
         resetStatus={resetStatus}
-        postMatchTeamStatus={postMatchTeamStatus}
+        postMatchTeamStatus={postTeamMatchStatus}
         putTeamStatus={putTeamStatus}
         postTeamStatus={postTeamStatus}
         errMessage={errMessage}

@@ -16,17 +16,12 @@ export const Deem = styled.div`
   z-index: 2;
 `;
 
-const HanseiThonComponent: React.FC<HanseiThonProps> = ({
-  deemStatus,
-  agreeStatus,
-}) => {
+const HanseiThonComponent: React.FC<HanseiThonProps> = ({ deemStatus }) => {
   return (
     <>
       {deemStatus && <Deem />}
       <Switch>
-        {agreeStatus && (
-          <Route exact={true} path="/hanseithon/join" component={JoinPage} />
-        )}
+        <Route exact={true} path="/hanseithon/join" component={JoinPage} />
         <Route
           exact={true}
           path="/hanseithon/current"

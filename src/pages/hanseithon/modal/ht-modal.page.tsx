@@ -13,7 +13,7 @@ const Template = styled.div`
   justify-content: center;
   align-items: center;
 
-  z-index: 15;
+  z-index: 9;
 `;
 
 const HTModalPage: React.FC = () => {

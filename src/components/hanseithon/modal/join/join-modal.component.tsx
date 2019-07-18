@@ -194,7 +194,7 @@ const JoinTeamModal: React.FC<ModalProps> = ({
           </JoinJobLabel>
           <JoinKeyLabel>
             참가 키
-            <input type="text" placeholder="ex) FFFFFFFFF" onChange={setCode} />
+            <input type="text" placeholder="예) 1234" onChange={setCode} />
           </JoinKeyLabel>
           <button>참가</button>
         </JoinTeamForm>

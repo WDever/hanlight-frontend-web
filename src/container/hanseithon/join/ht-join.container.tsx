@@ -1,5 +1,6 @@
 import HTJoinComponent from 'components/hanseithon/join';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
@@ -12,6 +13,7 @@ import {
 export interface HTJoinProps {
   modalType: ModalTypes;
   deemStatus: boolean;
+  agreeStatus: boolean;
 }
 
 export interface HTJoinMethod {
@@ -24,6 +26,7 @@ export interface HTJoinOwnProps {}
 const mapStateToProps = ({ hanseithon }: AppState) => ({
   modalType: hanseithon.modalType,
   deemStatus: hanseithon.deemStatus,
+  agreeStatus: hanseithon.agreeStatus,
 });
 
 const mapDispatchToProps = (
@@ -33,9 +36,11 @@ const mapDispatchToProps = (
   deem: bindActionCreators(hanseithonActions.deem, dispatch),
 });
 
-const HTJoinContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(HTJoinComponent);
+const HTJoinContainer = withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(HTJoinComponent),
+);
 
 export default HTJoinContainer;

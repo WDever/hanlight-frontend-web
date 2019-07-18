@@ -37,6 +37,7 @@ const MatchTeamModal: React.FC<ModalProps> = ({
   };
 
   useEffect(() => {
+    console.log(postMatchTeamStatus);
     if (postMatchTeamStatus === 'success') {
       alert('매칭에 참가하셨습니다.');
       deem(false);
@@ -44,6 +45,9 @@ const MatchTeamModal: React.FC<ModalProps> = ({
       resetStatus();
     } else if (postMatchTeamStatus === 'failure') {
       alert(errMessage);
+      deem(false);
+      modal('none');
+      resetStatus();
     }
   }, [postMatchTeamStatus]);
 
