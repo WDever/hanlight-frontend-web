@@ -193,6 +193,23 @@ const TeamForm = styled.form`
     @media ${Device.tabletL} {
       margin-top: 1.575rem;
     }
+
+    select {
+      height: 1.9375rem;
+
+      background-color: #ffffff;
+      border: none;
+      border-radius: 0;
+      border-top: 1px solid #e9e9e9;
+      border-bottom: 1px solid #e9e9e9;
+
+      font-family: inherit;
+      font-size: 0.875rem;
+
+      @media ${Device.tabletL} {
+        height: 1.6875rem;
+      }
+    }
   }
 
   input {
@@ -286,7 +303,10 @@ const CreateTeamModal: React.FC = () => {
         <TeamForm style={{ marginTop: '1rem' }}>
           <label style={{ marginTop: '0' }}>
             신청 부문
-            <input type="select" placeholder="생활 부문, 게임 부문" />
+            <select>
+              <option>생활</option>
+              <option>게임</option>
+            </select>
           </label>
           <label>
             팀명
@@ -318,7 +338,10 @@ const MatchTeamModal: React.FC = () => {
         <TeamForm style={{ marginTop: '1rem' }}>
           <label style={{ marginTop: '0' }}>
             신청 부문
-            <input type="text" placeholder="생활 부문, 게임 부문" />
+            <select>
+              <option>생활</option>
+              <option>게임</option>
+            </select>
           </label>
           <label>
             직군
