@@ -159,6 +159,7 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
   match,
   deem,
   agree,
+  modal,
 }) => {
   const [checked, setChecked] = useState<boolean>(false);
 
@@ -168,6 +169,11 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
     agree(checked);
     deem(false);
     history.push('/hanseithon/join');
+  };
+
+  const Exit = () => {
+    deem(false);
+    modal('none');
   };
 
   return (
