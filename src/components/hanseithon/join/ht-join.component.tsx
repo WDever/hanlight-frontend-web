@@ -25,6 +25,7 @@ const Wrapper = styled.div`
 `;
 
 const CreateBtn = styled.button`
+  position: relative;
   color: #ffffff;
 
   background-color: #bdbdbd;
@@ -54,6 +55,7 @@ const CreateBtnImg = styled.img`
 `;
 
 const CommonBtn = styled.button<{ last: boolean }>`
+  position: relative;
   background-color: #ffffff;
 
   @media ${Device.mobileL} {
@@ -158,7 +160,6 @@ const JoinComponent: React.FC<HTJoinProps & HTJoinMethod> = ({
 }) => {
   return (
     <>
-      {deemStatus && <Deem />}
       {modalType !== 'none' && <HTModalPage />}
       <Wrapper>
         <Form>

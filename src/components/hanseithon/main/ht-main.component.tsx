@@ -411,7 +411,7 @@ const HTMainComponent: React.FC<
               </button>
               <button
                 onClick={() => {
-                  history.push('/hanseithonn/currennt');
+                  alert('참가 현황은 7월 19일에 볼 수 있습니다!');
                 }}
               >
                 참가현황 봐臝
