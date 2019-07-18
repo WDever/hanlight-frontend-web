@@ -5,6 +5,7 @@ import { AppState } from 'store';
 
 export interface HanseiThonProps {
   deemStatus: boolean;
+  agreeStatus: boolean;
 }
 
 export interface HanseiThonMethod {}
@@ -13,6 +14,7 @@ export interface OwnProps {}
 
 const mapStateToProps = ({ hanseithon }: AppState) => ({
   deemStatus: hanseithon.deemStatus,
+  agreeStatus: hanseithon.agreeStatus,
 });
 
 const mapDispatchToProps = ({}) => ({});

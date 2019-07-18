@@ -4,14 +4,19 @@ import { bindActionCreators, Dispatch } from 'redux';
 import { hanseithonActions, hanseithonReducerActions, userReducerActions } from 'store';
 
 export interface AcceptPageProps {}
+
 export interface AcceptPageMethod {
   deem(payload: boolean): void;
+  agree(payload: boolean): void;
 }
+
 export interface AcceptPageOwnProps {}
 
 const mapStateToProps = ({}) => ({});
+
 const mapDispatchToProps = (dispatch: Dispatch<hanseithonReducerActions | userReducerActions>) => ({
   deem: bindActionCreators(hanseithonActions.deem, dispatch),
+  agree: bindActionCreators(hanseithonActions.agree, dispatch),
 });
 
 const AcceptPageContainer = connect(

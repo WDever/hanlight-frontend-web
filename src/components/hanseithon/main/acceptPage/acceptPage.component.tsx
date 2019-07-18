@@ -13,30 +13,34 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   color: #ffffff;
+
+  @media ${Device.tabletS} {
+    width: 85%;
+  }
 `;
 
 const TitleWrapper = styled.div`
-  width: 19.1rem;
   font-family: 'Nanum Myeongjo';
   color: #ffffff;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  align-items: flex-end;
   margin-top: 2.875rem;
 
-  @media ${Device.tabletL} {
-    width: 11.7rem;
+  @media ${Device.tabletS} {
     margin-top: 1.5rem;
     align-items: flex-end;
   }
 
   img {
     width: 6rem;
+    margin-right: 0.8rem;
 
-    @media ${Device.tabletL} {
+    @media ${Device.tabletS} {
+      width: 9.125rem;
+    }
+    @media ${Device.mobileL} {
       width: 4.375rem;
-      width: 11.7rem;
-      margin-top: 1.5rem;
+      margin-right: 0.5rem;
     }
   }
 
@@ -44,11 +48,14 @@ const TitleWrapper = styled.div`
     font-family: inherit;
     font-size: 2.25rem;
     font-weight: bold;
-    margin-bottom: 5px;
     word-break: keep-all;
+    line-height: 1.34;
 
-    @media ${Device.tabletL} {
-      font-size: 17px;
+    @media ${Device.tabletS} {
+      font-size: 2.18rem;
+    }
+    @media ${Device.mobileL} {
+      font-size: 1.1rem;
     }
   }
 `;
@@ -63,7 +70,10 @@ const ContentWrapper = styled.div`
     font-size: 1.25rem;
     margin: 2.25rem 0 1rem 0;
 
-    @media ${Device.tabletL} {
+    @media ${Device.tabletS} {
+      font-size: 1.5rem;
+    }
+    @media ${Device.mobileL} {
       font-size: 0.75rem;
     }
   }
@@ -72,8 +82,11 @@ const ContentWrapper = styled.div`
     font-family: inherit;
     font-size: 1rem;
 
-    @media ${Device.tabletL} {
-      font-size: 0.6rem;
+    @media ${Device.tabletS} {
+      font-size: 1.125rem;
+    }
+    @media ${Device.mobileL} {
+      font-size: 0.7rem;
     }
   }
 `;
@@ -93,6 +106,9 @@ const Form = styled.form<{ checked: boolean }>`
     align-items: center;
 
     @media ${Device.tabletL} {
+      font-size: 1.25rem;
+    }
+    @media ${Device.mobileL} {
       font-size: 0.75rem;
     }
   }
@@ -108,11 +124,18 @@ const Form = styled.form<{ checked: boolean }>`
     font-family: inherit;
     color: #ffffff;
     margin-top: 1.5rem;
+    cursor: pointer;
 
     @media ${Device.tabletL} {
+      width: 15.125rem;
+      height: 4.125rem;
+      font-size: 1.375rem;
+      font-weight: bold;
+    }
+    @media ${Device.mobileL} {
       width: 7.5rem;
-      height: 2rem;
-      font-size: 11px;
+      height: 2.06rem;
+      font-size: 0.69rem;
     }
   }
 
@@ -135,12 +158,14 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
   location,
   match,
   deem,
+  agree,
 }) => {
   const [checked, setChecked] = useState<boolean>(false);
 
   const submitCaution = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    agree(checked);
     deem(false);
     history.push('/hanseithon/join');
   };
@@ -149,7 +174,11 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
     <Wrapper>
       <TitleWrapper>
         <img src={TitleImg} alt="Accept Title" />
-        <span>오빠, 쉬면서 하자</span>
+        <span>
+          오빠,
+          <br />
+          쉬면서 하자
+        </span>
       </TitleWrapper>
       <ContentWrapper>
         <div>행사 숙지 사항</div>

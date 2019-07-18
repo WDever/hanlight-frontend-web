@@ -1,22 +1,21 @@
 import * as React from 'react';
 
-import AcceptPageContainer from 'container/hanseithon/main/acceptPage';
+import CurrentContainer from 'container/hanseithon/current';
 import styled from 'styled-components';
 
 const Template = styled.div`
   width: 100%;
-  position: absolute;
-  z-index: 9;
+  height: 100%;
   display: flex;
   justify-content: center;
 `;
 
-const AcceptPage: React.FC = () => {
+const HTCurrentPage: React.FC = () => {
   return (
     <Template>
-      <AcceptPageContainer />
+      <CurrentContainer />
     </Template>
   );
 };
 
-export default AcceptPage;
+export default HTCurrentPage;
