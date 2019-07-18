@@ -91,6 +91,7 @@ const ListWrapper = styled.div`
 
   @media ${Device.mobileL} {
     grid-row-gap: 1.49rem;
+    justify-content: center;
 
     margin-top: 1.25rem;
     margin-bottom: 1.5rem;

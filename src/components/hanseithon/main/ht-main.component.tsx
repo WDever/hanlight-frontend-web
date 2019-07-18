@@ -405,7 +405,9 @@ const HTMainComponent: React.FC<
             <ButtonWrapper>
               <button
                 style={{ marginRight: '1.25rem' }}
-                onClick={() => deem(true)}
+                onClick={() =>
+                  deem(true)
+                }
               >
                 참가신청 해臝
               </button>
