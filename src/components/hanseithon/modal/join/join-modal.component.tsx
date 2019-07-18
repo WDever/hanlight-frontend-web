@@ -168,11 +168,6 @@ const JoinTeamModal: React.FC<ModalProps> = ({
   useEffect(() => {
     if (putTeamStatus === 'success') {
       modal('join-success');
-    } else if (putTeamStatus === 'failure') {
-      alert(errMessage);
-      deem(false);
-      modal('none');
-      resetStatus();
     }
   }, [putTeamStatus]);
 
@@ -194,7 +189,7 @@ const JoinTeamModal: React.FC<ModalProps> = ({
           </JoinJobLabel>
           <JoinKeyLabel>
             참가 키
-            <input type="text" placeholder="ex) FFFFFFFFF" onChange={setCode} />
+            <input type="text" placeholder="예) 1234" onChange={setCode} />
           </JoinKeyLabel>
           <button>참가</button>
         </JoinTeamForm>

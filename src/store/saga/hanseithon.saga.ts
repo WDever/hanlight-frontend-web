@@ -13,6 +13,10 @@ import {
 } from 'store';
 import {
   GET_TEAM,
+  GET_TEAM_MATCH,
+  GET_TEAM_MATCH_FAILURE,
+  GET_TEAM_MATCH_SUCCESS,
+  GetTeamMatchParams,
   GetTeamParams,
   POST_TEAM,
   POST_TEAM_FAILURE,
@@ -61,9 +65,35 @@ function* putTeamApiSaga(action: PutTeam) {
   }
 }
 
-const postMatchTeamApi = (payload: PostTeamMatchParams) => {
-  console.log(payload);
-  return hanseithonInstance
+const getTeamMatchApi = (payload: GetTeamMatchParams) =>
+  hanseithonInstance
+    .get('/team/match', {
+      headers: {
+        authorization: payload.accessToken,
+      },
+      params: {
+        category: payload.category,
+      },
+    })
+    .then(res => res.data);
+function* getTeamMatchApiSaga(action: PostTeamMatch) {
+  if (action.type) {
+    try {
+      const response = yield call(getTeamMatchApi, action.payload);
+
+      yield put({ type: GET_TEAM_MATCH_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_TEAM_MATCH_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const postMatchTeamApi = (payload: PostTeamMatchParams) =>
+  hanseithonInstance
     .post(
       '/team/match',
       {
@@ -78,7 +108,6 @@ const postMatchTeamApi = (payload: PostTeamMatchParams) => {
       },
     )
     .then(res => res.data);
-};
 
 function* postMatchTeamApiSaga(action: PostTeamMatch) {
   if (action.type) {
@@ -160,6 +189,7 @@ function* getTeamApiSaga(action: GetTeam) {
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
+  yield takeEvery(GET_TEAM_MATCH, getTeamMatchApiSaga);
   yield takeEvery(POST_TEAM_MATCH, postMatchTeamApiSaga);
   yield takeEvery(POST_TEAM, postTeamApiSaga);
 }
