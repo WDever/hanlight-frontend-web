@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { HanseiThonProps } from 'container/hanseithon';
+import HTCurrentPage from 'pages/hanseithon/current';
 import JoinPage from 'pages/hanseithon/join';
 import MainPage from 'pages/hanseithon/main';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
@@ -15,13 +16,24 @@ export const Deem = styled.div`
   z-index: 2;
 `;
 
-const HanseiThonComponent: React.FC<HanseiThonProps> = ({ deemStatus }) => {
+const HanseiThonComponent: React.FC<HanseiThonProps> = ({
+  deemStatus,
+  agreeStatus,
+}) => {
   return (
     <>
       {deemStatus && <Deem />}
       <Switch>
-        <Route exact={true} path="/hanseithon/join" component={JoinPage} />
+        {agreeStatus && (
+          <Route exact={true} path="/hanseithon/join" component={JoinPage} />
+        )}
+        <Route
+          exact={true}
+          path="/hanseithon/current"
+          component={HTCurrentPage}
+        />
         <Route exact={true} path="/hanseithon" component={MainPage} />
+        <Redirect to="/error" />
       </Switch>
     </>
   );

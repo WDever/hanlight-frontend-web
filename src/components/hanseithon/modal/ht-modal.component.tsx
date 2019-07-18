@@ -1,9 +1,11 @@
 import * as React from 'react';
 
-import { HTModalProps } from 'container/hanseithon/modal';
-import { useInputs } from 'lib/hooks';
+import HTCurrentContainer from 'container/hanseithon/current';
+import { HTModalMethod, HTModalProps } from 'container/hanseithon/modal';
+import { useInput, useInputs } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import JoinSuccessSvg from 'lib/svg/join-team-success.svg';
+import { CategoryType, JobType } from 'store';
 import styled from 'styled-components';
 
 const { useState } = React;
@@ -130,7 +132,6 @@ const JoinTeamForm = styled.form`
 
     border-radius: 1rem;
 
-    /* margin-top: 3.25rem; */
     margin-top: 1.875rem;
 
     @media ${Device.tabletL} {
@@ -159,8 +160,26 @@ const JoinKeyLabel = styled.label`
   }
 `;
 
-const JoinTeamModal: React.FC = () => {
-  const [keyValidation, setKeyValidation] = useState<boolean>(true);
+const JoinTeamModal: React.FC<HTModalMethod & ModalProps> = ({
+  postTeam,
+  putTeam,
+  postTeamMatch,
+  changeSelect,
+  data,
+  accessToken,
+  deem,
+  modal,
+}) => {
+  const [code, setCode] = useInput('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const { job } = data;
+    putTeam({ accessToken, posiotion: job, code: Number(code) });
+    deem(false);
+    modal('none');
+  };
 
   return (
     <JoinTeamBox>
@@ -169,19 +188,18 @@ const JoinTeamModal: React.FC = () => {
           <div>쉬어가는 한세톤 : 休</div>
           <span>팀 참가</span>
         </TitleWrapper>
-        <JoinTeamForm style={{ marginTop: '1.125rem' }}>
+        <JoinTeamForm style={{ marginTop: '1.125rem' }} onSubmit={handleSubmit}>
           <JoinJobLabel>
             직군
-            <select>
-              <option>기획</option>
-              <option>개발</option>
-              <option>디자인</option>
+            <select onChange={changeSelect}>
+              <option value="기획">기획</option>
+              <option value="개발">개발</option>
+              <option value="디자인">디자인</option>
             </select>
           </JoinJobLabel>
           <JoinKeyLabel>
             참가 키
-            <input type="text" placeholder="ex) FFFFFFFFF" />
-            {!keyValidation && <span>올바르지 않은 참가 키 입니다.</span>}
+            <input type="text" placeholder="ex) FFFFFFFFF" onChange={setCode} />
           </JoinKeyLabel>
           <button>참가</button>
         </JoinTeamForm>
@@ -310,7 +328,11 @@ const CreateTeamWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CreateTeamModal: React.FC = () => {
+const CreateTeamModal: React.FC<HTModalMethod & ModalProps> = ({
+  changeSelect,
+  postTeam,
+  deem,
+}) => {
   return (
     <CreateTeamBox>
       <CreateTeamWrapper>
@@ -321,9 +343,9 @@ const CreateTeamModal: React.FC = () => {
         <TeamForm style={{ marginTop: '1rem' }}>
           <label style={{ marginTop: '0' }}>
             신청 부문
-            <select>
-              <option>생활</option>
-              <option>게임</option>
+            <select name="category" onChange={changeSelect}>
+              <option value="l">생활</option>
+              <option value="g">게임</option>
             </select>
           </label>
           <label>
@@ -332,7 +354,7 @@ const CreateTeamModal: React.FC = () => {
           </label>
           <label>
             팀장 직군
-            <select>
+            <select name="job" onChange={changeSelect}>
               <option>기획</option>
               <option>개발</option>
               <option>디자인</option>
@@ -349,7 +371,18 @@ const MatchTeamBox = CreateTeamBox;
 
 const MatchTeamWrapper = CreateTeamWrapper;
 
-const MatchTeamModal: React.FC = () => {
+const MatchTeamModal: React.FC<HTModalMethod & ModalProps> = ({
+  changeSelect,
+  postTeamMatch,
+  data,
+  deem,
+  modal,
+}) => {
+  const handleSubmit = () => {
+    deem(false);
+    modal('none');
+  }
+
   return (
     <MatchTeamBox>
       <MatchTeamWrapper>
@@ -360,17 +393,17 @@ const MatchTeamModal: React.FC = () => {
         <TeamForm style={{ marginTop: '1rem' }}>
           <label style={{ marginTop: '0' }}>
             신청 부문
-            <select>
-              <option>생활</option>
-              <option>게임</option>
+            <select name="category" onChange={changeSelect}>
+              <option value="l">생활</option>
+              <option value="g">게임</option>
             </select>
           </label>
           <label>
             직군
-            <select>
-              <option>기획</option>
-              <option>개발</option>
-              <option>디자인</option>
+            <select name="job" onChange={changeSelect}>
+              <option value="기획">기획</option>
+              <option value="개발">개발</option>
+              <option value="디자인">디자인</option>
             </select>
           </label>
           <label>
@@ -625,17 +658,104 @@ const CreateSuccessModal: React.FC = () => {
   );
 };
 
-const HTModalComponent: React.FC<HTModalProps> = ({ modalType }) => {
+const CurrentBox = styled.div`
+  width: 85%;
+  max-height: 36rem;
+
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
+  top: 10%;
+
+  background-color: #ffffff;
+
+  overflow-y: scroll;
+`;
+
+export interface DataType {
+  job: JobType;
+  category: CategoryType;
+}
+
+export interface ModalProps {
+  data: DataType;
+  accessToken: string;
+  changeSelect(e: React.ChangeEvent<HTMLSelectElement>): void;
+}
+
+const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
+  modalType,
+  postTeam,
+  putTeam,
+  postTeamMatch,
+  accessToken,
+  deem,
+  modal,
+}) => {
+  const [data, setData] = useState<DataType>({
+    job: '기획',
+    category: 'l',
+  });
+
+  const changeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.currentTarget;
+
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
   if (modalType === 'create') {
-    return <CreateTeamModal />;
+    return (
+      <CreateTeamModal
+        modal={modal}
+        deem={deem}
+        data={data}
+        changeSelect={changeSelect}
+        postTeam={postTeam}
+        putTeam={putTeam}
+        postTeamMatch={postTeamMatch}
+        accessToken={accessToken}
+      />
+    );
   } else if (modalType === 'join') {
-    return <JoinTeamModal />;
+    return (
+      <JoinTeamModal
+        modal={modal}
+        deem={deem}
+        data={data}
+        changeSelect={changeSelect}
+        postTeam={postTeam}
+        putTeam={putTeam}
+        postTeamMatch={postTeamMatch}
+        accessToken={accessToken}
+      />
+    );
   } else if (modalType === 'match') {
-    return <MatchTeamModal />;
+    return (
+      <MatchTeamModal
+        modal={modal}
+        deem={deem}
+        data={data}
+        changeSelect={changeSelect}
+        postTeam={postTeam}
+        putTeam={putTeam}
+        postTeamMatch={postTeamMatch}
+        accessToken={accessToken}
+      />
+    );
   } else if (modalType === 'join-success') {
     return <JoinSuccessModal />;
   } else if (modalType === 'create-success') {
     return <CreateSuccessModal />;
+  } else if (modalType === 'current') {
+    return (
+      <CurrentBox>
+        <HTCurrentContainer />
+      </CurrentBox>
+    );
   } else {
     return <></>;
   }

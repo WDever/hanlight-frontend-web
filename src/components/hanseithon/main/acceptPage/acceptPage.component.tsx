@@ -135,12 +135,14 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
   location,
   match,
   deem,
+  agree,
 }) => {
   const [checked, setChecked] = useState<boolean>(false);
 
   const submitCaution = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    agree(checked);
     deem(false);
     history.push('/hanseithon/join');
   };
