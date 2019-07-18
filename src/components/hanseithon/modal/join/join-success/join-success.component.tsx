@@ -4,9 +4,7 @@ import { Device } from 'lib/styles';
 import JoinSuccessSvg from 'lib/svg/join-team-success.svg';
 import { Deem, ModalTypes } from 'store';
 import styled from 'styled-components';
-import { TitleWrapper } from '../../ht-modal.component';
-
-const { useEffect } = React;
+import { TitleWrapper, XButton } from '../../ht-modal.component';
 
 const JoinSuccessBox = styled.div`
   width: 27.5rem;
@@ -16,6 +14,8 @@ const JoinSuccessBox = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  position: relative;
 
   background-color: #ffffff;
   box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.2);
@@ -114,6 +114,12 @@ const JoinSuccessModal: React.FC<JoinSuccessProps> = ({
 }) => {
   return (
     <JoinSuccessBox>
+      <XButton
+        onClick={() => {
+          deem(false);
+          modal('none');
+        }}
+      />
       <JoinSuccessWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>

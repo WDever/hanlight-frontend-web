@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useInput } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import styled from 'styled-components';
-import { ModalProps, TitleWrapper } from '../ht-modal.component';
+import { ModalProps, TitleWrapper, XButton } from '../ht-modal.component';
 
 const { useEffect } = React;
 
@@ -18,6 +18,8 @@ const JoinTeamBox = styled.div`
 
   background-color: #ffffff;
   box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.2);
+
+  position: relative;
 
   border-radius: 0.5rem;
 
@@ -178,6 +180,12 @@ const JoinTeamModal: React.FC<ModalProps> = ({
 
   return (
     <JoinTeamBox>
+      <XButton
+        onClick={() => {
+          deem(false);
+          modal('none');
+        }}
+      />
       <JoinTeamWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>

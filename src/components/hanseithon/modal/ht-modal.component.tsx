@@ -121,6 +121,8 @@ export const TeamBox = styled.div`
   align-items: center;
   justify-content: center;
 
+  position: relative;
+
   background-color: #ffffff;
   box-shadow: 0 20px 50px 0 rgba(0, 0, 0, 0.2);
 
@@ -150,6 +152,7 @@ const CurrentBox = styled.div`
   justify-content: center;
 
   position: absolute;
+
   top: 10%;
 
   background-color: #ffffff;
@@ -176,6 +179,34 @@ export const TitleWrapper = styled.div`
     font-family: inherit;
     font-size: 0.875rem;
   }
+`;
+
+export const XButton = styled.span<{ current?: boolean }>`
+  position: absolute;
+  right: -0.5rem;
+  top: ${props => (props.current ? '0.5rem' : '-2.5rem')};
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+
+  &::before {
+    transform: rotate(45deg);
+  }
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &::before,
+  &::after {
+    position: absolute;
+    content: ' ';
+    height: 32px;
+    width: 2px;
+    border-radius: 1.25rem;
+    background-color: ${props => (props.current ? '#000000' : '#ffffff')};
+  }
+
+  z-index: 20;
 `;
 
 export interface DataType {
@@ -312,6 +343,13 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   } else if (modalType === 'current') {
     return (
       <CurrentBox>
+        <XButton
+          onClick={() => {
+            deem(false);
+            modal('none');
+          }}
+          current={true}
+        />
         <HTCurrentContainer isModal={true} />
       </CurrentBox>
     );
