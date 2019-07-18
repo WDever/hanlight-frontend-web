@@ -113,6 +113,21 @@ const MenuSpan = styled.span`
   background-color: #707070;
 `;
 
+const HanseiThon = styled.div`
+  position: relative;
+`;
+
+const New = styled.div`
+  position: absolute;
+  top: -0.5rem;
+  right: -0.7rem;
+
+  color: #765df6;
+  font-size: 0.69rem;
+  font-family: 'Spoqa Han Sans';
+  font-weight: bold;
+`;
+
 const HeaderComponent: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
 > = ({ name, history, location, resetUser, toggleMenu }) => {
@@ -135,13 +150,16 @@ const HeaderComponent: React.FC<
           alt="Hanlight Logo"
         />
         <BtnsWrapper>
-          <StyledNavLink
-            exact={true}
-            to="/hanseithon"
-            active={location.pathname.includes('/hanseithon')}
-          >
-            한세톤
-          </StyledNavLink>
+          <HanseiThon>
+            <StyledNavLink
+              exact={true}
+              to="/hanseithon"
+              active={location.pathname.includes('/hanseithon')}
+            >
+              한세톤
+            </StyledNavLink>
+            <New>NEW</New>
+          </HanseiThon>
           <StyledNavLink
             exact={true}
             to="/notice"
