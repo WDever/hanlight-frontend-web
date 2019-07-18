@@ -14,7 +14,6 @@ const Templete = styled.div`
   width: 100%;
   min-height: 100%;
   background-color: #e9ebee;
-  overflow-x: hidden;
 
   display: flex;
   justify-content: center;
@@ -112,7 +111,6 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   useEffect(() => {
     return () => {
       if (errorCode < 500) {
-        console.log(errorCode);
         resetError();
       }
     };

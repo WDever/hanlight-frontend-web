@@ -116,6 +116,7 @@ const LinksWrapper = styled.div`
 const LinkBtn = styled.img`
   width: 2.375rem;
   height: 2.375rem;
+  cursor: pointer;
 
   @media ${Device.tabletL} {
     width: 1.875rem;
@@ -161,7 +162,7 @@ const FooterPage: React.FC = () => {
               src={IgLogoSvg}
               alt="Instagram logo"
               onClick={() =>
-                window.open('https://www.instagram.com/awes_____/')
+                window.open('https://www.instagram.com/')
               }
             />
             <LinkBtn
@@ -172,7 +173,7 @@ const FooterPage: React.FC = () => {
           </LinksWrapper>
         </UpsideWrapper>
         <CopyRight>
-          Copyright COPYTRIGHT HANSEI CYBER SECURITY HIGHSCHOOL. ALL RIGHT
+          Copyright COPYRIGHT HANSEI CYBER SECURITY HIGHSCHOOL. ALL RIGHT
           REVERSED
         </CopyRight>
       </FooterWrapper>

@@ -86,7 +86,7 @@ const CommentName = styled.span`
   }
 `;
 
-const CommentContent = styled.span`
+const CommentContent = styled.div`
   font-size: 0.81rem;
   color: #1d2129;
   padding: 0.375rem;
@@ -97,15 +97,13 @@ const CommentContent = styled.span`
   background-color: #f2f3f5;
 
   @media ${Device.tabletL} {
-    height: 2.25rem;
-    display: flex;
-    align-items: center;
+    vertical-align: middle;
     padding: 0.375rem 12px;
     font-size: 1rem;
   }
 
   @media ${Device.mobileL} {
-    height: 1.25rem;
+    padding: 0.375rem 8px;
     font-size: 0.625rem;
   }
 `;

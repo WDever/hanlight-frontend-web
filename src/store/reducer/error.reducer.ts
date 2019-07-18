@@ -35,6 +35,7 @@ export const errorReducer = (
           draft.name = 'Network Error';
           draft.time = moment().unix();
         }
+        console.log(action.payload.err.response);
         break;
 
       case 'RESET_ERROR':

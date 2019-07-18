@@ -44,7 +44,6 @@ export const userReducer = (
           ...action.payload.user,
         });
 
-        console.log(action.payload);
         localStorage.setItem('accessToken', action.payload.accessToken);
         break;
 

@@ -49,7 +49,6 @@ export const mealReducer = (
       case 'GET_MEAL_ORDER_SUCCESS':
         draft.getMealOrderStatus = 'success';
         draft.mealOrder = action.payload.data.order;
-        console.log(action.payload);
         break;
 
       case 'GET_MEAL_ORDER_FAILURE':

@@ -22,7 +22,7 @@ function* getTimetableApiSaga(action: GetTimetable) {
   if (action.type) {
     try {
       const response = yield call(getTimetableApi, action.payload);
-      console.log(response);
+
       yield put({ type: GET_TIMETABLE_SUCCESS, payload: response });
     } catch (e) {
       yield put({

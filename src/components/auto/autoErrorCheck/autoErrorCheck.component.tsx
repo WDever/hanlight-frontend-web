@@ -10,9 +10,18 @@ const { useEffect } = React;
 
 const AutoErrorCheckComponent: React.FC<
   AutoErrorCheckProps & AutoErrorCheckMethod & RouteComponentProps
-> = ({ history, location, onError, code, message, time, setError }) => {
+> = ({
+  history,
+  location,
+  onError,
+  code,
+  message,
+  time,
+  setError,
+  resetUser,
+}) => {
   useEffect(() => {
-    const isIE = navigator.userAgent.toLowerCase().indexOf('msie') != -1;
+    const isIE = navigator.userAgent.toLowerCase().indexOf('msie') !== -1;
 
     if (isIE) {
       setError({
@@ -35,6 +44,17 @@ const AutoErrorCheckComponent: React.FC<
         (!location.pathname.includes('/board') && code === 404) ||
         code >= 500
       ) {
+        history.push('/error');
+      } else if (code === 401) {
+        resetUser();
+        history.push('/user/login');
+      } else if (code === 503) {
+        setError({
+          code: 503,
+          message: '점검중',
+          description: '서버 / 디비 에러',
+          name: 'SERVER / DB ERROR',
+        });
         history.push('/error');
       }
     }
