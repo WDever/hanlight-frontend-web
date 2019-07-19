@@ -113,6 +113,8 @@ interface Props {
   teamMember: TeamMemberType[];
   category: CategoryType;
   team_pk: number;
+  isModal?: boolean;
+
   modal(payload: ModalTypes): void;
   setTeamPk(payload: number): void;
 }
@@ -125,6 +127,7 @@ const HTCurrentItemComponent: React.FC<Props> = ({
   team_pk,
   modal,
   setTeamPk,
+  isModal,
 }) => {
   return (
     <Box active={teamMember.length === 4}>
@@ -134,14 +137,26 @@ const HTCurrentItemComponent: React.FC<Props> = ({
         <span>{leaderName}</span>
         <p>정원: 4명 / {4 - teamMember.length}명 신청 가능</p>
       </ContentWrapper>
-      <button
-        onClick={() => {
-          modal('join');
-          setTeamPk(team_pk);
-        }}
-      >
-        {teamMember.length === 4 ? '마감' : '참가'}
-      </button>
+      {isModal ? (
+        <button
+          onClick={() => {
+            modal('join');
+            setTeamPk(team_pk);
+          }}
+        >
+          {teamMember.length === 4 ? '마감' : '참가'}
+        </button>
+      ) : (
+        <button
+          onClick={() =>
+            alert(
+              '참가 신청은 한세톤 메인 페이지의 참가 신청 버튼을 이용해주세요!',
+            )
+          }
+        >
+          {teamMember.length === 4 ? '마감' : '참가'}
+        </button>
+      )}
     </Box>
   );
 };
