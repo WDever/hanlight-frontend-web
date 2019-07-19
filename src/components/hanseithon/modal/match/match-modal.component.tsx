@@ -81,11 +81,11 @@ const MatchTeamModal: React.FC<ModalProps> = ({
           </label>
           <label>
             자기소개
-            <input
-              type="text"
+            <textarea
+              maxLength={100}
               placeholder="자기소개"
               value={introduction}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                 setIntrodiction(e.currentTarget.value)
               }
             />
