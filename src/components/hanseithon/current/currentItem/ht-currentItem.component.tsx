@@ -54,12 +54,18 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
 
+  width: 75%;
+
   b {
     font-family: inherit;
     font-size: 1.125rem;
     font-weight: bold;
 
     margin-top: 2.175rem;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     @media ${Device.tabletL} {
       font-size: 0.8125rem;

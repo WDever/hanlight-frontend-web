@@ -204,7 +204,7 @@ const JoinTeamModal: React.FC<ModalProps> = ({
             참가 키
             <input type="text" placeholder="예) 1234" onChange={setCode} />
           </JoinKeyLabel>
-          <button>참가</button>
+          <button disabled={putTeamStatus === 'pending'}>참가</button>
         </JoinTeamForm>
       </JoinTeamWrapper>
     </JoinTeamBox>

@@ -106,6 +106,8 @@ export const TeamForm = styled.form`
     width: 7.5rem;
     height: 2rem;
 
+    cursor: pointer;
+
     align-self: flex-end;
 
     font-family: 'Open Sans';

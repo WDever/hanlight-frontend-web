@@ -119,7 +119,12 @@ const CreateTeamModal: React.FC<ModalProps> = ({
               <option>디자인</option>
             </select>
           </label>
-          <button style={{ marginTop: '0.9375rem' }}>생성 시작</button>
+          <button
+            style={{ marginTop: '0.9375rem' }}
+            disabled={postTeamStatus === 'pending'}
+          >
+            생성 시작
+          </button>
         </TeamForm>
       </CreateTeamWrapper>
     </CreateTeamBox>
