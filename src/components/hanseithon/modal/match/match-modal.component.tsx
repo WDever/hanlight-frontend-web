@@ -1,13 +1,13 @@
 import * as React from 'react';
 
 import { useInput } from 'lib/hooks';
-import styled from 'styled-components';
 import {
   ModalProps,
   TeamBox,
   TeamForm,
   TeamWrapper,
   TitleWrapper,
+  XButton,
 } from '../ht-modal.component';
 
 const { useEffect } = React;
@@ -37,7 +37,6 @@ const MatchTeamModal: React.FC<ModalProps> = ({
   };
 
   useEffect(() => {
-    console.log(postMatchTeamStatus);
     if (postMatchTeamStatus === 'success') {
       alert('매칭에 참가하셨습니다.');
       deem(false);
@@ -53,6 +52,12 @@ const MatchTeamModal: React.FC<ModalProps> = ({
 
   return (
     <TeamBox>
+      <XButton
+        onClick={() => {
+          deem(false);
+          modal('none');
+        }}
+      />
       <TeamWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>
