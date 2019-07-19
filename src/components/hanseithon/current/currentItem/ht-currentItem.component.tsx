@@ -135,7 +135,7 @@ const HTCurrentItemComponent: React.FC<Props> = ({
       <ContentWrapper>
         <b>{name}</b>
         <span>{leaderName}</span>
-        <p>정원: 4명 / {4 - teamMember.length}명 신청 가능</p>
+        <p>정원: 4명 / {4 - teamMember.length}명 신청 가능</p>
       </ContentWrapper>
       {isModal ? (
         <button

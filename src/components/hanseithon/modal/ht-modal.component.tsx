@@ -77,6 +77,25 @@ export const TeamForm = styled.form`
     }
   }
 
+  textarea {
+    border: none;
+    border-top: solid 1px #e9e9e9;
+    border-bottom: solid 1px #e9e9e9;
+
+    height: 1.9375rem;
+
+    resize: none;
+
+    font-family: inherit;
+    font-size: 0.875rem;
+
+    background-color: #ffffff;
+
+    @media ${Device.tabletL} {
+      height: 1.6875rem;
+    }
+  }
+
   span {
     font-size: 0.8125rem;
     color: #ff0000;
