@@ -90,7 +90,12 @@ const MatchTeamModal: React.FC<ModalProps> = ({
               }
             />
           </label>
-          <button style={{ marginTop: '0.9375rem' }}>매칭 시작</button>
+          <button
+            style={{ marginTop: '0.9375rem' }}
+            disabled={postMatchTeamStatus === 'pending'}
+          >
+            매칭 시작
+          </button>
         </TeamForm>
       </TeamWrapper>
     </TeamBox>
