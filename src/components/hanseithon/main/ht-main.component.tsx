@@ -406,14 +406,14 @@ const HTMainComponent: React.FC<
               <button
                 style={{ marginRight: '1.25rem' }}
                 onClick={() =>
-                  alert('7월 19일 아침에 오픈하겠습니다. 죄송합니다.')
+                  deem(true)
                 }
               >
                 참가신청 해臝
               </button>
               <button
                 onClick={() => {
-                  alert('참가 현황은 7월 19일에 볼 수 있습니다!');
+                  history.push('/hanseithon/current');
                 }}
               >
                 참가현황 봐臝

@@ -13,7 +13,7 @@ const Template = styled.div`
 const HTCurrentPage: React.FC = () => {
   return (
     <Template>
-      <CurrentContainer />
+      <CurrentContainer isModal={false} />
     </Template>
   );
 };

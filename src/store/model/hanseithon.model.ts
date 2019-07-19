@@ -1,4 +1,11 @@
-export type ModalTypes = 'none' | 'create' | 'join' | 'match' | 'join-success' | 'create-success' | 'current';
+export type ModalTypes =
+  | 'none'
+  | 'create'
+  | 'join'
+  | 'match'
+  | 'join-success'
+  | 'create-success'
+  | 'current';
 
 export type CategoryType = string | 'l' | 'g';
 
@@ -17,8 +24,16 @@ export interface TeamType {
   leader_name: string;
   category: CategoryType;
   createAt: string;
+  code: number;
 
   teamMember: TeamMemberType[];
+}
+
+export interface MatchMember {
+  name: string;
+  studentId: string;
+  position: string;
+  introduction: string;
 }
 
 export interface HanseithonModel {
@@ -29,8 +44,12 @@ export interface HanseithonModel {
   putTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   postTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   getTeamStatus: 'none' | 'pending' | 'success' | 'failure';
-  postMatchTeamStatus: 'none' | 'pending' | 'success' | 'failure';
+  getTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
+  postTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
 
+  team: TeamType;
   teams: TeamType[];
   teamPk: number;
+
+  match: MatchMember[];
 }

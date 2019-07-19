@@ -7,6 +7,7 @@ import {
   Comment,
   ErrorResponse,
   JobType,
+  MatchMember,
   ModalTypes,
   TeamMemberType,
   TeamType,
@@ -57,6 +58,15 @@ export interface GetTeamParams {
   category: CategoryType;
 }
 
+export interface GetTeamMatchParams {
+  accessToken: string;
+  category: CategoryType;
+}
+
+export interface GetTeamMatchResType {
+  match: MatchMember[];
+}
+
 export const DEEM = 'DEEM';
 
 export const MODAL = 'MODAL';
@@ -76,6 +86,10 @@ export const POST_TEAM_FAILURE = 'POST_TEAM_FAILURE';
 export const PUT_TEAM = 'PUT_TEAM';
 export const PUT_TEAM_SUCCESS = 'PUT_TEAM_SUCCESS';
 export const PUT_TEAM_FAILURE = 'PUT_TEAM_FAILURE';
+
+export const GET_TEAM_MATCH = 'GET_TEAM_MATCH';
+export const GET_TEAM_MATCH_SUCCESS = 'GET_TEAM_MATCH_SUCCESS';
+export const GET_TEAM_MATCH_FAILURE = 'GET_TEAM_MATCH_FAILURE';
 
 export const POST_TEAM_MATCH = 'POST_TEAM_MATCH';
 export const POST_TEAM_MATCH_SUCCESS = 'POST_TEAM_MATCH_SUCCESS';
@@ -152,11 +166,27 @@ export class PutTeam implements Action {
 export class PutTeamSuccess implements Action {
   public readonly type = PUT_TEAM_SUCCESS;
 
-  public constructor(public payload: PutTeamResType) {}
+  public constructor(public payload: PutTeamResType & { pk: number }) {}
 }
 
 export class PutTeamFailure implements Action {
   public readonly type = PUT_TEAM_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class GetTeamMatch implements Action {
+  public readonly type = GET_TEAM_MATCH;
+
+  public constructor(public payload: GetTeamMatchParams) {}
+}
+export class GetTeamMatchSuccess implements Action {
+  public readonly type = GET_TEAM_MATCH_SUCCESS;
+
+  public constructor(public payload: GetTeamMatchResType) {}
+}
+export class GetTeamMatchFailure implements Action {
+  public readonly type = GET_TEAM_MATCH_FAILURE;
 
   public constructor(public payload: ErrorResponse) {}
 }
@@ -191,7 +221,8 @@ export const hanseithonActions = {
   getTeam: createStandardAction(GET_TEAM)<GetTeamParams>(),
   postTeam: createStandardAction(POST_TEAM)<PostTeamParams>(),
   putTeam: createStandardAction(PUT_TEAM)<PutTeamParams>(),
-  postMatchTeam: createStandardAction(POST_TEAM_MATCH)<PostTeamMatchParams>(),
+  getTeamMatch: createStandardAction(GET_TEAM_MATCH)<GetTeamMatchParams>(),
+  postTeamMatch: createStandardAction(POST_TEAM_MATCH)<PostTeamMatchParams>(),
   resetStatus: createStandardAction(REST_STATUS)(),
 };
 
@@ -209,6 +240,9 @@ export type hanseithonReducerActions =
   | PutTeam
   | PutTeamSuccess
   | PutTeamFailure
+  | GetTeamMatch
+  | GetTeamMatchSuccess
+  | GetTeamMatchFailure
   | PostTeamMatch
   | PostTeamMatchSuccess
   | PostTeamMatchFailure

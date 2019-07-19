@@ -11,6 +11,7 @@ import {
   PostTeamMatchParams,
   PostTeamParams,
   PutTeamParams,
+  TeamType,
   userReducerActions,
 } from 'store';
 
@@ -20,8 +21,10 @@ export interface HTModalProps {
   teamPk: number;
   putTeamStatus: 'none' | 'pending' | 'success' | 'failure';
   postTeamStatus: 'none' | 'pending' | 'success' | 'failure';
-  postMatchTeamStatus: 'none' | 'pending' | 'success' | 'failure';
+  postTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
   errMessage: string;
+  teams: TeamType[];
+  team: TeamType;
 }
 
 export interface HTModalMethod {
@@ -33,16 +36,16 @@ export interface HTModalMethod {
   resetStatus(): void;
 }
 
-export interface HTModalOwnProps {}
-
 const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   modalType: hanseithon.modalType,
   accessToken: user.accessToken,
   teamPk: hanseithon.teamPk,
   putTeamStatus: hanseithon.putTeamStatus,
   postTeamStatus: hanseithon.postTeamStatus,
-  postMatchTeamStatus: hanseithon.postMatchTeamStatus,
+  postTeamMatchStatus: hanseithon.postTeamMatchStatus,
   errMessage: error.message,
+  teams: hanseithon.teams,
+  team: hanseithon.team,
 });
 
 const mapDispatchToProps = (
@@ -50,7 +53,7 @@ const mapDispatchToProps = (
 ) => ({
   postTeam: bindActionCreators(hanseithonActions.postTeam, dispatch),
   putTeam: bindActionCreators(hanseithonActions.putTeam, dispatch),
-  postTeamMatch: bindActionCreators(hanseithonActions.postMatchTeam, dispatch),
+  postTeamMatch: bindActionCreators(hanseithonActions.postTeamMatch, dispatch),
   deem: bindActionCreators(hanseithonActions.deem, dispatch),
   modal: bindActionCreators(hanseithonActions.modal, dispatch),
   resetStatus: bindActionCreators(hanseithonActions.resetStatus, dispatch),
