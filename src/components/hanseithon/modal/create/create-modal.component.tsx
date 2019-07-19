@@ -3,13 +3,20 @@ import * as React from 'react';
 import { useInput } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import styled from 'styled-components';
-import { ModalProps, TeamForm, TitleWrapper } from '../ht-modal.component';
+import {
+  ModalProps,
+  TeamForm,
+  TitleWrapper,
+  XButton,
+} from '../ht-modal.component';
 
 const { useEffect } = React;
 
 const CreateTeamBox = styled.div`
   width: 27.5rem;
   height: 21rem;
+
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -74,6 +81,12 @@ const CreateTeamModal: React.FC<ModalProps> = ({
 
   return (
     <CreateTeamBox>
+      <XButton
+        onClick={() => {
+          deem(false);
+          modal('none');
+        }}
+      />
       <CreateTeamWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>

@@ -3,11 +3,13 @@ import * as React from 'react';
 import { Device } from 'lib/styles';
 import { ModalTypes } from 'store';
 import styled from 'styled-components';
-import { TitleWrapper } from '../../ht-modal.component';
+import { TitleWrapper, XButton } from '../../ht-modal.component';
 
 const CreateSuccessBox = styled.div`
   width: 27.5rem;
   height: 21rem;
+
+  position: relative;
 
   display: flex;
   flex-direction: column;
@@ -135,6 +137,12 @@ const CreateSuccessModal: React.FC<CreateSuccessProps> = ({
 }) => {
   return (
     <CreateSuccessBox>
+      <XButton
+        onClick={() => {
+          deem(false);
+          modal('none');
+        }}
+      />
       <CreateSuccessWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>
