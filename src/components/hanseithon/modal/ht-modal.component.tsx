@@ -204,6 +204,10 @@ export const XButton = styled.span<{ current?: boolean }>`
     width: 2px;
     border-radius: 1.25rem;
     background-color: ${props => (props.current ? '#000000' : '#ffffff')};
+
+    @media ${Device.tabletS} {
+      height: 26px;
+    }
   }
 
   z-index: 20;
