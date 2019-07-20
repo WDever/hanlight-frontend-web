@@ -198,11 +198,6 @@ const AcceptPageComponent: React.FC<RouteComponentProps & AcceptPageMethod> = ({
     history.push('/hanseithon/join');
   };
 
-  const Exit = () => {
-    deem(false);
-    modal('none');
-  };
-
   return (
     <Wrapper>
       <XButton

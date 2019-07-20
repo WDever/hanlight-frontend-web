@@ -7,6 +7,8 @@ import CreateBackImg from 'lib/svg/create-team-back.svg';
 import CreateTeamBtnImg from 'lib/svg/create-team-btn.svg';
 import JoinTeamImg from 'lib/svg/join-team.svg';
 import MatchTeamImg from 'lib/svg/match-team.svg';
+import moment from 'moment';
+import 'moment/locale/ko';
 import HTModalPage from 'pages/hanseithon/modal';
 import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';

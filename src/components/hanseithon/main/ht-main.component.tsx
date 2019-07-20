@@ -3,6 +3,8 @@ import * as React from 'react';
 import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import { Device } from 'lib/styles';
 import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
+import moment from 'moment';
+import 'moment/locale/ko';
 import AcceptPage from 'pages/hanseithon/main/acceptPage';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
@@ -406,7 +408,14 @@ const HTMainComponent: React.FC<
               <button
                 style={{ marginRight: '1.25rem' }}
                 onClick={() =>
-                  deem(true)
+                  Number(
+                    moment()
+                      .format('YYYY M D k m s')
+                      .split(' ')
+                      .join(''),
+                  ) >= 20190722235959
+                    ? alert('참가 신청이 마감되었습니다.')
+                    : deem(true)
                 }
               >
                 참가신청 해臝
