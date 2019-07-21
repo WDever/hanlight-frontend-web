@@ -95,6 +95,10 @@ export const POST_TEAM_MATCH = 'POST_TEAM_MATCH';
 export const POST_TEAM_MATCH_SUCCESS = 'POST_TEAM_MATCH_SUCCESS';
 export const POST_TEAM_MATCH_FAILURE = 'POST_TEAM_MATCH_FAILURE';
 
+export const POST_OBSERVER = 'POST_OBSERVER';
+export const POST_OBSERVER_SUCCESS = 'POST_OBSERVER_SUCCESS';
+export const POST_OBSERVER_FAILURE = 'POST_OBSERVER_FAILURE';
+
 export const REST_STATUS = 'RESET_STATUS';
 
 export class Deem implements Action {
@@ -209,6 +213,24 @@ export class PostTeamMatchFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class PostObserver implements Action {
+  public readonly type = POST_OBSERVER;
+
+  public constructor(public payload: string) {}
+}
+
+export class PostObserverSuccess implements Action {
+  public readonly type = POST_OBSERVER_SUCCESS;
+
+  public constructor(public payload: { success: boolean }) {}
+}
+
+export class PostObserverFailure implements Action {
+  public readonly type = POST_OBSERVER_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export class ResetStatus implements Action {
   public readonly type = REST_STATUS;
 }
@@ -223,6 +245,7 @@ export const hanseithonActions = {
   putTeam: createStandardAction(PUT_TEAM)<PutTeamParams>(),
   getTeamMatch: createStandardAction(GET_TEAM_MATCH)<GetTeamMatchParams>(),
   postTeamMatch: createStandardAction(POST_TEAM_MATCH)<PostTeamMatchParams>(),
+  postObserver: createStandardAction(POST_OBSERVER)<string>(),
   resetStatus: createStandardAction(REST_STATUS)(),
 };
 
@@ -246,4 +269,7 @@ export type hanseithonReducerActions =
   | PostTeamMatch
   | PostTeamMatchSuccess
   | PostTeamMatchFailure
+  | PostObserver
+  | PostObserverSuccess
+  | PostObserverFailure
   | ResetStatus;

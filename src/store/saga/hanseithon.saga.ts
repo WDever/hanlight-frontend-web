@@ -1,4 +1,3 @@
-import { yieldExpression } from '@babel/types';
 import { hanseithonInstance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
@@ -18,19 +17,22 @@ import {
   GET_TEAM_MATCH_SUCCESS,
   GetTeamMatchParams,
   GetTeamParams,
+  POST_OBSERVER,
+  POST_OBSERVER_FAILURE,
+  POST_OBSERVER_SUCCESS,
   POST_TEAM,
   POST_TEAM_FAILURE,
   POST_TEAM_MATCH,
   POST_TEAM_MATCH_FAILURE,
   POST_TEAM_MATCH_SUCCESS,
   POST_TEAM_SUCCESS,
+  PostObserver,
   PostTeam,
   PostTeamMatch,
   PostTeamMatchParams,
   PostTeamParams,
   PUT_TEAM,
 } from 'store/action';
-import { action } from 'typesafe-actions';
 
 const putTeamApi = (payload: PutTeamParams) =>
   hanseithonInstance
@@ -189,12 +191,42 @@ function* getTeamApiSaga(action: GetTeam) {
   }
 }
 
+const postObserverApi = (payload: string) =>
+  hanseithonInstance
+    .post(
+      '/observer',
+      {},
+      {
+        headers: {
+          authorization: payload,
+        },
+      },
+    )
+    .then(res => res.data);
+
+function* postObserverApiSaga(action: PostObserver) {
+  if (action.type) {
+    try {
+      const response = yield call(postObserverApi, action.payload);
+
+      yield put({ type: POST_OBSERVER_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: POST_OBSERVER_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
   yield takeEvery(GET_TEAM_MATCH, getTeamMatchApiSaga);
   yield takeEvery(POST_TEAM_MATCH, postMatchTeamApiSaga);
   yield takeEvery(POST_TEAM, postTeamApiSaga);
+  yield takeEvery(POST_OBSERVER, postObserverApiSaga);
 }
 
 export { hanseithonSaga };
