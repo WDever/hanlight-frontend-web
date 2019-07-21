@@ -129,6 +129,7 @@ const HTCurrentComponent: React.FC<
               category={category}
               modal={modal}
               setTeamPk={setTeamPk}
+              isModal={isModal}
             />
           );
         })

@@ -77,6 +77,25 @@ export const TeamForm = styled.form`
     }
   }
 
+  textarea {
+    border: none;
+    border-top: solid 1px #e9e9e9;
+    border-bottom: solid 1px #e9e9e9;
+
+    height: 1.9375rem;
+
+    resize: none;
+
+    font-family: inherit;
+    font-size: 0.875rem;
+
+    background-color: #ffffff;
+
+    @media ${Device.tabletL} {
+      height: 1.6875rem;
+    }
+  }
+
   span {
     font-size: 0.8125rem;
     color: #ff0000;
@@ -86,6 +105,8 @@ export const TeamForm = styled.form`
   button {
     width: 7.5rem;
     height: 2rem;
+
+    cursor: pointer;
 
     align-self: flex-end;
 
@@ -204,6 +225,10 @@ export const XButton = styled.span<{ current?: boolean }>`
     width: 2px;
     border-radius: 1.25rem;
     background-color: ${props => (props.current ? '#000000' : '#ffffff')};
+
+    @media ${Device.tabletS} {
+      height: 26px;
+    }
   }
 
   z-index: 20;
