@@ -348,7 +348,6 @@ const ContentCol = styled.col`
 
 const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
 const joinEndTime = moment([2019, 6, 22, 23, 59, 59]);
-const test = moment([2019, 6, 21, 17, 0, 30]);
 const now = moment();
 
 const HTMainComponent: React.FC<
