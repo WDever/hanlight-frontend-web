@@ -8,6 +8,8 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 
 import logos from 'lib/sponsor/logos.svg';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 const { useEffect } = React;
 
@@ -144,7 +146,6 @@ const ButtonWrapper = styled.div`
     width: 11.25rem;
     height: 3.5rem;
     border-radius: 3.93rem;
-    background-color: #000000;
     color: #ffffff;
     font-family: 'Opne Sans';
     font-size: 1rem;
@@ -163,6 +164,15 @@ const ButtonWrapper = styled.div`
       font-size: 0.69rem;
     }
   }
+`;
+
+const JoinButton = styled.button<{ disable: boolean }>`
+  background-color: ${props => (props.disable ? '#a2a2a2' : '#000000')};
+  margin-right: 1.25rem;
+`;
+
+const CurrentButton = styled.button`
+  background-color: #000000;
 `;
 
 const Exaplain = styled.span`
@@ -336,39 +346,45 @@ const ContentCol = styled.col`
   width: 65%;
 `;
 
-const CurrnetLink = styled(Link)`
-  width: 11.25rem;
-  height: 3.5rem;
-  border-radius: 3.93rem;
-  background-color: #000000;
-  color: #ffffff;
-  font-family: 'Opne Sans';
-  font-size: 1rem;
-  outline: none;
-  border: none;
-  cursor: pointer;
-
-  text-decoration: none;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  @media ${Device.mobileL} {
-    width: 7.5rem;
-    height: 2.25rem;
-    font-size: 0.69rem;
-  }
-`;
+const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
+const joinEndTime = moment([2019, 6, 22, 23, 59, 59]);
+const test = moment([2019, 6, 21, 17, 0, 30]);
+const now = moment();
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = ({ history, deem, deemStatus }) => {
+> = ({
+  history,
+  deem,
+  deemStatus,
+  errMessage,
+  postObserver,
+  accessToken,
+  userType,
+  postObserverStatus,
+  resetStatus,
+}) => {
   const [rightTableToggle, setRightTableToggle] = React.useState<boolean>(
     false,
   );
 
-  useEffect(() => () => deem(false), []);
+  const visit = () =>
+    window.confirm('참관 신청 하시겠습니까?')
+      ? postObserver(accessToken)
+      : alert('한세톤: 休 많은 관심 부탁드립니다.');
+
+  useEffect(() => {
+    if (postObserverStatus === 'success') {
+      alert('신청되었습니다. 확정될 시 한빛 연락처로 연락드리겠습니다!');
+    } else if (postObserverStatus === 'failure') {
+      alert(errMessage);
+    }
+
+    return () => {
+      deem(false);
+      resetStatus();
+    };
+  }, [postObserverStatus]);
 
   return (
     <>
@@ -403,21 +419,30 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <Exaplain>臝(라) : 자유와 해방을 뜻함</Exaplain>
             <ButtonWrapper>
-              <button
-                style={{ marginRight: '1.25rem' }}
-                onClick={() =>
-                  deem(true)
-                }
-              >
-                참가신청 해臝
-              </button>
-              <button
+              {userType === 'graduate' ? (
+                <JoinButton
+                  onClick={visit}
+                  disable={now.isAfter(visitEndTime)}
+                  disabled={now.isAfter(visitEndTime)}
+                >
+                  {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
+                </JoinButton>
+              ) : (
+                <JoinButton
+                  onClick={() => deem(true)}
+                  disable={now.isAfter(joinEndTime)}
+                  disabled={now.isAfter(joinEndTime)}
+                >
+                  {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
+                </JoinButton>
+              )}
+              <CurrentButton
                 onClick={() => {
                   history.push('/hanseithon/current');
                 }}
               >
                 참가현황 봐臝
-              </button>
+              </CurrentButton>
             </ButtonWrapper>
           </RightSeparator>
         </ContentWrapper>

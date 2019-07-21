@@ -10,6 +10,7 @@ const initialState: HanseithonModel = {
   getTeamStatus: 'none',
   getTeamMatchStatus: 'none',
   postTeamMatchStatus: 'none',
+  postObserverStatus: 'none',
   teams: [],
   teamPk: 0,
   team: {
@@ -119,10 +120,23 @@ export const hanseithonReducer = (
         draft.postTeamMatchStatus = 'failure';
         break;
 
+      case 'POST_OBSERVER':
+        draft.postObserverStatus = 'pending';
+        break;
+
+      case 'POST_OBSERVER_SUCCESS':
+        draft.postObserverStatus = 'success';
+        break;
+      
+      case 'POST_OBSERVER_FAILURE':
+        draft.postObserverStatus = 'failure';
+        break;
+
       case 'RESET_STATUS':
         draft.putTeamStatus = 'none';
         draft.postTeamStatus = 'none';
         draft.postTeamMatchStatus = 'none';
+        draft.postObserverStatus = 'none';
         break;
 
       default:
