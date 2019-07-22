@@ -452,7 +452,7 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <ButtonWrapper>
               <div>
-                <OpenLink onClick={themeFunc}>
+                <OpenLink onClick={judgementFunc}>
                   심사 기준표 >
                 </OpenLink>
                 {userType === 'graduate' ? (
@@ -474,7 +474,7 @@ const HTMainComponent: React.FC<
                 )}
               </div>
               <div>
-                <OpenLink onClick={judgementFunc}>
+                <OpenLink onClick={themeFunc}>
                   주제 공개 >
                 </OpenLink>
                 <CurrentButton
