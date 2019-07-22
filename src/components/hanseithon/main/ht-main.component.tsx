@@ -166,13 +166,9 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const JoinButton = styled.button<{ disable: boolean }>`
+const Button = styled.button<{ disable: boolean }>`
   background-color: ${props => (props.disable ? '#a2a2a2' : '#000000')};
   margin-right: 1.25rem;
-`;
-
-const CurrentButton = styled.button`
-  background-color: #000000;
 `;
 
 const Exaplain = styled.span`
@@ -461,33 +457,34 @@ const HTMainComponent: React.FC<
               <div>
                 <OpenLink onClick={themeFunc}>심사 기준표 ></OpenLink>
                 {userType === 'graduate' ? (
-                  <JoinButton
+                  <Button
                     onClick={visit}
                     disable={now.isAfter(visitEndTime)}
                     disabled={now.isAfter(visitEndTime)}
                   >
                     {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
-                  </JoinButton>
+                  </Button>
                 ) : (
-                  <JoinButton
+                  <Button
                     onClick={() => deem(true)}
                     disable={now.isAfter(joinEndTime)}
                     disabled={now.isAfter(joinEndTime)}
                   >
                     {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
-                  </JoinButton>
+                  </Button>
                 )}
               </div>
               <div>
                 <OpenLink onClick={judgementFunc}>주제 공개 ></OpenLink>
-                <CurrentButton
+                <Button
                   onClick={() => {
                     history.push('/hanseithon/current');
                   }}
                   disabled={now.isAfter(joinEndTime)}
+                  disable={now.isAfter(joinEndTime)}
                 >
                   {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
-                </CurrentButton>
+                </Button>
               </div>
             </ButtonWrapper>
           </RightSeparator>
