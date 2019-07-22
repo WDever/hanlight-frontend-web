@@ -455,7 +455,9 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <ButtonWrapper>
               <div>
-                <OpenLink onClick={themeFunc}>심사 기준표 ></OpenLink>
+                <OpenLink onClick={judgementFunc}>
+                  심사 기준표 >
+                </OpenLink>
                 {userType === 'graduate' ? (
                   <Button
                     onClick={visit}
@@ -475,8 +477,10 @@ const HTMainComponent: React.FC<
                 )}
               </div>
               <div>
-                <OpenLink onClick={judgementFunc}>주제 공개 ></OpenLink>
-                <Button
+                <OpenLink onClick={themeFunc}>
+                  주제 공개 >
+                </OpenLink>
+                <CurrentButton
                   onClick={() => {
                     history.push('/hanseithon/current');
                   }}
