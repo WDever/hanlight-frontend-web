@@ -354,6 +354,13 @@ const OpenLink = styled.div`
   cursor: pointer;
 
   margin-bottom: 1rem;
+
+  @media ${Device.mobileL} {
+    width: 7.5rem;
+    font-size: 0.625rem;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+  }
 `;
 
 const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
@@ -452,9 +459,7 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <ButtonWrapper>
               <div>
-                <OpenLink onClick={themeFunc}>
-                  심사 기준표 >
-                </OpenLink>
+                <OpenLink onClick={themeFunc}>심사 기준표 ></OpenLink>
                 {userType === 'graduate' ? (
                   <JoinButton
                     onClick={visit}
@@ -474,9 +479,7 @@ const HTMainComponent: React.FC<
                 )}
               </div>
               <div>
-                <OpenLink onClick={judgementFunc}>
-                  주제 공개 >
-                </OpenLink>
+                <OpenLink onClick={judgementFunc}>주제 공개 ></OpenLink>
                 <CurrentButton
                   onClick={() => {
                     history.push('/hanseithon/current');
