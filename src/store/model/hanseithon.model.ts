@@ -13,8 +13,8 @@ export type JobType = '기획' | '개발' | '디자인' | string;
 
 export interface TeamMemberType {
   name: string;
-  leader: string;
-  studuntId: string;
+  leader: boolean;
+  studentId: string;
   position: string;
 }
 
@@ -47,10 +47,15 @@ export interface HanseithonModel {
   getTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
   postTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
   postObserverStatus: 'none' | 'pending' | 'success' | 'failure';
+  getThemeStatus: 'none' | 'pending' | 'success' | 'failure';
+  getJudgementStatus: 'none' | 'pending' | 'success' | 'failure';
 
   team: TeamType;
   teams: TeamType[];
   teamPk: number;
+
+  themeUrl: string;
+  judgementUrl: string;
 
   match: MatchMember[];
 }

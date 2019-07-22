@@ -346,6 +346,16 @@ const ContentCol = styled.col`
   width: 65%;
 `;
 
+const OpenLink = styled.div`
+  color: #291bfe;
+  font-family: 'Noto Sans KR';
+  font-size: 17px;
+
+  cursor: pointer;
+
+  margin-bottom: 1rem;
+`;
+
 const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
 const joinEndTime = moment([2019, 6, 22, 23, 59, 59]);
 const now = moment();
@@ -362,6 +372,12 @@ const HTMainComponent: React.FC<
   userType,
   postObserverStatus,
   resetStatus,
+  getJudgement,
+  getTheme,
+  getThemeStatus,
+  getJudgementStatus,
+  themeUrl,
+  judgementUrl,
 }) => {
   const [rightTableToggle, setRightTableToggle] = React.useState<boolean>(
     false,
@@ -372,10 +388,28 @@ const HTMainComponent: React.FC<
       ? postObserver(accessToken)
       : alert('한세톤: 休 많은 관심 부탁드립니다.');
 
+  const themeFunc = () =>
+    now.isAfter(visitEndTime)
+      ? getTheme(accessToken)
+      : alert('주제는 수요일에 공개됩니다!');
+
+  const judgementFunc = () =>
+    now.isAfter(visitEndTime)
+      ? getJudgement(accessToken)
+      : alert('심사기준은 수요일에 공개됩니다!');
+
   useEffect(() => {
     if (postObserverStatus === 'success') {
       alert('신청되었습니다. 확정될 시 한빛 연락처로 연락드리겠습니다!');
-    } else if (postObserverStatus === 'failure') {
+    } else if (getThemeStatus === 'success') {
+      window.open(themeUrl);
+    } else if (getJudgementStatus === 'success') {
+      window.open(judgementUrl);
+    } else if (
+      postObserverStatus === 'failure' ||
+      getThemeStatus === 'failure' ||
+      getJudgementStatus === 'failure'
+    ) {
       alert(errMessage);
     }
 
@@ -416,32 +450,42 @@ const HTMainComponent: React.FC<
             </Content>
           </LeftSeparator>
           <RightSeparator>
-            <Exaplain>臝(라) : 자유와 해방을 뜻함</Exaplain>
             <ButtonWrapper>
-              {userType === 'graduate' ? (
-                <JoinButton
-                  onClick={visit}
-                  disable={now.isAfter(visitEndTime)}
-                  disabled={now.isAfter(visitEndTime)}
-                >
-                  {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
-                </JoinButton>
-              ) : (
-                <JoinButton
-                  onClick={() => deem(true)}
-                  disable={now.isAfter(joinEndTime)}
+              <div>
+                <OpenLink onClick={themeFunc}>
+                  심사 기준표 >
+                </OpenLink>
+                {userType === 'graduate' ? (
+                  <JoinButton
+                    onClick={visit}
+                    disable={now.isAfter(visitEndTime)}
+                    disabled={now.isAfter(visitEndTime)}
+                  >
+                    {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
+                  </JoinButton>
+                ) : (
+                  <JoinButton
+                    onClick={() => deem(true)}
+                    disable={now.isAfter(joinEndTime)}
+                    disabled={now.isAfter(joinEndTime)}
+                  >
+                    {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
+                  </JoinButton>
+                )}
+              </div>
+              <div>
+                <OpenLink onClick={judgementFunc}>
+                  주제 공개 >
+                </OpenLink>
+                <CurrentButton
+                  onClick={() => {
+                    history.push('/hanseithon/current');
+                  }}
                   disabled={now.isAfter(joinEndTime)}
                 >
-                  {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
-                </JoinButton>
-              )}
-              <CurrentButton
-                onClick={() => {
-                  history.push('/hanseithon/current');
-                }}
-              >
-                참가현황 봐臝
-              </CurrentButton>
+                  {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
+                </CurrentButton>
+              </div>
             </ButtonWrapper>
           </RightSeparator>
         </ContentWrapper>
