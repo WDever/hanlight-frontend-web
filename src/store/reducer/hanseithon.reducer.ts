@@ -11,6 +11,12 @@ const initialState: HanseithonModel = {
   getTeamMatchStatus: 'none',
   postTeamMatchStatus: 'none',
   postObserverStatus: 'none',
+  getThemeStatus: 'none',
+  getJudgementStatus: 'none',
+
+  themeUrl: '',
+  judgementUrl: '',
+
   teams: [],
   teamPk: 0,
   team: {
@@ -132,11 +138,39 @@ export const hanseithonReducer = (
         draft.postObserverStatus = 'failure';
         break;
 
+      case 'GET_THEME':
+        draft.getThemeStatus = 'pending';
+        break;
+
+      case 'GET_THEME_SUCCESS':
+        draft.getThemeStatus = 'success';
+        draft.themeUrl = action.payload;
+        break;
+
+      case 'GET_THEME_FAILURE':
+        draft.getThemeStatus = 'failure';
+        break;
+
+      case 'GET_JUDGEMENT':
+        draft.getJudgementStatus = 'pending';
+        break;
+
+      case 'GET_THEME_SUCCESS':
+        draft.getJudgementStatus = 'success';
+        draft.judgementUrl = action.payload;
+        break;
+
+      case 'GET_THEME_FAILURE':
+        draft.getJudgementStatus = 'failure';
+        break;
+
       case 'RESET_STATUS':
         draft.putTeamStatus = 'none';
         draft.postTeamStatus = 'none';
         draft.postTeamMatchStatus = 'none';
         draft.postObserverStatus = 'none';
+        draft.getThemeStatus = 'none';
+        draft.getJudgementStatus = 'none';
         break;
 
       default:
