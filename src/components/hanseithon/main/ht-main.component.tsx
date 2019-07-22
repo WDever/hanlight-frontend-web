@@ -480,7 +480,7 @@ const HTMainComponent: React.FC<
                 <OpenLink onClick={themeFunc}>
                   주제 공개 >
                 </OpenLink>
-                <CurrentButton
+                <Button
                   onClick={() => {
                     history.push('/hanseithon/current');
                   }}
