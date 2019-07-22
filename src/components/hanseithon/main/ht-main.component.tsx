@@ -481,6 +481,7 @@ const HTMainComponent: React.FC<
                   onClick={() => {
                     history.push('/hanseithon/current');
                   }}
+                  disabled={now.isAfter(joinEndTime)}
                 >
                   {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
                 </CurrentButton>
