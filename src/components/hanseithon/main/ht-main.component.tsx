@@ -166,13 +166,9 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const JoinButton = styled.button<{ disable: boolean }>`
+const Button = styled.button<{ disable: boolean }>`
   background-color: ${props => (props.disable ? '#a2a2a2' : '#000000')};
   margin-right: 1.25rem;
-`;
-
-const CurrentButton = styled.button`
-  background-color: #000000;
 `;
 
 const Exaplain = styled.span`
@@ -354,6 +350,13 @@ const OpenLink = styled.div`
   cursor: pointer;
 
   margin-bottom: 1rem;
+
+  @media ${Device.mobileL} {
+    width: 7.5rem;
+    font-size: 0.625rem;
+    margin-bottom: 0.25rem;
+    margin-left: 0.5rem;
+  }
 `;
 
 const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
@@ -456,35 +459,36 @@ const HTMainComponent: React.FC<
                   심사 기준표 >
                 </OpenLink>
                 {userType === 'graduate' ? (
-                  <JoinButton
+                  <Button
                     onClick={visit}
                     disable={now.isAfter(visitEndTime)}
                     disabled={now.isAfter(visitEndTime)}
                   >
                     {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
-                  </JoinButton>
+                  </Button>
                 ) : (
-                  <JoinButton
+                  <Button
                     onClick={() => deem(true)}
                     disable={now.isAfter(joinEndTime)}
                     disabled={now.isAfter(joinEndTime)}
                   >
                     {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
-                  </JoinButton>
+                  </Button>
                 )}
               </div>
               <div>
                 <OpenLink onClick={themeFunc}>
                   주제 공개 >
                 </OpenLink>
-                <CurrentButton
+                <Button
                   onClick={() => {
                     history.push('/hanseithon/current');
                   }}
                   disabled={now.isAfter(joinEndTime)}
+                  disable={now.isAfter(joinEndTime)}
                 >
                   {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
-                </CurrentButton>
+                </Button>
               </div>
             </ButtonWrapper>
           </RightSeparator>
