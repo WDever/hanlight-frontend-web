@@ -396,10 +396,7 @@ const HTMainComponent: React.FC<
       ? getTheme(accessToken)
       : alert('주제는 수요일에 공개됩니다!');
 
-  const judgementFunc = () =>
-    now.isAfter(visitEndTime)
-      ? getJudgement(accessToken)
-      : alert('심사기준은 수요일에 공개됩니다!');
+  const judgementFunc = () => alert('심사기준은 수요일 중으로 공개됩니다!');
 
   useEffect(() => {
     if (postObserverStatus === 'success') {
@@ -420,7 +417,7 @@ const HTMainComponent: React.FC<
       deem(false);
       resetStatus();
     };
-  }, [postObserverStatus]);
+  }, [postObserverStatus, getThemeStatus, getJudgementStatus]);
 
   return (
     <>
@@ -455,9 +452,7 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <ButtonWrapper>
               <div>
-                <OpenLink onClick={judgementFunc}>
-                  심사 기준표 >
-                </OpenLink>
+                <OpenLink onClick={judgementFunc}>심사 기준표 ></OpenLink>
                 {userType === 'graduate' ? (
                   <Button
                     onClick={visit}
@@ -477,15 +472,12 @@ const HTMainComponent: React.FC<
                 )}
               </div>
               <div>
-                <OpenLink onClick={themeFunc}>
-                  주제 공개 >
-                </OpenLink>
+                <OpenLink onClick={themeFunc}>주제 공개 ></OpenLink>
                 <Button
                   onClick={() => {
-                    history.push('/hanseithon/current');
+                    history.push('/hanseithon/participation');
                   }}
-                  disabled={now.isAfter(joinEndTime)}
-                  disable={now.isAfter(joinEndTime)}
+                  disable={false}
                 >
                   {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
                 </Button>

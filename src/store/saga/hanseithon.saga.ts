@@ -266,7 +266,10 @@ function* getJudgementApiSaga(action: GetTheme) {
     try {
       const response = yield call(getJudgementApi, action.payload);
 
-      yield put({ type: GET_JUDGEMENT_SUCCESS, payload: response.data.judgement.url });
+      yield put({
+        type: GET_JUDGEMENT_SUCCESS,
+        payload: response.data.judgement.url,
+      });
     } catch (e) {
       yield put({
         type: SET_ERROR,
