@@ -99,6 +99,14 @@ export const POST_OBSERVER = 'POST_OBSERVER';
 export const POST_OBSERVER_SUCCESS = 'POST_OBSERVER_SUCCESS';
 export const POST_OBSERVER_FAILURE = 'POST_OBSERVER_FAILURE';
 
+export const GET_THEME = 'GET_THEME';
+export const GET_THEME_SUCCESS = 'GET_THEME_SUCCESS';
+export const GET_THEME_FAILURE = 'GET_THEME_FAILURE';
+
+export const GET_JUDGEMENT = 'GET_JUDGEMENT';
+export const GET_JUDGEMENT_SUCCESS = 'GET_JUDGEMENT_SUCCESS';
+export const GET_JUDGEMENT_FAILURE = 'GET_JUDGEMENT_FAILURE';
+
 export const REST_STATUS = 'RESET_STATUS';
 
 export class Deem implements Action {
@@ -231,6 +239,42 @@ export class PostObserverFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class GetTheme implements Action {
+  public readonly type = GET_THEME;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetThemeSuccess implements Action {
+  public readonly type = GET_THEME_SUCCESS;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetThemeFailure implements Action {
+  public readonly type = GET_THEME_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class GetJudgement implements Action {
+  public readonly type = GET_JUDGEMENT;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetJudgementSuccess implements Action {
+  public readonly type = GET_JUDGEMENT_SUCCESS;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetJudgementFailure implements Action {
+  public readonly type = GET_JUDGEMENT_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export class ResetStatus implements Action {
   public readonly type = REST_STATUS;
 }
@@ -246,6 +290,8 @@ export const hanseithonActions = {
   getTeamMatch: createStandardAction(GET_TEAM_MATCH)<GetTeamMatchParams>(),
   postTeamMatch: createStandardAction(POST_TEAM_MATCH)<PostTeamMatchParams>(),
   postObserver: createStandardAction(POST_OBSERVER)<string>(),
+  getTheme: createStandardAction(GET_THEME)<string>(),
+  getJudgement: createStandardAction(GET_JUDGEMENT)<string>(),
   resetStatus: createStandardAction(REST_STATUS)(),
 };
 
@@ -272,4 +318,10 @@ export type hanseithonReducerActions =
   | PostObserver
   | PostObserverSuccess
   | PostObserverFailure
+  | GetTheme
+  | GetThemeSuccess
+  | GetThemeFailure
+  | GetJudgement
+  | GetJudgementSuccess
+  | GetJudgementFailure
   | ResetStatus;

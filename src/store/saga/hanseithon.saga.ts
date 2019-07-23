@@ -11,12 +11,19 @@ import {
   SET_ERROR,
 } from 'store';
 import {
+  GET_JUDGEMENT,
+  GET_JUDGEMENT_FAILURE,
+  GET_JUDGEMENT_SUCCESS,
   GET_TEAM,
   GET_TEAM_MATCH,
   GET_TEAM_MATCH_FAILURE,
   GET_TEAM_MATCH_SUCCESS,
+  GET_THEME,
+  GET_THEME_FAILURE,
+  GET_THEME_SUCCESS,
   GetTeamMatchParams,
   GetTeamParams,
+  GetTheme,
   POST_OBSERVER,
   POST_OBSERVER_FAILURE,
   POST_OBSERVER_SUCCESS,
@@ -220,6 +227,56 @@ function* postObserverApiSaga(action: PostObserver) {
   }
 }
 
+const getThemeApi = (payload: string) =>
+  hanseithonInstance
+    .get('/theme', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getThemeApiSaga(action: GetTheme) {
+  if (action.type) {
+    try {
+      const response = yield call(getThemeApi, action.payload);
+
+      yield put({ type: GET_THEME_SUCCESS, payload: response.data.theme.url });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_THEME_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const getJudgementApi = (payload: string) =>
+  hanseithonInstance
+    .get('/judgement', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getJudgementApiSaga(action: GetTheme) {
+  if (action.type) {
+    try {
+      const response = yield call(getJudgementApi, action.payload);
+
+      yield put({ type: GET_JUDGEMENT_SUCCESS, payload: response.data.judgement.url });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_JUDGEMENT_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
@@ -227,6 +284,8 @@ function* hanseithonSaga() {
   yield takeEvery(POST_TEAM_MATCH, postMatchTeamApiSaga);
   yield takeEvery(POST_TEAM, postTeamApiSaga);
   yield takeEvery(POST_OBSERVER, postObserverApiSaga);
+  yield takeEvery(GET_THEME, getThemeApiSaga);
+  yield takeEvery(GET_JUDGEMENT, getJudgementApiSaga);
 }
 
 export { hanseithonSaga };
