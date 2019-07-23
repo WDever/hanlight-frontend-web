@@ -482,10 +482,9 @@ const HTMainComponent: React.FC<
                 </OpenLink>
                 <Button
                   onClick={() => {
-                    history.push('/hanseithon/current');
+                    history.push('/hanseithon/participation');
                   }}
-                  disabled={now.isAfter(joinEndTime)}
-                  disable={now.isAfter(joinEndTime)}
+                  disable={false}
                 >
                   {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
                 </Button>
