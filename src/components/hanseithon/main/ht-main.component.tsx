@@ -102,16 +102,17 @@ const UserWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 100%;
+  width: 76%;
 
   display: flex;
-  justify-content: space-between;
 
   font-size: 2.25rem;
 
   margin-left: 24%;
 
   @media ${Device.mobileL} {
+    width: 100%;
+
     font-size: 0.875rem;
 
     margin: 0;
@@ -120,7 +121,6 @@ const ButtonWrapper = styled.div`
   }
 
   div {
-    display: flex;
     flex-direction: column;
     align-items: center;
 
@@ -165,8 +165,14 @@ const ButtonWrapper = styled.div`
   }
 `;
 
+const MentorWrapper = styled.div`
+  display: flex;
+`;
+
 const SubmitWrapper = styled.div`
   display: flex;
+
+  margin-left: 8rem;
 
   @media ${Device.mobileL} {
     display: none;
@@ -368,10 +374,10 @@ const HTMainComponent: React.FC<
             </p>
           </UserWrapper>
           <ButtonWrapper>
-            <div>
+            <MentorWrapper>
               <p>멘토링을 신청하세요!</p>
               <button>눌러보게</button>
-            </div>
+            </MentorWrapper>
             <SubmitWrapper>
               <p>제출 할래요?</p>
               <button>눌러보게</button>
