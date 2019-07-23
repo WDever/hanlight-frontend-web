@@ -133,7 +133,7 @@ export const hanseithonReducer = (
       case 'POST_OBSERVER_SUCCESS':
         draft.postObserverStatus = 'success';
         break;
-      
+
       case 'POST_OBSERVER_FAILURE':
         draft.postObserverStatus = 'failure';
         break;

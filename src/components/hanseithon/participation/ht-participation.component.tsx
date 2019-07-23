@@ -66,7 +66,7 @@ const ListWrapper = styled.div`
   margin-bottom: 3rem;
 
   @media ${Device.tabletL} {
-    grid-template-columns: repeat(auto-fill, 9.375rem);
+    grid-template-columns: repeat(auto-fill, 13.56rem);
     grid-column-gap: 1.41rem;
     grid-row-gap: 1.62rem;
   }
