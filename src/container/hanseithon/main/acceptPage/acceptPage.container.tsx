@@ -1,4 +1,4 @@
-import AcceptPageComponent from 'components/hanseithon/join-main/acceptPage';
+import AcceptPageComponent from 'components/hanseithon/main/acceptPage';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {

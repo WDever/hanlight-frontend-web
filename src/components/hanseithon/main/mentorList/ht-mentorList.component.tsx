@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import BackgroundImg from 'lib/svg/mentoring-background.svg';
 import styled from 'styled-components';
 import HTMentorListItemComponent from './mentorListItem';
 
@@ -9,8 +10,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 
   margin-bottom: 8rem;
+`;
+
+const Background = styled.img`
+  position: absolute;
+  z-index: -1;
 `;
 
 const TitleWrapper = styled.div`
@@ -50,9 +57,18 @@ const ContentWrapper = styled.div`
 const HTMentoringListComponent: React.FC = () => {
   return (
     <Wrapper>
+      <Background src={BackgroundImg} alt="Mentor list background" />
       <TitleWrapper>실시간 멘토 현황</TitleWrapper>
       <ContentWrapper>
         <p>실시간 멘토 체크</p>
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
+        <HTMentorListItemComponent />
         <HTMentorListItemComponent />
       </ContentWrapper>
     </Wrapper>

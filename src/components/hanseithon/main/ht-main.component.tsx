@@ -1,8 +1,11 @@
 import * as React from 'react';
 
+import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import logos from 'lib/sponsor/logos.svg';
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/ht-background.svg';
+import TimetableBackgroundImg from 'lib/svg/timetable-background.svg';
+import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import HTMentoringListComponent from './mentorList';
 import HTTimerComponent from './timer';
@@ -151,6 +154,11 @@ const SponsorTitle = styled.div`
   }
 `;
 
+const TimetableBackground = styled.img`
+  position: absolute;
+  z-index: -1;
+`;
+
 const TimetableTitle = styled.p`
   font-size: 2.25rem;
   font-family: 'yg-jalnan';
@@ -177,6 +185,7 @@ const TimetableWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-end;
 
   margin-bottom: 16.425rem;
 `;
@@ -216,6 +225,8 @@ const Timetable = styled.table`
   border-collapse: collapse;
   border-spacing: 0;
 
+  background-color: #ffffff;
+
   tr {
     width: 100%;
     height: 3.96rem;
@@ -251,10 +262,10 @@ const ContentCol = styled.col`
   width: 65%;
 `;
 
-const HTMainComponent: React.FC = () => {
-  const [rightTableToggle, setRightTableToggle] = useState<boolean>(
-    false,
-  );
+const HTMainComponent: React.FC<
+  HTMainMethod & HTMainProps & RouteComponentProps
+> = () => {
+  const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
 
   return (
     <>
@@ -286,6 +297,7 @@ const HTMainComponent: React.FC = () => {
         </ContentWrapper>
         <HTMentoringListComponent />
         <TimetableWrapper>
+          <TimetableBackground src={TimetableBackgroundImg} alt="timetable background" />
           <TimetableTitle>타임 테이블</TimetableTitle>
           <TimetableBtnWrapper>
             <TimetableBtn

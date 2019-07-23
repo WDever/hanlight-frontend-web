@@ -3,7 +3,6 @@ import * as React from 'react';
 import { HanseiThonProps } from 'container/hanseithon';
 import HTCurrentPage from 'pages/hanseithon/current';
 import JoinPage from 'pages/hanseithon/join';
-import MainPage from 'pages/hanseithon/join-main';
 import HTMainPage from 'pages/hanseithon/main';
 import HTParticipationPage from 'pages/hanseithon/participation';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
