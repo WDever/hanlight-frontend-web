@@ -345,7 +345,7 @@ const ContentCol = styled.col`
 const OpenLink = styled.div`
   color: #291bfe;
   font-family: 'Noto Sans KR';
-  font-size: 17px;
+  font-size: 1.06rem;
 
   cursor: pointer;
 
@@ -353,7 +353,7 @@ const OpenLink = styled.div`
 
   @media ${Device.mobileL} {
     width: 7.5rem;
-    font-size: 0.625rem;
+    font-size: 0.875rem;
     margin-bottom: 0.25rem;
     margin-left: 0.5rem;
   }
