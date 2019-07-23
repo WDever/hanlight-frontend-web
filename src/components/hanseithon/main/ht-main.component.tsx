@@ -17,6 +17,8 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+
+  overflow-x: hidden;
 `;
 
 const Background = styled.img`
@@ -58,18 +60,18 @@ const TitleWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   position: relative;
-  left: 24%;
 
   display: flex;
   flex-direction: column;
 
-  width: 44.725rem;
-  max-width: 100%;
+  width: 100%;
 
   margin-bottom: 11.275rem;
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
+
+    margin-bottom: 3.5rem;
   }
 `;
 
@@ -77,10 +79,12 @@ const UserWrapper = styled.div`
   font-size: 2.25rem;
 
   margin-bottom: 11rem;
+  margin-left: 24%;
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
-    margin-bottom: 5.875rem;
+    margin-bottom: 4rem;
+    margin-left: 15%;
   }
 
   p {
@@ -105,17 +109,30 @@ const ButtonWrapper = styled.div`
 
   font-size: 2.25rem;
 
+  margin-left: 24%;
+
   @media ${Device.mobileL} {
     font-size: 0.875rem;
+
+    margin: 0;
+
+    justify-content: center;
   }
 
   div {
+    display: flex;
     flex-direction: column;
     align-items: center;
 
     p {
       margin: 0;
       margin-bottom: 2.4rem;
+
+      text-align: center;
+
+      @media ${Device.mobileL} {
+        margin-bottom: 0.9rem;
+      }
     }
   }
 
@@ -134,6 +151,10 @@ const ButtonWrapper = styled.div`
     font-size: 1.5rem;
 
     cursor: pointer;
+
+    outline: none;
+    border: none;
+    padding: none;
 
     @media ${Device.mobileL} {
       width: 9.3125rem;
