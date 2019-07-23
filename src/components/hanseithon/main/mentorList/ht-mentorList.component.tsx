@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/mentoring-background.svg';
 import styled from 'styled-components';
 import HTMentorListItemComponent from './mentorListItem';
@@ -18,6 +19,10 @@ const Wrapper = styled.div`
 const Background = styled.img`
   position: absolute;
   z-index: -1;
+
+  @media ${Device.mobileL} {
+    display: none;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -29,12 +34,21 @@ const TitleWrapper = styled.div`
   font-size: 2.25rem;
 
   margin-bottom: 2.3rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
   width: 43.125rem;
 
   font-family: 'Open Sans';
+
+  @media ${Device.mobileL} {
+    width: 100%;
+  }
 
   p {
     margin: 0;
@@ -51,6 +65,12 @@ const ContentWrapper = styled.div`
     align-items: center;
 
     background-color: #000000;
+
+    @media ${Device.mobileL} {
+      height: 2.125rem;
+
+      font-size: 13px;
+    }
   }
 `;
 

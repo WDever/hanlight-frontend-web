@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const Content = styled.div`
@@ -10,6 +11,10 @@ const Content = styled.div`
 
   display: flex;
   justify-content: center;
+
+  @media ${Device.mobileL} {
+    height: 2.125rem;
+  }
 `;
 
 const NameBox = styled.div`
@@ -24,6 +29,10 @@ const NameBox = styled.div`
   font-family: 'Open Sans';
   font-size: 19px;
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
 `;
 
 const LightBox = styled.div`
@@ -42,6 +51,11 @@ const LightBox = styled.div`
     height: 20px;
     border-radius: 50%;
     background-color: #30f97b;
+
+    @media ${Device.mobileL} {
+      width: 0.65rem;
+      height: 0.65rem;
+    }
   }
 `;
 

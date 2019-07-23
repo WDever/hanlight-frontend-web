@@ -20,8 +20,7 @@ const Wrapper = styled.div`
 `;
 
 const Background = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 102.5%;
 
   position: absolute;
   z-index: -1;
@@ -39,12 +38,20 @@ const TitleWrapper = styled.div`
   margin-bottom: 1.125rem;
 
   @media ${Device.laptop} {
-    padding-top: 8.375rem;
+    padding-top: 9rem;
+  }
+
+  @media ${Device.mobileL} {
+    padding-top: 4rem;
   }
 
   span {
     font-size: 3.5rem;
     color: #ffffff;
+
+    @media ${Device.mobileL} {
+      font-size: 1rem;
+    }
   }
 `;
 
@@ -56,17 +63,25 @@ const ContentWrapper = styled.div`
   flex-direction: column;
 
   width: 44.725rem;
+  max-width: 100%;
 
   margin-bottom: 11.275rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+  }
 `;
 
 const UserWrapper = styled.div`
   font-size: 2.25rem;
 
   margin-bottom: 11rem;
-
   @media ${Device.laptop} {
     margin-bottom: 5.5rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
   }
 
   p {
@@ -87,8 +102,11 @@ const ButtonWrapper = styled.div`
 
   font-size: 2.25rem;
 
+  @media ${Device.mobileL} {
+    font-size: 0.875rem;
+  }
+
   div {
-    display: flex;
     flex-direction: column;
     align-items: center;
 
@@ -113,6 +131,21 @@ const ButtonWrapper = styled.div`
     font-size: 1.5rem;
 
     cursor: pointer;
+
+    @media ${Device.mobileL} {
+      width: 9.3125rem;
+      height: 2.25rem;
+
+      font-size: 0.875rem;
+    }
+  }
+`;
+
+const SubmitWrapper = styled.div`
+  display: flex;
+
+  @media ${Device.mobileL} {
+    display: none;
   }
 `;
 
@@ -157,9 +190,13 @@ const SponsorTitle = styled.div`
 const TimetableBackground = styled.img`
   position: absolute;
   z-index: -1;
+
+  @media ${Device.mobileL} {
+    display: none;
+  }
 `;
 
-const TimetableTitle = styled.p`
+const TimetableOverTitle = styled.p`
   font-size: 2.25rem;
   font-family: 'yg-jalnan';
   margin: 0;
@@ -172,10 +209,22 @@ const TimetableTitle = styled.p`
     margin-left: 5%;
   }
   @media ${Device.mobileL} {
+    display: none;
+  }
+`;
+
+const TimetableUnderTitle = styled.div`
+  display: none;
+  @media ${Device.mobileL} {
+    width: 100%;
+
     font-size: 1.25rem;
-    margin-left: 5%;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    font-family: 'Open Sans';
+    font-weight: bold;
+
+    padding: 1rem 0 1rem 1.25rem;
+
+    display: initial;
   }
 `;
 
@@ -188,6 +237,10 @@ const TimetableWrapper = styled.div`
   justify-content: flex-end;
 
   margin-bottom: 16.425rem;
+
+  @media screen {
+    margin-bottom: 1.75rem;
+  }
 `;
 
 const TimetableBtnWrapper = styled.div`
@@ -199,6 +252,8 @@ const TimetableBtnWrapper = styled.div`
   }
   @media ${Device.mobileL} {
     height: 2.25rem;
+
+    width: 100%;
   }
 `;
 
@@ -226,6 +281,10 @@ const Timetable = styled.table`
   border-spacing: 0;
 
   background-color: #ffffff;
+
+  @media ${Device.mobileL} {
+    width: 100%;
+  }
 
   tr {
     width: 100%;
@@ -289,16 +348,19 @@ const HTMainComponent: React.FC<
               <p>멘토링을 신청하세요!</p>
               <button>눌러보게</button>
             </div>
-            <div>
+            <SubmitWrapper>
               <p>제출 할래요?</p>
               <button>눌러보게</button>
-            </div>
+            </SubmitWrapper>
           </ButtonWrapper>
         </ContentWrapper>
         <HTMentoringListComponent />
         <TimetableWrapper>
-          <TimetableBackground src={TimetableBackgroundImg} alt="timetable background" />
-          <TimetableTitle>타임 테이블</TimetableTitle>
+          <TimetableBackground
+            src={TimetableBackgroundImg}
+            alt="timetable background"
+          />
+          <TimetableOverTitle>타임 테이블</TimetableOverTitle>
           <TimetableBtnWrapper>
             <TimetableBtn
               clicked={!rightTableToggle}
@@ -319,6 +381,7 @@ const HTMainComponent: React.FC<
               7월 26일 (금)
             </TimetableBtn>
           </TimetableBtnWrapper>
+          <TimetableUnderTitle>TIME TABLE</TimetableUnderTitle>
           <Timetable>
             <colgroup>
               <DateCol />
@@ -413,7 +476,6 @@ const HTMainComponent: React.FC<
             )}
           </Timetable>
         </TimetableWrapper>
-
         <SponsorWrapper>
           <SponsorSeparator>
             <SponsorTitle>쉬어가는 스폰서</SponsorTitle>
