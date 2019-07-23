@@ -1,193 +1,115 @@
 import * as React from 'react';
 
-import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
-import { Device } from 'lib/styles';
-import TitleMainImg from 'lib/svg/hanseithon-main-title.svg';
-import AcceptPage from 'pages/hanseithon/main/acceptPage';
-import { Link, RouteComponentProps } from 'react-router-dom';
-import styled from 'styled-components';
-
 import logos from 'lib/sponsor/logos.svg';
-import moment from 'moment';
-import 'moment/locale/ko';
+import { Device } from 'lib/styles';
+import BackgroundImg from 'lib/svg/ht-background.svg';
+import styled from 'styled-components';
+import HTMentoringListComponent from './mentorList';
+import HTTimerComponent from './timer';
 
-const { useEffect } = React;
+const { useState } = React;
 
 const Wrapper = styled.div`
-  margin-bottom: 4.375rem;
+  width: 100%;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+`;
 
-  @media ${Device.tabletL} {
-    width: 100%;
-  }
+const Background = styled.img`
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  z-index: -1;
+
+  object-fit: cover;
 `;
 
 const TitleWrapper = styled.div`
-  font-family: 'Nanum Myeongjo';
+  width: 100%;
+
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-end;
-  margin: 3.8rem 0;
+  justify-content: center;
 
-  @media ${Device.tabletL} {
-    margin: 0;
-    margin-left: 5%;
-    margin-top: 3.1rem;
-    margin-bottom: 1.73rem;
-  }
-  @media ${Device.mobileL} {
-    width: 90%;
-    margin-top: 1.25rem;
-    margin-bottom: 1.5rem;
-  }
-`;
+  padding-top: 16.75rem;
+  margin-bottom: 1.125rem;
 
-const TitleImg = styled.img`
-  width: 20rem;
-
-  @media ${Device.tabletL} {
-    width: 11.07rem;
+  @media ${Device.laptop} {
+    padding-top: 8.375rem;
   }
-  @media ${Device.mobileL} {
-    width: 7.06rem;
-  }
-`;
 
-const Title = styled.span`
-  font-family: inherit;
-  font-size: 5.5rem;
-  font-weight: bold;
-  letter-spacing: normal;
-  word-break: keep-all;
-  margin-left: 3rem;
-  line-height: 1.34;
-
-  @media ${Device.tabletL} {
-    font-size: 2.31rem;
-    margin-left: 2.38rem;
-  }
-  @media ${Device.mobileL} {
-    font-size: 1.81rem;
-    margin-left: 0.81rem;
+  span {
+    font-size: 3.5rem;
+    color: #ffffff;
   }
 `;
 
 const ContentWrapper = styled.div`
-  font-family: 'Noto Sans KR';
-  width: 100%;
+  position: relative;
+  left: 24%;
 
-  display: flex;
-  justify-content: flex-start;
-
-  @media ${Device.tabletL} {
-    margin-left: 5%;
-    flex-direction: column;
-  }
-  @media ${Device.mobileL} {
-    width: 90%;
-  }
-`;
-
-const ContentTitleWrapper = styled.span`
-  font-family: inherit;
-  width: 100%;
   display: flex;
   flex-direction: column;
 
-  b {
-    font-family: inherit;
-    font-weight: bold;
-    font-size: 2.5rem;
-    margin-bottom: 3px;
+  width: 44.725rem;
 
-    @media ${Device.tabletL} {
-      font-size: 1.5rem;
-    }
-    @media ${Device.mobileL} {
-      font-size: 1.25rem;
-    }
+  margin-bottom: 11.275rem;
+`;
+
+const UserWrapper = styled.div`
+  font-size: 2.25rem;
+
+  margin-bottom: 11rem;
+
+  @media ${Device.laptop} {
+    margin-bottom: 5.5rem;
+  }
+
+  p {
+    margin: 0;
+    margin-bottom: 1.125rem;
   }
 
   span {
-    font-family: inherit;
-    font-size: 1rem;
-
-    @media ${Device.tabletL} {
-      font-size: 0.94rem;
-    }
-    @media ${Device.mobileL} {
-      font-size: 0.75rem;
-    }
-  }
-`;
-
-const Content = styled.div`
-  font-family: inherit;
-  font-size: 0.94rem;
-  line-height: 1.9;
-  margin-top: 1.5rem;
-  width: 30rem;
-  word-break: keep-all;
-  color: #000000;
-
-  @media ${Device.mobileL} {
-    width: 100%;
-    font-size: 0.625rem;
+    color: #4470ff;
   }
 `;
 
 const ButtonWrapper = styled.div`
+  width: 100%;
+
   display: flex;
+  justify-content: space-between;
 
-  button {
-    width: 11.25rem;
-    height: 3.5rem;
-    border-radius: 3.93rem;
-    color: #ffffff;
-    font-family: 'Opne Sans';
-    font-size: 1rem;
-    outline: none;
-    border: none;
-    cursor: pointer;
+  font-size: 2.25rem;
 
-    @media ${Device.tabletL} {
-      width: 8.75rem;
-      height: 2.72rem;
-      font-size: 0.75rem;
-    }
-    @media ${Device.mobileL} {
-      width: 7.5rem;
-      height: 2.25rem;
-      font-size: 0.69rem;
+  div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      margin: 0;
+      margin-bottom: 2.4rem;
     }
   }
-`;
 
-const JoinButton = styled.button<{ disable: boolean }>`
-  background-color: ${props => (props.disable ? '#a2a2a2' : '#000000')};
-  margin-right: 1.25rem;
-`;
+  button {
+    width: 15rem;
+    height: 4rem;
 
-const CurrentButton = styled.button`
-  background-color: #000000;
-`;
+    box-shadow: 0 21px 30px 0 rgba(95, 95, 95, 0.4);
 
-const Exaplain = styled.span`
-  width: 13rem;
-  text-align: center;
-  font-family: 'Opne Sans';
-  font-size: 0.875rem;
-  margin-top: 1.25rem;
-  margin-bottom: 0.5rem;
+    border-radius: 2rem;
 
-  @media ${Device.mobileL} {
-    width: 7.5rem;
-    font-size: 0.625rem;
-    margin-top: 0.5rem;
-    margin-bottom: 0;
+    background-color: #000000;
+
+    color: #ffffff;
+    font-family: 'Nanum Myeongjo';
+    font-size: 1.5rem;
+
+    cursor: pointer;
   }
 `;
 
@@ -229,53 +151,14 @@ const SponsorTitle = styled.div`
   }
 `;
 
-const LeftSeparator = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-right: 7.31rem;
-
-  @media ${Device.mobileL} {
-    margin-right: 0;
-  }
-`;
-
-const RightSeparator = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-
-  @media ${Device.mobileL} {
-    flex-direction: column-reverse;
-  }
-`;
-
-const TimetableWrapper = styled.div`
-  width: 100%;
-  margin-top: 4.89rem;
-
-  @media ${Device.mobileL} {
-    margin-top: 2rem;
-  }
-`;
-
-const TimetableBtnWrapper = styled.div`
-  width: 100%;
-  height: 3.73rem;
-
-  @media ${Device.tabletL} {
-    height: 2.71rem;
-  }
-  @media ${Device.mobileL} {
-    height: 2.25rem;
-  }
-`;
-
 const TimetableTitle = styled.p`
-  font-size: 1.81rem;
-  font-weight: 800;
-  font-family: 'Open Sans';
-  margin-top: 1.37rem;
-  margin-bottom: 1.49rem;
+  font-size: 2.25rem;
+  font-family: 'yg-jalnan';
+  margin: 0;
+  margin-bottom: 2.275rem;
+
+  display: flex;
+  justify-content: center;
 
   @media ${Device.tabletL} {
     margin-left: 5%;
@@ -285,6 +168,28 @@ const TimetableTitle = styled.p`
     margin-left: 5%;
     margin-top: 1rem;
     margin-bottom: 1rem;
+  }
+`;
+
+const TimetableWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 16.425rem;
+`;
+
+const TimetableBtnWrapper = styled.div`
+  width: 51.46%;
+  height: 3.73rem;
+
+  @media ${Device.tabletL} {
+    height: 2.71rem;
+  }
+  @media ${Device.mobileL} {
+    height: 2.25rem;
   }
 `;
 
@@ -305,7 +210,7 @@ const TimetableBtn = styled.button<{ clicked: boolean }>`
 `;
 
 const Timetable = styled.table`
-  width: 100%;
+  width: 51.46%;
   font-size: 1.18rem;
   font-weight: bold;
   border-collapse: collapse;
@@ -346,157 +251,42 @@ const ContentCol = styled.col`
   width: 65%;
 `;
 
-const OpenLink = styled.div`
-  color: #291bfe;
-  font-family: 'Noto Sans KR';
-  font-size: 17px;
-
-  cursor: pointer;
-
-  margin-bottom: 1rem;
-
-  @media ${Device.mobileL} {
-    width: 7.5rem;
-    font-size: 0.625rem;
-    margin-bottom: 0.25rem;
-    margin-left: 0.5rem;
-  }
-`;
-
-const visitEndTime = moment([2019, 6, 23, 23, 59, 59]);
-const joinEndTime = moment([2019, 6, 22, 23, 59, 59]);
-const now = moment();
-
-const HTMainComponent: React.FC<
-  HTMainMethod & HTMainProps & RouteComponentProps
-> = ({
-  history,
-  deem,
-  deemStatus,
-  errMessage,
-  postObserver,
-  accessToken,
-  userType,
-  postObserverStatus,
-  resetStatus,
-  getJudgement,
-  getTheme,
-  getThemeStatus,
-  getJudgementStatus,
-  themeUrl,
-  judgementUrl,
-}) => {
-  const [rightTableToggle, setRightTableToggle] = React.useState<boolean>(
+const HTMainComponent: React.FC = () => {
+  const [rightTableToggle, setRightTableToggle] = useState<boolean>(
     false,
   );
 
-  const visit = () =>
-    window.confirm('참관 신청 하시겠습니까?')
-      ? postObserver(accessToken)
-      : alert('한세톤: 休 많은 관심 부탁드립니다.');
-
-  const themeFunc = () =>
-    now.isAfter(visitEndTime)
-      ? getTheme(accessToken)
-      : alert('주제는 수요일에 공개됩니다!');
-
-  const judgementFunc = () =>
-    now.isAfter(visitEndTime)
-      ? getJudgement(accessToken)
-      : alert('심사기준은 수요일에 공개됩니다!');
-
-  useEffect(() => {
-    if (postObserverStatus === 'success') {
-      alert('신청되었습니다. 확정될 시 한빛 연락처로 연락드리겠습니다!');
-    } else if (getThemeStatus === 'success') {
-      window.open(themeUrl);
-    } else if (getJudgementStatus === 'success') {
-      window.open(judgementUrl);
-    } else if (
-      postObserverStatus === 'failure' ||
-      getThemeStatus === 'failure' ||
-      getJudgementStatus === 'failure'
-    ) {
-      alert(errMessage);
-    }
-
-    return () => {
-      deem(false);
-      resetStatus();
-    };
-  }, [postObserverStatus]);
-
   return (
     <>
-      {deemStatus && <AcceptPage />}
+      <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
         <TitleWrapper>
-          <TitleImg src={TitleMainImg} alt="Main Title" />
-          <Title>
-            오빠,
-            <br />
-            쉬면서 하자
-          </Title>
+          <span>한세톤 마감까지</span>
         </TitleWrapper>
+        <HTTimerComponent />
         <ContentWrapper>
-          <LeftSeparator>
-            <ContentTitleWrapper>
-              <b>쉬어가는 한세톤 : 休</b>
-              <span>Hanseithon : 休</span>
-            </ContentTitleWrapper>
-            <Content>
-              <span>
-                안녕하세요, 한세사이버보안고등학교 주관 " 한세톤 : 休 "의 신청
-                페이지입니다. 한세톤의 참가부터 운영까지 모든 것이 현재
-                페이지에서 이루어질 예정입니다. 마음이 잘 맞는 팀원들을 모집하여
-                보다 멋진 작품을 선보여주세요. 이번 한세톤 : 休를 통하여
-                반복되는 지루한 일상에서 탈피하여 에어배드에서 쉬다 가세요.
-              </span>
-              <p>참가 신청 : 18일 18시부터</p>
-              <p>참가 신청 마감 시간 : 22일 오후 11시 59분까지</p>
-            </Content>
-          </LeftSeparator>
-          <RightSeparator>
-            <ButtonWrapper>
-              <div>
-                <OpenLink onClick={judgementFunc}>
-                  심사 기준표 >
-                </OpenLink>
-                {userType === 'graduate' ? (
-                  <JoinButton
-                    onClick={visit}
-                    disable={now.isAfter(visitEndTime)}
-                    disabled={now.isAfter(visitEndTime)}
-                  >
-                    {now.isAfter(visitEndTime) ? '신청 마감' : '참관신청 해臝'}
-                  </JoinButton>
-                ) : (
-                  <JoinButton
-                    onClick={() => deem(true)}
-                    disable={now.isAfter(joinEndTime)}
-                    disabled={now.isAfter(joinEndTime)}
-                  >
-                    {now.isAfter(joinEndTime) ? '신청 마감' : '참가신청 해臝'}
-                  </JoinButton>
-                )}
-              </div>
-              <div>
-                <OpenLink onClick={themeFunc}>
-                  주제 공개 >
-                </OpenLink>
-                <CurrentButton
-                  onClick={() => {
-                    history.push('/hanseithon/current');
-                  }}
-                  disabled={now.isAfter(joinEndTime)}
-                >
-                  {now.isAfter(joinEndTime) ? '참가 확인' : '참가현황 봐臝'}
-                </CurrentButton>
-              </div>
-            </ButtonWrapper>
-          </RightSeparator>
+          <UserWrapper>
+            {/* <p>{user.name}님의 팀은</p>
+          <p>{user.team} 입니다</p> */}
+            <p>최민규님의 팀은</p>
+            <p>
+              <span>노예들</span> 입니다
+            </p>
+          </UserWrapper>
+          <ButtonWrapper>
+            <div>
+              <p>멘토링을 신청하세요!</p>
+              <button>눌러보게</button>
+            </div>
+            <div>
+              <p>제출 할래요?</p>
+              <button>눌러보게</button>
+            </div>
+          </ButtonWrapper>
         </ContentWrapper>
+        <HTMentoringListComponent />
         <TimetableWrapper>
+          <TimetableTitle>타임 테이블</TimetableTitle>
           <TimetableBtnWrapper>
             <TimetableBtn
               clicked={!rightTableToggle}
@@ -517,7 +307,6 @@ const HTMainComponent: React.FC<
               7월 26일 (금)
             </TimetableBtn>
           </TimetableBtnWrapper>
-          <TimetableTitle>TIME TABLE</TimetableTitle>
           <Timetable>
             <colgroup>
               <DateCol />
@@ -612,15 +401,16 @@ const HTMainComponent: React.FC<
             )}
           </Timetable>
         </TimetableWrapper>
+
+        <SponsorWrapper>
+          <SponsorSeparator>
+            <SponsorTitle>쉬어가는 스폰서</SponsorTitle>
+            <Sponsors>
+              <img src={logos} alt="" />
+            </Sponsors>
+          </SponsorSeparator>
+        </SponsorWrapper>
       </Wrapper>
-      <SponsorWrapper>
-        <SponsorSeparator>
-          <SponsorTitle>쉬어가는 스폰서</SponsorTitle>
-          <Sponsors>
-            <img src={logos} alt="" />
-          </Sponsors>
-        </SponsorSeparator>
-      </SponsorWrapper>
     </>
   );
 };

@@ -3,7 +3,8 @@ import * as React from 'react';
 import { HanseiThonProps } from 'container/hanseithon';
 import HTCurrentPage from 'pages/hanseithon/current';
 import JoinPage from 'pages/hanseithon/join';
-import MainPage from 'pages/hanseithon/main';
+import MainPage from 'pages/hanseithon/join-main';
+import HTMainPage from 'pages/hanseithon/main';
 import HTParticipationPage from 'pages/hanseithon/participation';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -33,7 +34,7 @@ const HanseiThonComponent: React.FC<HanseiThonProps> = ({ deemStatus }) => {
           path="/hanseithon/participation"
           component={HTParticipationPage}
         />
-        <Route exact={true} path="/hanseithon" component={MainPage} />
+        <Route exact={true} path="/hanseithon" component={HTMainPage} />
         <Redirect to="/error" />
       </Switch>
     </>

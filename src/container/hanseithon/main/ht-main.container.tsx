@@ -1,4 +1,4 @@
-import HTMainComponent from 'components/hanseithon/main';
+import HTMainComponent from 'components/hanseithon/join-main';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
