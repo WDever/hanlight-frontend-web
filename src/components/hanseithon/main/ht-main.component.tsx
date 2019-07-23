@@ -43,6 +43,7 @@ const TitleWrapper = styled.div`
 
   @media ${Device.mobileL} {
     padding-top: 4rem;
+    margin-bottom: 0.55rem;
   }
 
   span {
@@ -76,17 +77,19 @@ const UserWrapper = styled.div`
   font-size: 2.25rem;
 
   margin-bottom: 11rem;
-  @media ${Device.laptop} {
-    margin-bottom: 5.5rem;
-  }
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
+    margin-bottom: 5.875rem;
   }
 
   p {
     margin: 0;
     margin-bottom: 1.125rem;
+
+    @media ${Device.mobileL} {
+      margin-bottom: 0.375rem;
+    }
   }
 
   span {

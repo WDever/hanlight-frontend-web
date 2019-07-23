@@ -16,13 +16,9 @@ const Wrapper = styled.div`
 
   margin-bottom: 37.75rem;
 
-  /* @media ${Device.laptop} {
-    margin-bottom: 18rem;
-  } */
-
   @media ${Device.mobileL} {
     font-size: 1.5rem;
-    margin-bottom: 27.5rem;
+    margin-bottom: 8.875rem;
   }
 `;
 

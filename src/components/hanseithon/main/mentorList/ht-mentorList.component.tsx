@@ -14,6 +14,10 @@ const Wrapper = styled.div`
   justify-content: flex-end;
 
   margin-bottom: 8rem;
+
+  @media ${Device.mobileL} {
+    margin-bottom: 1.55rem;
+  }
 `;
 
 const Background = styled.img`
