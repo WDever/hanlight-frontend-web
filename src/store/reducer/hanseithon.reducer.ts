@@ -133,7 +133,7 @@ export const hanseithonReducer = (
       case 'POST_OBSERVER_SUCCESS':
         draft.postObserverStatus = 'success';
         break;
-      
+
       case 'POST_OBSERVER_FAILURE':
         draft.postObserverStatus = 'failure';
         break;
@@ -155,12 +155,12 @@ export const hanseithonReducer = (
         draft.getJudgementStatus = 'pending';
         break;
 
-      case 'GET_THEME_SUCCESS':
+      case 'GET_JUDGEMENT_SUCCESS':
         draft.getJudgementStatus = 'success';
         draft.judgementUrl = action.payload;
         break;
 
-      case 'GET_THEME_FAILURE':
+      case 'GET_JUDGEMENT_FAILURE':
         draft.getJudgementStatus = 'failure';
         break;
 

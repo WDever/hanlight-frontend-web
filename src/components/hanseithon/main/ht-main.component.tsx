@@ -345,7 +345,7 @@ const ContentCol = styled.col`
 const OpenLink = styled.div`
   color: #291bfe;
   font-family: 'Noto Sans KR';
-  font-size: 17px;
+  font-size: 1.06rem;
 
   cursor: pointer;
 
@@ -353,7 +353,7 @@ const OpenLink = styled.div`
 
   @media ${Device.mobileL} {
     width: 7.5rem;
-    font-size: 0.625rem;
+    font-size: 0.875rem;
     margin-bottom: 0.25rem;
     margin-left: 0.5rem;
   }
@@ -396,10 +396,7 @@ const HTMainComponent: React.FC<
       ? getTheme(accessToken)
       : alert('주제는 수요일에 공개됩니다!');
 
-  const judgementFunc = () =>
-    now.isAfter(visitEndTime)
-      ? getJudgement(accessToken)
-      : alert('심사기준은 수요일에 공개됩니다!');
+  const judgementFunc = () => getJudgement(accessToken);
 
   useEffect(() => {
     if (postObserverStatus === 'success') {
@@ -420,7 +417,7 @@ const HTMainComponent: React.FC<
       deem(false);
       resetStatus();
     };
-  }, [postObserverStatus]);
+  }, [postObserverStatus, getThemeStatus, getJudgementStatus]);
 
   return (
     <>
@@ -455,9 +452,7 @@ const HTMainComponent: React.FC<
           <RightSeparator>
             <ButtonWrapper>
               <div>
-                <OpenLink onClick={judgementFunc}>
-                  심사 기준표 >
-                </OpenLink>
+                <OpenLink onClick={judgementFunc}>심사 기준표 ></OpenLink>
                 {userType === 'graduate' ? (
                   <Button
                     onClick={visit}
@@ -477,9 +472,7 @@ const HTMainComponent: React.FC<
                 )}
               </div>
               <div>
-                <OpenLink onClick={themeFunc}>
-                  주제 공개 >
-                </OpenLink>
+                <OpenLink onClick={themeFunc}>주제 공개 ></OpenLink>
                 <Button
                   onClick={() => {
                     history.push('/hanseithon/participation');
