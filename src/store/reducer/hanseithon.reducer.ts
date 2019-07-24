@@ -32,7 +32,7 @@ const initialState: HanseithonModel = {
   },
   match: [],
 
-  userType: 'none',
+  htUserType: 'none',
 };
 
 export const hanseithonReducer = (
@@ -173,7 +173,7 @@ export const hanseithonReducer = (
 
       case 'GET_HT_USER_SUCCESS':
         draft.getUserStatus = 'success';
-        draft.userType = action.payload;
+        draft.htUserType = action.payload;
         break;
 
       case 'GET_HT_USER_FAILURE':

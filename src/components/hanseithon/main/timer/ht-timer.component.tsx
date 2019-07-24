@@ -20,10 +20,6 @@ const Wrapper = styled.div`
 
   margin-bottom: 39.75rem;
 
-  @media ${Device.laptop} {
-    margin-bottom: 32rem;
-  }
-
   @media ${Device.mobileL} {
     font-size: 1.5rem;
     margin-bottom: 8.875rem;
@@ -33,7 +29,7 @@ const Wrapper = styled.div`
 const minUnit = 60;
 const hourUnit = minUnit * 60;
 const day = hourUnit * 24;
-const totalTime = 13 * hourUnit;
+const totalTime = 15 * hourUnit;
 
 const HTTimerComponent: React.FC = () => {
   const [sec, setSec] = useState<string>('00');

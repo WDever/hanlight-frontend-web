@@ -11,7 +11,7 @@ import {
   ModalTypes,
   TeamMemberType,
   TeamType,
-  UserType,
+  HtUserType,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
@@ -289,7 +289,7 @@ export class GetHtUser implements Action {
 export class GetHtUserSuccess implements Action {
   public readonly type = GET_HT_USER_SUCCESS;
 
-  public constructor(public payload: UserType) {}
+  public constructor(public payload: HtUserType) {}
 }
 
 export class GetHtUserFailure implements Action {
@@ -316,7 +316,7 @@ export const hanseithonActions = {
   getTheme: createStandardAction(GET_THEME)<string>(),
   getJudgement: createStandardAction(GET_JUDGEMENT)<string>(),
   resetStatus: createStandardAction(REST_STATUS)(),
-  getUser: createStandardAction(GET_HT_USER)<string>(),
+  getHtUser: createStandardAction(GET_HT_USER)<string>(),
 };
 
 export type hanseithonReducerActions =

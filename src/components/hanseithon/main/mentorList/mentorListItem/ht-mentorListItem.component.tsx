@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
+import { ModalTypes } from 'store';
 import styled from 'styled-components';
 
 const Content = styled.div`
@@ -46,11 +47,26 @@ const LightBox = styled.div`
   justify-content: center;
   align-items: center;
 
+  button {
+    font-family: 'Open Sans';
+    font-weight: bold;
+    font-size: 1rem;
+    color: #ffffff;
+
+    cursor: pointer;
+
+    width: 5.375rem;
+    height: 2.25rem;
+    border-radius: 1.25rem;
+    background-color: #000000;
+  }
+
   div {
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    background-color: #30f97b;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+    background-color: #ef0058;
 
     @media ${Device.mobileL} {
       width: 0.65rem;
@@ -59,12 +75,33 @@ const LightBox = styled.div`
   }
 `;
 
-const HTMentorListItemComponent: React.FC = () => {
+export interface MentorListItemProps {
+  active: boolean;
+  modal(payload: ModalTypes): void;
+  deem(payload: boolean): void;
+}
+
+const HTMentorListItemComponent: React.FC<MentorListItemProps> = ({
+  active,
+  modal,
+  deem,
+}) => {
   return (
     <Content>
       <NameBox>멘토</NameBox>
       <LightBox>
-        <div />
+        {active ? (
+          <button
+            onClick={() => {
+              modal('request');
+              deem(true);
+            }}
+          >
+            신청
+          </button>
+        ) : (
+          <div />
+        )}
       </LightBox>
     </Content>
   );

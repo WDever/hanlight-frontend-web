@@ -1,11 +1,4 @@
-export type ModalTypes =
-  | 'none'
-  | 'create'
-  | 'join'
-  | 'match'
-  | 'join-success'
-  | 'create-success'
-  | 'current';
+export type ModalTypes = 'none' | 'request' | 'detail-view' | 'submit';
 
 export type CategoryType = string | 'l' | 'g';
 
@@ -36,7 +29,7 @@ export interface MatchMember {
   introduction: string;
 }
 
-export type UserType =
+export type HtUserType =
   | 'none'
   | 'observer'
   | 'mentor'
@@ -69,5 +62,5 @@ export interface HanseithonModel {
 
   match: MatchMember[];
 
-  userType: UserType;
+  htUserType: HtUserType;
 }

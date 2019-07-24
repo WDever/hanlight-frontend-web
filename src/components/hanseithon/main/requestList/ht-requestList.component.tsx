@@ -3,9 +3,7 @@ import * as React from 'react';
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/mentoring-background.svg';
 import styled from 'styled-components';
-import HTMentorListItemComponent, {
-  MentorListItemProps,
-} from './mentorListItem';
+import HTRequestItemComponent, { RequestListItemProps } from './requestItem';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -80,24 +78,19 @@ const ContentWrapper = styled.div`
   }
 `;
 
-interface MentorListProps extends MentorListItemProps {}
+interface RequestListProps extends RequestListItemProps {}
 
-const HTMentoringListComponent: React.FC<MentorListProps> = ({
-  modal,
-  deem,
-  active,
-}) => {
+const HTRequestList: React.FC<RequestListProps> = ({ deem, modal }) => {
   return (
     <Wrapper>
       <Background src={BackgroundImg} alt="Mentor list background" />
-      <TitleWrapper>실시간 멘토 현황</TitleWrapper>
+      <TitleWrapper>실시간 멘토링 요청 현황</TitleWrapper>
       <ContentWrapper>
-        <p>실시간 멘토 체크</p>
-        <HTMentorListItemComponent deem={deem} modal={modal} active={true} />
-        <HTMentorListItemComponent deem={deem} modal={modal} active={false} />
+        <p>실시간 요청 체크</p>
+        <HTRequestItemComponent deem={deem} modal={modal} />
       </ContentWrapper>
     </Wrapper>
   );
 };
 
-export default HTMentoringListComponent;
+export default HTRequestList;

@@ -6,7 +6,9 @@ import {
   AppState,
   hanseithonActions,
   hanseithonReducerActions,
+  HtUserType,
   userReducerActions,
+  ModalTypes,
 } from 'store';
 
 export interface HTMainProps {
@@ -18,12 +20,17 @@ export interface HTMainProps {
   themeUrl: string;
   judgementUrl: string;
   userName: string;
+  htUserType: HtUserType;
+  modalType: ModalTypes;
 }
 
 export interface HTMainMethod {
   resetStatus(): void;
   getTheme(payload: string): void;
   getJudgement(payload: string): void;
+  getHtUser(payload: string): void;
+  modal(payload: ModalTypes): void;
+  deem(payload: boolean): void;
 }
 
 export interface HTMainOwnProps {}
@@ -39,6 +46,8 @@ const mapStateToProps = ({ hanseithon, error, user }: AppState) => ({
   themeUrl: hanseithon.themeUrl,
   judgementUrl: hanseithon.judgementUrl,
   userName: user.name,
+  htUserType: hanseithon.htUserType,
+  modalType: hanseithon.modalType,
 });
 
 const mapDispatchToProps = (
@@ -49,6 +58,8 @@ const mapDispatchToProps = (
   resetStatus: bindActionCreators(hanseithonActions.resetStatus, dispatch),
   getTheme: bindActionCreators(hanseithonActions.getTheme, dispatch),
   getJudgement: bindActionCreators(hanseithonActions.getJudgement, dispatch),
+  getHtUser: bindActionCreators(hanseithonActions.getHtUser, dispatch),
+  modal: bindActionCreators(hanseithonActions.modal, dispatch),
 });
 
 const HTMainContainer = withRouter(

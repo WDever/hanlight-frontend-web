@@ -5,9 +5,11 @@ import logos from 'lib/sponsor/logos.svg';
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/ht-background.svg';
 import TimetableBackgroundImg from 'lib/svg/timetable-background.svg';
+import HTModalPage from 'pages/hanseithon/modal';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import HTMentoringListComponent from './mentorList';
+import HTRequestList from './requestList';
 import HTTimerComponent from './timer';
 
 const { useState } = React;
@@ -63,10 +65,11 @@ const ContentWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   width: 100%;
 
-  margin-bottom: 11.275rem;
+  margin-bottom: 7.6rem;
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
@@ -78,8 +81,9 @@ const ContentWrapper = styled.div`
 const UserWrapper = styled.div`
   font-size: 2.25rem;
 
-  margin-bottom: 11rem;
-  margin-left: 24%;
+  text-align: center;
+
+  margin-bottom: 5.75rem;
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
@@ -102,13 +106,9 @@ const UserWrapper = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
-  width: 76%;
-
   display: flex;
 
   font-size: 2.25rem;
-
-  margin-left: 24%;
 
   @media ${Device.mobileL} {
     width: 100%;
@@ -389,20 +389,12 @@ const ContentCol = styled.col`
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = ({ userName }) => {
+> = ({ userName, getHtUser, htUserType, modal, deem, modalType }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
-
-  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { files } = e.currentTarget;
-
-    if (files) {
-      alert(files[0].name);
-      console.log(files[0]);
-    }
-  }
 
   return (
     <>
+      {modalType !== 'none' && <HTModalPage />}
       <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
         <TitleWrapper>
@@ -417,24 +409,17 @@ const HTMainComponent: React.FC<
             </p>
           </UserWrapper>
           <ButtonWrapper>
-            <MentorWrapper>
-              <p>멘토링을 신청하세요!</p>
-              <button>눌러보게</button>
-            </MentorWrapper>
-            <SubmitWrapper>
+            <div>
               <p>제출 할래요?</p>
-              <label>
-                눌러보게
-                <input
-                  type="file"
-                  accept=".zip, zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-                  onChange={handleFile}
-                />
-              </label>
-            </SubmitWrapper>
+              <button>눌러보게</button>
+            </div>
           </ButtonWrapper>
         </ContentWrapper>
-        <HTMentoringListComponent />
+        {htUserType !== 'mentor' ? (
+          <HTMentoringListComponent deem={deem} modal={modal} active={false} />
+        ) : (
+        <HTRequestList modal={modal} deem={deem} />
+        )}
         <TimetableWrapper>
           <TimetableBackground
             src={TimetableBackgroundImg}
