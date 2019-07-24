@@ -396,7 +396,7 @@ const HTMainComponent: React.FC<
       ? getTheme(accessToken)
       : alert('주제는 수요일에 공개됩니다!');
 
-  const judgementFunc = () => alert('심사기준은 수요일 중으로 공개됩니다!');
+  const judgementFunc = () => getJudgement(accessToken);
 
   useEffect(() => {
     if (postObserverStatus === 'success') {
