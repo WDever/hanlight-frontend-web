@@ -36,6 +36,15 @@ export interface MatchMember {
   introduction: string;
 }
 
+export type UserType =
+  | 'none'
+  | 'observer'
+  | 'mentor'
+  | 'attendee'
+  | 'staff'
+  | 'teacher'
+  | 'common';
+
 export interface HanseithonModel {
   deemStatus: boolean;
   agreeStatus: boolean;
@@ -49,6 +58,7 @@ export interface HanseithonModel {
   postObserverStatus: 'none' | 'pending' | 'success' | 'failure';
   getThemeStatus: 'none' | 'pending' | 'success' | 'failure';
   getJudgementStatus: 'none' | 'pending' | 'success' | 'failure';
+  getUserStatus: 'none' | 'pending' | 'success' | 'failure';
 
   team: TeamType;
   teams: TeamType[];
@@ -58,4 +68,6 @@ export interface HanseithonModel {
   judgementUrl: string;
 
   match: MatchMember[];
+
+  userType: UserType;
 }

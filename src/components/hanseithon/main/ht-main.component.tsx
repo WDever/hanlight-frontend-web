@@ -163,6 +163,42 @@ const ButtonWrapper = styled.div`
       font-size: 0.875rem;
     }
   }
+
+  input {
+    display: none;
+  }
+
+  label {
+    width: 15rem;
+    height: 4rem;
+
+    box-shadow: 0 21px 30px 0 rgba(95, 95, 95, 0.4);
+
+    border-radius: 2rem;
+
+    background-color: #000000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: #ffffff;
+    font-family: 'Nanum Myeongjo';
+    font-size: 1.5rem;
+
+    cursor: pointer;
+
+    outline: none;
+    border: none;
+    padding: none;
+
+    @media ${Device.mobileL} {
+      width: 9.3125rem;
+      height: 2.25rem;
+
+      font-size: 0.875rem;
+    }
+  }
 `;
 
 const MentorWrapper = styled.div`
@@ -268,7 +304,7 @@ const TimetableWrapper = styled.div`
 
   margin-bottom: 16.425rem;
 
-  @media screen {
+  @media ${Device.mobileL} {
     margin-bottom: 1.75rem;
   }
 `;
@@ -353,8 +389,17 @@ const ContentCol = styled.col`
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = () => {
+> = ({ userName }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.currentTarget;
+
+    if (files) {
+      alert(files[0].name);
+      console.log(files[0]);
+    }
+  }
 
   return (
     <>
@@ -366,9 +411,7 @@ const HTMainComponent: React.FC<
         <HTTimerComponent />
         <ContentWrapper>
           <UserWrapper>
-            {/* <p>{user.name}님의 팀은</p>
-          <p>{user.team} 입니다</p> */}
-            <p>최민규님의 팀은</p>
+            <p>{userName}님의 팀은</p>
             <p>
               <span>노예들</span> 입니다
             </p>
@@ -380,7 +423,14 @@ const HTMainComponent: React.FC<
             </MentorWrapper>
             <SubmitWrapper>
               <p>제출 할래요?</p>
-              <button>눌러보게</button>
+              <label>
+                눌러보게
+                <input
+                  type="file"
+                  accept=".zip, zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+                  onChange={handleFile}
+                />
+              </label>
             </SubmitWrapper>
           </ButtonWrapper>
         </ContentWrapper>

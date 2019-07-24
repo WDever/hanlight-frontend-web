@@ -33,7 +33,7 @@ const Wrapper = styled.div`
 const minUnit = 60;
 const hourUnit = minUnit * 60;
 const day = hourUnit * 24;
-const totalTime = 21 * hourUnit + 30 * minUnit;
+const totalTime = 13 * hourUnit;
 
 const HTTimerComponent: React.FC = () => {
   const [sec, setSec] = useState<string>('00');
@@ -59,9 +59,14 @@ const HTTimerComponent: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => computeTime(), 1000);
 
-  })
+    return () => clearInterval(interval);
+  }, []);
 
-  return <Wrapper>{hour}시 : {min}분 : {sec}초</Wrapper>;
+  return (
+    <Wrapper>
+      {hour}시 : {min}분 : {sec}초
+    </Wrapper>
+  );
 };
 
 export default HTTimerComponent;

@@ -13,6 +13,7 @@ const initialState: HanseithonModel = {
   postObserverStatus: 'none',
   getThemeStatus: 'none',
   getJudgementStatus: 'none',
+  getUserStatus: 'none',
 
   themeUrl: '',
   judgementUrl: '',
@@ -30,6 +31,8 @@ const initialState: HanseithonModel = {
     teamMember: [],
   },
   match: [],
+
+  userType: 'none',
 };
 
 export const hanseithonReducer = (
@@ -162,6 +165,19 @@ export const hanseithonReducer = (
 
       case 'GET_THEME_FAILURE':
         draft.getJudgementStatus = 'failure';
+        break;
+
+      case 'GET_HT_USER':
+        draft.getUserStatus = 'pending';
+        break;
+
+      case 'GET_HT_USER_SUCCESS':
+        draft.getUserStatus = 'success';
+        draft.userType = action.payload;
+        break;
+
+      case 'GET_HT_USER_FAILURE':
+        draft.getUserStatus = 'failure';
         break;
 
       case 'RESET_STATUS':

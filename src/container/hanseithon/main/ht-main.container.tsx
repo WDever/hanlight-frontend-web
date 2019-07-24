@@ -10,20 +10,17 @@ import {
 } from 'store';
 
 export interface HTMainProps {
-  deemStatus: boolean;
   errMessage: string;
   accessToken: string;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
-  postObserverStatus: 'none' | 'pending' | 'success' | 'failure';
   getThemeStatus: 'none' | 'pending' | 'success' | 'failure';
   getJudgementStatus: 'none' | 'pending' | 'success' | 'failure';
   themeUrl: string;
   judgementUrl: string;
+  userName: string;
 }
 
 export interface HTMainMethod {
-  deem(payload: boolean): void;
-  postObserver(payload: string): void;
   resetStatus(): void;
   getTheme(payload: string): void;
   getJudgement(payload: string): void;
@@ -41,6 +38,7 @@ const mapStateToProps = ({ hanseithon, error, user }: AppState) => ({
   getJudgementStatus: hanseithon.getJudgementStatus,
   themeUrl: hanseithon.themeUrl,
   judgementUrl: hanseithon.judgementUrl,
+  userName: user.name,
 });
 
 const mapDispatchToProps = (

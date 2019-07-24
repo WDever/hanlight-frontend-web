@@ -11,6 +11,7 @@ import {
   ModalTypes,
   TeamMemberType,
   TeamType,
+  UserType,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
@@ -106,6 +107,10 @@ export const GET_THEME_FAILURE = 'GET_THEME_FAILURE';
 export const GET_JUDGEMENT = 'GET_JUDGEMENT';
 export const GET_JUDGEMENT_SUCCESS = 'GET_JUDGEMENT_SUCCESS';
 export const GET_JUDGEMENT_FAILURE = 'GET_JUDGEMENT_FAILURE';
+
+export const GET_HT_USER = 'GET_HT_USER';
+export const GET_HT_USER_SUCCESS = 'GET_HT_USER_SUCCESS';
+export const GET_HT_USER_FAILURE = 'GET_HT_USER_FAILURE';
 
 export const REST_STATUS = 'RESET_STATUS';
 
@@ -275,6 +280,24 @@ export class GetJudgementFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class GetHtUser implements Action {
+  public readonly type = GET_HT_USER;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetHtUserSuccess implements Action {
+  public readonly type = GET_HT_USER_SUCCESS;
+
+  public constructor(public payload: UserType) {}
+}
+
+export class GetHtUserFailure implements Action {
+  public readonly type = GET_HT_USER_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export class ResetStatus implements Action {
   public readonly type = REST_STATUS;
 }
@@ -293,6 +316,7 @@ export const hanseithonActions = {
   getTheme: createStandardAction(GET_THEME)<string>(),
   getJudgement: createStandardAction(GET_JUDGEMENT)<string>(),
   resetStatus: createStandardAction(REST_STATUS)(),
+  getUser: createStandardAction(GET_HT_USER)<string>(),
 };
 
 export type hanseithonReducerActions =
@@ -324,4 +348,7 @@ export type hanseithonReducerActions =
   | GetJudgement
   | GetJudgementSuccess
   | GetJudgementFailure
-  | ResetStatus;
+  | ResetStatus
+  | GetHtUser
+  | GetHtUserSuccess
+  | GetHtUserFailure;

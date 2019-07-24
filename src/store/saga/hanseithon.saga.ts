@@ -40,6 +40,12 @@ import {
   PostTeamParams,
   PUT_TEAM,
 } from 'store/action';
+import {
+  GET_HT_USER,
+  GET_HT_USER_FAILURE,
+  GET_HT_USER_SUCCESS,
+  GetHtUser,
+} from 'store/action/hanseithon.action';
 
 const putTeamApi = (payload: PutTeamParams) =>
   hanseithonInstance
@@ -266,11 +272,39 @@ function* getJudgementApiSaga(action: GetTheme) {
     try {
       const response = yield call(getJudgementApi, action.payload);
 
-      yield put({ type: GET_JUDGEMENT_SUCCESS, payload: response.data.judgement.url });
+      yield put({
+        type: GET_JUDGEMENT_SUCCESS,
+        payload: response.data.judgement.url,
+      });
     } catch (e) {
       yield put({
         type: SET_ERROR,
         name: GET_JUDGEMENT_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const getUserApi = (payload: string) =>
+  hanseithonInstance
+    .get('/user', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getUserApiSaga(action: GetHtUser) {
+  if (action.type) {
+    try {
+      const response = yield call(getUserApi, action.payload);
+
+      yield put({ type: GET_HT_USER_SUCCESS, payload: response.data.type });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_HT_USER_FAILURE,
         payload: { err: e, origin: action.payload },
       });
     }
@@ -286,6 +320,7 @@ function* hanseithonSaga() {
   yield takeEvery(POST_OBSERVER, postObserverApiSaga);
   yield takeEvery(GET_THEME, getThemeApiSaga);
   yield takeEvery(GET_JUDGEMENT, getJudgementApiSaga);
+  yield takeEvery(GET_HT_USER, getUserApiSaga);
 }
 
 export { hanseithonSaga };
