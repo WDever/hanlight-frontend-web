@@ -271,7 +271,6 @@ function* getJudgementApiSaga(action: GetTheme) {
   if (action.type) {
     try {
       const response = yield call(getJudgementApi, action.payload);
-
       yield put({
         type: GET_JUDGEMENT_SUCCESS,
         payload: response.data.judgement.url,
