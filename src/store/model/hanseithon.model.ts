@@ -1,4 +1,4 @@
-export type ModalTypes = 'none' | 'request' | 'detail-view' | 'submit';
+export type ModalTypes = 'none' | 'request' | 'detail-view' | 'submit' | 'mentor-comment';
 
 export type CategoryType = string | 'l' | 'g';
 
@@ -51,6 +51,10 @@ export interface MentorRequestType {
 export interface MentorType {
   pk: number;
   name: string;
+
+  mentor: {
+    pk: number;
+  }
 }
 
 export type HtUserType =
@@ -79,6 +83,7 @@ export interface HanseithonModel {
   getMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  postMentorCommentStatus: 'none' | 'pending' | 'success' | 'failure';
 
   team: TeamType;
   teams: TeamType[];

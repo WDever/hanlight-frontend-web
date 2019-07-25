@@ -100,7 +100,7 @@ const HTMentorListItemComponent: React.FC<MentorListItemProps> = ({
   const submitMentoring = () => {
     modal('request');
     deem(true);
-    setMentorPk(mentor.pk);
+    setMentorPk(mentor.mentor.pk);
   };
 
   return (
