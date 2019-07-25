@@ -101,9 +101,10 @@ const HTMentorListItemComponent: React.FC<MentorListItemProps> = ({
       <LightBox>
         <button
           onClick={() => {
-            modal('request');
-            deem(true);
-            setMentorPk(mentor.pk);
+            // modal('request');
+            // deem(true);
+            // setMentorPk(mentor.pk);
+            alert('밤에 공개됩니다.');
           }}
         >
           신청
