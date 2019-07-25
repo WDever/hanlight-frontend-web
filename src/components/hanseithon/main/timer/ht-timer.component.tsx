@@ -29,7 +29,7 @@ const Wrapper = styled.div`
 const min = 60;
 const hour = min * 60;
 const day = hour * 24;
-const endTime = 17 * hour + 32 * min;
+const endTime = 15 * hour;
 
 const HTTimerComponent: React.FC = () => {
   const [viewSec, setViewSec] = useState<string>('00');
