@@ -62,6 +62,7 @@ const ContentWrapper = styled.div`
 
   @media ${Device.mobileL} {
     width: 100%;
+    min-height: 8.5rem;
   }
 
   p {
