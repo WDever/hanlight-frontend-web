@@ -51,10 +51,6 @@ export interface MentorRequestType {
 export interface MentorType {
   pk: number;
   name: string;
-
-  mentor: {
-    pk: number;
-  }
 }
 
 export type HtUserType =
