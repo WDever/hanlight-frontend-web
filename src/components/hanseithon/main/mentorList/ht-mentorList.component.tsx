@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/mentoring-background.svg';
-import { MentorRequestType, MentorType, ModalTypes } from 'store';
+import { HtUserType, MentorRequestType, MentorType, ModalTypes } from 'store';
 import styled from 'styled-components';
 import HTMentorListItemComponent, {
   MentorListItemProps,
@@ -93,6 +93,7 @@ interface MentorListProps {
   mentorList: MentorType[];
   errMessage: string;
   accessToken: string;
+  htUserType: HtUserType;
 
   getMentorStatus: 'none' | 'pending' | 'success' | 'failure';
 
@@ -111,11 +112,13 @@ const HTMentoringListComponent: React.FC<MentorListProps> = ({
   getMentorStatus,
   errMessage,
   setMentorPk,
+  htUserType,
 }) => {
   const MentorList = mentorList.map((item, i) => {
     return (
       <HTMentorListItemComponent
         key={i}
+        htUserType={htUserType}
         deem={deem}
         modal={modal}
         mentor={item}
@@ -125,7 +128,9 @@ const HTMentoringListComponent: React.FC<MentorListProps> = ({
   });
 
   useEffect(() => {
-    getMentor(accessToken);
+    const interval = setInterval(() => getMentor(accessToken), 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {

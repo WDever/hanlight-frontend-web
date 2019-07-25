@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
-import { MentorType, ModalTypes } from 'store';
+import { HtUserType, MentorType, ModalTypes } from 'store';
 import styled from 'styled-components';
 
 const Content = styled.div`
@@ -83,6 +83,7 @@ const LightBox = styled.div`
 `;
 
 export interface MentorListItemProps {
+  htUserType: HtUserType;
   mentor: MentorType;
   modal(payload: ModalTypes): void;
   deem(payload: boolean): void;
@@ -94,18 +95,24 @@ const HTMentorListItemComponent: React.FC<MentorListItemProps> = ({
   deem,
   setMentorPk,
   mentor,
+  htUserType,
 }) => {
+  const submitMentoring = () => {
+    modal('request');
+    deem(true);
+    setMentorPk(mentor.pk);
+  };
+
   return (
     <Content>
       <NameBox>{mentor.name}</NameBox>
       <LightBox>
         <button
-          onClick={() => {
-            // modal('request');
-            // deem(true);
-            // setMentorPk(mentor.pk);
-            alert('밤에 공개됩니다.');
-          }}
+          onClick={
+            htUserType === 'attendee'
+              ? submitMentoring
+              : () => alert('멘토링 신청은 참가자만 가능합니다.')
+          }
         >
           신청
         </button>

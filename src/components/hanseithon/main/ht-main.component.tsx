@@ -406,6 +406,7 @@ const HTMainComponent: React.FC<
   patchMentorRequest,
   reqPk,
   setReqPk,
+  resetStatus,
 }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
 
@@ -445,6 +446,7 @@ const HTMainComponent: React.FC<
         </ContentWrapper>
         {htUserType !== 'mentor' ? (
           <HTMentoringListComponent
+            htUserType={htUserType}
             deem={deem}
             modal={modal}
             mentorList={mentorList}

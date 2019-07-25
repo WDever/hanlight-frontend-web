@@ -35,7 +35,7 @@ export const ModalBox = styled.div`
 
   @media ${Device.mobileL} {
     width: 18.875rem;
-    height: 17.875rem;
+    height: 17.75rem;
   }
 `;
 
@@ -59,10 +59,6 @@ export const TitleWrapper = styled.div`
     font-family: inherit;
     font-size: 1.25rem;
     font-weight: bold;
-
-    @media ${Device.mobileL} {
-      font-size: 13px;
-    }
   }
 
   span {
@@ -120,6 +116,10 @@ export const Form = styled.div`
 
     white-space: nowrap;
     text-overflow: ellipsis;
+
+    @media ${Device.mobileL} {
+      font-size: 13px;
+    }
   }
 
   button {
@@ -142,6 +142,8 @@ export const Form = styled.div`
     @media ${Device.mobileL} {
       width: 5rem;
       height: 1.75rem;
+
+      margin-top: 0.625rem;
     }
   }
 
@@ -156,6 +158,10 @@ export const Form = styled.div`
 
     font-family: 'Open Sans';
     font-size: 13px;
+
+    @media ${Device.mobileL} {
+      height: 10rem;
+    }
   }
 `;
 

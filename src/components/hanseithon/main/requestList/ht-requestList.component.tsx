@@ -115,7 +115,9 @@ const HTRequestList: React.FC<RequestListProps> = ({
   mentorRequestList,
 }) => {
   useEffect(() => {
-    getMentorRequest(accessToken);
+    const interval = setInterval(() => getMentorRequest(accessToken), 3000);
+
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -125,7 +127,15 @@ const HTRequestList: React.FC<RequestListProps> = ({
   }, [errMessage, getMentorRequestStatus]);
 
   const RequestList = mentorRequestList.map((item, i) => {
-    return <HTRequestItemComponent deem={deem} modal={modal} key={i} mentorRequestItem={item} setReqPk={setReqPk} />;
+    return (
+      <HTRequestItemComponent
+        deem={deem}
+        modal={modal}
+        key={i}
+        mentorRequestItem={item}
+        setReqPk={setReqPk}
+      />
+    );
   });
 
   return (
