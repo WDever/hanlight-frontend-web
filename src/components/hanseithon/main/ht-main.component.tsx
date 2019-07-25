@@ -112,7 +112,7 @@ const ButtonWrapper = styled.div`
   font-size: 2.25rem;
 
   @media ${Device.mobileL} {
-    display: none;
+    font-size: 1rem;
   }
 
   div {
@@ -410,11 +410,6 @@ const HTMainComponent: React.FC<
   history,
 }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
-
-  const goComment = () => {
-    history.push('/hanseithon/comment');
-    
-  };
 
   const submit = () =>
     htUserType === 'attendee'
