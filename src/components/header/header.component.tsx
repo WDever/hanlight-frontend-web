@@ -130,9 +130,10 @@ const New = styled.div`
 
 const HeaderComponent: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
-> = ({ name, history, location, resetUser, toggleMenu }) => {
+> = ({ name, history, location, resetUser, toggleMenu, resetHtUser }) => {
   const logout = () => {
     resetUser();
+    resetHtUser();
     history.push('/user/login');
   };
 

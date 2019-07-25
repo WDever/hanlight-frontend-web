@@ -21,6 +21,7 @@ import {
   GET_THEME,
   GET_THEME_FAILURE,
   GET_THEME_SUCCESS,
+  GetMentorRequest,
   GetTeamMatchParams,
   GetTeamParams,
   GetTheme,
@@ -40,6 +41,29 @@ import {
   PostTeamParams,
   PUT_TEAM,
 } from 'store/action';
+import {
+  GET_HT_USER,
+  GET_HT_USER_FAILURE,
+  GET_HT_USER_SUCCESS,
+  GET_MENTOR,
+  GET_MENTOR_FAILURE,
+  GET_MENTOR_REQUEST,
+  GET_MENTOR_REQUEST_FAILURE,
+  GET_MENTOR_REQUEST_SUCCESS,
+  GET_MENTOR_SUCCESS,
+  GetHtUser,
+  GetMentor,
+  PATCH_MENTOR_REQUEST,
+  PATCH_MENTOR_REQUEST_FAILURE,
+  PATCH_MENTOR_REQUEST_SUCCESS,
+  PatchMentorRequest,
+  PatchMentorRequestParams,
+  POST_MENTOR_REQUEST,
+  POST_MENTOR_REQUEST_FAILURE,
+  POST_MENTOR_REQUEST_SUCCESS,
+  PostMentorRequest,
+  PostMentorRequestParams,
+} from 'store/action/hanseithon.action';
 
 const putTeamApi = (payload: PutTeamParams) =>
   hanseithonInstance
@@ -279,6 +303,141 @@ function* getJudgementApiSaga(action: GetTheme) {
   }
 }
 
+const getUserApi = (payload: string) =>
+  hanseithonInstance
+    .get('/user', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getUserApiSaga(action: GetHtUser) {
+  if (action.type) {
+    try {
+      const response = yield call(getUserApi, action.payload);
+
+      yield put({ type: GET_HT_USER_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_HT_USER_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const getMentorApi = (payload: string) =>
+  hanseithonInstance
+    .get('/mentor', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getMentorApiSaga(action: GetMentor) {
+  if (action.type) {
+    try {
+      const response = yield call(getMentorApi, action.payload);
+      yield put({ type: GET_MENTOR_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_MENTOR_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const getMentorRequestApi = (payload: string) =>
+  hanseithonInstance
+    .get('mentor/request', {
+      headers: {
+        authorization: payload,
+      },
+    })
+    .then(res => res.data);
+
+function* getMentorRequestApiSaga(action: GetMentorRequest) {
+  if (action.type) {
+    try {
+      const response = yield call(getMentorRequestApi, action.payload);
+
+      yield put({ type: GET_MENTOR_REQUEST_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_MENTOR_REQUEST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const postMentorRequestApi = (payload: PostMentorRequestParams) =>
+  hanseithonInstance
+    .post(
+      '/mentor/request',
+      {
+        content: payload.content,
+        mentor_pk: payload.mentor_pk
+      },
+      {
+        headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    )
+    .then(res => res.data);
+
+function* postMentorRequestApiSaga(action: PostMentorRequest) {
+  if (action.type) {
+    try {
+      const response = yield call(postMentorRequestApi, action.payload);
+
+      yield put({ type: POST_MENTOR_REQUEST_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: POST_MENTOR_REQUEST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+const patchMentorRequestApi = (payload: PatchMentorRequestParams) =>
+  hanseithonInstance.patch(
+    '/mentor/request',
+    {
+      request_pk: payload.requestPk,
+    },
+    {
+      headers: {
+        authorization: payload.accessToken,
+      },
+    },
+  );
+
+function* patchMentorRequestApiSaga(action: PatchMentorRequest) {
+  if (action.type) {
+    try {
+      const response = yield call(patchMentorRequestApi, action.payload);
+
+      yield put({ type: PATCH_MENTOR_REQUEST_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: PATCH_MENTOR_REQUEST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
@@ -288,6 +447,11 @@ function* hanseithonSaga() {
   yield takeEvery(POST_OBSERVER, postObserverApiSaga);
   yield takeEvery(GET_THEME, getThemeApiSaga);
   yield takeEvery(GET_JUDGEMENT, getJudgementApiSaga);
+  yield takeEvery(GET_HT_USER, getUserApiSaga);
+  yield takeEvery(GET_MENTOR, getMentorApiSaga);
+  yield takeEvery(GET_MENTOR_REQUEST, getMentorRequestApiSaga);
+  yield takeEvery(POST_MENTOR_REQUEST, postMentorRequestApiSaga);
+  yield takeEvery(PATCH_MENTOR_REQUEST, patchMentorRequestApiSaga);
 }
 
 export { hanseithonSaga };
