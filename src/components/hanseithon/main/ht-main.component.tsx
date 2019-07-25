@@ -515,15 +515,15 @@ const HTMainComponent: React.FC<
             {!rightTableToggle ? (
               <>
                 <tr>
-                  <td>16:30 ~ 17:00</td>
+                  <td>15:00 ~ 15:30</td>
                   <td>참가자 입장 및 등록</td>
                 </tr>
                 <tr>
-                  <td>17:00 ~ 17:30</td>
+                  <td>15:30 ~ 16:00</td>
                   <td>키노트</td>
                 </tr>
                 <tr>
-                  <td>17:30 ~ 18:00</td>
+                  <td>16:00 ~ 18:00</td>
                   <td>자율 개발</td>
                 </tr>
                 <tr>
