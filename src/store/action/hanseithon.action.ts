@@ -94,6 +94,12 @@ export interface PatchMentorRequestParams {
   requestPk: number;
 }
 
+export interface PostMentorCommentParams {
+  accessToken: string;
+  team_pk: number;
+  content: string;
+}
+
 export const DEEM = 'DEEM';
 
 export const MODAL = 'MODAL';
@@ -154,7 +160,11 @@ export const PATCH_MENTOR_REQUEST = 'PATCH_MENTOR_REQUEST';
 export const PATCH_MENTOR_REQUEST_SUCCESS = 'PATCH_MENTOR_REQUEST_SUCCESS';
 export const PATCH_MENTOR_REQUEST_FAILURE = 'PATCH_MENTOR_REQUEST_FAILURE';
 
-export const SET_REQ_PK = 'SET_REQ_PK'
+export const POST_MENTOR_COMMENT = 'POST_MENTOR_COMMENT';
+export const POST_MENTOR_COMMENT_SUCCESS = 'POST_MENTOR_COMMENT_SUCCESS';
+export const POST_MENTOR_COMMENT_FAILURE = 'POST_MENTOR_COMMENT_FAILURE';
+
+export const SET_REQ_PK = 'SET_REQ_PK';
 
 export const SET_MENTOR_PK = 'SET_MENTOR_PK';
 
@@ -414,6 +424,22 @@ export class PatchMentorRequestFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class PostMentorComment implements Action {
+  public readonly type = POST_MENTOR_COMMENT;
+
+  public constructor(public payload: PostMentorCommentParams) {}
+}
+
+export class PostMentorCommentSuccess implements Action {
+  public readonly type = POST_MENTOR_COMMENT_SUCCESS;
+}
+
+export class PostMentorCommentFailure implements Action {
+  public readonly type = POST_MENTOR_COMMENT_FAILURE;
+
+  public constructor(public paylpad: ErrorResponse) {}
+}
+
 export class SetReqPk implements Action {
   public readonly type = SET_REQ_PK;
 
@@ -454,6 +480,9 @@ export const hanseithonActions = {
   >(),
   patchMentorRequest: createStandardAction(PATCH_MENTOR_REQUEST)<
     PatchMentorRequestParams
+  >(),
+  postMentorComment: createStandardAction(POST_MENTOR_COMMENT)<
+    PostMentorCommentParams
   >(),
   setReqPk: createStandardAction(SET_REQ_PK)<number>(),
   setMentorPk: createStandardAction(SET_MENTOR_PK)<number>(),
@@ -507,6 +536,9 @@ export type hanseithonReducerActions =
   | PatchMentorRequest
   | PatchMentorRequestSuccess
   | PatchMentorRequestFailure
+  | PostMentorComment
+  | PostMentorCommentSuccess
+  | PostMentorCommentFailure
   | SetReqPk
   | ResetHtUser
   | SetMentorPk;

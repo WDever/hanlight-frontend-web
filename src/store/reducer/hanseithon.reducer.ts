@@ -18,6 +18,7 @@ const initialState: HanseithonModel = {
   getMentorRequestStatus: 'none',
   postMentorRequestStatus: 'none',
   patchMentorRequestStatus: 'none',
+  postMentorCommentStatus: 'none',
 
   themeUrl: '',
   judgementUrl: '',
@@ -242,13 +243,25 @@ export const hanseithonReducer = (
         draft.patchMentorRequestStatus = 'failure';
         break;
 
+      case 'POST_MENTOR_COMMENT':
+        draft.postMentorCommentStatus = 'pending';
+        break;
+
+      case 'POST_MENTOR_COMMENT_SUCCESS':
+        draft.postMentorCommentStatus = 'success';
+        break;
+
+      case 'POST_MENTOR_COMMENT_FAILURE':
+        draft.postMentorCommentStatus = 'failure';
+        break;
+
       case 'SET_MENTOR_PK':
         draft.mentorPk = action.payload;
         break;
 
-        case 'SET_REQ_PK':
-          draft.reqPk = action.payload;
-          break;
+      case 'SET_REQ_PK':
+        draft.reqPk = action.payload;
+        break;
 
       case 'RESET_HT_USER':
         draft.userTeam = '';
@@ -265,6 +278,7 @@ export const hanseithonReducer = (
         draft.postMentorRequestStatus = 'none';
         draft.getMentorRequestStatus = 'none';
         draft.patchMentorRequestStatus = 'none';
+        draft.postMentorCommentStatus = 'none';
         break;
 
       default:

@@ -58,9 +58,14 @@ import {
   PATCH_MENTOR_REQUEST_SUCCESS,
   PatchMentorRequest,
   PatchMentorRequestParams,
+  POST_MENTOR_COMMENT,
+  POST_MENTOR_COMMENT_FAILURE,
+  POST_MENTOR_COMMENT_SUCCESS,
   POST_MENTOR_REQUEST,
   POST_MENTOR_REQUEST_FAILURE,
   POST_MENTOR_REQUEST_SUCCESS,
+  PostMentorComment,
+  PostMentorCommentParams,
   PostMentorRequest,
   PostMentorRequestParams,
 } from 'store/action/hanseithon.action';
@@ -383,7 +388,7 @@ const postMentorRequestApi = (payload: PostMentorRequestParams) =>
       '/mentor/request',
       {
         content: payload.content,
-        mentor_pk: payload.mentor_pk
+        mentor_pk: payload.mentor_pk,
       },
       {
         headers: {
@@ -397,7 +402,6 @@ function* postMentorRequestApiSaga(action: PostMentorRequest) {
   if (action.type) {
     try {
       const response = yield call(postMentorRequestApi, action.payload);
-
       yield put({ type: POST_MENTOR_REQUEST_SUCCESS, payload: response.data });
     } catch (e) {
       yield put({
@@ -438,6 +442,38 @@ function* patchMentorRequestApiSaga(action: PatchMentorRequest) {
   }
 }
 
+const postMentorCommentApi = (payload: PostMentorCommentParams) =>
+  hanseithonInstance
+    .post(
+      '/team/comment',
+      {
+        team_pk: payload.team_pk,
+        content: payload.content,
+      },
+      {
+        headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    )
+    .then(res => res.data);
+
+function* postMentorCommentApiSaga(action: PostMentorComment) {
+  if (action.type) {
+    try {
+      const response = yield call(postMentorCommentApi, action.payload);
+
+      yield put({ type: POST_MENTOR_COMMENT_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: POST_MENTOR_COMMENT_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
@@ -452,6 +488,7 @@ function* hanseithonSaga() {
   yield takeEvery(GET_MENTOR_REQUEST, getMentorRequestApiSaga);
   yield takeEvery(POST_MENTOR_REQUEST, postMentorRequestApiSaga);
   yield takeEvery(PATCH_MENTOR_REQUEST, patchMentorRequestApiSaga);
+  yield takeEvery(POST_MENTOR_COMMENT, postMentorCommentApiSaga);
 }
 
 export { hanseithonSaga };

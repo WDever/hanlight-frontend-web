@@ -407,12 +407,20 @@ const HTMainComponent: React.FC<
   reqPk,
   setReqPk,
   resetStatus,
+  history,
 }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
+
+  const goComment = () => {
+    history.push('/hanseithon/comment');
+    
+  };
 
   const submit = () =>
     htUserType === 'attendee'
       ? alert('밤에 공개될 예정입니다.')
+      : htUserType === 'mentor'
+      ? history.push('/hanseithon/comment')
       : alert('참가자만 가능한 기능입니다.');
 
   useEffect(() => {
@@ -439,7 +447,9 @@ const HTMainComponent: React.FC<
           </UserWrapper>
           <ButtonWrapper>
             <div>
-              <p>제출 할래요?</p>
+              <p>
+                {htUserType === 'mentor' ? '코멘트 달래요?' : '제출 할래요?'}
+              </p>
               <button onClick={submit}>눌러보게</button>
             </div>
           </ButtonWrapper>

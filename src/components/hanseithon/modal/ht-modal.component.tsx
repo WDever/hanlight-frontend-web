@@ -12,6 +12,7 @@ import {
 } from 'store';
 import styled from 'styled-components';
 import HTDetailViewModalComponent from './detailView';
+import HTCommentModalComponent from './mentorComment';
 import HTRequestModalComponent from './request';
 
 const { useState, useEffect } = React;
@@ -192,6 +193,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   teams,
   team,
   reqPk,
+  postMentorComment,
+  postMentorCommentStatus,
 }) => {
   if (modalType === 'request') {
     return (
@@ -220,6 +223,20 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         reqPk={reqPk}
         resetStatus={resetStatus}
         mentorRequestList={mentorRequestList}
+      />
+    );
+  } else if (modalType === 'mentor-comment') {
+    return (
+      <HTCommentModalComponent
+        accessToken={accessToken}
+        teamPk={teamPk}
+        errMessage={errMessage}
+        deem={deem}
+        modal={modal}
+        resetStatus={resetStatus}
+        postMentorComment={postMentorComment}
+        postMentorCommentStatus={postMentorCommentStatus}
+        mentorPk={mentorPk}
       />
     );
   } else {
