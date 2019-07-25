@@ -26,41 +26,54 @@ const Wrapper = styled.div`
   }
 `;
 
-const minUnit = 60;
-const hourUnit = minUnit * 60;
-const day = hourUnit * 24;
-const totalTime = 15 * hourUnit;
+const min = 60;
+const hour = min * 60;
+const day = hour * 24;
+const endTime = 17 * hour + 32 * min;
 
 const HTTimerComponent: React.FC = () => {
-  const [sec, setSec] = useState<string>('00');
-  const [min, setMin] = useState<string>('00');
-  const [hour, setHour] = useState<string>('00');
+  const [viewSec, setViewSec] = useState<string>('00');
+  const [viewMin, setViewMin] = useState<string>('00');
+  const [viewHour, setViewHour] = useState<string>('00');
+  const [sum, setSum] = useState<number>(1);
 
   const formatTwoDigit = (x: number): string => ('0' + x).slice(-2);
 
   const computeTime = () => {
-    const inHour = moment().get('hour') * 3600;
-    const inMin = moment().get('minute') * 60;
+    const inHour = moment().get('hour') * hour;
+    const inMin = moment().get('minute') * min;
     const inSec = moment().get('second');
 
     const sum = inHour + inMin + inSec;
 
-    const SumTime = sum >= totalTime ? day + totalTime - sum : totalTime - sum;
+    const SumTime = sum >= endTime ? day + endTime - sum : endTime - sum;
 
-    setHour(formatTwoDigit(Math.floor(SumTime / 3600)));
-    setMin(formatTwoDigit(Math.floor((SumTime % 3600) / 60)));
-    setSec(formatTwoDigit(Math.floor(SumTime % 60)));
+    setSum(SumTime);
+
+    if (SumTime === 86400) {
+      setViewHour('00');
+      setViewMin('00')
+      setViewSec('00')
+    } else {
+      setViewHour(formatTwoDigit(Math.floor(SumTime / hour)));
+      setViewMin(formatTwoDigit(Math.floor((SumTime % hour) / min)));
+      setViewSec(formatTwoDigit(Math.floor(SumTime % min)));
+    }
   };
 
   useEffect(() => {
     const interval = setInterval(() => computeTime(), 1000);
 
+    if (sum === 86400) {
+      clearInterval(interval);
+    }
+
     return () => clearInterval(interval);
-  }, []);
+  }, [sum]);
 
   return (
     <Wrapper>
-      {hour}시 : {min}분 : {sec}초
+      {viewHour}시 : {viewMin}분 : {viewSec}초
     </Wrapper>
   );
 };

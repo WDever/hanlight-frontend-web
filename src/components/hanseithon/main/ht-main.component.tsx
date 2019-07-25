@@ -74,8 +74,6 @@ const ContentWrapper = styled.div`
   @media ${Device.mobileL} {
     font-size: 0.875rem;
 
-    /* margin-bottom: 3.5rem; */
-
     margin-bottom: 3.175rem;
   }
 `;
@@ -410,6 +408,11 @@ const HTMainComponent: React.FC<
 }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
 
+  const submit = () =>
+    htUserType === 'attendee'
+      ? alert('밤에 공개될 예정입니다.')
+      : alert('참가자만 가능한 기능입니다.');
+
   useEffect(() => {
     getHtUser(accessToken);
   }, []);
@@ -425,7 +428,7 @@ const HTMainComponent: React.FC<
         <HTTimerComponent />
         <ContentWrapper>
           <UserWrapper>
-            <p>{userName}님의 팀은</p>
+            {htUserType === 'attendee' && <p>{userName}님의 팀은</p>}
             {userTeam !== null && (
               <p>
                 <span>{userTeam}</span> 입니다
@@ -435,9 +438,7 @@ const HTMainComponent: React.FC<
           <ButtonWrapper>
             <div>
               <p>제출 할래요?</p>
-              <button onClick={() => alert('밤에 공개될 예정입니다.')}>
-                눌러보게
-              </button>
+              <button onClick={submit}>눌러보게</button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
