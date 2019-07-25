@@ -77,8 +77,8 @@ const Content = styled.div`
 interface OwnProps {
   mentorRequestList: MentorRequestType[];
   reqPk: number;
-
   patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+
   patchMentorRequest(payload: PatchMentorRequestParams): void;
 }
 
@@ -92,6 +92,7 @@ const HTDetailViewModalComponent: React.FC<ModalProps & OwnProps> = ({
   patchMentorRequest,
   patchMentorRequestStatus,
   errMessage,
+  resetStatus,
 }) => {
   const [item, setItem] = useState<MentorRequestType>({
     pk: 0,
@@ -114,6 +115,7 @@ const HTDetailViewModalComponent: React.FC<ModalProps & OwnProps> = ({
   const close = () => {
     deem(false);
     modal('none');
+    resetStatus();
   };
 
   const done = () => {
@@ -133,10 +135,12 @@ const HTDetailViewModalComponent: React.FC<ModalProps & OwnProps> = ({
       alert(errMessage);
       deem(false);
       modal('none');
+      resetStatus();
     } else if (patchMentorRequestStatus === 'success') {
       alert('멘토링을 완료하였습니다.');
       deem(false);
       modal('none');
+      resetStatus();
     }
   });
 
