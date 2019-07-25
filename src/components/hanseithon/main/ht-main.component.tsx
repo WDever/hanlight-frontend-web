@@ -102,6 +102,7 @@ const UserWrapper = styled.div`
 
   span {
     color: #4470ff;
+    font-family: 'yg-jalnan';
   }
 `;
 
