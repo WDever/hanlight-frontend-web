@@ -174,7 +174,6 @@ const ItemIcon = styled.img`
     width: 1.25rem;
   }
   @media ${Device.mobileL} {
-    /* width: unset; */
     width: 1.1rem;
   }
 `;
