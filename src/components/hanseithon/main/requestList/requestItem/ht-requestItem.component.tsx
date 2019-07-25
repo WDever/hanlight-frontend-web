@@ -91,7 +91,6 @@ const HTRequestItemComponent: React.FC<RequestListItemProps> = ({
             deem(true);
             modal('detail-view');
             setReqPk(mentorRequestItem.pk);
-            // alert('밤에 공개됩니다.');
           }}
         >
           상세보기

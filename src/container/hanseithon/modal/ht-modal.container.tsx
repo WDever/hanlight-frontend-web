@@ -16,6 +16,7 @@ import {
   TeamType,
   userReducerActions,
   PatchMentorRequestParams,
+  PostMentorCommentParams,
 } from 'store';
 
 export interface HTModalProps {
@@ -32,6 +33,7 @@ export interface HTModalProps {
 
   postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  postMentorCommentStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface HTModalMethod {
@@ -40,6 +42,7 @@ export interface HTModalMethod {
   resetStatus(): void;
   postMentorRequest(payload: PostMentorRequestParams): void;
   patchMentorRequest(payload: PatchMentorRequestParams): void;
+  postMentorComment(payload: PostMentorCommentParams): void;
 }
 
 const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
@@ -54,6 +57,7 @@ const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   mentorRequestList: hanseithon.mentorRequestList,
   reqPk: hanseithon.reqPk,
   patchMentorRequestStatus: hanseithon.patchMentorRequestStatus,
+  postMentorCommentStatus: hanseithon.postMentorCommentStatus,
 });
 
 const mapDispatchToProps = (
@@ -67,6 +71,7 @@ const mapDispatchToProps = (
     dispatch,
   ),
   patchMentorRequest: bindActionCreators(hanseithonActions.patchMentorRequest, dispatch),
+  postMentorComment: bindActionCreators(hanseithonActions.postMentorComment, dispatch),
 });
 
 const HTModalContainer = connect(
