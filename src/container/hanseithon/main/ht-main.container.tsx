@@ -7,8 +7,11 @@ import {
   hanseithonActions,
   hanseithonReducerActions,
   HtUserType,
-  userReducerActions,
+  MentorRequestType,
+  MentorType,
   ModalTypes,
+  PatchMentorRequestParams,
+  userReducerActions,
 } from 'store';
 
 export interface HTMainProps {
@@ -17,11 +20,19 @@ export interface HTMainProps {
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   getThemeStatus: 'none' | 'pending' | 'success' | 'failure';
   getJudgementStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMentorStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   themeUrl: string;
   judgementUrl: string;
   userName: string;
   htUserType: HtUserType;
   modalType: ModalTypes;
+  userTeam: string | null;
+  mentorList: MentorType[];
+  mentorRequestList: MentorRequestType[];
+  mentorPk: number;
+  teamPk: number;
+  reqPk: number;
 }
 
 export interface HTMainMethod {
@@ -31,6 +42,12 @@ export interface HTMainMethod {
   getHtUser(payload: string): void;
   modal(payload: ModalTypes): void;
   deem(payload: boolean): void;
+  getMentor(payload: string): void;
+  getMentorRequest(payload: string): void;
+  setMentorPk(payload: number): void;
+  setTeamPk(payload: number): void;
+  setReqPk(payload: number): void;
+  patchMentorRequest(payload: PatchMentorRequestParams): void;
 }
 
 export interface HTMainOwnProps {}
@@ -48,6 +65,14 @@ const mapStateToProps = ({ hanseithon, error, user }: AppState) => ({
   userName: user.name,
   htUserType: hanseithon.htUserType,
   modalType: hanseithon.modalType,
+  userTeam: hanseithon.userTeam,
+  getMentorStatus: hanseithon.getMentorStatus,
+  getMentorRequestStatus: hanseithon.getMentorRequestStatus,
+  mentorList: hanseithon.mentorList,
+  mentorRequestList: hanseithon.mentorRequestList,
+  mentorPk: hanseithon.mentorPk,
+  teamPk: hanseithon.teamPk,
+  reqPk: hanseithon.reqPk,
 });
 
 const mapDispatchToProps = (
@@ -60,6 +85,18 @@ const mapDispatchToProps = (
   getJudgement: bindActionCreators(hanseithonActions.getJudgement, dispatch),
   getHtUser: bindActionCreators(hanseithonActions.getHtUser, dispatch),
   modal: bindActionCreators(hanseithonActions.modal, dispatch),
+  getMentor: bindActionCreators(hanseithonActions.getMentor, dispatch),
+  getMentorRequest: bindActionCreators(
+    hanseithonActions.getMentorRequest,
+    dispatch,
+  ),
+  setMentorPk: bindActionCreators(hanseithonActions.setMentorPk, dispatch),
+  setTeamPk: bindActionCreators(hanseithonActions.setTeamPk, dispatch),
+  patchMentorRequest: bindActionCreators(
+    hanseithonActions.patchMentorRequest,
+    dispatch,
+  ),
+  setReqPk: bindActionCreators(hanseithonActions.setReqPk, dispatch),
 });
 
 const HTMainContainer = withRouter(

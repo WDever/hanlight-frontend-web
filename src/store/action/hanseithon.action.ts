@@ -6,12 +6,14 @@ import {
   CategoryType,
   Comment,
   ErrorResponse,
+  HtUserType,
   JobType,
   MatchMember,
+  MentorRequestType,
+  MentorType,
   ModalTypes,
   TeamMemberType,
   TeamType,
-  HtUserType,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
@@ -68,6 +70,30 @@ export interface GetTeamMatchResType {
   match: MatchMember[];
 }
 
+export interface GetHtUserResType {
+  type: HtUserType;
+  team: string | null;
+}
+
+export interface GetMentorRequestResType {
+  request: MentorRequestType[];
+}
+
+export interface PostMentorRequestParams {
+  accessToken: string;
+  content: string;
+  mentor_pk: number;
+}
+
+export interface GetMentorResType {
+  mentor: MentorType[];
+}
+
+export interface PatchMentorRequestParams {
+  accessToken: string;
+  requestPk: number;
+}
+
 export const DEEM = 'DEEM';
 
 export const MODAL = 'MODAL';
@@ -111,6 +137,28 @@ export const GET_JUDGEMENT_FAILURE = 'GET_JUDGEMENT_FAILURE';
 export const GET_HT_USER = 'GET_HT_USER';
 export const GET_HT_USER_SUCCESS = 'GET_HT_USER_SUCCESS';
 export const GET_HT_USER_FAILURE = 'GET_HT_USER_FAILURE';
+
+export const GET_MENTOR = 'GET_MENTOR';
+export const GET_MENTOR_SUCCESS = 'GET_MENTOR_SUCCESS';
+export const GET_MENTOR_FAILURE = 'GET_MENTOR_FAILURE';
+
+export const GET_MENTOR_REQUEST = 'GET_MENTOR_REQUEST';
+export const GET_MENTOR_REQUEST_SUCCESS = 'GET_MENTOR_REQUEST_SUCCESS';
+export const GET_MENTOR_REQUEST_FAILURE = 'GET_MENTOR_REQUEST_FAILURE';
+
+export const POST_MENTOR_REQUEST = 'POST_MENTOR_REQUEST';
+export const POST_MENTOR_REQUEST_SUCCESS = 'POST_MENTOR_REQUEST_SUCCESS';
+export const POST_MENTOR_REQUEST_FAILURE = 'POST_MENTOR_REQUEST_FAILURE';
+
+export const PATCH_MENTOR_REQUEST = 'PATCH_MENTOR_REQUEST';
+export const PATCH_MENTOR_REQUEST_SUCCESS = 'PATCH_MENTOR_REQUEST_SUCCESS';
+export const PATCH_MENTOR_REQUEST_FAILURE = 'PATCH_MENTOR_REQUEST_FAILURE';
+
+export const SET_REQ_PK = 'SET_REQ_PK'
+
+export const SET_MENTOR_PK = 'SET_MENTOR_PK';
+
+export const RESET_HT_USER = 'RESET_HT_USER';
 
 export const REST_STATUS = 'RESET_STATUS';
 
@@ -289,13 +337,97 @@ export class GetHtUser implements Action {
 export class GetHtUserSuccess implements Action {
   public readonly type = GET_HT_USER_SUCCESS;
 
-  public constructor(public payload: HtUserType) {}
+  public constructor(public payload: GetHtUserResType) {}
 }
 
 export class GetHtUserFailure implements Action {
   public readonly type = GET_HT_USER_FAILURE;
 
   public constructor(public payload: ErrorResponse) {}
+}
+
+export class GetMentor implements Action {
+  public readonly type = GET_MENTOR;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetMentorSuccess implements Action {
+  public readonly type = GET_MENTOR_SUCCESS;
+
+  public constructor(public payload: GetMentorResType) {}
+}
+
+export class GetMentorFailure implements Action {
+  public readonly type = GET_MENTOR_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class GetMentorRequest implements Action {
+  public readonly type = GET_MENTOR_REQUEST;
+
+  public constructor(public payload: string) {}
+}
+
+export class GetMentorRequestSuccess implements Action {
+  public readonly type = GET_MENTOR_REQUEST_SUCCESS;
+
+  public constructor(public payload: GetMentorRequestResType) {}
+}
+
+export class GetMentorRequestFailure implements Action {
+  public readonly type = GET_MENTOR_REQUEST_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class PostMentorRequest implements Action {
+  public readonly type = POST_MENTOR_REQUEST;
+
+  public constructor(public payload: PostMentorRequestParams) {}
+}
+
+export class PostMentorRequestSuccess implements Action {
+  public readonly type = POST_MENTOR_REQUEST_SUCCESS;
+}
+
+export class PostMentorRequestFailure implements Action {
+  public readonly type = POST_MENTOR_REQUEST_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class PatchMentorRequest implements Action {
+  public readonly type = PATCH_MENTOR_REQUEST;
+
+  public constructor(public payload: PatchMentorRequestParams) {}
+}
+
+export class PatchMentorRequestSuccess implements Action {
+  public readonly type = PATCH_MENTOR_REQUEST_SUCCESS;
+}
+
+export class PatchMentorRequestFailure implements Action {
+  public readonly type = PATCH_MENTOR_REQUEST_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
+export class SetReqPk implements Action {
+  public readonly type = SET_REQ_PK;
+
+  public constructor(public payload: number) {}
+}
+
+export class SetMentorPk implements Action {
+  public readonly type = SET_MENTOR_PK;
+
+  public constructor(public payload: number) {}
+}
+
+export class ResetHtUser implements Action {
+  public readonly type = RESET_HT_USER;
 }
 
 export class ResetStatus implements Action {
@@ -315,6 +447,17 @@ export const hanseithonActions = {
   postObserver: createStandardAction(POST_OBSERVER)<string>(),
   getTheme: createStandardAction(GET_THEME)<string>(),
   getJudgement: createStandardAction(GET_JUDGEMENT)<string>(),
+  getMentor: createStandardAction(GET_MENTOR)<string>(),
+  getMentorRequest: createStandardAction(GET_MENTOR_REQUEST)<string>(),
+  postMentorRequest: createStandardAction(POST_MENTOR_REQUEST)<
+    PostMentorRequestParams
+  >(),
+  patchMentorRequest: createStandardAction(PATCH_MENTOR_REQUEST)<
+    PatchMentorRequestParams
+  >(),
+  setReqPk: createStandardAction(SET_REQ_PK)<number>(),
+  setMentorPk: createStandardAction(SET_MENTOR_PK)<number>(),
+  resetHtUser: createStandardAction(RESET_HT_USER)(),
   resetStatus: createStandardAction(REST_STATUS)(),
   getHtUser: createStandardAction(GET_HT_USER)<string>(),
 };
@@ -351,4 +494,19 @@ export type hanseithonReducerActions =
   | ResetStatus
   | GetHtUser
   | GetHtUserSuccess
-  | GetHtUserFailure;
+  | GetHtUserFailure
+  | GetMentor
+  | GetMentorSuccess
+  | GetMentorFailure
+  | GetMentorRequest
+  | GetMentorRequestSuccess
+  | GetMentorRequestFailure
+  | PostMentorRequest
+  | PostMentorRequestSuccess
+  | PostMentorRequestFailure
+  | PatchMentorRequest
+  | PatchMentorRequestSuccess
+  | PatchMentorRequestFailure
+  | SetReqPk
+  | ResetHtUser
+  | SetMentorPk;

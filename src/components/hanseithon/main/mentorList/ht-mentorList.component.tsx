@@ -2,10 +2,13 @@ import * as React from 'react';
 
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/mentoring-background.svg';
+import { MentorRequestType, MentorType, ModalTypes } from 'store';
 import styled from 'styled-components';
 import HTMentorListItemComponent, {
   MentorListItemProps,
 } from './mentorListItem';
+
+const { useEffect } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -49,6 +52,11 @@ const TitleWrapper = styled.div`
 
 const ContentWrapper = styled.div`
   width: 43.125rem;
+  min-height: 16rem;
+
+  background-color: #ffffff;
+
+  border: solid 1px #e8e8e8;
 
   font-family: 'Open Sans';
 
@@ -80,21 +88,58 @@ const ContentWrapper = styled.div`
   }
 `;
 
-interface MentorListProps extends MentorListItemProps {}
+interface MentorListProps {
+  mentorList: MentorType[];
+  errMessage: string;
+  accessToken: string;
+
+  getMentorStatus: 'none' | 'pending' | 'success' | 'failure';
+
+  modal(payload: ModalTypes): void;
+  deem(payload: boolean): void;
+  getMentor(payload: string): void;
+  setMentorPk(payload: number): void;
+}
 
 const HTMentoringListComponent: React.FC<MentorListProps> = ({
   modal,
   deem,
-  active,
+  mentorList,
+  getMentor,
+  accessToken,
+  getMentorStatus,
+  errMessage,
+  setMentorPk,
 }) => {
+  const MentorList = mentorList.map((item, i) => {
+    return (
+      <HTMentorListItemComponent
+        key={i}
+        deem={deem}
+        modal={modal}
+        mentor={item}
+        setMentorPk={setMentorPk}
+      />
+    );
+  });
+
+  useEffect(() => {
+    getMentor(accessToken);
+  }, []);
+
+  useEffect(() => {
+    if (getMentorStatus === 'failure') {
+      alert(errMessage);
+    }
+  }, [getMentorStatus]);
+
   return (
     <Wrapper>
       <Background src={BackgroundImg} alt="Mentor list background" />
       <TitleWrapper>실시간 멘토 현황</TitleWrapper>
       <ContentWrapper>
         <p>실시간 멘토 체크</p>
-        <HTMentorListItemComponent deem={deem} modal={modal} active={true} />
-        <HTMentorListItemComponent deem={deem} modal={modal} active={false} />
+        {MentorList}
       </ContentWrapper>
     </Wrapper>
   );

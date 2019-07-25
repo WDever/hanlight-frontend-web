@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { MentorRequestType, PatchMentorRequestParams } from 'store';
 import styled from 'styled-components';
 import {
   ContentWrapper,
@@ -9,6 +10,8 @@ import {
   TitleWrapper,
   XButton,
 } from '../ht-modal.component';
+
+const { useEffect, useState } = React;
 
 const ButtonWrapper = styled.div`
   width: 100%;
@@ -40,39 +43,103 @@ const PointButton = styled.div`
 `;
 
 const Content = styled.div`
-  width: 24.875rem;
+  width: 100%;
   height: 8.125rem;
   border-radius: 0.5rem;
   border: solid 1px #e9e9e9;
   background-color: #ffffff;
 
-  word-break: keep-all;
+  div {
+    line-height: 1.38;
+    letter-spacing: -0.39px;
+    word-break: keep-all;
+
+    margin: 0.5rem;
+  }
 `;
 
-const HTDetailViewModalComponent: React.FC<ModalProps> = ({ deem, modal }) => {
+interface OwnProps {
+  mentorRequestList: MentorRequestType[];
+  reqPk: number;
+
+  patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchMentorRequest(payload: PatchMentorRequestParams): void;
+}
+
+const HTDetailViewModalComponent: React.FC<ModalProps & OwnProps> = ({
+  deem,
+  modal,
+  mentorRequestList,
+  accessToken,
+  teamPk,
+  reqPk,
+  patchMentorRequest,
+  patchMentorRequestStatus,
+  errMessage,
+}) => {
+  const [item, setItem] = useState<MentorRequestType>({
+    pk: 0,
+    done: false,
+    content: '',
+    mentor_pk: 0,
+
+    team: {
+      pk: 0,
+      name: '',
+      leader_name: '',
+      category: 'l',
+      createdAt: '',
+      updatedAt: '',
+      code: 0,
+    },
+    team_pk: 0,
+  });
+
+  const close = () => {
+    deem(false);
+    modal('none');
+  };
+
+  const done = () => {
+    patchMentorRequest({ accessToken, requestPk: item.pk });
+  };
+
+  useEffect(() => {
+    const requestItem = mentorRequestList.find(item => item.pk === reqPk);
+
+    if (requestItem) {
+      setItem(requestItem);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (patchMentorRequestStatus === 'failure') {
+      alert(errMessage);
+      deem(false);
+      modal('none');
+    } else if (patchMentorRequestStatus === 'success') {
+      alert('멘토링을 완료하였습니다.');
+      deem(false);
+      modal('none');
+    }
+  });
+
   return (
     <ModalBox>
-      <XButton
-        onClick={() => {
-          deem(false);
-          modal('none');
-        }}
-      />
+      <XButton onClick={close} />
       <ContentWrapper>
         <TitleWrapper>
           <div>쉬어가는 한세톤 : 休</div>
           <span>멘티 체크</span>
         </TitleWrapper>
         <Form>
-          <p>Team Name</p>
+          <p>{item.team.name}</p>
           <Content>
-            나는 노예입니다. 한세사이버보안고등학교라는 곳의 스포실이라는 곳에
-            매일같이 갇혀서 일을 하고 있지요. 저를 살려주세요. 곧 한세톤이
-            마감입니다. 저는 죽을 것 같습니다. 살려주세요.
+            <div>{item.content}</div>
           </Content>
           <ButtonWrapper>
-            <button>닫기</button>
-            <PointButton>완료</PointButton>
+            <button onClick={close}>닫기</button>
+            <PointButton onClick={done}>완료</PointButton>
           </ButtonWrapper>
         </Form>
       </ContentWrapper>

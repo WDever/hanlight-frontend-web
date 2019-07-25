@@ -12,7 +12,7 @@ import HTMentoringListComponent from './mentorList';
 import HTRequestList from './requestList';
 import HTTimerComponent from './timer';
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -74,7 +74,9 @@ const ContentWrapper = styled.div`
   @media ${Device.mobileL} {
     font-size: 0.875rem;
 
-    margin-bottom: 3.5rem;
+    /* margin-bottom: 3.5rem; */
+
+    margin-bottom: 3.175rem;
   }
 `;
 
@@ -87,8 +89,8 @@ const UserWrapper = styled.div`
 
   @media ${Device.mobileL} {
     font-size: 0.875rem;
-    margin-bottom: 4rem;
-    margin-left: 15%;
+
+    margin-bottom: 0;
   }
 
   p {
@@ -111,13 +113,7 @@ const ButtonWrapper = styled.div`
   font-size: 2.25rem;
 
   @media ${Device.mobileL} {
-    width: 100%;
-
-    font-size: 0.875rem;
-
-    margin: 0;
-
-    justify-content: center;
+    display: none;
   }
 
   div {
@@ -389,8 +385,34 @@ const ContentCol = styled.col`
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = ({ userName, getHtUser, htUserType, modal, deem, modalType }) => {
+> = ({
+  userName,
+  getHtUser,
+  htUserType,
+  modal,
+  deem,
+  modalType,
+  accessToken,
+  userTeam,
+  mentorList,
+  mentorRequestList,
+  getMentor,
+  getMentorRequest,
+  getMentorRequestStatus,
+  getMentorStatus,
+  errMessage,
+  setMentorPk,
+  setTeamPk,
+  teamPk,
+  patchMentorRequest,
+  reqPk,
+  setReqPk,
+}) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
+
+  useEffect(() => {
+    getHtUser(accessToken);
+  }, []);
 
   return (
     <>
@@ -404,21 +426,45 @@ const HTMainComponent: React.FC<
         <ContentWrapper>
           <UserWrapper>
             <p>{userName}님의 팀은</p>
-            <p>
-              <span>노예들</span> 입니다
-            </p>
+            {userTeam !== null && (
+              <p>
+                <span>{userTeam}</span> 입니다
+              </p>
+            )}
           </UserWrapper>
           <ButtonWrapper>
             <div>
               <p>제출 할래요?</p>
-              <button>눌러보게</button>
+              <button onClick={() => alert('밤에 공개될 예정입니다.')}>
+                눌러보게
+              </button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
         {htUserType !== 'mentor' ? (
-          <HTMentoringListComponent deem={deem} modal={modal} active={false} />
+          <HTMentoringListComponent
+            deem={deem}
+            modal={modal}
+            mentorList={mentorList}
+            getMentor={getMentor}
+            accessToken={accessToken}
+            errMessage={errMessage}
+            getMentorStatus={getMentorStatus}
+            setMentorPk={setMentorPk}
+          />
         ) : (
-        <HTRequestList modal={modal} deem={deem} />
+          <HTRequestList
+            accessToken={accessToken}
+            getMentorRequest={getMentorRequest}
+            setReqPk={setReqPk}
+            teamPk={teamPk}
+            patchMentorRequest={patchMentorRequest}
+            modal={modal}
+            deem={deem}
+            getMentorRequestStatus={getMentorRequestStatus}
+            errMessage={errMessage}
+            mentorRequestList={mentorRequestList}
+          />
         )}
         <TimetableWrapper>
           <TimetableBackground
@@ -455,15 +501,15 @@ const HTMainComponent: React.FC<
             {!rightTableToggle ? (
               <>
                 <tr>
-                  <td>16:30 ~ 17:00</td>
+                  <td>15:00 ~ 15:30</td>
                   <td>참가자 입장 및 등록</td>
                 </tr>
                 <tr>
-                  <td>17:00 ~ 17:30</td>
+                  <td>15:30 ~ 16:00</td>
                   <td>키노트</td>
                 </tr>
                 <tr>
-                  <td>17:30 ~ 18:00</td>
+                  <td>16:00 ~ 18:00</td>
                   <td>자율 개발</td>
                 </tr>
                 <tr>

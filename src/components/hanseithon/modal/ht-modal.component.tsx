@@ -35,7 +35,7 @@ export const ModalBox = styled.div`
 
   @media ${Device.mobileL} {
     width: 18.875rem;
-    height: 21.125rem;
+    height: 17.875rem;
   }
 `;
 
@@ -59,6 +59,10 @@ export const TitleWrapper = styled.div`
     font-family: inherit;
     font-size: 1.25rem;
     font-weight: bold;
+
+    @media ${Device.mobileL} {
+      font-size: 13px;
+    }
   }
 
   span {
@@ -134,6 +138,11 @@ export const Form = styled.div`
     font-family: 'Open Sans';
     font-weight: bold;
     font-size: 13px;
+
+    @media ${Device.mobileL} {
+      width: 5rem;
+      height: 1.75rem;
+    }
   }
 
   textarea {
@@ -168,8 +177,15 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   teamPk,
   resetStatus,
   errMessage,
+  postMentorRequest,
+  postMentorRequestStatus,
+  mentorPk,
+  mentorRequestList,
+  patchMentorRequest,
+  patchMentorRequestStatus,
   teams,
   team,
+  reqPk,
 }) => {
   if (modalType === 'request') {
     return (
@@ -180,17 +196,24 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         deem={deem}
         modal={modal}
         resetStatus={resetStatus}
+        postMentorRequest={postMentorRequest}
+        mentorPk={mentorPk}
+        postMentorRequestStatus={postMentorRequestStatus}
       />
     );
   } else if (modalType === 'detail-view') {
     return (
       <HTDetailViewModalComponent
+        patchMentorRequest={patchMentorRequest}
+        patchMentorRequestStatus={patchMentorRequestStatus}
         accessToken={accessToken}
         teamPk={teamPk}
         errMessage={errMessage}
         deem={deem}
         modal={modal}
+        reqPk={reqPk}
         resetStatus={resetStatus}
+        mentorRequestList={mentorRequestList}
       />
     );
   } else {

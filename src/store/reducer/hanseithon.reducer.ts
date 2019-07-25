@@ -13,7 +13,11 @@ const initialState: HanseithonModel = {
   postObserverStatus: 'none',
   getThemeStatus: 'none',
   getJudgementStatus: 'none',
-  getUserStatus: 'none',
+  getHtUserStatus: 'none',
+  getMentorStatus: 'none',
+  getMentorRequestStatus: 'none',
+  postMentorRequestStatus: 'none',
+  patchMentorRequestStatus: 'none',
 
   themeUrl: '',
   judgementUrl: '',
@@ -33,6 +37,13 @@ const initialState: HanseithonModel = {
   match: [],
 
   htUserType: 'none',
+  userTeam: null,
+  mentorRequestList: [],
+  mentorList: [],
+
+  mentorPk: 0,
+
+  reqPk: 0,
 };
 
 export const hanseithonReducer = (
@@ -168,16 +179,80 @@ export const hanseithonReducer = (
         break;
 
       case 'GET_HT_USER':
-        draft.getUserStatus = 'pending';
+        draft.getHtUserStatus = 'pending';
         break;
 
       case 'GET_HT_USER_SUCCESS':
-        draft.getUserStatus = 'success';
-        draft.htUserType = action.payload;
+        draft.getHtUserStatus = 'success';
+        draft.htUserType = action.payload.type;
+        draft.userTeam = action.payload.team;
         break;
 
       case 'GET_HT_USER_FAILURE':
-        draft.getUserStatus = 'failure';
+        draft.getHtUserStatus = 'failure';
+        break;
+
+      case 'GET_MENTOR':
+        draft.getMentorStatus = 'pending';
+        break;
+
+      case 'GET_MENTOR_SUCCESS':
+        draft.getMentorStatus = 'success';
+        draft.mentorList = action.payload.mentor;
+        break;
+
+      case 'GET_MENTOR_FAILURE':
+        draft.getMentorStatus = 'failure';
+        break;
+
+      case 'GET_MENTOR_REQUEST':
+        draft.getMentorRequestStatus = 'pending';
+        break;
+
+      case 'GET_MENTOR_REQUEST_SUCCESS':
+        draft.getMentorRequestStatus = 'success';
+        draft.mentorRequestList = action.payload.request;
+        break;
+
+      case 'GET_MENTOR_REQUEST_FAILURE':
+        draft.getMentorRequestStatus = 'failure';
+        break;
+
+      case 'POST_MENTOR_REQUEST':
+        draft.postMentorRequestStatus = 'pending';
+        break;
+
+      case 'POST_MENTOR_REQUEST_SUCCESS':
+        draft.postMentorRequestStatus = 'success';
+        break;
+
+      case 'POST_MENTOR_REQUEST_FAILURE':
+        draft.postMentorRequestStatus = 'failure';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST':
+        draft.patchMentorRequestStatus = 'pending';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST_SUCCESS':
+        draft.patchMentorRequestStatus = 'success';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST_FAILURE':
+        draft.patchMentorRequestStatus = 'failure';
+        break;
+
+      case 'SET_MENTOR_PK':
+        draft.mentorPk = action.payload;
+        break;
+
+        case 'SET_REQ_PK':
+          draft.reqPk = action.payload;
+          break;
+
+      case 'RESET_HT_USER':
+        draft.userTeam = '';
+        draft.htUserType = 'none';
         break;
 
       case 'RESET_STATUS':
@@ -187,6 +262,9 @@ export const hanseithonReducer = (
         draft.postObserverStatus = 'none';
         draft.getThemeStatus = 'none';
         draft.getJudgementStatus = 'none';
+        draft.postMentorRequestStatus = 'none';
+        draft.getMentorRequestStatus = 'none';
+        draft.patchMentorRequestStatus = 'none';
         break;
 
       default:

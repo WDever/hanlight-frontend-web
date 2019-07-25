@@ -1,7 +1,8 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
+import { MentorRequestType, ModalTypes } from 'store';
 import styled from 'styled-components';
-import { ModalTypes } from 'store';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -10,6 +11,10 @@ const Wrapper = styled.div`
   display: flex;
 
   background-color: #ffffff;
+
+  @media ${Device.mobileL} {
+    height: 2.125rem;
+  }
 `;
 
 const NameBox = styled.div`
@@ -24,6 +29,10 @@ const NameBox = styled.div`
   font-family: 'Open Sans';
   font-size: 19px;
   font-weight: bold;
+
+  @media ${Device.mobileL} {
+    font-size: 0.75rem;
+  }
 `;
 
 const Box = styled.div`
@@ -49,24 +58,43 @@ const Box = styled.div`
 
     border-radius: 1.25rem;
     background-color: #000000;
+
+    @media ${Device.mobileL} {
+      width: 5.625rem;
+      height: 1.5rem;
+
+      font-size: 11px;
+    }
   }
 `;
 
 export interface RequestListItemProps {
+  mentorRequestItem: MentorRequestType;
+
+  setReqPk(payload: number): void;
   modal(payload: ModalTypes): void;
   deem(payload: boolean): void;
 }
 
-
-const HTRequestItemComponent: React.FC<RequestListItemProps> = ({ deem, modal }) => {
+const HTRequestItemComponent: React.FC<RequestListItemProps> = ({
+  deem,
+  modal,
+  mentorRequestItem,
+  setReqPk,
+}) => {
   return (
     <Wrapper>
-      <NameBox>이름</NameBox>
+      <NameBox>{mentorRequestItem.team.name}</NameBox>
       <Box>
-        <button onClick={() => {
-          deem(true);
-          modal('detail-view');
-        }}>상세보기</button>
+        <button
+          onClick={() => {
+            deem(true);
+            modal('detail-view');
+            setReqPk(mentorRequestItem.pk);
+          }}
+        >
+          상세보기
+        </button>
       </Box>
     </Wrapper>
   );

@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
-import { ModalTypes } from 'store';
+import { MentorType, ModalTypes } from 'store';
 import styled from 'styled-components';
 
 const Content = styled.div`
@@ -59,6 +59,13 @@ const LightBox = styled.div`
     height: 2.25rem;
     border-radius: 1.25rem;
     background-color: #000000;
+
+    @media ${Device.mobileL} {
+      width: 3.375rem;
+      height: 1.5rem;
+
+      font-size: 11px;
+    }
   }
 
   div {
@@ -76,32 +83,31 @@ const LightBox = styled.div`
 `;
 
 export interface MentorListItemProps {
-  active: boolean;
+  mentor: MentorType;
   modal(payload: ModalTypes): void;
   deem(payload: boolean): void;
+  setMentorPk(payload: number): void;
 }
 
 const HTMentorListItemComponent: React.FC<MentorListItemProps> = ({
-  active,
   modal,
   deem,
+  setMentorPk,
+  mentor,
 }) => {
   return (
     <Content>
-      <NameBox>멘토</NameBox>
+      <NameBox>{mentor.name}</NameBox>
       <LightBox>
-        {active ? (
-          <button
-            onClick={() => {
-              modal('request');
-              deem(true);
-            }}
-          >
-            신청
-          </button>
-        ) : (
-          <div />
-        )}
+        <button
+          onClick={() => {
+            modal('request');
+            deem(true);
+            setMentorPk(mentor.pk);
+          }}
+        >
+          신청
+        </button>
       </LightBox>
     </Content>
   );

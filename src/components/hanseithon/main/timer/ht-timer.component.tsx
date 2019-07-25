@@ -22,7 +22,7 @@ const Wrapper = styled.div`
 
   @media ${Device.mobileL} {
     font-size: 1.5rem;
-    margin-bottom: 8.875rem;
+    margin-bottom: 12.375rem;
   }
 `;
 

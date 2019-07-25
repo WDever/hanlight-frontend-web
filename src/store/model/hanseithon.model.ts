@@ -29,13 +29,36 @@ export interface MatchMember {
   introduction: string;
 }
 
+export interface MentorRequestType {
+  pk: number;
+  done: boolean;
+  content: string;
+  mentor_pk: number;
+
+  team: {
+    category: CategoryType;
+    code: number;
+    createdAt: string;
+    leader_name: string;
+    name: string;
+    pk: number;
+    updatedAt: string;
+  };
+
+  team_pk: number;
+}
+
+export interface MentorType {
+  pk: number;
+  name: string;
+}
+
 export type HtUserType =
   | 'none'
   | 'observer'
   | 'mentor'
   | 'attendee'
   | 'staff'
-  | 'teacher'
   | 'common';
 
 export interface HanseithonModel {
@@ -51,7 +74,11 @@ export interface HanseithonModel {
   postObserverStatus: 'none' | 'pending' | 'success' | 'failure';
   getThemeStatus: 'none' | 'pending' | 'success' | 'failure';
   getJudgementStatus: 'none' | 'pending' | 'success' | 'failure';
-  getUserStatus: 'none' | 'pending' | 'success' | 'failure';
+  getHtUserStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMentorStatus: 'none' | 'pending' | 'success' | 'failure';
+  getMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
 
   team: TeamType;
   teams: TeamType[];
@@ -63,4 +90,12 @@ export interface HanseithonModel {
   match: MatchMember[];
 
   htUserType: HtUserType;
+  userTeam: null | string;
+
+  mentorRequestList: MentorRequestType[];
+  mentorList: MentorType[];
+
+  mentorPk: number;
+
+  reqPk: number;
 }
