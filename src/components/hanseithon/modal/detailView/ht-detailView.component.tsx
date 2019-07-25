@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import { MentorRequestType, PatchMentorRequestParams } from 'store';
 import styled from 'styled-components';
 import {
@@ -40,6 +41,13 @@ const PointButton = styled.div`
   font-family: 'Open Sans';
   font-weight: bold;
   font-size: 13px;
+
+  @media ${Device.mobileL} {
+    width: 5rem;
+    height: 1.75rem;
+
+    margin-top: 0.625rem;
+  }
 `;
 
 const Content = styled.div`
@@ -49,10 +57,18 @@ const Content = styled.div`
   border: solid 1px #e9e9e9;
   background-color: #ffffff;
 
+  @media ${Device.mobileL} {
+    height: 10rem;
+  }
+
   div {
+    height: calc(100% - 0.5rem);
+
     line-height: 1.38;
     letter-spacing: -0.39px;
     word-break: keep-all;
+
+    overflow: scroll;
 
     margin: 0.5rem;
   }
@@ -138,7 +154,12 @@ const HTDetailViewModalComponent: React.FC<ModalProps & OwnProps> = ({
             <div>{item.content}</div>
           </Content>
           <ButtonWrapper>
-            <button onClick={close}>닫기</button>
+            <button
+              onClick={close}
+              disabled={patchMentorRequestStatus === 'pending'}
+            >
+              닫기
+            </button>
             <PointButton onClick={done}>완료</PointButton>
           </ButtonWrapper>
         </Form>
