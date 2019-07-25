@@ -10,7 +10,7 @@ import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import HTTeamItemComponent from './teamItem';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 const Wrapper = styled.div`
   max-width: 66.25rem;
@@ -57,6 +57,7 @@ const HTMentorCommentComponent: React.FC<
 }) => {
   useEffect(() => {
     getTeam({ accessToken, category: 'l' });
+    getTeam({ accessToken, category: 'g' });
   }, []);
 
   useEffect(() => {

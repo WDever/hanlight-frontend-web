@@ -111,7 +111,7 @@ export const hanseithonReducer = (
 
       case 'GET_TEAM_SUCCESS':
         draft.getTeamStatus = 'success';
-        draft.teams = action.payload.team;
+        draft.teams = state.teams.concat(action.payload.team);
         break;
 
       case 'GET_TEAM_FAILURE':
