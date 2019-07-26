@@ -19,6 +19,7 @@ const initialState: HanseithonModel = {
   postMentorRequestStatus: 'none',
   patchMentorRequestStatus: 'none',
   postMentorCommentStatus: 'none',
+  postFileStatus: 'none',
 
   themeUrl: '',
   judgementUrl: '',
@@ -255,6 +256,18 @@ export const hanseithonReducer = (
         draft.postMentorCommentStatus = 'failure';
         break;
 
+      case 'POST_FILE':
+        draft.postFileStatus = 'pending';
+        break;
+
+      case 'POST_FILE_SUCCESS':
+        draft.postFileStatus = 'success';
+        break;
+
+      case 'POST_FILE_FAILURE':
+        draft.postFileStatus= 'failure';
+        break;
+
       case 'SET_MENTOR_PK':
         draft.mentorPk = action.payload;
         break;
@@ -279,6 +292,7 @@ export const hanseithonReducer = (
         draft.getMentorRequestStatus = 'none';
         draft.patchMentorRequestStatus = 'none';
         draft.postMentorCommentStatus = 'none';
+        draft.postFileStatus = 'none';
         break;
 
       default:

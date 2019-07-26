@@ -80,6 +80,7 @@ export interface HanseithonModel {
   postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   postMentorCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+  postFileStatus: 'none' | 'pending' | 'success' | 'failure';
 
   team: TeamType;
   teams: TeamType[];

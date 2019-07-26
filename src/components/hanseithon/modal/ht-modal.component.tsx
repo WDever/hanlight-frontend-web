@@ -14,13 +14,15 @@ import styled from 'styled-components';
 import HTDetailViewModalComponent from './detailView';
 import HTCommentModalComponent from './mentorComment';
 import HTRequestModalComponent from './request';
+import HTSubmitFormModal from './submitForm';
 
 const { useState, useEffect } = React;
 
 export const ModalBox = styled.div`
   width: 27.5rem;
   max-width: 27.5rem;
-  min-height: 19.2rem;
+  min-height: 19.25rem;
+  height: 19.25rem;
 
   display: flex;
   flex-direction: column;
@@ -45,6 +47,7 @@ export const ContentWrapper = styled.div`
   height: 90%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 export const TitleWrapper = styled.div`
@@ -195,6 +198,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   reqPk,
   postMentorComment,
   postMentorCommentStatus,
+  postFile,
+  postFileStatus,
 }) => {
   if (modalType === 'request') {
     return (
@@ -237,6 +242,19 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         postMentorComment={postMentorComment}
         postMentorCommentStatus={postMentorCommentStatus}
         mentorPk={mentorPk}
+      />
+    );
+  } else if (modalType === 'submit') {
+    return (
+      <HTSubmitFormModal
+        deem={deem}
+        modal={modal}
+        accessToken={accessToken}
+        teamPk={teamPk}
+        errMessage={errMessage}
+        resetStatus={resetStatus}
+        postFile={postFile}
+        postFileStatus={postFileStatus}
       />
     );
   } else {

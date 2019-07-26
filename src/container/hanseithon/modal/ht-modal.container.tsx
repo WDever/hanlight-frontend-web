@@ -9,14 +9,15 @@ import {
   JobType,
   MentorRequestType,
   ModalTypes,
+  PatchMentorRequestParams,
+  PostFileParams,
+  PostMentorCommentParams,
   PostMentorRequestParams,
   PostTeamMatchParams,
   PostTeamParams,
   PutTeamParams,
   TeamType,
   userReducerActions,
-  PatchMentorRequestParams,
-  PostMentorCommentParams,
 } from 'store';
 
 export interface HTModalProps {
@@ -34,6 +35,7 @@ export interface HTModalProps {
   postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
   postMentorCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+  postFileStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface HTModalMethod {
@@ -43,6 +45,7 @@ export interface HTModalMethod {
   postMentorRequest(payload: PostMentorRequestParams): void;
   patchMentorRequest(payload: PatchMentorRequestParams): void;
   postMentorComment(payload: PostMentorCommentParams): void;
+  postFile(payload: PostFileParams): void;
 }
 
 const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
@@ -58,6 +61,7 @@ const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   reqPk: hanseithon.reqPk,
   patchMentorRequestStatus: hanseithon.patchMentorRequestStatus,
   postMentorCommentStatus: hanseithon.postMentorCommentStatus,
+  postFileStatus: hanseithon.postFileStatus,
 });
 
 const mapDispatchToProps = (
@@ -70,8 +74,15 @@ const mapDispatchToProps = (
     hanseithonActions.postMentorRequest,
     dispatch,
   ),
-  patchMentorRequest: bindActionCreators(hanseithonActions.patchMentorRequest, dispatch),
-  postMentorComment: bindActionCreators(hanseithonActions.postMentorComment, dispatch),
+  patchMentorRequest: bindActionCreators(
+    hanseithonActions.patchMentorRequest,
+    dispatch,
+  ),
+  postMentorComment: bindActionCreators(
+    hanseithonActions.postMentorComment,
+    dispatch,
+  ),
+  postFile: bindActionCreators(hanseithonActions.postFile, dispatch),
 });
 
 const HTModalContainer = connect(

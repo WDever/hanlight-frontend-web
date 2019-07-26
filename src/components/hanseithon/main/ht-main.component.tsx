@@ -411,9 +411,14 @@ const HTMainComponent: React.FC<
 }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
 
+  const openSubmitModal = () => {
+    deem(true);
+    modal('submit');
+  };
+
   const submit = () =>
     htUserType === 'attendee'
-      ? alert('밤에 공개될 예정입니다.')
+      ? openSubmitModal()
       : htUserType === 'mentor'
       ? history.push('/hanseithon/comment')
       : alert('참가자만 가능한 기능입니다.');
