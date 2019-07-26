@@ -198,6 +198,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
   reqPk,
   postMentorComment,
   postMentorCommentStatus,
+  postFile,
+  postFileStatus,
 }) => {
   if (modalType === 'request') {
     return (
@@ -251,6 +253,8 @@ const HTModalComponent: React.FC<HTModalProps & HTModalMethod> = ({
         teamPk={teamPk}
         errMessage={errMessage}
         resetStatus={resetStatus}
+        postFile={postFile}
+        postFileStatus={postFileStatus}
       />
     );
   } else {

@@ -58,12 +58,17 @@ import {
   PATCH_MENTOR_REQUEST_SUCCESS,
   PatchMentorRequest,
   PatchMentorRequestParams,
+  POST_FILE,
+  POST_FILE_FAILURE,
+  POST_FILE_SUCCESS,
   POST_MENTOR_COMMENT,
   POST_MENTOR_COMMENT_FAILURE,
   POST_MENTOR_COMMENT_SUCCESS,
   POST_MENTOR_REQUEST,
   POST_MENTOR_REQUEST_FAILURE,
   POST_MENTOR_REQUEST_SUCCESS,
+  PostFile,
+  PostFileParams,
   PostMentorComment,
   PostMentorCommentParams,
   PostMentorRequest,
@@ -474,6 +479,44 @@ function* postMentorCommentApiSaga(action: PostMentorComment) {
   }
 }
 
+const postFileApi = (payload: PostFileParams) => {
+  const formData = new FormData();
+  formData.append('file', payload.file);
+  if (payload.link1 && payload.link2) {
+    formData.append('link1', payload.link1);
+    formData.append('link2', payload.link2);
+  } else if (payload.link1) {
+    formData.append('link1', payload.link1);
+  } else if (payload.link2) {
+    formData.append('link2', payload.link2);
+  }
+
+  return hanseithonInstance
+    .post('/file', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        authorization: payload.accessToken,
+      },
+    })
+    .then(res => res.data);
+};
+
+function* postFileApiSaga(action: PostFile) {
+  if (action.type) {
+    try {
+      const response = yield call(postFileApi, action.payload);
+
+      yield put({ type: POST_FILE_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: POST_FILE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* hanseithonSaga() {
   yield takeEvery(PUT_TEAM, putTeamApiSaga);
   yield takeEvery(GET_TEAM, getTeamApiSaga);
@@ -489,6 +532,7 @@ function* hanseithonSaga() {
   yield takeEvery(POST_MENTOR_REQUEST, postMentorRequestApiSaga);
   yield takeEvery(PATCH_MENTOR_REQUEST, patchMentorRequestApiSaga);
   yield takeEvery(POST_MENTOR_COMMENT, postMentorCommentApiSaga);
+  yield takeEvery(POST_FILE, postFileApiSaga);
 }
 
 export { hanseithonSaga };

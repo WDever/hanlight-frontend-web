@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useInputs } from 'lib/hooks';
+import { PostFileParams } from 'store';
 import styled from 'styled-components';
 import {
   ContentWrapper,
@@ -10,7 +11,7 @@ import {
   XButton,
 } from '../ht-modal.component';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
 
 const Title = styled.div`
   width: 100%;
@@ -40,12 +41,54 @@ const SubmitForm = styled.form`
 
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
 
     font-family: 'Noto Sans KR';
     font-size: 13px;
 
     span {
       margin-left: 0.5rem;
+    }
+
+    div {
+      margin: 0;
+
+      display: flex;
+      justify-content: flex-start;
+
+      div {
+        width: 7.5rem;
+        height: 2rem;
+        border-radius: 1rem;
+        background-color: #000000;
+
+        font-family: 'Open Sans';
+        font-size: 13px;
+        color: #ffffff;
+        font-weight: bold;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        cursor: pointer;
+
+        margin: 0;
+        margin-top: 1px;
+      }
+
+      p {
+        margin: 0;
+
+        border-bottom: 1px solid #000000;
+
+        width: 100%;
+
+        display: flex;
+        align-items: center;
+
+        text-indent: 0.5rem;
+      }
     }
   }
 
@@ -84,25 +127,102 @@ const SubmitForm = styled.form`
       font-size: 13px;
       color: #ffffff;
       font-weight: bold;
+
+      cursor: pointer;
     }
   }
 `;
 
-const ButtonWrapper = styled.div``;
-
-interface OwnProps {}
+interface OwnProps {
+  postFileStatus: 'none' | 'pending' | 'success' | 'failure';
+  postFile(payload: PostFileParams): void;
+}
 
 const HTSubmitFormModal: React.FC<ModalProps & OwnProps> = ({
   deem,
   modal,
+  postFile,
+  postFileStatus,
+  accessToken,
+  errMessage,
+  resetStatus,
 }) => {
   const [inputs, setInputs] = useInputs({
     firstLink: '',
     secondLink: '',
-    thirdLink: '',
   });
+  const [file, setFile] = useState<File | null>(null);
 
-  const { firstLink, secondLink, thirdLink } = inputs;
+  const { firstLink, secondLink } = inputs;
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // const files = e.currentTarget.files;
+    // if (files && files.length > 5) {
+    //   alert('사진은 최대 5장까지 가능합니다.');
+    // } else if (
+    //   files &&
+    //   files.length !== 0 &&
+    //   files.length + files.length <= 5
+    // ) {
+    //   Array.from(files)
+    //     .filter(file => {
+    //       if (file.size > 1024 * 1024 * 5) {
+    //         alert(`${file.name} 파일이 용량이 커서 업로드할 수 없습니다.`);
+    //       } else {
+    //         return true;
+    //       }
+    //     })
+    //     .forEach(file => {
+    //       const reader = new FileReader();
+    //       reader.readAsDataURL(file);
+    //       reader.onloadend = () =>
+    //         this.setState({
+    //           files: this.state.files.concat({
+    //             file,
+    //             preview: reader.result as string,
+    //           }),
+    //         });
+    //     });
+    //   e.target.value = '';
+    // }
+
+    const { files } = e.currentTarget;
+
+    const reader = new FileReader();
+
+    if (files) {
+      console.log(files);
+      console.log(files[0]);
+      console.log(reader.readAsDataURL(files[0]));
+      console.log(reader.result);
+
+      setFile(files[0]);
+    }
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    if (file !== null) {
+      postFile({ accessToken, link1: firstLink, link2: secondLink, file });
+    } else {
+      alert('발표자료를 제출해주세요!');
+    }
+  };
+
+  useEffect(() => {
+    if (postFileStatus === 'success') {
+      alert('제출했습니다!');
+      deem(false);
+      modal('none');
+      resetStatus();
+    } else if (postFileStatus === 'failure') {
+      alert(errMessage);
+      deem(false);
+      modal('none');
+      resetStatus();
+    }
+  });
 
   return (
     <ModalBox>
@@ -138,17 +258,27 @@ const HTSubmitFormModal: React.FC<ModalProps & OwnProps> = ({
             />
           </label>
           <label>
-            <span>링크3</span>
-            <input
-              type="text"
-              value={thirdLink}
-              onChange={setInputs}
-              name="thirdLink"
-              placeholder="C:\Users\dlals\Desktop\ui8"
-            />
+            <span>파일</span>
+            <div>
+              <div>파일 제출</div>
+              <input
+                id="files"
+                multiple={true}
+                type="file"
+                style={{ display: 'none' }}
+                onChange={handleFile}
+                accept=".pdf, .ppt, .pptx, .key, .zip"
+              />
+              <p>{file ? file.name : ''}</p>
+            </div>
           </label>
           <div>
-            <button>제출</button>
+            <button
+              onClick={handleSubmit}
+              disabled={postFileStatus === 'pending'}
+            >
+              제출
+            </button>
           </div>
         </SubmitForm>
       </ContentWrapper>

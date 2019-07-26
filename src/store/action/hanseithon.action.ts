@@ -100,6 +100,13 @@ export interface PostMentorCommentParams {
   content: string;
 }
 
+export interface PostFileParams {
+  accessToken: string;
+  link1?: string;
+  link2?: string;
+  file: File;
+}
+
 export const DEEM = 'DEEM';
 
 export const MODAL = 'MODAL';
@@ -163,6 +170,10 @@ export const PATCH_MENTOR_REQUEST_FAILURE = 'PATCH_MENTOR_REQUEST_FAILURE';
 export const POST_MENTOR_COMMENT = 'POST_MENTOR_COMMENT';
 export const POST_MENTOR_COMMENT_SUCCESS = 'POST_MENTOR_COMMENT_SUCCESS';
 export const POST_MENTOR_COMMENT_FAILURE = 'POST_MENTOR_COMMENT_FAILURE';
+
+export const POST_FILE = 'POST_FILE';
+export const POST_FILE_SUCCESS = 'POST_FILE_SUCCESS';
+export const POST_FILE_FAILURE = 'POST_FILE_FAILURE';
 
 export const SET_REQ_PK = 'SET_REQ_PK';
 
@@ -440,6 +451,22 @@ export class PostMentorCommentFailure implements Action {
   public constructor(public paylpad: ErrorResponse) {}
 }
 
+export class PostFile implements Action {
+  public readonly type = POST_FILE;
+
+  public constructor(public payload: PostFileParams) {}
+}
+
+export class PostFileSuccess implements Action {
+  public readonly type = POST_FILE_SUCCESS;
+}
+
+export class PostFileFailure implements Action {
+  public readonly type = POST_FILE_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export class SetReqPk implements Action {
   public readonly type = SET_REQ_PK;
 
@@ -484,6 +511,7 @@ export const hanseithonActions = {
   postMentorComment: createStandardAction(POST_MENTOR_COMMENT)<
     PostMentorCommentParams
   >(),
+  postFile: createStandardAction(POST_FILE)<PostFileParams>(),
   setReqPk: createStandardAction(SET_REQ_PK)<number>(),
   setMentorPk: createStandardAction(SET_MENTOR_PK)<number>(),
   resetHtUser: createStandardAction(RESET_HT_USER)(),
@@ -539,6 +567,9 @@ export type hanseithonReducerActions =
   | PostMentorComment
   | PostMentorCommentSuccess
   | PostMentorCommentFailure
+  | PostFile
+  | PostFileSuccess
+  | PostFileFailure
   | SetReqPk
   | ResetHtUser
   | SetMentorPk;
