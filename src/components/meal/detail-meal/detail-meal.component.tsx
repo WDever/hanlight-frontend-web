@@ -180,7 +180,7 @@ export default class DetailMealComponent extends React.Component<
           const todayBool = moment().get('date') === mealMoment.get('date');
           const day = days[mealMoment.get('d')];
           const week = Math.ceil(date / 7) - 1;
-          if (mealIndex > 0) {
+          if (mealIndex >= 0) {
             MealList[week].push(
               <DetailMealItem
                 key={date}

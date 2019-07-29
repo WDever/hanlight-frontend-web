@@ -7,7 +7,12 @@ import {
   hanseithonActions,
   hanseithonReducerActions,
   JobType,
+  MentorRequestType,
   ModalTypes,
+  PatchMentorRequestParams,
+  PostFileParams,
+  PostMentorCommentParams,
+  PostMentorRequestParams,
   PostTeamMatchParams,
   PostTeamParams,
   PutTeamParams,
@@ -19,44 +24,65 @@ export interface HTModalProps {
   modalType: ModalTypes;
   accessToken: string;
   teamPk: number;
-  putTeamStatus: 'none' | 'pending' | 'success' | 'failure';
-  postTeamStatus: 'none' | 'pending' | 'success' | 'failure';
-  postTeamMatchStatus: 'none' | 'pending' | 'success' | 'failure';
   errMessage: string;
   teams: TeamType[];
   team: TeamType;
+  mentorPk: number;
+  reqPk: number;
+
+  mentorRequestList: MentorRequestType[];
+
+  postMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  patchMentorRequestStatus: 'none' | 'pending' | 'success' | 'failure';
+  postMentorCommentStatus: 'none' | 'pending' | 'success' | 'failure';
+  postFileStatus: 'none' | 'pending' | 'success' | 'failure';
 }
 
 export interface HTModalMethod {
-  postTeam(payload: PostTeamParams): void;
-  putTeam(payload: PutTeamParams): void;
-  postTeamMatch(payload: PostTeamMatchParams): void;
   deem(payload: boolean): void;
   modal(payload: ModalTypes): void;
   resetStatus(): void;
+  postMentorRequest(payload: PostMentorRequestParams): void;
+  patchMentorRequest(payload: PatchMentorRequestParams): void;
+  postMentorComment(payload: PostMentorCommentParams): void;
+  postFile(payload: PostFileParams): void;
 }
 
 const mapStateToProps = ({ hanseithon, user, error }: AppState) => ({
   modalType: hanseithon.modalType,
   accessToken: user.accessToken,
   teamPk: hanseithon.teamPk,
-  putTeamStatus: hanseithon.putTeamStatus,
-  postTeamStatus: hanseithon.postTeamStatus,
-  postTeamMatchStatus: hanseithon.postTeamMatchStatus,
   errMessage: error.message,
   teams: hanseithon.teams,
   team: hanseithon.team,
+  mentorPk: hanseithon.mentorPk,
+  postMentorRequestStatus: hanseithon.postMentorRequestStatus,
+  mentorRequestList: hanseithon.mentorRequestList,
+  reqPk: hanseithon.reqPk,
+  patchMentorRequestStatus: hanseithon.patchMentorRequestStatus,
+  postMentorCommentStatus: hanseithon.postMentorCommentStatus,
+  postFileStatus: hanseithon.postFileStatus,
 });
 
 const mapDispatchToProps = (
   dispatch: Dispatch<hanseithonReducerActions | userReducerActions>,
 ) => ({
-  postTeam: bindActionCreators(hanseithonActions.postTeam, dispatch),
-  putTeam: bindActionCreators(hanseithonActions.putTeam, dispatch),
-  postTeamMatch: bindActionCreators(hanseithonActions.postTeamMatch, dispatch),
   deem: bindActionCreators(hanseithonActions.deem, dispatch),
   modal: bindActionCreators(hanseithonActions.modal, dispatch),
   resetStatus: bindActionCreators(hanseithonActions.resetStatus, dispatch),
+  postMentorRequest: bindActionCreators(
+    hanseithonActions.postMentorRequest,
+    dispatch,
+  ),
+  patchMentorRequest: bindActionCreators(
+    hanseithonActions.patchMentorRequest,
+    dispatch,
+  ),
+  postMentorComment: bindActionCreators(
+    hanseithonActions.postMentorComment,
+    dispatch,
+  ),
+  postFile: bindActionCreators(hanseithonActions.postFile, dispatch),
 });
 
 const HTModalContainer = connect(
