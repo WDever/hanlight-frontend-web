@@ -127,16 +127,6 @@ const HTMentoringListComponent: React.FC<MentorListProps> = ({
     );
   });
 
-  useEffect(() => {
-    getMentor(accessToken);
-  }, []);
-
-  useEffect(() => {
-    if (getMentorStatus === 'failure') {
-      alert(errMessage);
-    }
-  }, [getMentorStatus]);
-
   return (
     <Wrapper>
       <Background src={BackgroundImg} alt="Mentor list background" />
