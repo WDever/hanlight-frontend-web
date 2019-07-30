@@ -423,10 +423,6 @@ const HTMainComponent: React.FC<
       ? history.push('/hanseithon/comment')
       : alert('참가자만 가능한 기능입니다.');
 
-  useEffect(() => {
-    getHtUser(accessToken);
-  }, []);
-
   return (
     <>
       {modalType !== 'none' && <HTModalPage />}

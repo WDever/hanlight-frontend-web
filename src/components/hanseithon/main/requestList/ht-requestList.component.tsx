@@ -114,18 +114,6 @@ const HTRequestList: React.FC<RequestListProps> = ({
   errMessage,
   mentorRequestList,
 }) => {
-  useEffect(() => {
-    const interval = setInterval(() => getMentorRequest(accessToken), 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (getMentorRequestStatus === 'failure') {
-      alert(errMessage);
-    }
-  }, [errMessage, getMentorRequestStatus]);
-
   const RequestList = mentorRequestList.map((item, i) => {
     return (
       <HTRequestItemComponent
