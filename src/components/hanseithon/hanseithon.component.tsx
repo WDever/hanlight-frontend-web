@@ -2,8 +2,6 @@ import * as React from 'react';
 
 import { HanseiThonProps } from 'container/hanseithon';
 import HTMainPage from 'pages/hanseithon/main';
-import HTMentorCommentPage from 'pages/hanseithon/mentorComment';
-import HTParticipationPage from 'pages/hanseithon/participation';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -21,16 +19,6 @@ const HanseiThonComponent: React.FC<HanseiThonProps> = ({ deemStatus }) => {
     <>
       {deemStatus && <Deem />}
       <Switch>
-        <Route
-          exact={true}
-          path="/hanseithon/participation"
-          component={HTParticipationPage}
-        />
-        <Route
-          exact={true}
-          path="/hanseithon/comment/"
-          component={HTMentorCommentPage}
-        />
         <Route exact={true} path="/hanseithon" component={HTMainPage} />
         <Redirect to="/error" />
       </Switch>

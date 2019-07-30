@@ -5,12 +5,8 @@ import logos from 'lib/sponsor/logos.svg';
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/ht-background.svg';
 import TimetableBackgroundImg from 'lib/svg/timetable-background.svg';
-import HTModalPage from 'pages/hanseithon/modal';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import HTMentoringListComponent from './mentorList';
-import HTRequestList from './requestList';
-import HTTimerComponent from './timer';
 
 const { useState, useEffect } = React;
 
@@ -429,57 +425,20 @@ const HTMainComponent: React.FC<
 
   return (
     <>
-      {modalType !== 'none' && <HTModalPage />}
       <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
         <TitleWrapper>
           <span>한세톤 마감까지</span>
         </TitleWrapper>
-        <HTTimerComponent />
         <ContentWrapper>
-          <UserWrapper>
-            {htUserType === 'attendee' && <p>{userName}님의 팀은</p>}
-            {userTeam !== null && (
-              <p>
-                <span>{userTeam}</span> 입니다
-              </p>
-            )}
-          </UserWrapper>
+          <UserWrapper>{userName}님</UserWrapper>
           <ButtonWrapper>
             <div>
-              <p>
-                {htUserType === 'mentor' ? '코멘트 달래요?' : '제출 할래요?'}
-              </p>
+              <p>사진 볼래요?</p>
               <button onClick={submit}>눌러보게</button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
-        {htUserType !== 'mentor' ? (
-          <HTMentoringListComponent
-            htUserType={htUserType}
-            deem={deem}
-            modal={modal}
-            mentorList={mentorList}
-            getMentor={getMentor}
-            accessToken={accessToken}
-            errMessage={errMessage}
-            getMentorStatus={getMentorStatus}
-            setMentorPk={setMentorPk}
-          />
-        ) : (
-          <HTRequestList
-            accessToken={accessToken}
-            getMentorRequest={getMentorRequest}
-            setReqPk={setReqPk}
-            teamPk={teamPk}
-            patchMentorRequest={patchMentorRequest}
-            modal={modal}
-            deem={deem}
-            getMentorRequestStatus={getMentorRequestStatus}
-            errMessage={errMessage}
-            mentorRequestList={mentorRequestList}
-          />
-        )}
         <TimetableWrapper>
           <TimetableBackground
             src={TimetableBackgroundImg}
