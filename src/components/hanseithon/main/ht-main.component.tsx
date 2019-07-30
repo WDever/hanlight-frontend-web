@@ -18,6 +18,11 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   overflow-x: hidden;
+
+  background-image: url(${BackgroundImg});
+  background-size: 102.5%;
+  background-position: center -1%;
+  background-repeat: no-repeat;
 `;
 
 const Background = styled.img`
@@ -35,7 +40,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding-top: 16.75rem;
+  padding: 16.75rem 0;
   margin-bottom: 1.125rem;
 
   @media ${Device.laptop} {
@@ -381,63 +386,25 @@ const ContentCol = styled.col`
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = ({
-  userName,
-  getHtUser,
-  htUserType,
-  modal,
-  deem,
-  modalType,
-  accessToken,
-  userTeam,
-  mentorList,
-  mentorRequestList,
-  getMentor,
-  getMentorRequest,
-  getMentorRequestStatus,
-  getMentorStatus,
-  errMessage,
-  setMentorPk,
-  setTeamPk,
-  teamPk,
-  patchMentorRequest,
-  reqPk,
-  setReqPk,
-  resetStatus,
-  history,
-}) => {
+> = ({ userName, accessToken, history }) => {
   const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
-
-  const openSubmitModal = () => {
-    deem(true);
-    modal('submit');
-  };
-
-  const submit = () =>
-    htUserType === 'attendee'
-      ? openSubmitModal()
-      : htUserType === 'mentor'
-      ? history.push('/hanseithon/comment')
-      : alert('참가자만 가능한 기능입니다.');
-
-  useEffect(() => {
-    getHtUser(accessToken);
-  }, []);
 
   return (
     <>
-      <Background src={BackgroundImg} alt="Background" />
+      <HTVideoComponent />
       <Wrapper>
-        <HTVideoComponent />
+        <TitleWrapper>
+          <span>한세톤 종료</span>
+        </TitleWrapper>
         <ContentWrapper>
           <ButtonWrapper>
             <div>
               <p>사진 볼래요?</p>
-              <button onClick={submit}>눌러보게</button>
+              <button onClick={() => alert('asdf')}>눌러보게</button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
-        <TimetableWrapper>
+        {/* <TimetableWrapper>
           <TimetableBackground
             src={TimetableBackgroundImg}
             alt="timetable background"
@@ -557,7 +524,7 @@ const HTMainComponent: React.FC<
               </>
             )}
           </Timetable>
-        </TimetableWrapper>
+        </TimetableWrapper> */}
         <SponsorWrapper>
           <SponsorSeparator>
             <SponsorTitle>쉬어가는 스폰서</SponsorTitle>
