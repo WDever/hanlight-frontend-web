@@ -115,9 +115,7 @@ const HTRequestList: React.FC<RequestListProps> = ({
   mentorRequestList,
 }) => {
   useEffect(() => {
-    const interval = setInterval(() => getMentorRequest(accessToken), 3000);
-
-    return () => clearInterval(interval);
+    getMentorRequest(accessToken);
   }, []);
 
   useEffect(() => {

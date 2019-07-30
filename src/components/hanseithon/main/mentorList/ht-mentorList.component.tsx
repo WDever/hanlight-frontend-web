@@ -128,9 +128,7 @@ const HTMentoringListComponent: React.FC<MentorListProps> = ({
   });
 
   useEffect(() => {
-    const interval = setInterval(() => getMentor(accessToken), 3000);
-
-    return () => clearInterval(interval);
+    getMentor(accessToken);
   }, []);
 
   useEffect(() => {
