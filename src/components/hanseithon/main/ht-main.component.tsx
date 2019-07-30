@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import HTVideoComponent from 'components/hanseithon/video';
 import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import logos from 'lib/sponsor/logos.svg';
 import { Device } from 'lib/styles';
@@ -427,11 +428,8 @@ const HTMainComponent: React.FC<
     <>
       <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
-        <TitleWrapper>
-          <span>한세톤 마감까지</span>
-        </TitleWrapper>
+        <HTVideoComponent />
         <ContentWrapper>
-          <UserWrapper>{userName}님</UserWrapper>
           <ButtonWrapper>
             <div>
               <p>사진 볼래요?</p>
