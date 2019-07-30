@@ -1,7 +1,6 @@
 import { BoardModel } from './board.model';
 import { CalendarModel } from './calendar.model';
 import { ErrorModel } from './error.model';
-import { HanseithonModel } from './hanseithon.model';
 import { MealModel } from './meal.model';
 import { NoticeModel } from './notice.model';
 import { TimeTableModel } from './timeTable.model';
@@ -17,7 +16,6 @@ export interface AppState {
   error: ErrorModel;
   board: BoardModel;
   util: UtilModel;
-  hanseithon: HanseithonModel;
 }
 
 export * from './timeTable.model';
@@ -27,4 +25,3 @@ export * from './meal.model';
 export * from './error.model';
 export * from './board.model';
 export * from './util.model';
-export * from './hanseithon.model';

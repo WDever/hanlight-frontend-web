@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
-  hanseithonActions,
-  hanseithonReducerActions,
   userActions,
   userReducerActions,
 } from 'store';
@@ -17,7 +15,6 @@ export interface MainProps {
 
 export interface MainMethod {
   resetUser(): void;
-  resetHtUser(): void;
 }
 
 const mapStateToProps = ({ user, util }: AppState) => ({
@@ -26,10 +23,9 @@ const mapStateToProps = ({ user, util }: AppState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<userReducerActions | hanseithonReducerActions>,
+  dispatch: Dispatch<userReducerActions>,
 ) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
-  resetHtUser: bindActionCreators(hanseithonActions.resetHtUser, dispatch),
 });
 
 const MainCotainer = withRouter(

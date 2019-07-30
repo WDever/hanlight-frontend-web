@@ -1,13 +1,11 @@
 import * as React from 'react';
 
-import HanseiThonContainer from 'container/hanseithon';
-import { Device } from 'lib/styles';
-import styled from 'styled-components';
+import HanseiThonComponents from 'components/hanseithon';
 
 const HanseiThonPage: React.FC = () => {
   return (
     <>
-      <HanseiThonContainer />
+      <HanseiThonComponents />
     </>
   );
 };

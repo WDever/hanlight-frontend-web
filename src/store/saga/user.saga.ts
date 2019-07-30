@@ -32,7 +32,6 @@ import {
   PatchPhone,
   PatchPhoneParam,
   PatchPwParam,
-  PostTeamParams,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
   PW_RECOVERY_SUCCESS,
