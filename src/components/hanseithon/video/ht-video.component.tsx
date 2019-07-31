@@ -5,6 +5,7 @@ import styled from 'styled-components';
 const Video = styled.video`
   width: 60%;
   margin-top: 5rem;
+  margin-bottom: 40%;
 `;
 
 const HTVideoComponent: React.FC = () => {
