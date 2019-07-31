@@ -137,7 +137,7 @@ const BoardCommentComponent: React.FC<
   return (
     <FeedCommentWrapper>
       <FeedCommentTittle>댓글({props.commentCount})</FeedCommentTittle>
-      {props.userType === 'student' && (
+      {(props.userType === 'student' || props.userType === 'graduate') && (
         <CommentFormContainer
           accessToken={props.accessToken}
           board_pk={props.board_pk}
