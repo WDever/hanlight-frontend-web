@@ -4,7 +4,8 @@ const size = {
   mobileL: '425px',
   tabletS: '768px',
   tabletL: '1024px',
-  laptop: '1440px',
+  laptopS: '1440px',
+  laptopL: '1600px',
   desktop: '1920px',
   desktopL: '2560px',
 };
@@ -14,6 +15,7 @@ export const Device = {
   mobileL: `(max-width: ${size.mobileL})`,
   tabletS: `(max-width: ${size.tabletS})`,
   tabletL: `(max-width: ${size.tabletL})`,
-  laptop: `(max-width: ${size.laptop})`,
+  laptopS: `(max-width: ${size.laptopS})`,
+  laptopL: `(max-width: ${size.laptopL})`,
   desktop: `(max-width: ${size.desktop})`,
 };

@@ -41,7 +41,7 @@ const MoreBox = styled.div`
   justify-content: space-around;
   align-items: center;
 
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     width: 13.225rem;
   }
   @media ${Device.tabletL} {

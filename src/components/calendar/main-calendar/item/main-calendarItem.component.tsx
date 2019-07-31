@@ -25,7 +25,7 @@ const Wrapper = styled.div<{ today: boolean }>`
   justify-content: center;
   border-radius: 1rem;
 
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     width: 13.85rem;
     height: 13.85rem;
   }

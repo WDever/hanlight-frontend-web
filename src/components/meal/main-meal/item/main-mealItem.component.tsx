@@ -30,7 +30,7 @@ const ItemWrapper = styled.div<MealItemProps>`
           color: #000000;
         `}
   
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     width: 13.225rem;
   }
   @media ${Device.tabletL} {

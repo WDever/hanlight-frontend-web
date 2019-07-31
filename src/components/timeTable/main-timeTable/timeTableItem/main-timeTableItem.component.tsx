@@ -31,7 +31,7 @@ const ItemBox = styled.div<BoxProps>`
   align-items: center;
   justify-content: center;
 
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     width: 13%;
     height: 10rem;
   }
