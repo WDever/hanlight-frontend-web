@@ -14,8 +14,6 @@ const Wrapper = styled.div<{ prize: number }>`
       return '#FFD700';
     } else if (prize === 2) {
       return '#C4CACE';
-    } else if (prize === 3) {
-      return '#d7995b';
     } else {
       return '#ffffff';
     }

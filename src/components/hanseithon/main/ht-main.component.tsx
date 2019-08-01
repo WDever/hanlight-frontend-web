@@ -126,8 +126,6 @@ const ButtonWrapper = styled.div`
 
   font-size: 2.25rem;
 
-  margin-bottom: 15rem;
-
   @media ${Device.mobileL} {
     font-size: 1rem;
   }
@@ -322,17 +320,20 @@ const HTMainComponent: React.FC<
 > = ({ userName, accessToken, history }) => {
   const [category, setCategory] = useState<'l' | 'g'>('l');
 
-  const LivingWinnerList = livingTeams.map((item, i) => {
+  const LivingParticipantList = livingTeams.map((item, i) => {
     return <HTParticipantItem key={i} team={item} />;
   });
 
-  const GameWinnerList = gameTeams.map((item, i) => {
+  const GameParticipantList = gameTeams.map((item, i) => {
     return <HTParticipantItem key={i} team={item} />;
   });
 
   return (
     <>
       <Wrapper>
+        <TitleWrapper>
+          <span>한세톤이 종료되었습니다.</span>
+        </TitleWrapper>
         <HTVideoComponent />
         <ListWrapper>
           <p>쉬어가는 참가자들</p>
@@ -350,7 +351,9 @@ const HTMainComponent: React.FC<
               게임 부문
             </ListCategory>
           </ListSeparator>
-          <List>{category === 'l' ? LivingWinnerList : GameWinnerList}</List>
+          <List>
+            {category === 'l' ? LivingParticipantList : GameParticipantList}
+          </List>
         </ListWrapper>
         <ContentWrapper>
           <GroupImg src={GroupPicture} alt="group picture" />
