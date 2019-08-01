@@ -28,7 +28,7 @@ const NoBox = styled.div`
   background-color: #ffffff;
   border: solid 1px #b1b1b1;
 
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     width: 13%;
     height: 10rem;
   }

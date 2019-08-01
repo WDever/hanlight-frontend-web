@@ -45,7 +45,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   resetUser,
   toggleMenuStatus,
-  resetHtUser,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
@@ -74,7 +73,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
             <HeaderMenuContainer
               logout={() => {
                 resetUser();
-                resetHtUser();
               }}
             />
           )}

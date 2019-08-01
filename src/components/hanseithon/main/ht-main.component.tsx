@@ -1,16 +1,15 @@
 import * as React from 'react';
 
+import HTVideoComponent from 'components/hanseithon/video';
 import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
-import logos from 'lib/sponsor/logos.svg';
+import GroupPicture from 'lib/png/group-pic.jpg';
 import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/ht-background.svg';
-import TimetableBackgroundImg from 'lib/svg/timetable-background.svg';
-import HTModalPage from 'pages/hanseithon/modal';
 import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
-import HTMentoringListComponent from './mentorList';
-import HTRequestList from './requestList';
-import HTTimerComponent from './timer';
+import { gameTeams, livingTeams } from './participantData';
+import HTParticipantItem from './participantItem';
+import HTSponsor from './sponsor';
 
 const { useState, useEffect } = React;
 
@@ -19,17 +18,14 @@ const Wrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+  align-items: center;
 
   overflow-x: hidden;
-`;
 
-const Background = styled.img`
-  width: 102.5%;
-
-  position: absolute;
-  z-index: -1;
-
-  object-fit: cover;
+  background-image: url(${BackgroundImg});
+  background-size: 102.5%;
+  background-position: center -1rem;
+  background-repeat: no-repeat;
 `;
 
 const TitleWrapper = styled.div`
@@ -38,25 +34,76 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding-top: 16.75rem;
-  margin-bottom: 1.125rem;
+  padding: 20% 0;
+  margin-bottom: 45%;
 
-  @media ${Device.laptop} {
+  @media ${Device.laptopS} {
     padding-top: 9rem;
   }
 
   @media ${Device.mobileL} {
     padding-top: 4rem;
-    margin-bottom: 0.55rem;
   }
 
   span {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     color: #ffffff;
 
-    @media ${Device.mobileL} {
-      font-size: 1rem;
+    @media ${Device.tabletL} {
+      font-size: 3rem;
     }
+
+    @media ${Device.mobileL} {
+      font-size: 2rem;
+    }
+  }
+`;
+
+const WinWrapper = styled.div`
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 50%;
+
+  @media ${Device.laptopL} {
+    margin-bottom: 45%;
+  }
+
+  div {
+    width: 35%;
+    font-family: 'yg-jalnan';
+    font-size: 1.5rem;
+    color: #ffffff;
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    span {
+      font-family: 'Spoqa Han Sans';
+      font-size: 2.25rem;
+      font-weight: bold;
+      color: #ff476c;
+    }
+  }
+`;
+
+const GroupImg = styled.img`
+  background-color: #ffffff;
+
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.46);
+  border-radius: 0.25rem;
+
+  margin-right: 10rem;
+
+  width: 40%;
+
+  @media ${Device.tabletS} {
+    margin-bottom: 5rem;
+    margin-right: 0;
+    width: 90%;
   }
 `;
 
@@ -64,45 +111,19 @@ const ContentWrapper = styled.div`
   position: relative;
 
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
 
   width: 100%;
 
-  margin-bottom: 7.6rem;
+  margin-bottom: 10rem;
 
-  @media ${Device.mobileL} {
+  @media ${Device.tabletS} {
+    flex-direction: column;
+
     font-size: 0.875rem;
 
-    margin-bottom: 3.175rem;
-  }
-`;
-
-const UserWrapper = styled.div`
-  font-size: 2.25rem;
-
-  text-align: center;
-
-  margin-bottom: 5.75rem;
-
-  @media ${Device.mobileL} {
-    font-size: 0.875rem;
-
-    margin-bottom: 0;
-  }
-
-  p {
-    margin: 0;
-    margin-bottom: 1.125rem;
-
-    @media ${Device.mobileL} {
-      margin-bottom: 0.375rem;
-    }
-  }
-
-  span {
-    color: #4470ff;
-    font-family: 'yg-jalnan';
+    margin-bottom: 5rem;
   }
 `;
 
@@ -112,10 +133,11 @@ const ButtonWrapper = styled.div`
   font-size: 2.25rem;
 
   @media ${Device.mobileL} {
-    display: none;
+    font-size: 1rem;
   }
 
   div {
+    display: flex;
     flex-direction: column;
     align-items: center;
 
@@ -196,407 +218,192 @@ const ButtonWrapper = styled.div`
   }
 `;
 
-const MentorWrapper = styled.div`
-  display: flex;
-`;
-
-const SubmitWrapper = styled.div`
-  display: flex;
-
-  margin-left: 8rem;
-
-  @media ${Device.mobileL} {
-    display: none;
-  }
-`;
-
-const SponsorWrapper = styled.div`
-  width: 100%;
-  background-color: #000000;
-  color: #ffffff;
-  font-family: 'Opne Sans';
-  padding-bottom: 2rem;
-`;
-
-const SponsorSeparator = styled.div`
-  margin-left: 5%;
-`;
-
-const Sponsors = styled.div`
-  width: 100%;
-  display: flex;
-
-  img {
-    width: 100%;
-    max-width: fit-content;
-  }
-`;
-
-const SponsorTitle = styled.div`
-  font-family: inherit;
-  font-size: 1.875rem;
-  font-weight: bold;
-  margin-top: 1.5rem;
-  margin-bottom: 3rem;
-
-  @media ${Device.tabletL} {
-    font-size: 1.5rem;
-  }
-  @media ${Device.mobileL} {
-    font-size: 1.125rem;
-    margin-bottom: 2.31rem;
-  }
-`;
-
-const TimetableBackground = styled.img`
-  position: absolute;
-  z-index: -1;
-
-  @media ${Device.mobileL} {
-    display: none;
-  }
-`;
-
-const TimetableOverTitle = styled.p`
-  font-size: 2.25rem;
-  font-family: 'yg-jalnan';
-  margin: 0;
-  margin-bottom: 2.275rem;
-
-  display: flex;
-  justify-content: center;
-
-  @media ${Device.tabletL} {
-    margin-left: 5%;
-  }
-  @media ${Device.mobileL} {
-    display: none;
-  }
-`;
-
-const TimetableUnderTitle = styled.div`
-  display: none;
-  @media ${Device.mobileL} {
-    width: 100%;
-
-    font-size: 1.25rem;
-    font-family: 'Open Sans';
-    font-weight: bold;
-
-    padding: 1rem 0 1rem 1.25rem;
-
-    display: initial;
-  }
-`;
-
-const TimetableWrapper = styled.div`
+const ListWrapper = styled.div`
   width: 100%;
 
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
 
-  margin-bottom: 16.425rem;
+  p {
+    font-size: 3rem;
+    font-family: 'yg-jalnan';
+
+    margin: 0;
+    margin-bottom: 5rem;
+
+    @media ${Device.tabletL} {
+      margin-bottom: 2.5rem;
+
+      font-size: 2rem;
+    }
+
+    @media ${Device.mobileL} {
+      margin-bottom: 2.5rem;
+
+      font-size: 1.5rem;
+    }
+  }
+
+  margin-bottom: 15rem;
 
   @media ${Device.mobileL} {
-    margin-bottom: 1.75rem;
+    margin-bottom: 5rem;
   }
 `;
 
-const TimetableBtnWrapper = styled.div`
-  width: 51.46%;
-  height: 3.73rem;
-
-  @media ${Device.tabletL} {
-    height: 2.71rem;
-  }
-  @media ${Device.mobileL} {
-    height: 2.25rem;
-
-    width: 100%;
-  }
-`;
-
-const TimetableBtn = styled.button<{ clicked: boolean }>`
-  width: 50%;
-  height: 100%;
-  border: solid 1px #e8e8e8;
-  background-color: ${({ clicked }) => (clicked ? '#000000' : '#ffffff')};
-  font-size: 1.18rem;
-  font-family: 'Open Sans';
-  font-weight: bold;
-  color: ${({ clicked }) => (clicked ? '#ffffff' : '#000000')};
-  cursor: pointer;
-
-  @media ${Device.mobileL} {
-    font-size: 0.8125rem;
-  }
-`;
-
-const Timetable = styled.table`
-  width: 51.46%;
-  font-size: 1.18rem;
-  font-weight: bold;
-  border-collapse: collapse;
-  border-spacing: 0;
+const ListSeparator = styled.div`
+  width: 90%;
+  height: 4rem;
 
   background-color: #ffffff;
 
-  @media ${Device.mobileL} {
-    width: 100%;
-  }
-
-  tr {
-    width: 100%;
-    height: 3.96rem;
-    border: solid 1px #e8e8e8;
-    font-family: 'Open Sans';
-    text-align: center;
-
-    @media ${Device.tabletL} {
-      height: 3.1rem;
-    }
-    @media ${Device.mobileL} {
-      height: 2.25rem;
-    }
-
-    td {
-      border: solid 1px #e8e8e8;
-    }
-  }
+  display: flex;
 
   @media ${Device.tabletL} {
-    font-size: 1.06rem;
+    height: 3rem;
+  }
+
+  @media ${Device.mobileL} {
+    height: 2rem;
+  }
+`;
+
+const ListCategory = styled.div<{ active: boolean }>`
+  width: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  border: 1px solid #000000;
+
+  background-color: ${props => (props.active ? '#000000' : '#ffffff')};
+
+  color: ${props => (props.active ? '#ffffff' : '#000000')};
+  font-family: 'Open Sans';
+  font-weight: bold;
+  font-size: 2rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.5rem;
+  }
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
+`;
+
+const List = styled.div`
+  width: 90%;
+
+  display: flex;
+  justify-content: space-evenly;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 14.25rem);
+  grid-column-gap: 1rem;
+  grid-row-gap: 2.5rem;
+
+  justify-content: space-between;
+
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fill, 13.56rem);
+    grid-column-gap: 1.41rem;
+    grid-row-gap: 1.62rem;
+  }
+
+  @media ${Device.mobileL} {
+    grid-row-gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, 9.375rem);
+    justify-content: space-evenly;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+const ListLine = styled.div`
+  width: 49%;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 14rem);
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 2.5rem;
+
+  justify-content: space-between;
+
+  margin-top: 2.5rem;
+  margin-bottom: 3rem;
+
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fill, 13.56rem);
+    grid-column-gap: 1.41rem;
+    grid-row-gap: 1.62rem;
   }
   @media ${Device.mobileL} {
-    font-size: 0.69rem;
+    grid-row-gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, 9.375rem);
+    justify-content: space-evenly;
+    margin-top: 1.25rem;
+    margin-bottom: 1.5rem;
   }
-`;
-
-const DateCol = styled.col`
-  width: 35%;
-`;
-
-const ContentCol = styled.col`
-  width: 65%;
 `;
 
 const HTMainComponent: React.FC<
   HTMainMethod & HTMainProps & RouteComponentProps
-> = ({
-  userName,
-  getHtUser,
-  htUserType,
-  modal,
-  deem,
-  modalType,
-  accessToken,
-  userTeam,
-  mentorList,
-  mentorRequestList,
-  getMentor,
-  getMentorRequest,
-  getMentorRequestStatus,
-  getMentorStatus,
-  errMessage,
-  setMentorPk,
-  setTeamPk,
-  teamPk,
-  patchMentorRequest,
-  reqPk,
-  setReqPk,
-}) => {
-  const [rightTableToggle, setRightTableToggle] = useState<boolean>(false);
+> = ({ userName, accessToken, history }) => {
+  const [category, setCategory] = useState<'l' | 'g'>('l');
 
-  const submit = () =>
-    htUserType === 'attendee'
-      ? alert('밤에 공개될 예정입니다.')
-      : alert('참가자만 가능한 기능입니다.');
+  const LivingParticipantList = livingTeams.map((item, i) => {
+    return <HTParticipantItem key={i} team={item} />;
+  });
 
-  useEffect(() => {
-    getHtUser(accessToken);
-  }, []);
+  const GameParticipantList = gameTeams.map((item, i) => {
+    return <HTParticipantItem key={i} team={item} />;
+  });
 
   return (
     <>
-      {modalType !== 'none' && <HTModalPage />}
-      <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
         <TitleWrapper>
-          <span>한세톤 마감까지</span>
+          <span>한세톤이 종료되었습니다.</span>
         </TitleWrapper>
-        <HTTimerComponent />
+        <HTVideoComponent />
+        <ListWrapper>
+          <p>쉬어가는 참가자들</p>
+          <ListSeparator>
+            <ListCategory
+              active={category === 'l'}
+              onClick={() => setCategory('l')}
+            >
+              생활 부문
+            </ListCategory>
+            <ListCategory
+              active={category === 'g'}
+              onClick={() => setCategory('g')}
+            >
+              게임 부문
+            </ListCategory>
+          </ListSeparator>
+          <List>
+            {category === 'l' ? LivingParticipantList : GameParticipantList}
+          </List>
+        </ListWrapper>
         <ContentWrapper>
-          <UserWrapper>
-            {htUserType === 'attendee' && <p>{userName}님의 팀은</p>}
-            {userTeam !== null && (
-              <p>
-                <span>{userTeam}</span> 입니다
-              </p>
-            )}
-          </UserWrapper>
+          <GroupImg src={GroupPicture} alt="group picture" />
           <ButtonWrapper>
             <div>
-              <p>제출 할래요?</p>
-              <button onClick={submit}>눌러보게</button>
+              <p>사진 보고 가세요!</p>
+              <button onClick={() => alert('사진 링크')}>눌러보게</button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
-        {htUserType !== 'mentor' ? (
-          <HTMentoringListComponent
-            deem={deem}
-            modal={modal}
-            mentorList={mentorList}
-            getMentor={getMentor}
-            accessToken={accessToken}
-            errMessage={errMessage}
-            getMentorStatus={getMentorStatus}
-            setMentorPk={setMentorPk}
-          />
-        ) : (
-          <HTRequestList
-            accessToken={accessToken}
-            getMentorRequest={getMentorRequest}
-            setReqPk={setReqPk}
-            teamPk={teamPk}
-            patchMentorRequest={patchMentorRequest}
-            modal={modal}
-            deem={deem}
-            getMentorRequestStatus={getMentorRequestStatus}
-            errMessage={errMessage}
-            mentorRequestList={mentorRequestList}
-          />
-        )}
-        <TimetableWrapper>
-          <TimetableBackground
-            src={TimetableBackgroundImg}
-            alt="timetable background"
-          />
-          <TimetableOverTitle>타임 테이블</TimetableOverTitle>
-          <TimetableBtnWrapper>
-            <TimetableBtn
-              clicked={!rightTableToggle}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                setRightTableToggle(false);
-              }}
-            >
-              7월 25일 (목)
-            </TimetableBtn>
-            <TimetableBtn
-              clicked={rightTableToggle}
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                setRightTableToggle(true);
-              }}
-            >
-              7월 26일 (금)
-            </TimetableBtn>
-          </TimetableBtnWrapper>
-          <TimetableUnderTitle>TIME TABLE</TimetableUnderTitle>
-          <Timetable>
-            <colgroup>
-              <DateCol />
-              <ContentCol />
-            </colgroup>
-            {!rightTableToggle ? (
-              <>
-                <tr>
-                  <td>15:00 ~ 15:30</td>
-                  <td>참가자 입장 및 등록</td>
-                </tr>
-                <tr>
-                  <td>15:30 ~ 16:00</td>
-                  <td>키노트</td>
-                </tr>
-                <tr>
-                  <td>16:00 ~ 18:00</td>
-                  <td>자율 개발</td>
-                </tr>
-                <tr>
-                  <td>18:00 ~ 19:00</td>
-                  <td>저녁 식사</td>
-                </tr>
-                <tr>
-                  <td>19:00 ~ 19:30</td>
-                  <td>이벤트 타임</td>
-                </tr>
-                <tr>
-                  <td>19:30 ~ 20:30</td>
-                  <td>자율 개발</td>
-                </tr>
-                <tr>
-                  <td>20:30 ~ 21:00</td>
-                  <td>멘토단 오리엔테이션</td>
-                </tr>
-                <tr>
-                  <td>21:00 ~ 23:00</td>
-                  <td>순차 멘토링</td>
-                </tr>
-                <tr>
-                  <td>23:00 ~ 24:00</td>
-                  <td>야식</td>
-                </tr>
-                <tr>
-                  <td>24:00 ~</td>
-                  <td>자율 개발</td>
-                </tr>
-              </>
-            ) : (
-              <>
-                <tr>
-                  <td>07:30 ~ 08:00</td>
-                  <td>아침 식사</td>
-                </tr>
-                <tr>
-                  <td>08:00 ~ 10:00</td>
-                  <td>자율 개발</td>
-                </tr>
-                <tr>
-                  <td>10:00 ~ 10:30</td>
-                  <td>이벤트 타임</td>
-                </tr>
-                <tr>
-                  <td>10:30 ~ 12:00</td>
-                  <td>자율 개발</td>
-                </tr>
-                <tr>
-                  <td>12:00 ~ 13:00</td>
-                  <td>점심 식사</td>
-                </tr>
-                <tr>
-                  <td>13:00 ~ 13:30</td>
-                  <td>이벤트 타임</td>
-                </tr>
-                <tr>
-                  <td>13:30 ~ 14:30</td>
-                  <td>자율 개발</td>
-                </tr>
-                <tr>
-                  <td>14:30 ~ 15:00</td>
-                  <td>파일 제출 및 발표 준비</td>
-                </tr>
-                <tr>
-                  <td>15:00 ~ 18:00</td>
-                  <td>발표 및 심사</td>
-                </tr>
-                <tr>
-                  <td>18:00 ~ 18:30</td>
-                  <td>시상</td>
-                </tr>
-              </>
-            )}
-          </Timetable>
-        </TimetableWrapper>
-        <SponsorWrapper>
-          <SponsorSeparator>
-            <SponsorTitle>쉬어가는 스폰서</SponsorTitle>
-            <Sponsors>
-              <img src={logos} alt="" />
-            </Sponsors>
-          </SponsorSeparator>
-        </SponsorWrapper>
+        <HTSponsor />
       </Wrapper>
     </>
   );
