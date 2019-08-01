@@ -35,7 +35,7 @@ const TitleWrapper = styled.div`
   justify-content: center;
 
   padding: 20% 0;
-  margin-bottom: 15rem;
+  margin-bottom: 45%;
 
   @media ${Device.laptopS} {
     padding-top: 9rem;
@@ -43,12 +43,15 @@ const TitleWrapper = styled.div`
 
   @media ${Device.mobileL} {
     padding-top: 4rem;
-    margin-bottom: 0.55rem;
   }
 
   span {
     font-size: 4.5rem;
     color: #ffffff;
+
+    @media ${Device.tabletL} {
+      font-size: 3rem;
+    }
 
     @media ${Device.mobileL} {
       font-size: 2rem;
@@ -96,10 +99,11 @@ const GroupImg = styled.img`
   margin-right: 10rem;
 
   width: 40%;
-  height: auto;
 
-  @media ${Device.mobileL} {
-    margin-right: 5rem;
+  @media ${Device.tabletS} {
+    margin-bottom: 5rem;
+    margin-right: 0;
+    width: 90%;
   }
 `;
 
@@ -114,7 +118,9 @@ const ContentWrapper = styled.div`
 
   margin-bottom: 10rem;
 
-  @media ${Device.mobileL} {
+  @media ${Device.tabletS} {
+    flex-direction: column;
+
     font-size: 0.875rem;
 
     margin-bottom: 5rem;
@@ -226,6 +232,12 @@ const ListWrapper = styled.div`
     margin: 0;
     margin-bottom: 5rem;
 
+    @media ${Device.tabletL} {
+      margin-bottom: 2.5rem;
+
+      font-size: 2rem;
+    }
+
     @media ${Device.mobileL} {
       margin-bottom: 2.5rem;
 
@@ -247,6 +259,10 @@ const ListSeparator = styled.div`
   background-color: #ffffff;
 
   display: flex;
+
+  @media ${Device.tabletL} {
+    height: 3rem;
+  }
 
   @media ${Device.mobileL} {
     height: 2rem;
@@ -270,6 +286,10 @@ const ListCategory = styled.div<{ active: boolean }>`
   font-family: 'Open Sans';
   font-weight: bold;
   font-size: 2rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.5rem;
+  }
 
   @media ${Device.mobileL} {
     font-size: 1rem;
@@ -297,6 +317,7 @@ const List = styled.div`
     grid-column-gap: 1.41rem;
     grid-row-gap: 1.62rem;
   }
+
   @media ${Device.mobileL} {
     grid-row-gap: 1.5rem;
     grid-template-columns: repeat(auto-fill, 9.375rem);

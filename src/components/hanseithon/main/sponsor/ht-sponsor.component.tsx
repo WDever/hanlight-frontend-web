@@ -11,8 +11,11 @@ const SponsorWrapper = styled.div`
   font-family: 'Opne Sans';
   padding-bottom: 2rem;
 
+  @media ${Device.mobileL} {
+    padding-bottom: 0;
+  }
+
   box-shadow: 0 10px 15px 0 rgba(101, 101, 101, 0.66);
-  /* border-radius: 0.25rem; */
 `;
 
 const SponsorSeparator = styled.div`

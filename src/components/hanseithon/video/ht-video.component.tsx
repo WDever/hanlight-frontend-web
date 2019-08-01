@@ -4,11 +4,13 @@ import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const Video = styled.video`
-  width: 60%;
+  width: 90%;
   margin-bottom: 15rem;
 
   @media ${Device.mobileL} {
-    width: 80%;
+    width: 90%;
+
+    margin-bottom: 8rem;
   }
 `;
 
