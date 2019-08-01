@@ -6,7 +6,7 @@ import { Device } from 'lib/styles';
 import BackgroundImg from 'lib/svg/ht-background.svg';
 import TimetableBackgroundImg from 'lib/svg/timetable-background.svg';
 import HTModalPage from 'pages/hanseithon/modal';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router';
 import styled from 'styled-components';
 import HTMentoringListComponent from './mentorList';
 import HTRequestList from './requestList';
