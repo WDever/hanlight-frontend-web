@@ -383,7 +383,8 @@ export default class BoardFormComponent extends React.Component<
 
     return (
       <>
-        {this.props.userType === 'student' ? (
+        {this.props.userType === 'student' ||
+        this.props.userType === 'graduate' ? (
           <FormWrapper>
             <FormTitle>
               <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
