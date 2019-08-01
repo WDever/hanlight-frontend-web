@@ -8,7 +8,7 @@ const SponsorWrapper = styled.div`
   width: 100%;
   background-color: #ffffff;
   color: #000000;
-  font-family: 'Opne Sans';
+  font-family: 'Open Sans';
   padding-bottom: 2rem;
 
   @media ${Device.mobileL} {

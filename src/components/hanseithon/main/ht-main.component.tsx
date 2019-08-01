@@ -56,6 +56,10 @@ const TitleWrapper = styled.div`
     @media ${Device.mobileL} {
       font-size: 2rem;
     }
+
+    @media ${Device.mobileS} {
+      font-size: 1.5rem;
+    }
   }
 `;
 
