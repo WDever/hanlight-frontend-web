@@ -56,6 +56,10 @@ const TitleWrapper = styled.div`
     @media ${Device.mobileL} {
       font-size: 2rem;
     }
+
+    @media ${Device.mobileS} {
+      font-size: 1.5rem;
+    }
   }
 `;
 
@@ -318,12 +322,23 @@ const List = styled.div`
     grid-row-gap: 1.62rem;
   }
 
+  @media ${Device.tabletL} {
+    grid-template-columns: repeat(auto-fill, 13.56rem);
+    grid-column-gap: 0.7rem;
+    grid-row-gap: 1.62rem;
+  }
+
   @media ${Device.mobileL} {
     grid-row-gap: 1.5rem;
     grid-template-columns: repeat(auto-fill, 9.375rem);
     justify-content: space-evenly;
     margin-top: 1.25rem;
     margin-bottom: 1.5rem;
+  }
+
+  @media ${Device.mobileS} {
+    grid-column-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, 8.5rem);
   }
 `;
 

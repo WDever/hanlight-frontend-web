@@ -28,6 +28,11 @@ const Wrapper = styled.div<{ prize: number }>`
     width: calc(100% - 2.625rem);
     padding: 1.125rem 1.3125rem 1.475rem 1.3125rem;
   }
+
+  @media ${Device.mobileS} {
+    width: calc(100% - 2rem);
+    padding: 0.875rem 1rem 1.125rem 1rem;
+  }
 `;
 
 const Team = styled.div`
