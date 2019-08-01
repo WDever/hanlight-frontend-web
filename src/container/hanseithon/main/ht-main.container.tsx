@@ -1,6 +1,6 @@
 import HTMainComponent from 'components/hanseithon/main';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
