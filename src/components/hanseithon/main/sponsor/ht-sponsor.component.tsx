@@ -5,14 +5,14 @@ import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const SponsorWrapper = styled.div`
-  width: 90%;
+  width: 100%;
   background-color: #ffffff;
   color: #000000;
   font-family: 'Opne Sans';
   padding-bottom: 2rem;
+
   box-shadow: 0 10px 15px 0 rgba(101, 101, 101, 0.66);
-  border-radius: 0.25rem;
-  margin-bottom: 10rem;
+  /* border-radius: 0.25rem; */
 `;
 
 const SponsorSeparator = styled.div`
@@ -21,18 +21,24 @@ const SponsorSeparator = styled.div`
 
 const Sponsors = styled.div`
   width: 100%;
+
   display: flex;
+
   div {
     width: 33%;
+
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
+
     img {
-      width: 6rem;
       margin-bottom: 3rem;
+
       cursor: pointer;
+
       transition: 0.1s ease-in-out;
+
       :hover {
         opacity: 1;
         -webkit-transform: scale(1.1);
@@ -48,6 +54,7 @@ const SponsorTitle = styled.div`
   font-weight: bold;
   margin-top: 1.5rem;
   margin-bottom: 3rem;
+
   @media ${Device.tabletL} {
     font-size: 1.5rem;
   }
