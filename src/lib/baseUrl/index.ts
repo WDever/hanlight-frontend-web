@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export const instance = axios.create({
-  baseURL: 'https://test.hanlight.kr/',
+  baseURL: 'https://api.hanlight.kr/',
 });
 
 export const hanseithonInstance = axios.create({
-  baseURL: 'http://54.180.116.217/',
+  baseURL: 'https://hanseithon.hanlight.kr/',
 });
