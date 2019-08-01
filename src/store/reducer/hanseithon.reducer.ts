@@ -10,6 +10,20 @@ const initialState: HanseithonModel = {
   getTeamStatus: 'none',
   getTeamMatchStatus: 'none',
   postTeamMatchStatus: 'none',
+  postObserverStatus: 'none',
+  getThemeStatus: 'none',
+  getJudgementStatus: 'none',
+  getHtUserStatus: 'none',
+  getMentorStatus: 'none',
+  getMentorRequestStatus: 'none',
+  postMentorRequestStatus: 'none',
+  patchMentorRequestStatus: 'none',
+  postMentorCommentStatus: 'none',
+  postFileStatus: 'none',
+
+  themeUrl: '',
+  judgementUrl: '',
+
   teams: [],
   teamPk: 0,
   team: {
@@ -23,6 +37,15 @@ const initialState: HanseithonModel = {
     teamMember: [],
   },
   match: [],
+
+  htUserType: 'none',
+  userTeam: null,
+  mentorRequestList: [],
+  mentorList: [],
+
+  mentorPk: 0,
+
+  reqPk: 0,
 };
 
 export const hanseithonReducer = (
@@ -89,7 +112,7 @@ export const hanseithonReducer = (
 
       case 'GET_TEAM_SUCCESS':
         draft.getTeamStatus = 'success';
-        draft.teams = action.payload.team;
+        draft.teams = state.teams.concat(action.payload.team);
         break;
 
       case 'GET_TEAM_FAILURE':
@@ -119,10 +142,157 @@ export const hanseithonReducer = (
         draft.postTeamMatchStatus = 'failure';
         break;
 
+      case 'POST_OBSERVER':
+        draft.postObserverStatus = 'pending';
+        break;
+
+      case 'POST_OBSERVER_SUCCESS':
+        draft.postObserverStatus = 'success';
+        break;
+
+      case 'POST_OBSERVER_FAILURE':
+        draft.postObserverStatus = 'failure';
+        break;
+
+      case 'GET_THEME':
+        draft.getThemeStatus = 'pending';
+        break;
+
+      case 'GET_THEME_SUCCESS':
+        draft.getThemeStatus = 'success';
+        draft.themeUrl = action.payload;
+        break;
+
+      case 'GET_THEME_FAILURE':
+        draft.getThemeStatus = 'failure';
+        break;
+
+      case 'GET_JUDGEMENT':
+        draft.getJudgementStatus = 'pending';
+        break;
+
+      case 'GET_JUDGEMENT_SUCCESS':
+        draft.getJudgementStatus = 'success';
+        draft.judgementUrl = action.payload;
+        break;
+
+      case 'GET_JUDGEMENT_FAILURE':
+        draft.getJudgementStatus = 'failure';
+        break;
+
+      case 'GET_HT_USER':
+        draft.getHtUserStatus = 'pending';
+        break;
+
+      case 'GET_HT_USER_SUCCESS':
+        draft.getHtUserStatus = 'success';
+        draft.htUserType = action.payload.type;
+        draft.userTeam = action.payload.team;
+        break;
+
+      case 'GET_HT_USER_FAILURE':
+        draft.getHtUserStatus = 'failure';
+        break;
+
+      case 'GET_MENTOR':
+        draft.getMentorStatus = 'pending';
+        break;
+
+      case 'GET_MENTOR_SUCCESS':
+        draft.getMentorStatus = 'success';
+        draft.mentorList = action.payload.mentor;
+        break;
+
+      case 'GET_MENTOR_FAILURE':
+        draft.getMentorStatus = 'failure';
+        break;
+
+      case 'GET_MENTOR_REQUEST':
+        draft.getMentorRequestStatus = 'pending';
+        break;
+
+      case 'GET_MENTOR_REQUEST_SUCCESS':
+        draft.getMentorRequestStatus = 'success';
+        draft.mentorRequestList = action.payload.request;
+        break;
+
+      case 'GET_MENTOR_REQUEST_FAILURE':
+        draft.getMentorRequestStatus = 'failure';
+        break;
+
+      case 'POST_MENTOR_REQUEST':
+        draft.postMentorRequestStatus = 'pending';
+        break;
+
+      case 'POST_MENTOR_REQUEST_SUCCESS':
+        draft.postMentorRequestStatus = 'success';
+        break;
+
+      case 'POST_MENTOR_REQUEST_FAILURE':
+        draft.postMentorRequestStatus = 'failure';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST':
+        draft.patchMentorRequestStatus = 'pending';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST_SUCCESS':
+        draft.patchMentorRequestStatus = 'success';
+        break;
+
+      case 'PATCH_MENTOR_REQUEST_FAILURE':
+        draft.patchMentorRequestStatus = 'failure';
+        break;
+
+      case 'POST_MENTOR_COMMENT':
+        draft.postMentorCommentStatus = 'pending';
+        break;
+
+      case 'POST_MENTOR_COMMENT_SUCCESS':
+        draft.postMentorCommentStatus = 'success';
+        break;
+
+      case 'POST_MENTOR_COMMENT_FAILURE':
+        draft.postMentorCommentStatus = 'failure';
+        break;
+
+      case 'POST_FILE':
+        draft.postFileStatus = 'pending';
+        break;
+
+      case 'POST_FILE_SUCCESS':
+        draft.postFileStatus = 'success';
+        break;
+
+      case 'POST_FILE_FAILURE':
+        draft.postFileStatus= 'failure';
+        break;
+
+      case 'SET_MENTOR_PK':
+        draft.mentorPk = action.payload;
+        break;
+
+      case 'SET_REQ_PK':
+        draft.reqPk = action.payload;
+        break;
+
+      case 'RESET_HT_USER':
+        draft.userTeam = '';
+        draft.htUserType = 'none';
+        break;
+
       case 'RESET_STATUS':
         draft.putTeamStatus = 'none';
         draft.postTeamStatus = 'none';
         draft.postTeamMatchStatus = 'none';
+        draft.postObserverStatus = 'none';
+        draft.getThemeStatus = 'none';
+        draft.getJudgementStatus = 'none';
+        draft.postMentorRequestStatus = 'none';
+        draft.getMentorRequestStatus = 'none';
+        draft.patchMentorRequestStatus = 'none';
+        draft.postMentorCommentStatus = 'none';
+        draft.postFileStatus = 'none';
         break;
 
       default:
