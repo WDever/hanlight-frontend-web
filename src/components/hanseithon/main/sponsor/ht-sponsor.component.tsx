@@ -44,6 +44,10 @@ const Sponsors = styled.div`
         -webkit-transform: scale(1.1);
         transform: scale(1.1);
       }
+
+      @media ${Device.mobileL} {
+        width: 3rem;
+      }
     }
   }
 `;
@@ -66,38 +70,74 @@ const SponsorTitle = styled.div`
 
 const GudakImg = styled.img`
   height: 6rem;
+
+  @media ${Device.mobileL} {
+    height: 3rem;
+  }
 `;
 
 const InsightImg = styled.img`
   height: 2.5rem;
+
+  @media ${Device.mobileL} {
+    height: 1.5rem;
+  }
 `;
 
 const MasoImg = styled.img`
   height: 2rem;
+
+  @media ${Device.mobileL} {
+    height: 0.8rem;
+  }
 `;
 
 const GoormImg = styled.img`
   height: 1.5rem;
+
+  @media ${Device.mobileL} {
+    height: 0.8rem;
+  }
 `;
 
 const JpubImg = styled.img`
   height: 3.5rem;
+
+  @media ${Device.mobileL} {
+    height: 2rem;
+  }
 `;
 
 const UnityImg = styled.img`
   height: 2.2rem;
+
+  @media ${Device.mobileL} {
+    height: 1.2rem;
+  }
 `;
 
 const LaftelImg = styled.img`
   height: 2.3rem;
+
+  @media ${Device.mobileL} {
+    height: 1.2rem;
+  }
 `;
 
 const EasysPubImg = styled.img`
   height: 1.8rem;
+
+  @media ${Device.mobileL} {
+    height: 0.8rem;
+  }
 `;
 
 const EbrainImg = styled.img`
   height: 3rem;
+
+  @media ${Device.mobileL} {
+    height: 1.8rem;
+  }
 `;
 
 const HTSponsorComponent: React.FC = () => {

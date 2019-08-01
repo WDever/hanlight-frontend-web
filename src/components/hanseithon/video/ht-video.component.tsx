@@ -1,10 +1,15 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const Video = styled.video`
   width: 60%;
   margin-bottom: 15rem;
+
+  @media ${Device.mobileL} {
+    width: 80%;
+  }
 `;
 
 const HTVideoComponent: React.FC = () => {

@@ -34,8 +34,8 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
 
-  padding: 10rem 0;
-  margin-bottom: 5rem;
+  padding: 20% 0;
+  margin-bottom: 15rem;
 
   @media ${Device.laptopS} {
     padding-top: 9rem;
@@ -47,11 +47,11 @@ const TitleWrapper = styled.div`
   }
 
   span {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     color: #ffffff;
 
     @media ${Device.mobileL} {
-      font-size: 1rem;
+      font-size: 2rem;
     }
   }
 `;
@@ -90,23 +90,23 @@ const WinWrapper = styled.div`
 const GroupImg = styled.img`
   background-color: #ffffff;
 
-  margin-bottom: 5rem;
-
   box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.46);
   border-radius: 0.25rem;
 
   margin-right: 10rem;
 
-  /* width: 80%; */
   width: 40%;
   height: auto;
+
+  @media ${Device.mobileL} {
+    margin-right: 5rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
   position: relative;
 
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
 
@@ -117,7 +117,7 @@ const ContentWrapper = styled.div`
   @media ${Device.mobileL} {
     font-size: 0.875rem;
 
-    margin-bottom: 3.175rem;
+    margin-bottom: 5rem;
   }
 `;
 
@@ -225,9 +225,19 @@ const ListWrapper = styled.div`
 
     margin: 0;
     margin-bottom: 5rem;
+
+    @media ${Device.mobileL} {
+      margin-bottom: 2.5rem;
+
+      font-size: 1.5rem;
+    }
   }
 
   margin-bottom: 15rem;
+
+  @media ${Device.mobileL} {
+    margin-bottom: 5rem;
+  }
 `;
 
 const ListSeparator = styled.div`
@@ -237,6 +247,10 @@ const ListSeparator = styled.div`
   background-color: #ffffff;
 
   display: flex;
+
+  @media ${Device.mobileL} {
+    height: 2rem;
+  }
 `;
 
 const ListCategory = styled.div<{ active: boolean }>`
@@ -256,6 +270,10 @@ const ListCategory = styled.div<{ active: boolean }>`
   font-family: 'Open Sans';
   font-weight: bold;
   font-size: 2rem;
+
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
 `;
 
 const List = styled.div`
