@@ -370,7 +370,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
               </CommentBody>
             )}
             <CommentLikeBtnWrapper isLiked={isLiked}>
-              {userType === 'student' && (
+              {(userType === 'student' || userType === 'graduate') && (
                 <CommentLikeBtn
                   onClick={() => {
                     if (likeStatus !== 'pending') {
