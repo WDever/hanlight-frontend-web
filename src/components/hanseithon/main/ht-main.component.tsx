@@ -356,7 +356,15 @@ const HTMainComponent: React.FC<
           <ButtonWrapper>
             <div>
               <p>사진 보고 가세요!</p>
-              <button onClick={() => alert('사진 링크')}>눌러보게</button>
+              <button
+                onClick={() =>
+                  window.open(
+                    'https://o365sen-my.sharepoint.com/:f:/g/personal/wanna33008_o365sen_net/Ev_4S_p-QPtCtK5CSskMEWkB3pRk4Lb0HhDl5FtY4oC3Wg?e=6cfJ45',
+                  )
+                }
+              >
+                눌러보게
+              </button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
