@@ -55,7 +55,7 @@ const Name = styled.div`
   }
 `;
 
-const TeamMembersWrapper = styled.div<{ leader?: boolean }>`
+const TeamMembersWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;

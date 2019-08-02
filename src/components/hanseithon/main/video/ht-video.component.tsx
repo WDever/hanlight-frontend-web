@@ -17,7 +17,7 @@ const Video = styled.video`
 const HTVideoComponent: React.FC = () => {
   return (
     <Video
-      src="http://media.w3.org/2010/05/bunny/movie.ogv"
+      src="http://media.w3.org/2010/05/video/movie_300.mp4"
       controls={true}
       autoPlay={true}
       muted={true}
