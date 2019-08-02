@@ -10,9 +10,8 @@ import { RouteComponentProps } from 'react-router-dom';
 import styled from 'styled-components';
 import HTMentoringListComponent from './mentorList';
 import HTRequestList from './requestList';
-import HTTimerComponent from './timer';
 
-const { useState, useEffect } = React;
+const { useState } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -39,7 +38,9 @@ const TitleWrapper = styled.div`
   justify-content: center;
 
   padding-top: 16.75rem;
-  margin-bottom: 1.125rem;
+  margin-bottom: 45%;
+
+  font-family: 'yg-jalnan';
 
   @media ${Device.laptop} {
     padding-top: 9rem;
@@ -47,7 +48,6 @@ const TitleWrapper = styled.div`
 
   @media ${Device.mobileL} {
     padding-top: 4rem;
-    margin-bottom: 0.55rem;
   }
 
   span {
@@ -193,20 +193,6 @@ const ButtonWrapper = styled.div`
 
       font-size: 0.875rem;
     }
-  }
-`;
-
-const MentorWrapper = styled.div`
-  display: flex;
-`;
-
-const SubmitWrapper = styled.div`
-  display: flex;
-
-  margin-left: 8rem;
-
-  @media ${Device.mobileL} {
-    display: none;
   }
 `;
 
@@ -429,9 +415,8 @@ const HTMainComponent: React.FC<
       <Background src={BackgroundImg} alt="Background" />
       <Wrapper>
         <TitleWrapper>
-          <span>한세톤 마감까지</span>
+          <span>한세톤이 종료되었습니다.</span>
         </TitleWrapper>
-        <HTTimerComponent />
         <ContentWrapper>
           <UserWrapper>
             {htUserType === 'attendee' && <p>{userName}님의 팀은</p>}
@@ -441,14 +426,6 @@ const HTMainComponent: React.FC<
               </p>
             )}
           </UserWrapper>
-          <ButtonWrapper>
-            <div>
-              <p>
-                {htUserType === 'mentor' ? '코멘트 달래요?' : '제출 할래요?'}
-              </p>
-              <button onClick={submit}>눌러보게</button>
-            </div>
-          </ButtonWrapper>
         </ContentWrapper>
         {htUserType !== 'mentor' ? (
           <HTMentoringListComponent

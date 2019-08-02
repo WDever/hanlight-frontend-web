@@ -38,6 +38,7 @@ const TitleWrapper = styled.div`
   display: flex;
   justify-content: center;
 
+  font-family: 'yg-jalnan';
   font-size: 2.25rem;
 
   margin-bottom: 2.3rem;
