@@ -40,6 +40,8 @@ const TitleWrapper = styled.div`
   padding-top: 16.75rem;
   margin-bottom: 45%;
 
+  font-family: 'yg-jalnan';
+
   @media ${Device.laptop} {
     padding-top: 9rem;
   }
