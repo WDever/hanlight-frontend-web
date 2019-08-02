@@ -4,8 +4,6 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
-  hanseithonActions,
-  hanseithonReducerActions,
   userActions,
   userReducerActions,
   utilActions,
@@ -19,7 +17,6 @@ export interface HeaderProps {
 export interface HeaderMethod {
   resetUser(): void;
   toggleMenu(payload: boolean): void;
-  resetHtUser(): void;
 }
 
 const mapStateToProps = ({ user }: AppState) => ({
@@ -27,13 +24,10 @@ const mapStateToProps = ({ user }: AppState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<
-    userReducerActions | utilReducerActions | hanseithonReducerActions
-  >,
+  dispatch: Dispatch<userReducerActions | utilReducerActions>,
 ) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
   toggleMenu: bindActionCreators(utilActions.toggleMenu, dispatch),
-  resetHtUser: bindActionCreators(hanseithonActions.resetHtUser, dispatch),
 });
 
 const HeaderContainer = withRouter(
