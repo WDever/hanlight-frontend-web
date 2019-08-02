@@ -98,15 +98,36 @@ const Top = styled.div`
 
 const TopImg = styled.img`
   width: 7.5rem;
-  height: 7.5rem;
+  height: 8.5rem;
+
+  margin-bottom: -2rem;
 
   @media ${Device.tabletS} {
     width: 6.25rem;
-    height: 6.25rem;
+    height: 7.25rem;
+    margin-bottom: -1.5rem;
   }
   @media ${Device.mobileL} {
     width: 4rem;
-    height: 4rem;
+    height: 5rem;
+    margin-bottom: -1rem;
+  }
+`;
+
+const ProfileBtn = styled.label`
+  font-family: 'Spoqa Han Sans';
+  font-size: 0.875rem;
+  color: #4470ff;
+
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.7rem;
+  }
+
+  input {
+    display: none;
   }
 `;
 
@@ -316,6 +337,10 @@ const ProfileComponent: React.FC<
           <TopWrapper>
             <Top>
               <TopImg src={DefaultProfileImg} alt="" />
+              <ProfileBtn>
+                사진 변경
+                <input type="file" />
+              </ProfileBtn>
               <TopName>{name}</TopName>
             </Top>
           </TopWrapper>
