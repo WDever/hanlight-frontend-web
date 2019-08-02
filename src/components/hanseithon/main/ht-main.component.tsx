@@ -11,7 +11,7 @@ import { gameTeams, livingTeams } from './participantData';
 import HTParticipantItem from './participantItem';
 import HTSponsor from './sponsor';
 
-const { useState, useEffect } = React;
+const { useState } = React;
 
 const Wrapper = styled.div`
   width: 100%;
