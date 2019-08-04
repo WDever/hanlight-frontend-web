@@ -6,8 +6,9 @@ import {
 } from 'container/board/form/boardForm.container';
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
+import FormTypeArrow from 'lib/svg/form-type-arrow.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
 const FormTitle = styled.div`
   width: 100%;
@@ -16,8 +17,49 @@ const FormTitle = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    margin-left: 0.5rem;
+  }
+
   @media ${Device.tabletL} {
     display: none;
+  }
+`;
+
+const FormType = styled.label`
+  font-family: 'Spoqa Han Sans';
+  font-size: 0.875rem;
+
+  margin-right: 1.5rem;
+
+  select {
+    color: #4470ff;
+    font-weight: bold;
+    font-size: 0.875rem;
+    font-family: inherit;
+
+    margin-left: 1rem;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    background-image: url(${FormTypeArrow});
+    background-repeat: no-repeat;
+    background-position: 95% 50%;
+    background-color: #ffffff;
+
+    outline: none;
+
+    padding-right: 0.5rem;
+
+    border: none;
+
+    ::-ms-expand {
+      display: none;
+    }
   }
 `;
 
@@ -75,7 +117,7 @@ const FormBody = styled.div`
 const FormBodyText = styled.textarea<{ height: number }>`
   width: 88%;
   height: ${props => props.height}px;
-  min-height: 3.3rem;
+  min-height: 3.4rem;
   font-family: inherit;
   font-size: 0.875rem;
   resize: none;
@@ -279,10 +321,12 @@ export default class BoardFormComponent extends React.Component<
     content: string;
     files: Array<{ file: File; preview: string }>;
     textAreaHeight: number;
+    type: '익명' | '실명';
   } = {
     content: '',
     files: [],
     textAreaHeight: 0,
+    type: '익명',
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -360,6 +404,16 @@ export default class BoardFormComponent extends React.Component<
     }
   };
 
+  public handleFormType = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.currentTarget;
+
+    this.setState(state => ({
+      type: value,
+    }));
+
+    console.log(this.state.type);
+  };
+
   public render() {
     const FormPreviews = Array(5)
       .fill(null)
@@ -387,7 +441,14 @@ export default class BoardFormComponent extends React.Component<
         this.props.userType === 'graduate' ? (
           <FormWrapper>
             <FormTitle>
-              <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
+              <span>대나무숲에 글 올리기</span>
+              <FormType>
+                타입 선택
+                <select onChange={this.handleFormType}>
+                  <option value="익명">익명</option>
+                  <option value="실명">실명</option>
+                </select>
+              </FormType>
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
