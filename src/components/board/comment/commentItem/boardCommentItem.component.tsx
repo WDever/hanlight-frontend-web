@@ -22,15 +22,20 @@ const OptionBtn = styled.img`
   width: 1.25rem;
   cursor: pointer;
   margin-bottom: 1rem;
+  outline: none;
 `;
 
-const CommentWrapper = styled.div`
+const CommentWrapper = styled.div<{ optionToggle: boolean }>`
   width: 100%;
   display: flex;
   min-height: 3.5rem;
   justify-content: space-between;
   align-items: center;
   position: relative;
+
+  ${OptionBtn} {
+    display: ${props => props.optionToggle ? 'initial' : 'none'}
+  }
 
   &:hover {
     ${OptionBtn} {
@@ -341,7 +346,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
 
   return (
     <Wrapper>
-      <CommentWrapper>
+      <CommentWrapper optionToggle={optionToggle}>
         <CommentLeftWrapper>
           <ProfileImg src={DefaultProfileImage} alt="" />
           <CommentContentWrapper>
@@ -396,6 +401,8 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
           src={Dotdotdot}
           alt="comment option"
           onClick={() => setOptionToggle(!optionToggle)}
+          onBlur={() => setOptionToggle(false)}
+          tabIndex={0}
         />
         {optionToggle && (
           <OptionWrapper>

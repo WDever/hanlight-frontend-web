@@ -118,6 +118,7 @@ const FeedHeadDate = styled.p`
 const FeedHeadOptionBtn = styled.img`
   width: 20px;
   cursor: pointer;
+  outline: none;
 
   @media ${Device.tabletL} {
     width: 17.5px;
@@ -654,6 +655,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
               src={Dotdotdot}
               alt=""
               onClick={() => setOptionToggle(!optionToggle)}
+              onBlur={() => setOptionToggle(false)}
+              tabIndex={0}
             />
           </div>
         </FeedHeadWrapper>
