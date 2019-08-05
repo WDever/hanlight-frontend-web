@@ -642,7 +642,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <FeedHeadLeftWrapper>
             <img src={DefaultProfileImage} alt="" />
             <FeedHeadLeftString>
-              <FeedHeadName>{board.user_name}</FeedHeadName>
+              <FeedHeadName>{board.user_name ? board.user_name : '익명'}</FeedHeadName>
               <FeedHeadDate>
                 {moment(board.createdAt).format('lll')}
                 &ensp;

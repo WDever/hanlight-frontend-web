@@ -321,12 +321,12 @@ export default class BoardFormComponent extends React.Component<
     content: string;
     files: Array<{ file: File; preview: string }>;
     textAreaHeight: number;
-    type: '익명' | '실명';
+    type: '1' | '0';
   } = {
     content: '',
     files: [],
     textAreaHeight: 0,
-    type: '익명',
+    type: '1',
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -400,6 +400,7 @@ export default class BoardFormComponent extends React.Component<
         accessToken: this.props.accessToken,
         content: this.state.content.trim(),
         files: this.state.files.map(v => v.file),
+        anonymous: this.state.type,
       });
     }
   };
@@ -410,8 +411,6 @@ export default class BoardFormComponent extends React.Component<
     this.setState(state => ({
       type: value,
     }));
-
-    console.log(this.state.type);
   };
 
   public render() {
@@ -445,8 +444,8 @@ export default class BoardFormComponent extends React.Component<
               <FormType>
                 타입 선택
                 <select onChange={this.handleFormType}>
-                  <option value="익명">익명</option>
-                  <option value="실명">실명</option>
+                  <option value="1">익명</option>
+                  <option value="0">실명</option>
                 </select>
               </FormType>
             </FormTitle>

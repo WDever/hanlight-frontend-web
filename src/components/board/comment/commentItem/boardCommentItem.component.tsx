@@ -34,7 +34,7 @@ const CommentWrapper = styled.div<{ optionToggle: boolean }>`
   position: relative;
 
   ${OptionBtn} {
-    display: ${props => props.optionToggle ? 'initial' : 'none'}
+    display: ${props => (props.optionToggle ? 'initial' : 'none')};
   }
 
   &:hover {
@@ -365,7 +365,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
             ) : (
               <CommentBody>
                 <CommentContent>
-                  <CommentName>{user_name}</CommentName>
+                  <CommentName>{user_name ? user_name : '익명'}</CommentName>
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper>
