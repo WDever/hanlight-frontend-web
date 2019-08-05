@@ -464,7 +464,7 @@ export const gameTeams = [
   {
     pk: 5,
     prize: 0,
-    name: '오덕들의 개발 방법 1권',
+    name: '[시원찮은 오덕들의 개발 방법] 1권',
     teamMember: [
       {
         name: '권오현',
