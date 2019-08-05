@@ -5,8 +5,14 @@ export const livingTeams = [
     name: '커피 20잔만 마실게요',
     teamMember: [
       {
-        name: '김민혁',
+        name: '노수하',
         leader: true,
+        studentId: 'H2207',
+        position: '디자인',
+      },
+      {
+        name: '김민혁',
+        leader: false,
         studentId: 'H3103',
         position: '개발',
       },
@@ -20,12 +26,6 @@ export const livingTeams = [
         name: '김세경',
         leader: false,
         studentId: 'H3105',
-        position: '디자인',
-      },
-      {
-        name: '노수하',
-        leader: false,
-        studentId: 'H2207',
         position: '디자인',
       },
     ],
@@ -63,7 +63,6 @@ export const livingTeams = [
   },
   {
     pk: 3,
-    prize: 3,
     name: '빈과 콩나물',
     teamMember: [
       {
@@ -82,7 +81,7 @@ export const livingTeams = [
         name: '김경백',
         leader: false,
         studentId: 'H2101',
-        position: '디자인',
+        position: '개발',
       },
       {
         name: '김민기',
@@ -298,7 +297,7 @@ export const livingTeams = [
       {
         name: '이재하',
         leader: false,
-        studentId: 'U2210',
+        studentId: 'U2120',
         position: '개발',
       },
       {
@@ -401,37 +400,6 @@ export const gameTeams = [
   },
   {
     pk: 3,
-    prize: 3,
-    name: '스택 째고 왔다',
-    teamMember: [
-      {
-        name: '전세훈',
-        leader: false,
-        studentId: 'G2115',
-        position: '개발',
-      },
-      {
-        name: '정용우',
-        leader: true,
-        studentId: 'G2117',
-        position: '개발',
-      },
-      {
-        name: '추윤성',
-        leader: false,
-        studentId: 'G2123',
-        position: '디자인',
-      },
-      {
-        name: '임정현',
-        leader: false,
-        studentId: 'G2114',
-        position: '디자인',
-      },
-    ],
-  },
-  {
-    pk: 4,
     prize: 0,
     name: '윤성파크',
     teamMember: [
@@ -462,7 +430,7 @@ export const gameTeams = [
     ],
   },
   {
-    pk: 5,
+    pk: 4,
     prize: 0,
     name: '[시원찮은 오덕들의 개발 방법] 1권',
     teamMember: [
@@ -493,7 +461,7 @@ export const gameTeams = [
     ],
   },
   {
-    pk: 6,
+    pk: 5,
     prize: 0,
     name: '팀명',
     teamMember: [
@@ -524,7 +492,7 @@ export const gameTeams = [
     ],
   },
   {
-    pk: 7,
+    pk: 6,
     prize: 0,
     name: '퐁퐁먹은 세균',
     teamMember: [
@@ -555,7 +523,7 @@ export const gameTeams = [
     ],
   },
   {
-    pk: 8,
+    pk: 7,
     prize: 0,
     name: '4명이 개발함',
     teamMember: [
@@ -586,7 +554,7 @@ export const gameTeams = [
     ],
   },
   {
-    pk: 9,
+    pk: 8,
     prize: 0,
     name: '롤토체스 개잘함',
     teamMember: [
@@ -612,6 +580,36 @@ export const gameTeams = [
         name: '함승호',
         leader: true,
         studentId: 'G1126',
+        position: '디자인',
+      },
+    ],
+  },
+  {
+    pk: 9,
+    name: '스택 째고 왔다',
+    teamMember: [
+      {
+        name: '전세훈',
+        leader: false,
+        studentId: 'G2115',
+        position: '개발',
+      },
+      {
+        name: '정용우',
+        leader: true,
+        studentId: 'G2117',
+        position: '기획',
+      },
+      {
+        name: '추윤성',
+        leader: false,
+        studentId: 'G2123',
+        position: '디자인',
+      },
+      {
+        name: '임정현',
+        leader: false,
+        studentId: 'G2114',
         position: '디자인',
       },
     ],
