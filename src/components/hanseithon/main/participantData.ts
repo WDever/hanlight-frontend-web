@@ -64,6 +64,7 @@ export const livingTeams = [
   {
     pk: 3,
     name: '빈과 콩나물',
+    prize: 0,
     teamMember: [
       {
         name: '정빈',
@@ -586,6 +587,7 @@ export const gameTeams = [
   },
   {
     pk: 9,
+    prize: 0,
     name: '스택 째고 왔다',
     teamMember: [
       {
