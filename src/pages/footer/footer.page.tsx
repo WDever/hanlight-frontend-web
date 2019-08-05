@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Device } from 'lib/styles';
 import HatLogoSvg from 'lib/svg/college-graduation.svg';
 import FbLogoSvg from 'lib/svg/facebook-logo-button.svg';
-import IgLogoSvg from 'lib/svg/instagram.svg';
+import SchoolLogoSvg from 'lib/svg/school-logo.svg';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,11 +12,9 @@ const Footer = styled.footer`
   height: 15rem;
   background-color: #f9f9f9;
   font-family: 'Spoqa Han Sans';
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   @media ${Device.tabletL} {
     height: 11.1rem;
   }
@@ -32,7 +30,6 @@ const FooterWrapper = styled.div`
   width: 90%;
   max-width: 81rem;
   margin-bottom: 2.5rem;
-
   @media ${Device.tabletL} {
     margin-bottom: 1.57rem;
   }
@@ -44,11 +41,9 @@ const FooterWrapper = styled.div`
 const UpsideWrapper = styled.div`
   width: 100%;
   margin-top: 2.625rem;
-
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   @media ${Device.tabletL} {
     margin-top: 1.625rem;
   }
@@ -63,7 +58,6 @@ const TextWrapper = styled.div`
   font-family: inherit;
   line-height: 2;
   white-space: nowrap;
-
   @media ${Device.mobileL} {
     font-size: 0.625rem;
   }
@@ -74,7 +68,6 @@ const Email = styled.span`
   font-family: inherit;
   margin-top: 1.375rem;
   margin-bottom: 1.375rem;
-
   @media ${Device.tabletL} {
     margin-top: 0.75rem;
     margin-bottom: 0.75rem;
@@ -88,7 +81,6 @@ const RulesWrapper = styled.div`
   width: 11.5rem;
   display: flex;
   justify-content: space-between;
-
   @media ${Device.mobileL} {
     width: 10.5rem;
   }
@@ -102,22 +94,20 @@ const Rules = styled(Link)`
 
 const LinksWrapper = styled.div`
   width: 23.5rem;
+  height: 2.375rem;
   display: flex;
   justify-content: space-between;
-
   @media ${Device.tabletL} {
-    width: 11.375rem;
+    width: 12.375rem;
   }
   @media ${Device.mobileL} {
-    width: 6.82rem;
+    width: 8.82rem;
   }
 `;
 
 const LinkBtn = styled.img`
   width: 2.375rem;
-  height: 2.375rem;
   cursor: pointer;
-
   @media ${Device.tabletL} {
     width: 1.875rem;
     height: 1.875rem;
@@ -130,7 +120,6 @@ const LinkBtn = styled.img`
 
 const CopyRight = styled.span`
   font-size: 0.75rem;
-
   @media ${Device.mobileL} {
     font-size: 0.5rem;
   }
@@ -159,16 +148,14 @@ const FooterPage: React.FC = () => {
               }
             />
             <LinkBtn
-              src={IgLogoSvg}
-              alt="Instagram logo"
-              onClick={() =>
-                window.open('https://www.instagram.com/')
-              }
-            />
-            <LinkBtn
               src={HatLogoSvg}
               alt="Hat logo"
               onClick={() => window.open('https://github.com/hanlight')}
+            />
+            <LinkBtn
+              src={SchoolLogoSvg}
+              alt="School logo"
+              onClick={() => window.open('http://hansei.org/index.do')}
             />
           </LinksWrapper>
         </UpsideWrapper>

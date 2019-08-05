@@ -7,6 +7,8 @@ const Video = styled.video`
   width: 90%;
   margin-bottom: 15rem;
 
+  outline: none;
+
   @media ${Device.mobileL} {
     width: 90%;
 
@@ -17,10 +19,9 @@ const Video = styled.video`
 const HTVideoComponent: React.FC = () => {
   return (
     <Video
-      src="http://media.w3.org/2010/05/bunny/movie.ogv"
+      src="https://hanlight.s3.ap-northeast-2.amazonaws.com/hanseithon/%E1%84%86%E1%85%A1%E1%84%86%E1%85%AE%E1%84%85%E1%85%B5.mp4"
       controls={true}
       autoPlay={true}
-      muted={true}
     >
       브라우저가 동영상을 지원하지 않습니다.
     </Video>
