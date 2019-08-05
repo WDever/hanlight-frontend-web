@@ -8,7 +8,7 @@ export const livingTeams = [
         name: '노수하',
         leader: true,
         studentId: 'H2207',
-        position: '디자인',
+        position: '기획',
       },
       {
         name: '김민혁',
