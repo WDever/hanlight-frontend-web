@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { hanseithonInstance, instance } from 'lib/baseUrl';
+import { instance } from 'lib/baseUrl';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import {
   ExistParam,

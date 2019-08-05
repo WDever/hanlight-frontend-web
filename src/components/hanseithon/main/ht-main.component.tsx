@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import HTVideoComponent from 'components/hanseithon/video';
+import HTVideoComponent from 'components/hanseithon/main/video';
 import { HTMainMethod, HTMainProps } from 'container/hanseithon/main';
 import GroupPicture from 'lib/png/group-pic.jpg';
 import { Device } from 'lib/styles';
@@ -11,7 +11,7 @@ import { gameTeams, livingTeams } from './participantData';
 import HTParticipantItem from './participantItem';
 import HTSponsor from './sponsor';
 
-const { useState, useEffect } = React;
+const { useState } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -37,6 +37,8 @@ const TitleWrapper = styled.div`
   padding: 20% 0;
   margin-bottom: 45%;
 
+  font-family: 'yg-jalnan';
+
   @media ${Device.laptopS} {
     padding-top: 9rem;
   }
@@ -54,42 +56,7 @@ const TitleWrapper = styled.div`
     }
 
     @media ${Device.mobileL} {
-      font-size: 2rem;
-    }
-
-    @media ${Device.mobileS} {
       font-size: 1.5rem;
-    }
-  }
-`;
-
-const WinWrapper = styled.div`
-  width: 100%;
-
-  display: flex;
-  justify-content: center;
-
-  margin-bottom: 50%;
-
-  @media ${Device.laptopL} {
-    margin-bottom: 45%;
-  }
-
-  div {
-    width: 35%;
-    font-family: 'yg-jalnan';
-    font-size: 1.5rem;
-    color: #ffffff;
-
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-
-    span {
-      font-family: 'Spoqa Han Sans';
-      font-size: 2.25rem;
-      font-weight: bold;
-      color: #ff476c;
     }
   }
 `;
@@ -150,6 +117,8 @@ const ButtonWrapper = styled.div`
       margin-bottom: 2.4rem;
 
       text-align: center;
+
+      font-family: 'yg-jalnan';
 
       @media ${Device.mobileL} {
         margin-bottom: 0.9rem;
@@ -245,7 +214,7 @@ const ListWrapper = styled.div`
     @media ${Device.mobileL} {
       margin-bottom: 2.5rem;
 
-      font-size: 1.5rem;
+      font-size: 1rem;
     }
   }
 
@@ -296,7 +265,7 @@ const ListCategory = styled.div<{ active: boolean }>`
   }
 
   @media ${Device.mobileL} {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 `;
 
@@ -339,33 +308,6 @@ const List = styled.div`
   @media ${Device.mobileS} {
     grid-column-gap: 0.5rem;
     grid-template-columns: repeat(auto-fill, 8.5rem);
-  }
-`;
-
-const ListLine = styled.div`
-  width: 49%;
-
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 14rem);
-  grid-column-gap: 0.5rem;
-  grid-row-gap: 2.5rem;
-
-  justify-content: space-between;
-
-  margin-top: 2.5rem;
-  margin-bottom: 3rem;
-
-  @media ${Device.tabletL} {
-    grid-template-columns: repeat(auto-fill, 13.56rem);
-    grid-column-gap: 1.41rem;
-    grid-row-gap: 1.62rem;
-  }
-  @media ${Device.mobileL} {
-    grid-row-gap: 1.5rem;
-    grid-template-columns: repeat(auto-fill, 9.375rem);
-    justify-content: space-evenly;
-    margin-top: 1.25rem;
-    margin-bottom: 1.5rem;
   }
 `;
 
@@ -414,7 +356,15 @@ const HTMainComponent: React.FC<
           <ButtonWrapper>
             <div>
               <p>사진 보고 가세요!</p>
-              <button onClick={() => alert('사진 링크')}>눌러보게</button>
+              <button
+                onClick={() =>
+                  window.open(
+                    'https://o365sen-my.sharepoint.com/:f:/g/personal/wanna33008_o365sen_net/Ev_4S_p-QPtCtK5CSskMEWkB3pRk4Lb0HhDl5FtY4oC3Wg?e=6cfJ45',
+                  )
+                }
+              >
+                눌러보게
+              </button>
             </div>
           </ButtonWrapper>
         </ContentWrapper>
