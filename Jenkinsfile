@@ -5,6 +5,7 @@ node {
 
     stage('Install Node Modules') {
         script {
+            sh 'npm install -g yarn'
             sh 'yarn'
         }
     }
