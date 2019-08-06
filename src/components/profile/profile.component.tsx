@@ -330,6 +330,16 @@ const ProfileComponent: React.FC<
     }
   };
 
+  const submitProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.currentTarget;
+
+    console.log(files);
+
+    if (files) {
+      console.log(files[0]);
+    }
+  };
+
   return (
     <Wrapper>
       <ProfileWrapper>
@@ -339,7 +349,7 @@ const ProfileComponent: React.FC<
               <TopImg src={DefaultProfileImg} alt="" />
               <ProfileBtn>
                 사진 변경
-                <input type="file" />
+                <input type="file" onChange={submitProfileImg} accept="image/*" />
               </ProfileBtn>
               <TopName>{name}</TopName>
             </Top>
