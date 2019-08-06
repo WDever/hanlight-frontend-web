@@ -16,7 +16,7 @@ import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { ActiveReportData, Board, BoardApiModel, LikeParams } from 'store';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const FeedWrapper = styled.div`
   width: 100%;
@@ -73,8 +73,30 @@ const FeedHeadWrapper = styled.div`
 const FeedHeadLeftWrapper = styled.div`
   display: flex;
   align-items: flex-start;
+`;
 
-  img {
+const ProfileImg = styled.img<{ image: boolean }>`
+  width: 2.69rem;
+
+  ${({ image }) =>
+    image &&
+    css`
+      height: 2.69rem;
+      margin-bottom: 0.56rem;
+      border-radius: 100%;
+      border: 1px solid #d1d1d1;
+
+      @media ${Device.tabletL} {
+        height: 3.5rem;
+        margin-bottom: 0.75rem;
+      }
+
+      @media ${Device.mobileL} {
+        height: 2rem;
+        margin-bottom: 0.43rem;
+      }
+    `}
+
     @media ${Device.tabletL} {
       width: 3.5rem;
     }
@@ -82,8 +104,8 @@ const FeedHeadLeftWrapper = styled.div`
     @media ${Device.mobileL} {
       width: 2rem;
     }
-  }
 `;
+
 const FeedHeadLeftString = styled.div`
   margin-left: 0.75rem;
 `;
@@ -639,7 +661,11 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
       <Feed>
         <FeedHeadWrapper>
           <FeedHeadLeftWrapper>
-            <img src={DefaultProfileImage} alt="" />
+            <ProfileImg
+              image={!!board.user_image}
+              src={board.user_image || DefaultProfileImage}
+              alt="profile"
+            />
             <FeedHeadLeftString>
               <FeedHeadName>{board.user_name}</FeedHeadName>
               <FeedHeadDate>

@@ -108,6 +108,7 @@ export class LoginSuccess implements Action {
         grade: number | null;
         classNum: number | null;
         studentNum: number | null;
+        image: string | null;
       };
     },
   ) {}
@@ -250,6 +251,7 @@ export class GetUserSuccess implements Action {
         grade: number | null;
         classNum: number | null;
         studentNum: number | null;
+        image: string | null;
       };
     },
   ) {}

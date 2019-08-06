@@ -13,6 +13,7 @@ const initialState: UserModel = {
   grade: null,
   classNum: null,
   studentNum: null,
+  image: null,
 
   verifyPhoneStatus: 'none',
   registerStatus: 'none',

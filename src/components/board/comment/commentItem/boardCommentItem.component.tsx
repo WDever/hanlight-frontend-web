@@ -8,7 +8,7 @@ import LikeIcon from 'lib/svg/like.svg';
 import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
 import { ActiveReportData, BoardApiModel, Comment, LikeParams } from 'store';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -54,17 +54,36 @@ const CommentContentWrapper = styled.div`
   width: 100%;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.img<{ image: boolean }>`
   width: 2.5rem;
   margin-right: 0.75rem;
 
-  @media ${Device.tabletL} {
-    width: 3.3rem;
-  }
+  ${({ image }) =>
+    image &&
+    css`
+      height: 2.5rem;
+      margin-bottom: 0.4rem;
+      border-radius: 100%;
+      border: 1px solid #d1d1d1;
 
-  @media ${Device.mobileL} {
-    width: 2rem;
-  }
+      @media ${Device.tabletL} {
+        height: 3.3rem;
+        margin-bottom: 0.625rem;
+      }
+
+      @media ${Device.mobileL} {
+        height: 2rem;
+        margin-bottom: 0.43rem;
+      }
+    `}
+
+    @media ${Device.tabletL} {
+      width: 3.3rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 2rem;
+    }
 `;
 
 const CommentBody = styled.div`
@@ -241,6 +260,7 @@ interface CommentItemProps {
   board_pk: number;
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  userImage: string | null;
   accessToken: string;
   boardApiStatus: BoardApiModel;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -271,6 +291,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   board_pk,
   comment_pk,
   userType,
+  userImage,
   like,
   likeStatus,
   accessToken,
@@ -343,7 +364,11 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     <Wrapper>
       <CommentWrapper>
         <CommentLeftWrapper>
-          <ProfileImg src={DefaultProfileImage} alt="" />
+          <ProfileImg
+            image={!!userImage}
+            src={userImage || DefaultProfileImage}
+            alt=""
+          />
           <CommentContentWrapper>
             {editToggle ? (
               <Form onSubmit={submitEdit}>

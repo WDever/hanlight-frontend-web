@@ -17,6 +17,7 @@ import {
 export interface BoardCommentProps {
   accessToken: string;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  userImage: string | null;
 }
 
 export interface BoardCommentMethod {
@@ -45,6 +46,7 @@ const mapStateToProps = (
 ) => ({
   accessToken: user.accessToken,
   userType: user.type,
+  userImage: user.image,
   ...ownProps,
 });
 

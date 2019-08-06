@@ -9,6 +9,7 @@ export interface UserModel {
   grade: number | null;
   classNum: number | null;
   studentNum: number | null;
+  image: string | null;
 
   verifyPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
   registerStatus: 'none' | 'pending' | 'success' | 'failure';

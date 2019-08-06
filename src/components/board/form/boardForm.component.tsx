@@ -57,12 +57,6 @@ const FormBody = styled.div`
     margin-top: 1.25rem;
   }
 
-  @media ${Device.mobileL} {
-    img {
-      width: 2rem;
-    }
-  }
-
   width: 100%;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -70,6 +64,27 @@ const FormBody = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const ProfileImg = styled.img<{ image: boolean }>`
+    width: 2.69rem;
+
+${({ image }) =>
+  image &&
+  css`
+    height: 2.69rem;
+    margin-bottom: 0.56rem;
+    border-radius: 100%;
+    border: 1px solid #d1d1d1;
+
+    @media ${Device.mobileL} {
+      height: 2rem;
+    }
+  `}
+
+  @media ${Device.mobileL} {
+    width: 2rem;
+  }
 `;
 
 const FormBodyText = styled.textarea<{ height: number }>`
@@ -391,7 +406,11 @@ export default class BoardFormComponent extends React.Component<
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
-                <img src={DefaultProfileImage} alt="" />
+                <ProfileImg
+                  image={!!this.props.userImage}
+                  src={this.props.userImage || DefaultProfileImage}
+                  alt=""
+                />
                 <FormBodyText
                   onChange={this.handleContent}
                   value={this.state.content}

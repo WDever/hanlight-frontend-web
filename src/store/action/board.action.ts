@@ -143,6 +143,7 @@ export class PostBoardSuccess implements Action {
     public payload: {
       pk: number;
       user_name: string;
+      user_image: string;
       content: string;
       files: string[];
       createdAt: string;
