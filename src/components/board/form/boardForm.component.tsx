@@ -63,6 +63,28 @@ const FormType = styled.label`
   }
 `;
 
+const FormTypeMobile = styled(FormType)`
+  margin: 0;
+
+  display: none;
+
+  font-size: 11px;
+
+  @media ${Device.tabletL} {
+    display: flex;
+  }
+
+  select {
+    margin-left: 0.75rem;
+
+    @media ${Device.mobileL} {
+      margin-left: 0.5rem;
+    }
+
+    font-size: 11px;
+  }
+`;
+
 const FormWrapper = styled.div`
   width: 100%;
   border-radius: 4px;
@@ -125,8 +147,14 @@ const FormBodyText = styled.textarea<{ height: number }>`
   box-sizing: border-box;
   outline: none;
 
+  @media ${Device.tabletL} {
+    width: 75%;
+  }
+
   @media ${Device.mobileL} {
     min-height: 2rem;
+
+    width: 65%;
   }
 `;
 
@@ -458,6 +486,13 @@ export default class BoardFormComponent extends React.Component<
                   height={this.state.textAreaHeight}
                   placeholder="대나무숲에 글을 남겨보세요!"
                 />
+                <FormTypeMobile>
+                  타입 선택
+                  <select onChange={this.handleFormType}>
+                    <option value="1">익명</option>
+                    <option value="0">실명</option>
+                  </select>
+                </FormTypeMobile>
               </FormBody>
               <FormImageWrapper>{FormPreviews}</FormImageWrapper>
               <FormButtonWrapper>
