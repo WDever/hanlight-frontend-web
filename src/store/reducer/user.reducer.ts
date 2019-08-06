@@ -25,6 +25,7 @@ const initialState: UserModel = {
   getUserStatus: 'none',
   patchPasswordStatus: 'none',
   patchPhoneStatus: 'none',
+  postProfilePicStatus: 'none',
 };
 
 export const userReducer = (
@@ -160,6 +161,18 @@ export const userReducer = (
         break;
       case 'PATCH_PHONE_FAILURE':
         draft.patchPhoneStatus = 'failure';
+        break;
+
+      case 'POST_PROFILE_PIC':
+        draft.postProfilePicStatus = 'none';
+        break;
+      
+      case 'POST_PROFILE_PIC_SUCCESS':
+        draft.postProfilePicStatus = 'success';
+        break;
+
+      case 'POST_PROFILE_PIC_FAILURE':
+        draft.postProfilePicStatus = 'failure';
         break;
 
       default:

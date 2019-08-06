@@ -122,6 +122,8 @@ const ProfileBtn = styled.label`
   margin-top: 0.5rem;
   margin-bottom: 0.25rem;
 
+  cursor: pointer;
+
   @media ${Device.mobileL} {
     font-size: 0.7rem;
   }
@@ -277,6 +279,8 @@ const ProfileComponent: React.FC<
   patchPassword,
   patchPhone,
   resetError,
+  postProfilePic,
+  postProfilePicStatus,
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
@@ -335,9 +339,8 @@ const ProfileComponent: React.FC<
   const submitProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
 
-    console.log(files);
-
     if (files) {
+      postProfilePic({ accessToken, file: files[0] });
       console.log(files[0]);
     }
   };
