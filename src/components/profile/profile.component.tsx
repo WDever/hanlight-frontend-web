@@ -323,10 +323,11 @@ const ProfileComponent: React.FC<
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const confirm = window.confirm('비밀번호를 변경하시겠습니끼?');
-
     if (new RegExp(passwordRegExp).test(password)) {
-      if (patchPasswordStatus !== 'pending' && confirm) {
+      if (
+        patchPasswordStatus !== 'pending' &&
+        window.confirm('비밀번호를 변경하시겠습니끼?')
+      ) {
         patchPassword({ accessToken, password });
       }
     } else {
