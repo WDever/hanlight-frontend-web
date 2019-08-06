@@ -138,6 +138,7 @@ const FeedOptionWrapper = styled.div`
   top: 2rem;
   cursor: pointer;
   z-index: 1;
+  outline: none;
 `;
 
 const FeedOption = styled.div`
@@ -517,6 +518,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     index: 0,
   });
   const [reportToggle, setReportToggle] = React.useState<boolean>(false);
+  const optionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -571,6 +573,12 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   const imgClicked = (index: number) => {
     setImgToggle({ toggle: true, index });
     deemBoard(true);
+  };
+
+  const setOptionFocus = () => {
+    if (optionRef && optionRef.current) {
+      optionRef.current.focus();
+    }
   };
 
   React.useEffect(() => {
@@ -642,7 +650,9 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <FeedHeadLeftWrapper>
             <img src={DefaultProfileImage} alt="" />
             <FeedHeadLeftString>
-              <FeedHeadName>{board.user_name ? board.user_name : '익명'}</FeedHeadName>
+              <FeedHeadName>
+                {board.user_name ? board.user_name : '익명'}
+              </FeedHeadName>
               <FeedHeadDate>
                 {moment(board.createdAt).format('lll')}
                 &ensp;
@@ -655,14 +665,17 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
               src={Dotdotdot}
               alt=""
               onClick={() => setOptionToggle(!optionToggle)}
-              onBlur={() => setOptionToggle(false)}
-              tabIndex={0}
             />
           </div>
         </FeedHeadWrapper>
         {optionToggle && (
           <div>
-            <FeedOptionWrapper>
+            <FeedOptionWrapper
+              onLoad={setOptionFocus}
+              onBlur={() => setOptionToggle(false)}
+              tabIndex={0}
+              ref={optionRef}
+            >
               {board.write && (
                 <>
                   <FeedOption

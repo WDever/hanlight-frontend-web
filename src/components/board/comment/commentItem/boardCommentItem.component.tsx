@@ -158,6 +158,7 @@ const OptionWrapper = styled.div`
   top: 50%;
   cursor: pointer;
   z-index: 1;
+  outline: none;
 `;
 
 const Option = styled.div`
@@ -313,6 +314,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
   const [editedContent, setEditedContent] = useInput('');
+  const optionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -341,6 +343,12 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
         comment_pk,
         content: editedContent,
       });
+    }
+  };
+
+  const setOptionFocus = () => {
+    if (optionRef && optionRef.current) {
+      optionRef.current.focus();
     }
   };
 
@@ -401,11 +409,14 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
           src={Dotdotdot}
           alt="comment option"
           onClick={() => setOptionToggle(!optionToggle)}
-          onBlur={() => setOptionToggle(false)}
-          tabIndex={0}
         />
         {optionToggle && (
-          <OptionWrapper>
+          <OptionWrapper
+            ref={optionRef}
+            onLoad={setOptionFocus}
+            onBlur={() => setOptionToggle(false)}
+            tabIndex={0}
+          >
             {write && (
               <>
                 <Option
