@@ -98,15 +98,38 @@ const Top = styled.div`
 
 const TopImg = styled.img`
   width: 7.5rem;
-  height: 7.5rem;
+  height: 8.5rem;
+
+  margin-bottom: -2rem;
 
   @media ${Device.tabletS} {
     width: 6.25rem;
-    height: 6.25rem;
+    height: 7.25rem;
+    margin-bottom: -1.5rem;
   }
   @media ${Device.mobileL} {
     width: 4rem;
-    height: 4rem;
+    height: 5rem;
+    margin-bottom: -1rem;
+  }
+`;
+
+const ProfileBtn = styled.label`
+  font-family: 'Spoqa Han Sans';
+  font-size: 0.875rem;
+  color: #4470ff;
+
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+
+  cursor: pointer;
+
+  @media ${Device.mobileL} {
+    font-size: 0.7rem;
+  }
+
+  input {
+    display: none;
   }
 `;
 
@@ -256,6 +279,8 @@ const ProfileComponent: React.FC<
   patchPassword,
   patchPhone,
   resetError,
+  postUserImg,
+  postUserImgStatus,
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
@@ -287,11 +312,22 @@ const ProfileComponent: React.FC<
     }
   }, [patchPhoneStatus, patchPasswordStatus]);
 
+  useEffect(() => {
+    if (postUserImgStatus === 'success') {
+      alert('성공적으로 변경되었습니다.');
+    } else if (postUserImgStatus === 'failure') {
+      alert(errorMessage);
+    }
+  }, [postUserImgStatus]);
+
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
     if (new RegExp(passwordRegExp).test(password)) {
-      if (patchPasswordStatus !== 'pending') {
+      if (
+        patchPasswordStatus !== 'pending' &&
+        window.confirm('비밀번호를 변경하시겠습니끼?')
+      ) {
         patchPassword({ accessToken, password });
       }
     } else {
@@ -309,6 +345,18 @@ const ProfileComponent: React.FC<
     }
   };
 
+  const submitProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.currentTarget;
+
+    if (files && files.length > 0 && postUserImgStatus !== 'pending') {
+      if (window.confirm('프로필 사진을 변경하시겠습니까?')) {
+        postUserImg({ accessToken, file: files[0] });
+      }
+    }
+
+    e.target.value = '';
+  };
+
   return (
     <Wrapper>
       <ProfileWrapper>
@@ -316,6 +364,14 @@ const ProfileComponent: React.FC<
           <TopWrapper>
             <Top>
               <TopImg src={DefaultProfileImg} alt="" />
+              <ProfileBtn>
+                사진 변경
+                <input
+                  type="file"
+                  onChange={submitProfileImg}
+                  accept="image/*"
+                />
+              </ProfileBtn>
               <TopName>{name}</TopName>
             </Top>
           </TopWrapper>

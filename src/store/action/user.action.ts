@@ -44,6 +44,10 @@ export const PATCH_PHONE = 'PATCH_PHONE';
 export const PATCH_PHONE_SUCCESS = 'PATCH_PHONE_SUCCESS';
 export const PATCH_PHONE_FAILURE = 'PATCH_PHONE_FAILURE';
 
+export const POST_USER_IMG = 'POST_USER_IMG';
+export const POST_USER_IMG_SUCCESS = 'POST_USER_IMG_SUCCESS';
+export const POST_USER_IMG_FAILURE = 'POST_USER_IMG_FAILURE';
+
 export interface LoginParam {
   id: string;
   password: string;
@@ -85,6 +89,25 @@ export interface PatchPwParam {
 export interface PatchPhoneParam {
   accessToken: string;
   code: string;
+}
+
+export interface PostUserImgParmas {
+  accessToken: string;
+  file: File;
+}
+
+export interface PostUserImgResType {
+  user: {
+    type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+    admin: number;
+    name: string;
+    id: string;
+    major: string | null;
+    grade: number | null;
+    classNum: number | null;
+    studentNum: number | null;
+    image: string;
+  };
 }
 
 export class Login implements Action {
@@ -133,7 +156,7 @@ export class IdRecoverySuccess implements Action {
 export class IdRecoveryFailure implements Action {
   public readonly type = ID_RECOVERY_FAILURE;
 
-  public constructor(payload: ErrorResponse) {}
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class PwRecovery implements Action {
@@ -153,7 +176,7 @@ export class PwRecoverySuccess implements Action {
 export class PwRecoveryFailure implements Action {
   public readonly type = PW_RECOVERY_FAILURE;
 
-  public constructor(payload: ErrorResponse) {}
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class IdExist implements Action {
@@ -193,7 +216,7 @@ export class VerifyPhoneSuccess implements Action {
 export class VerifyPhoneFailure implements Action {
   public readonly type = VERIFY_PHONE_FAILURE;
 
-  public constructor(payload: ErrorResponse) {}
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class Register implements Action {
@@ -211,7 +234,7 @@ export class RegisterSuccess implements Action {
 export class RegisterFailure implements Action {
   public readonly type = REGISTER_FAILURE;
 
-  public constructor(payload: ErrorResponse) {}
+  public constructor(public payload: ErrorResponse) {}
 }
 
 export class SetSignKey implements Action {
@@ -289,6 +312,24 @@ export class PatchPhoneFailure implements Action {
   public readonly type = PATCH_PHONE_FAILURE;
 }
 
+export class PostUserImg implements Action {
+  public readonly type = POST_USER_IMG;
+
+  public constructor(public payload: PostUserImgParmas) {}
+}
+
+export class PostUserImgSuccess implements Action {
+  public readonly type = POST_USER_IMG_SUCCESS;
+
+  public constructor(public payload: PostUserImgResType) {}
+}
+
+export class PostUserImgFailure implements Action {
+  public readonly type = POST_USER_IMG_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export const userActions = {
   login: createStandardAction(LOGIN)<LoginParam>(),
   idRecovery: createStandardAction(ID_RECOVERY)<IdRecoveryParam>(),
@@ -303,6 +344,7 @@ export const userActions = {
   getUser: createStandardAction(GET_USER)<string>(),
   patchPassword: createStandardAction(PATCH_PASSWORD)<PatchPwParam>(),
   patchPhone: createStandardAction(PATCH_PHONE)<PatchPhoneParam>(),
+  postUserImg: createStandardAction(POST_USER_IMG)<PostUserImgParmas>(),
 };
 
 export type userReducerActions =
@@ -336,4 +378,7 @@ export type userReducerActions =
   | PatchPasswordFailure
   | PatchPhone
   | PatchPhoneSuccess
-  | PatchPhoneFailure;
+  | PatchPhoneFailure
+  | PostUserImg
+  | PostUserImgSuccess
+  | PostUserImgFailure;
