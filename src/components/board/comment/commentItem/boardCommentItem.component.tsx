@@ -22,15 +22,20 @@ const OptionBtn = styled.img`
   width: 1.25rem;
   cursor: pointer;
   margin-bottom: 1rem;
+  outline: none;
 `;
 
-const CommentWrapper = styled.div`
+const CommentWrapper = styled.div<{ optionToggle: boolean }>`
   width: 100%;
   display: flex;
   min-height: 3.5rem;
   justify-content: space-between;
   align-items: center;
   position: relative;
+
+  ${OptionBtn} {
+    display: ${props => (props.optionToggle ? 'initial' : 'none')};
+  }
 
   &:hover {
     ${OptionBtn} {
@@ -172,6 +177,7 @@ const OptionWrapper = styled.div`
   top: 50%;
   cursor: pointer;
   z-index: 1;
+  outline: none;
 `;
 
 const Option = styled.div`
@@ -329,6 +335,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
   const [editToggle, setEditToggle] = React.useState<boolean>(false);
   const [editedContent, setEditedContent] = useInput('');
+  const optionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -360,9 +367,15 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     }
   };
 
+  const setOptionFocus = () => {
+    if (optionRef && optionRef.current) {
+      optionRef.current.focus();
+    }
+  };
+
   return (
     <Wrapper>
-      <CommentWrapper>
+      <CommentWrapper optionToggle={optionToggle}>
         <CommentLeftWrapper>
           <ProfileImg
             image={!!userImage}
@@ -385,7 +398,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
             ) : (
               <CommentBody>
                 <CommentContent>
-                  <CommentName>{user_name}</CommentName>
+                  <CommentName>{user_name ? user_name : '익명'}</CommentName>
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper>
@@ -423,7 +436,12 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
           onClick={() => setOptionToggle(!optionToggle)}
         />
         {optionToggle && (
-          <OptionWrapper>
+          <OptionWrapper
+            ref={optionRef}
+            onLoad={setOptionFocus}
+            onBlur={() => setOptionToggle(false)}
+            tabIndex={0}
+          >
             {write && (
               <>
                 <Option

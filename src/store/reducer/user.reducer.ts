@@ -165,7 +165,7 @@ export const userReducer = (
         break;
 
       case 'POST_USER_IMG':
-        draft.postUserImgStatus = 'none';
+        draft.postUserImgStatus = 'pending';
         break;
 
       case 'POST_USER_IMG_SUCCESS':

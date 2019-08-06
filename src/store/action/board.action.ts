@@ -57,6 +57,7 @@ export interface PostBoardParams {
   accessToken: string;
   content: string;
   files?: File[];
+  anonymous?: string;
 }
 
 export interface PatchBoardParams {
