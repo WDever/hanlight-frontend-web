@@ -47,7 +47,7 @@ const mapStateToProps = ({ user, error }: AppState) => ({
   patchPhoneStatus: user.patchPhoneStatus,
   errorCode: error.code,
   errorMessage: error.message,
-  postProfilePicStatus: user.postUserImgStatus,
+  postUserImgStatus: user.postUserImgStatus,
 });
 
 const mapDispatchToProps = (
