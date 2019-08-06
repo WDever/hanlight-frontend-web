@@ -44,9 +44,9 @@ export const PATCH_PHONE = 'PATCH_PHONE';
 export const PATCH_PHONE_SUCCESS = 'PATCH_PHONE_SUCCESS';
 export const PATCH_PHONE_FAILURE = 'PATCH_PHONE_FAILURE';
 
-export const POST_PROFILE_PIC = 'POST_PROFILE_PIC';
-export const POST_PROFILE_PIC_SUCCESS = 'POST_PROFILE_PIC_SUCCESS';
-export const POST_PROFILE_PIC_FAILURE = 'POST_PROFILE_PIC_FAILURE';
+export const POST_USER_IMG = 'POST_USER_IMG';
+export const POST_USER_IMG_SUCCESS = 'POST_USER_IMG_SUCCESS';
+export const POST_USER_IMG_FAILURE = 'POST_USER_IMG_FAILURE';
 
 export interface LoginParam {
   id: string;
@@ -91,12 +91,12 @@ export interface PatchPhoneParam {
   code: string;
 }
 
-export interface PostProfilePicParmas {
+export interface PostUserImgParmas {
   accessToken: string;
   file: File;
 }
 
-export interface PostProfilePicResType {
+export interface PostUserImgResType {
   user: {
     type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
     admin: number;
@@ -310,20 +310,20 @@ export class PatchPhoneFailure implements Action {
   public readonly type = PATCH_PHONE_FAILURE;
 }
 
-export class PostProfilePic implements Action {
-  public readonly type = POST_PROFILE_PIC;
+export class PostUserImg implements Action {
+  public readonly type = POST_USER_IMG;
 
-  public constructor(public payload: PostProfilePicParmas) {}
+  public constructor(public payload: PostUserImgParmas) {}
 }
 
-export class PostProfilePicSuccess implements Action {
-  public readonly type = POST_PROFILE_PIC_SUCCESS;
+export class PostUserImgSuccess implements Action {
+  public readonly type = POST_USER_IMG_SUCCESS;
 
-  public constructor(public payload: PostProfilePicResType) {}
+  public constructor(public payload: PostUserImgResType) {}
 }
 
-export class PostProfilePicFailure implements Action {
-  public readonly type = POST_PROFILE_PIC_FAILURE;
+export class PostUserImgFailure implements Action {
+  public readonly type = POST_USER_IMG_FAILURE;
 
   public constructor(public payload: ErrorResponse) {}
 }
@@ -342,9 +342,7 @@ export const userActions = {
   getUser: createStandardAction(GET_USER)<string>(),
   patchPassword: createStandardAction(PATCH_PASSWORD)<PatchPwParam>(),
   patchPhone: createStandardAction(PATCH_PHONE)<PatchPhoneParam>(),
-  postProfilePic: createStandardAction(POST_PROFILE_PIC)<
-    PostProfilePicParmas
-  >(),
+  postUserImg: createStandardAction(POST_USER_IMG)<PostUserImgParmas>(),
 };
 
 export type userReducerActions =
@@ -379,6 +377,6 @@ export type userReducerActions =
   | PatchPhone
   | PatchPhoneSuccess
   | PatchPhoneFailure
-  | PostProfilePic
-  | PostProfilePicSuccess
-  | PostProfilePicFailure;
+  | PostUserImg
+  | PostUserImgSuccess
+  | PostUserImgFailure;

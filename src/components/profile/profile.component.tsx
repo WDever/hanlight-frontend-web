@@ -279,8 +279,8 @@ const ProfileComponent: React.FC<
   patchPassword,
   patchPhone,
   resetError,
-  postProfilePic,
-  postProfilePicStatus,
+  postUserImg,
+  postUserImgStatus,
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
@@ -313,12 +313,12 @@ const ProfileComponent: React.FC<
   }, [patchPhoneStatus, patchPasswordStatus]);
 
   useEffect(() => {
-    if (postProfilePicStatus === 'success') {
+    if (postUserImgStatus === 'success') {
       alert('성공적으로 변경되었습니다.');
-    } else if (postProfilePicStatus === 'failure') {
+    } else if (postUserImgStatus === 'failure') {
       alert(errorMessage);
     }
-  }, [postProfilePicStatus]);
+  }, [postUserImgStatus]);
 
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
@@ -347,9 +347,13 @@ const ProfileComponent: React.FC<
   const submitProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
 
-    if (files && postProfilePicStatus !== 'pending') {
-      postProfilePic({ accessToken, file: files[0] });
+    if (files && files.length > 0 && postUserImgStatus !== 'pending') {
+      if (window.confirm('프로필 사진을 변경하시겠습니까?')) {
+        postUserImg({ accessToken, file: files[0] });
+      }
     }
+
+    e.target.value = '';
   };
 
   return (

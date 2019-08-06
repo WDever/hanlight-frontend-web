@@ -8,7 +8,7 @@ import {
   errorReducerActions,
   PatchPhoneParam,
   PatchPwParam,
-  PostProfilePicParmas,
+  PostUserImgParmas,
   userActions,
   userReducerActions,
 } from 'store';
@@ -23,7 +23,7 @@ export interface ProfileProps {
   classNum: number | null;
   patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
   patchPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
-  postProfilePicStatus: 'none' | 'pending' | 'success' | 'failure';
+  postUserImgStatus: 'none' | 'pending' | 'success' | 'failure';
   errorMessage: string;
   errorCode: number;
 }
@@ -32,7 +32,7 @@ export interface ProfileMethod {
   patchPassword: (payload: PatchPwParam) => void;
   patchPhone: (payload: PatchPhoneParam) => void;
   resetError: () => void;
-  postProfilePic(payload: PostProfilePicParmas): void;
+  postUserImg(payload: PostUserImgParmas): void;
 }
 
 const mapStateToProps = ({ user, error }: AppState) => ({
@@ -47,7 +47,7 @@ const mapStateToProps = ({ user, error }: AppState) => ({
   patchPhoneStatus: user.patchPhoneStatus,
   errorCode: error.code,
   errorMessage: error.message,
-  postProfilePicStatus: user.postProfilePicStatus,
+  postProfilePicStatus: user.postUserImgStatus,
 });
 
 const mapDispatchToProps = (
@@ -56,7 +56,7 @@ const mapDispatchToProps = (
   patchPassword: bindActionCreators(userActions.patchPassword, dispatch),
   patchPhone: bindActionCreators(userActions.patchPhone, dispatch),
   resetError: bindActionCreators(errorActions.resetError, dispatch),
-  postProfilePic: bindActionCreators(userActions.postProfilePic, dispatch),
+  postUserImg: bindActionCreators(userActions.postUserImg, dispatch),
 });
 
 const ProfileContainer = withRouter(
