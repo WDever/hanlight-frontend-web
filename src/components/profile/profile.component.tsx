@@ -311,8 +311,10 @@ const ProfileComponent: React.FC<
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const confirm = window.confirm('비밀번호를 변경하시겠습니끼?');
+
     if (new RegExp(passwordRegExp).test(password)) {
-      if (patchPasswordStatus !== 'pending') {
+      if (patchPasswordStatus !== 'pending' && confirm) {
         patchPassword({ accessToken, password });
       }
     } else {
@@ -349,7 +351,11 @@ const ProfileComponent: React.FC<
               <TopImg src={DefaultProfileImg} alt="" />
               <ProfileBtn>
                 사진 변경
-                <input type="file" onChange={submitProfileImg} accept="image/*" />
+                <input
+                  type="file"
+                  onChange={submitProfileImg}
+                  accept="image/*"
+                />
               </ProfileBtn>
               <TopName>{name}</TopName>
             </Top>
