@@ -8,7 +8,7 @@ import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import FormTypeArrow from 'lib/svg/form-type-arrow.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const FormTitle = styled.div`
   width: 100%;
