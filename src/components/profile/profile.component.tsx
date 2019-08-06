@@ -312,6 +312,14 @@ const ProfileComponent: React.FC<
     }
   }, [patchPhoneStatus, patchPasswordStatus]);
 
+  useEffect(() => {
+    if (postProfilePicStatus === 'success') {
+      alert('성공적으로 변경되었습니다.');
+    } else if (postProfilePicStatus === 'failure') {
+      alert(errorMessage);
+    }
+  }, [postProfilePicStatus]);
+
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -339,9 +347,8 @@ const ProfileComponent: React.FC<
   const submitProfileImg = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.currentTarget;
 
-    if (files) {
+    if (files && postProfilePicStatus !== 'pending') {
       postProfilePic({ accessToken, file: files[0] });
-      console.log(files[0]);
     }
   };
 
