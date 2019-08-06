@@ -87,6 +87,11 @@ const postBoardApi = (data: PostBoardParams) => {
   if (data.files && data.files.length !== 0) {
     Array.from(data.files).forEach(file => formData.append('files', file));
   }
+
+  if (data.anonymous) {
+    formData.append('anonymous', data.anonymous);
+  }
+
   formData.append('content', data.content);
   return instance
     .post('/api/board', formData, {
