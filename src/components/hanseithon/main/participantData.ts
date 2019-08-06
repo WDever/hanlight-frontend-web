@@ -76,7 +76,7 @@ export const livingTeams = [
         name: '김현성',
         leader: false,
         studentId: 'U2206',
-        position: '개발',
+        position: '디자인',
       },
       {
         name: '김경백',
