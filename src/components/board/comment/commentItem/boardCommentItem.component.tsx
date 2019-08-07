@@ -398,7 +398,9 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
             ) : (
               <CommentBody>
                 <CommentContent>
-                  <CommentName>{user_name ? user_name : '익명'}</CommentName>
+                  <CommentName>
+                    {user_name ? user_name : '글 작성자'}
+                  </CommentName>
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper>

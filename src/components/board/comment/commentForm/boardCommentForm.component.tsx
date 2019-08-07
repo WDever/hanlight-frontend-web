@@ -113,12 +113,15 @@ const CommentFormComponent: React.FC<
   CommentFormProps & CommentFormOwnProps & CommentFormMethod
 > = ({
   board_pk,
+  board_userName,
+  board_write,
   postBoardComment,
   postBoardCommentStatus,
   accessToken,
   userImage,
 }) => {
   const [content, setContent] = useInput('');
+  const anonymous = !board_userName && board_write;
 
   const PostComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -131,8 +134,8 @@ const CommentFormComponent: React.FC<
   return (
     <Wrapper>
       <ProfileImg
-        image={!!userImage}
-        src={userImage || DefaultProfileImage}
+        image={!!userImage && !anonymous}
+        src={anonymous ? DefaultProfileImage : userImage || DefaultProfileImage}
         alt="Profile"
       />
       <Form>

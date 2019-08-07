@@ -31,6 +31,8 @@ export interface BoardCommentOwnProps {
   comment: Comment[];
   commentCount: number;
   board_pk: number;
+  board_write: boolean;
+  board_userName: string | null;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
   page: number;
   deemBoard: (payload: boolean) => void;

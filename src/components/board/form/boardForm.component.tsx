@@ -369,7 +369,7 @@ export default class BoardFormComponent extends React.Component<
     content: '',
     files: [],
     textAreaHeight: 0,
-    type: '1',
+    type: '0',
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -487,16 +487,20 @@ export default class BoardFormComponent extends React.Component<
               <FormType>
                 타입 선택
                 <select onChange={this.handleFormType}>
-                  <option value="1">익명</option>
                   <option value="0">실명</option>
+                  <option value="1">익명</option>
                 </select>
               </FormType>
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
                 <ProfileImg
-                  image={!!this.props.userImage}
-                  src={this.props.userImage || DefaultProfileImage}
+                  image={this.state.type === '0' && !!this.props.userImage}
+                  src={
+                    this.state.type === '0'
+                      ? this.props.userImage || DefaultProfileImage
+                      : DefaultProfileImage
+                  }
                   alt=""
                 />
                 <FormBodyText

@@ -16,7 +16,7 @@ import {
 import { Device } from 'lib/styles';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
 import { RouteComponentProps } from 'react-router';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import uuid from 'uuid';
 
 const { useEffect } = React;
@@ -96,20 +96,24 @@ const Top = styled.div`
   }
 `;
 
-const TopImg = styled.img`
+const TopImg = styled.img<{ image: boolean }>`
   width: 7.5rem;
-  height: 8.5rem;
-
   margin-bottom: -2rem;
+
+  ${({ image }) =>
+    image &&
+    css`
+      border: 1px solid #d1d1d1;
+      border-radius: 100%;
+      margin-bottom: 0;
+    `}
 
   @media ${Device.tabletS} {
     width: 6.25rem;
-    height: 7.25rem;
     margin-bottom: -1.5rem;
   }
   @media ${Device.mobileL} {
     width: 4rem;
-    height: 5rem;
     margin-bottom: -1rem;
   }
 `;
@@ -272,6 +276,7 @@ const ProfileComponent: React.FC<
   major,
   grade,
   classNum,
+  image,
   errorMessage,
   errorCode,
   patchPasswordStatus,
@@ -363,7 +368,7 @@ const ProfileComponent: React.FC<
         <Profile>
           <TopWrapper>
             <Top>
-              <TopImg src={DefaultProfileImg} alt="" />
+              <TopImg image={!!image} src={image || DefaultProfileImg} alt="" />
               <ProfileBtn>
                 사진 변경
                 <input

@@ -867,6 +867,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
         </FeedBody>
         <BoardCommentContainer
           board_pk={board.pk}
+          board_userName={board.user_name}
+          board_write={board.write}
           comment={board.comment}
           commentCount={board.commentCount}
           like={like}

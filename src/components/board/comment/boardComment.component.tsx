@@ -142,6 +142,8 @@ const BoardCommentComponent: React.FC<
         <CommentFormContainer
           accessToken={props.accessToken}
           board_pk={props.board_pk}
+          board_write={props.board_write}
+          board_userName={props.board_userName}
           userImage={props.userImage}
         />
       )}
