@@ -14,6 +14,7 @@ export interface BoardFormProps {
   accessToken: string;
   postBoardStatus: 'none' | 'pending' | 'success' | 'failure';
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  userImage: string | null;
 }
 
 export interface BoardFormMethod {
@@ -24,6 +25,7 @@ const mapStateToProps = ({ user, board, error }: AppState) => ({
   accessToken: user.accessToken,
   postBoardStatus: board.postBoardStatus,
   userType: user.type,
+  userImage: user.image,
   errorCode: error.code,
   errorMessage: error.message,
 });

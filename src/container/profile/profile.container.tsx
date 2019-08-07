@@ -21,6 +21,7 @@ export interface ProfileProps {
   major: string | null;
   grade: number | null;
   classNum: number | null;
+  image: string | null;
   patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
   patchPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
   postUserImgStatus: 'none' | 'pending' | 'success' | 'failure';
@@ -43,6 +44,7 @@ const mapStateToProps = ({ user, error }: AppState) => ({
   classNum: user.classNum,
   name: user.name,
   id: user.id,
+  image: user.image,
   patchPasswordStatus: user.patchPasswordStatus,
   patchPhoneStatus: user.patchPhoneStatus,
   errorCode: error.code,

@@ -8,7 +8,7 @@ import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import FormTypeArrow from 'lib/svg/form-type-arrow.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const FormTitle = styled.div`
   width: 100%;
@@ -121,12 +121,6 @@ const FormBody = styled.div`
     margin-top: 1.25rem;
   }
 
-  @media ${Device.mobileL} {
-    img {
-      width: 2rem;
-    }
-  }
-
   width: 100%;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -134,6 +128,27 @@ const FormBody = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+`;
+
+const ProfileImg = styled.img<{ image: boolean }>`
+    width: 2.69rem;
+
+${({ image }) =>
+  image &&
+  css`
+    height: 2.69rem;
+    margin-bottom: 0.56rem;
+    border-radius: 100%;
+    border: 1px solid #d1d1d1;
+
+    @media ${Device.mobileL} {
+      height: 2rem;
+    }
+  `}
+
+  @media ${Device.mobileL} {
+    width: 2rem;
+  }
 `;
 
 const FormBodyText = styled.textarea<{ height: number }>`
@@ -354,7 +369,7 @@ export default class BoardFormComponent extends React.Component<
     content: '',
     files: [],
     textAreaHeight: 0,
-    type: '1',
+    type: '0',
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -472,14 +487,22 @@ export default class BoardFormComponent extends React.Component<
               <FormType>
                 타입 선택
                 <select onChange={this.handleFormType}>
-                  <option value="1">익명</option>
                   <option value="0">실명</option>
+                  <option value="1">익명</option>
                 </select>
               </FormType>
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
-                <img src={DefaultProfileImage} alt="" />
+                <ProfileImg
+                  image={this.state.type === '0' && !!this.props.userImage}
+                  src={
+                    this.state.type === '0'
+                      ? this.props.userImage || DefaultProfileImage
+                      : DefaultProfileImage
+                  }
+                  alt=""
+                />
                 <FormBodyText
                   onChange={this.handleContent}
                   value={this.state.content}

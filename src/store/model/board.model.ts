@@ -1,6 +1,7 @@
 export interface Comment {
   pk: number;
-  user_name: string | null;
+  user_name: string;
+  user_image: string;
   content: string;
   createdAt: string;
   edited: boolean;
@@ -11,7 +12,8 @@ export interface Comment {
 
 export interface Board {
   pk: number;
-  user_name: string | null;
+  user_name: string;
+  user_image: string;
   content: string;
   files: string[];
   createdAt: string;

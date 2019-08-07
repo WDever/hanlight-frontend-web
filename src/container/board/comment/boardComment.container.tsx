@@ -17,6 +17,7 @@ import {
 export interface BoardCommentProps {
   accessToken: string;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  userImage: string | null;
 }
 
 export interface BoardCommentMethod {
@@ -30,6 +31,8 @@ export interface BoardCommentOwnProps {
   comment: Comment[];
   commentCount: number;
   board_pk: number;
+  board_write: boolean;
+  board_userName: string | null;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
   page: number;
   deemBoard: (payload: boolean) => void;
@@ -45,6 +48,7 @@ const mapStateToProps = (
 ) => ({
   accessToken: user.accessToken,
   userType: user.type,
+  userImage: user.image,
   ...ownProps,
 });
 
