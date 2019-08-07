@@ -512,8 +512,8 @@ export default class BoardFormComponent extends React.Component<
                 <FormTypeMobile>
                   타입 선택
                   <select onChange={this.handleFormType}>
-                    <option value="1">익명</option>
                     <option value="0">실명</option>
+                    <option value="1">익명</option>
                   </select>
                 </FormTypeMobile>
               </FormBody>
