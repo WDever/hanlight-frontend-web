@@ -5,8 +5,9 @@ import {
   BoardFormProps,
 } from 'container/board/form/boardForm.container';
 import { Device } from 'lib/styles';
+import BlueCheck from 'lib/svg/blue-check.svg';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
-import FormTypeArrow from 'lib/svg/form-type-arrow.svg';
+import GreyCheck from 'lib/svg/grey-check.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled, { css } from 'styled-components';
 
@@ -29,36 +30,49 @@ const FormTitle = styled.div`
   }
 `;
 
-const FormType = styled.label`
-  font-family: 'Spoqa Han Sans';
-  font-size: 0.875rem;
-
+const FormType = styled.div<{ checked: boolean }>`
   margin-right: 1.5rem;
 
-  select {
-    color: #4470ff;
-    font-weight: bold;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 1rem;
+
+    margin-top: 0.125rem;
+    margin-left: 0.25rem;
+
+    @media ${Device.tabletL} {
+      width: 1.125rem;
+
+      margin-left: 5px;
+    }
+
+    @media ${Device.mobileL} {
+      width: 0.75rem;
+
+      margin-left: 3px;
+    }
+  }
+
+  span {
+    font-family: 'Spoqa Han Sans';
     font-size: 0.875rem;
-    font-family: inherit;
+    font-weight: bold;
+    color: ${({ checked }) => (checked ? '#4470ff' : '#d3d3d3')};
 
-    margin-left: 1rem;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
 
-    background-image: url(${FormTypeArrow});
-    background-repeat: no-repeat;
-    background-position: 95% 50%;
-    background-color: #ffffff;
+    @media ${Device.tabletL} {
+      font-size: 1rem;
+    }
 
-    outline: none;
-
-    padding-right: 0.5rem;
-
-    border: none;
-
-    ::-ms-expand {
-      display: none;
+    @media ${Device.mobileL} {
+      font-size: 11px;
     }
   }
 `;
@@ -364,12 +378,12 @@ export default class BoardFormComponent extends React.Component<
     content: string;
     files: Array<{ file: File; preview: string }>;
     textAreaHeight: number;
-    type: '1' | '0';
+    type: boolean;
   } = {
     content: '',
     files: [],
     textAreaHeight: 0,
-    type: '0',
+    type: false,
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -443,17 +457,23 @@ export default class BoardFormComponent extends React.Component<
         accessToken: this.props.accessToken,
         content: this.state.content.trim(),
         files: this.state.files.map(v => v.file),
-        anonymous: this.state.type,
+        anonymous: this.state.type ? '1' : '0',
       });
     }
   };
 
-  public handleFormType = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.currentTarget;
-
-    this.setState(state => ({
-      type: value,
-    }));
+  public handleFormType = () => {
+    this.setState(
+      (state: {
+        content: string;
+        files: Array<{ file: File; preview: string }>;
+        textAreaHeight: number;
+        type: boolean;
+      }) => ({
+        type: !state.type,
+      }),
+    );
+    console.log(this.state.type);
   };
 
   public render() {
@@ -484,20 +504,20 @@ export default class BoardFormComponent extends React.Component<
           <FormWrapper>
             <FormTitle>
               <span>대나무숲에 글 올리기</span>
-              <FormType>
-                타입 선택
-                <select value={this.state.type} onChange={this.handleFormType}>
-                  <option value="0">실명</option>
-                  <option value="1">익명</option>
-                </select>
+              <FormType onClick={this.handleFormType} checked={this.state.type}>
+                <span>익명</span>
+                <img
+                  src={this.state.type ? BlueCheck : GreyCheck}
+                  alt="form type"
+                />
               </FormType>
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
                 <ProfileImg
-                  image={this.state.type === '0' && !!this.props.userImage}
+                  image={!this.state.type && !!this.props.userImage}
                   src={
-                    this.state.type === '0'
+                    !this.state.type
                       ? this.props.userImage || DefaultProfileImage
                       : DefaultProfileImage
                   }
@@ -509,12 +529,15 @@ export default class BoardFormComponent extends React.Component<
                   height={this.state.textAreaHeight}
                   placeholder="대나무숲에 글을 남겨보세요!"
                 />
-                <FormTypeMobile>
-                  타입 선택
-                  <select value={this.state.type} onChange={this.handleFormType}>
-                    <option value="0">실명</option>
-                    <option value="1">익명</option>
-                  </select>
+                <FormTypeMobile
+                  onClick={this.handleFormType}
+                  checked={this.state.type}
+                >
+                  <span>익명</span>
+                  <img
+                    src={this.state.type ? BlueCheck : GreyCheck}
+                    alt="form type"
+                  />
                 </FormTypeMobile>
               </FormBody>
               <FormImageWrapper>{FormPreviews}</FormImageWrapper>
