@@ -315,6 +315,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   } = boardApiStatus;
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -327,6 +328,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   };
   const prevStatusProps:
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }

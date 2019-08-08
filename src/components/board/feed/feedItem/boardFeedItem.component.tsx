@@ -513,6 +513,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     postBoardStatus,
     patchBoardStatus,
     deleteBoardStatus,
+    getLikeListStatus,
   } = boardApiStatus;
 
   const statusProps: {

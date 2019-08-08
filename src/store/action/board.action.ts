@@ -1,6 +1,12 @@
 import { AxiosError } from 'axios';
 import { Action } from 'redux';
-import { ActiveReportData, Board, Comment, ErrorResponse } from 'store/model';
+import {
+  ActiveReportData,
+  Board,
+  Comment,
+  ErrorResponse,
+  LikeListModel,
+} from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
@@ -43,6 +49,10 @@ export const ACTIVE_REPORT = 'ACTIVE_REPORT';
 export const LIKE = 'LIKE';
 export const LIKE_SUCCESS = 'LIKE_SUCCESS';
 export const LIKE_FAILURE = 'LIKE_FAILURE';
+
+export const GET_LIKE_LIST = 'GET_LIKE_LIST';
+export const GET_LIKE_LIST_SUCCESS = 'GET_LIKE_LIST_SUCCESS';
+export const GET_LIKE_LIST_FAILURE = 'GET_LIKE_LIST_FAILURE';
 
 export const DEEM_BOARD = 'DEEM_BOARD';
 
@@ -109,6 +119,10 @@ export interface LikeParams {
   type: 'board' | 'comment';
   board_pk: number;
   comment_pk?: number;
+}
+
+export interface GetLikeListResType {
+  like: LikeListModel[];
 }
 
 export class GetBoard implements Action {
@@ -359,6 +373,24 @@ export class LikeFailure implements Action {
   ) {}
 }
 
+export class GetLikeList implements Action {
+  public readonly type = GET_LIKE_LIST;
+
+  public constructor(public payload: LikeParams) {}
+}
+
+export class GetLikeListSuccess implements Action {
+  public readonly type = GET_LIKE_LIST_SUCCESS;
+
+  public constructor(public payload: GetLikeListResType) {}
+}
+
+export class GetLikeListFailure implements Action {
+  public readonly type = GET_LIKE_LIST_FAILURE;
+
+  public constructor(public payload: ErrorResponse) {}
+}
+
 export class DeemBoard implements Action {
   public readonly type = DEEM_BOARD;
 
@@ -389,6 +421,7 @@ export const boardActions = {
   report: createStandardAction(REPORT)<ReportParams>(),
   activeReport: createStandardAction(ACTIVE_REPORT)<ActiveReportData>(),
   like: createStandardAction(LIKE)<LikeParams>(),
+  getLikeList: createStandardAction(GET_LIKE_LIST)<LikeParams>(),
   deemBoard: createStandardAction(DEEM_BOARD)(),
   resetBoard: createStandardAction(RESET_BOARD)(),
 };
@@ -425,5 +458,8 @@ export type boardReducerActions =
   | Like
   | LikeSuccess
   | LikeFailure
+  | GetLikeList
+  | GetLikeListSuccess
+  | GetLikeListFailure
   | DeemBoard
   | ResetBoard;

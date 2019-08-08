@@ -32,6 +32,11 @@ export interface ActiveReportData {
   active: boolean;
 }
 
+export interface LikeListModel {
+  user_name: string;
+  user_image: string;
+}
+
 type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardApiModel {
@@ -43,6 +48,7 @@ export interface BoardApiModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
+  getLikeListStatus: status;
 }
 
 export interface BoardModel {
@@ -56,6 +62,7 @@ export interface BoardModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
+  getLikeListStatus: status;
   reportStatus: status;
   likeStatus: status;
   deemBoardStatus: boolean;

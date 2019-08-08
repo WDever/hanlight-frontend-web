@@ -87,6 +87,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   postBoardCommentStatus,
   patchBoardCommentStatus,
   deleteBoardCommentStatus,
+  getLikeListStatus,
   errorCode,
   errorMessage,
 }) => {
@@ -102,6 +103,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   };
 
   const prevStatusProps:
@@ -149,6 +151,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
                 postBoardCommentStatus,
                 patchBoardCommentStatus,
                 deleteBoardCommentStatus,
+                getLikeListStatus,
               }}
               likeStatus={likeStatus}
               errorCode={errorCode}

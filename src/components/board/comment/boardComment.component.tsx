@@ -72,6 +72,7 @@ const BoardCommentComponent: React.FC<
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   } = boardApiStatus;
 
   const handleOption = ({

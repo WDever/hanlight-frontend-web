@@ -13,6 +13,7 @@ const initialState: BoardModel = {
   postBoardCommentStatus: 'none',
   patchBoardCommentStatus: 'none',
   deleteBoardCommentStatus: 'none',
+  getLikeListStatus: 'none',
   reportStatus: 'none',
   likeStatus: 'none',
   deemBoardStatus: false,
@@ -391,6 +392,19 @@ export const boardReducer = (
             }
           }
         }
+        break;
+
+      case 'GET_LIKE_LIST':
+        draft.getLikeListStatus = 'pending';
+        break;
+
+      case 'GET_LIKE_LIST_SUCCESS':
+        draft.getLikeListStatus = 'success';
+        console.log(action.payload);
+        break;
+
+      case 'GET_LIKE_LIST_FAILURE':
+        draft.getLikeListStatus = 'failure';
         break;
 
       case 'DEEM_BOARD':
