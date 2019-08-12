@@ -62,36 +62,6 @@ export default class BoardFeedComponent extends React.Component<
     }
   }
 
-  public handleOption = ({
-    action,
-    board_pk,
-    content,
-  }: {
-    action: 'delete' | 'edit' | 'report';
-    board_pk: number;
-    comment_pk?: number;
-    content?: string;
-  }) => {
-    if (
-      action === 'delete' &&
-      this.props.boardApiStatus.deleteBoardStatus !== 'pending'
-    ) {
-      window.confirm('정말로 삭제하시겠습니까?') &&
-        this.props.deleteBoard({
-          board_pk,
-          accessToken: this.props.accessToken,
-        });
-    } else if (action === 'edit') {
-      if (content) {
-        this.props.patchBoard({
-          accessToken: this.props.accessToken,
-          board_pk,
-          content,
-        });
-      }
-    }
-  };
-
   public getBoardComments = ({
     board_pk,
     page,
@@ -115,15 +85,15 @@ export default class BoardFeedComponent extends React.Component<
       deemBoardStatus,
       activeReport,
       boardApiStatus,
+      optionToggle
     } = this.props;
-    const { handleOption, getBoardComments } = this;
+    const { getBoardComments } = this;
 
     return board.map((val, i) => (
       <FeedItemComponent
         accessToken={accessToken}
         key={i}
         board={val}
-        handleOption={handleOption}
         getBoardComments={getBoardComments}
         like={like}
         likeStatus={likeStatus}
@@ -131,6 +101,7 @@ export default class BoardFeedComponent extends React.Component<
         deemBoardStatus={deemBoardStatus}
         activeReport={activeReport}
         boardApiStatus={boardApiStatus}
+        optionToggle={optionToggle}
       />
     ));
   }

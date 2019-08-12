@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import BoradOptionComponent from 'components/board/option';
 import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
@@ -90,6 +91,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   getLikeListStatus,
   errorCode,
   errorMessage,
+  optionData,
 }) => {
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -111,14 +113,6 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     | undefined = usePrevious(statusProps);
 
   useEffect(() => {
-    return () => {
-      if (errorCode < 500) {
-        resetError();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     if (prevStatusProps) {
       if (
         Object.keys(prevStatusProps).some(
@@ -138,6 +132,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     <Templete>
       <Wrapper>
         {deemBoardStatus && <Deem />}
+        {optionData.type !== 'none' && <BoradOptionComponent />}
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />

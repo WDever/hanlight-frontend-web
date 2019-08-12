@@ -1,7 +1,6 @@
 import * as React from 'react';
 
 import BoardCommentContainer from 'container/board/comment';
-import BoardReportContainer from 'container/board/report';
 import { usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
@@ -15,7 +14,12 @@ import ReportIcon from 'lib/svg/report-icon.svg';
 import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { ActiveReportData, Board, BoardApiModel, LikeParams } from 'store';
+import {
+  Board,
+  BoardApiModel,
+  LikeParams,
+  OptionData,
+} from 'store';
 import styled, { css } from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -324,84 +328,6 @@ const FeedImgToggleArrow = styled.img`
   cursor: pointer;
 `;
 
-const EditWrapper = styled.div`
-  width: 100%;
-  position: absolute;
-  top: 3rem;
-  background-color: #ffffff;
-  z-index: 3;
-  font-family: 'Spoqa Han Sans';
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const EditTitleWrapper = styled.div`
-  width: 100%;
-  height: 2.3rem;
-  border-bottom: 1px solid #d1d1d1;
-
-  display: flex;
-  align-items: center;
-`;
-
-const EditTitle = styled.span`
-  font-size: 0.875rem;
-  margin-left: 0.75rem;
-`;
-
-const EditContentWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  margin-top: 2.25rem;
-`;
-
-const EditContentText = styled.textarea<{ height: number }>`
-  width: 80%;
-  height: ${props => props.height}px;
-  min-height: 5rem;
-  font-size: 0.875rem;
-  font-family: inherit;
-  line-height: 1.43;
-  resize: none;
-  box-sizing: border-box;
-  color: #1d2129;
-  border: 0;
-  outline: none;
-`;
-
-const EditImgWrapper = styled.div`
-  width: 5.75rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const EditFooter = styled.div`
-  width: 95%;
-  height: 4.5rem;
-  border-top: solid 1px #e5e5e5;
-  margin-top: 2.25rem;
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-`;
-
-const EditButton = styled.button`
-  width: 6.875rem;
-  height: 2rem;
-  font-size: 0.875rem;
-  font-weight: bold;
-  color: #e9ebee;
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: #4470ff;
-  border: 0;
-  border-radius: 1rem;
-`;
-
 const LikeWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -486,27 +412,23 @@ interface FeedItemProps {
 }
 
 interface FeedItemMethod {
-  handleOption: (payload: {
-    action: 'delete' | 'edit' | 'report';
-    board_pk: number;
-    content?: string;
-  }) => void;
   getBoardComments: (payload: { board_pk: number; page: number }) => void;
   like: (payload: LikeParams) => void;
   deemBoard: (payload: boolean) => void;
-  activeReport(data: ActiveReportData): void;
+  activeReport(data: boolean): void;
+  optionToggle(payload: OptionData): void;
 }
 
 const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   accessToken,
   board,
-  handleOption,
   getBoardComments,
   like,
   likeStatus,
   deemBoard,
   activeReport,
   boardApiStatus,
+  optionToggle,
 }) => {
   const {
     getBoardStatus,
@@ -527,11 +449,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   const prevStatusProps:
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
     | undefined = usePrevious(statusProps);
-  const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
-  const [editing, setEditing] = React.useState<boolean>(false);
-  const [editHeight, setEditHeight] = React.useState<number>(80);
-  const [editContent, setEditContent] = React.useState<string>('');
-  const editRef = React.useRef(null);
   const [page, setPage] = React.useState<number>(1);
   const [imgToggle, setImgToggle] = React.useState<{
     toggle: boolean;
@@ -540,7 +457,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     toggle: false,
     index: 0,
   });
-  const [reportToggle, setReportToggle] = React.useState<boolean>(false);
   const optionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -552,36 +468,24 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             statusProps[status] !== 'pending',
         )
       ) {
-        if (editing) {
-          deemBoard(false);
-          setEditing(false);
-          setEditHeight(80);
-          setEditContent('');
-        }
         if (imgToggle.toggle) {
           setImgToggle({ toggle: false, index: 0 });
           deemBoard(false);
         }
-        if (reportToggle) {
-          deemBoard(false);
-          setReportToggle(false);
-          activeReport({
-            active: false,
-            type: 'none',
-            board_pk: board.pk,
-          });
-        }
-        setOptionToggle(false);
+        optionToggle({
+          type: 'none',
+          board_pk: 0,
+          content: '',
+          write: board.write,
+        });
       }
     }
   }, [
     activeReport,
     board.pk,
     deemBoard,
-    editing,
     imgToggle.toggle,
     prevStatusProps,
-    reportToggle,
     statusProps,
   ]);
 
@@ -604,70 +508,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     }
   };
 
-  React.useEffect(() => {
-    if (patchBoardStatus === 'success' && editing) {
-      setEditing(false);
-      deemBoard(false);
-    }
-  }, [deemBoard, editing, patchBoardStatus]);
-
   return (
     <FeedWrapper key={board.pk}>
-      {reportToggle && (
-        <BoardReportContainer setReportToggle={setReportToggle} />
-      )}
-      {editing && (
-        <EditWrapper>
-          <FeedXButton
-            width={26}
-            height={3}
-            left={2}
-            top={1}
-            color={'#9B9B9B'}
-            onClick={() => {
-              setEditing(false);
-              deemBoard(false);
-            }}
-          />
-          <EditTitleWrapper>
-            <EditTitle>글 수정하기</EditTitle>
-          </EditTitleWrapper>
-          <EditContentWrapper>
-            <EditImgWrapper>
-              <img src={DefaultProfileImage} alt="" />
-            </EditImgWrapper>
-            <EditContentText
-              height={editHeight}
-              value={editContent}
-              ref={editRef}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                if (e.target.value.length <= 300) {
-                  setEditContent(e.target.value);
-                  if (e.currentTarget.scrollHeight > editHeight) {
-                    setEditHeight(e.currentTarget.scrollHeight);
-                  }
-                }
-              }}
-            />
-          </EditContentWrapper>
-          <EditFooter>
-            <EditButton
-              onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                e.preventDefault();
-                if (patchBoardStatus !== 'pending') {
-                  handleOption({
-                    action: 'edit',
-                    board_pk: board.pk,
-                    content: editContent,
-                  });
-                }
-              }}
-            >
-              수정
-            </EditButton>
-          </EditFooter>
-        </EditWrapper>
-      )}
       <Feed>
         <FeedHeadWrapper>
           <FeedHeadLeftWrapper>
@@ -691,60 +533,19 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             <FeedHeadOptionBtn
               src={Dotdotdot}
               alt=""
-              onClick={() => setOptionToggle(!optionToggle)}
+              onClick={() =>{
+                optionToggle({
+                  type: 'board',
+                  board_pk: board.pk,
+                  content: board.content,
+                  write: board.write
+                })
+              }
+                
+              }
             />
           </div>
         </FeedHeadWrapper>
-        {optionToggle && (
-          <div>
-            <FeedOptionWrapper
-              onLoad={setOptionFocus}
-              onBlur={() => setOptionToggle(false)}
-              tabIndex={0}
-              ref={optionRef}
-            >
-              {board.write && (
-                <>
-                  <FeedOption
-                    onClick={() => {
-                      setOptionToggle(false);
-                      setEditing(true);
-                      setEditContent(board.content);
-                      deemBoard(true);
-                    }}
-                  >
-                    <FeedOptionImg src={EditIcon} alt="" />
-                    <span>게시글 수정</span>
-                  </FeedOption>
-                  <FeedOption
-                    onClick={() => {
-                      handleOption({ action: 'delete', board_pk: board.pk });
-                      setOptionToggle(false);
-                    }}
-                  >
-                    <FeedOptionImg src={DeleteIcon} alt="" />
-                    <span>게시글 삭제</span>
-                  </FeedOption>
-                </>
-              )}
-              <FeedOption
-                onClick={() => {
-                  setOptionToggle(false);
-                  setReportToggle(true);
-                  deemBoard(true);
-                  activeReport({
-                    active: true,
-                    type: 'board',
-                    board_pk: board.pk,
-                  });
-                }}
-              >
-                <FeedOptionImg src={ReportIcon} alt="" />
-                <span>신고하기</span>
-              </FeedOption>
-            </FeedOptionWrapper>
-          </div>
-        )}
         <FeedBody>
           <FeedContentWrapper>
             <FeedContent>{board.content}</FeedContent>
@@ -809,7 +610,12 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                         key={i}
                         onClick={() => {
                           imgClicked(i);
-                          setOptionToggle(false);
+                          optionToggle({
+                            type: 'none',
+                            board_pk: 0,
+                            content: '',
+                            write: board.write,
+                          });
                         }}
                       >
                         <FeedMoreImgSpan>
@@ -832,7 +638,12 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                         src={file}
                         onClick={() => {
                           imgClicked(i);
-                          setOptionToggle(false);
+                          optionToggle({
+                            type: 'none',
+                            board_pk: 0,
+                            content: '',
+                            write: board.write
+                          });
                         }}
                       />
                     );
@@ -877,8 +688,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           GetBoardComments={GetBoardComments}
           page={page}
           deemBoard={deemBoard}
-          setReportToggle={setReportToggle}
           boardApiStatus={boardApiStatus}
+          optionToggle={optionToggle}
         />
       </Feed>
     </FeedWrapper>

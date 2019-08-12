@@ -4,7 +4,15 @@ import BoardComponent from 'components/board';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, errorActions, errorReducerActions, LikeParams, boardReducerActions, boardActions } from 'store';
+import {
+  AppState,
+  boardActions,
+  boardReducerActions,
+  errorActions,
+  errorReducerActions,
+  LikeParams,
+  OptionData,
+} from 'store';
 
 type status = 'none' | 'pending' | 'success' | 'failure';
 
@@ -23,6 +31,7 @@ export interface BoardProps {
   getLikeListStatus: status;
   errorCode: number;
   errorMessage: string;
+  optionData: OptionData;
 }
 
 export interface BoardMethod {
@@ -44,9 +53,12 @@ const mapStateToProps = ({ board, error, user }: AppState) => ({
   getLikeListStatus: board.getLikeListStatus,
   errorCode: error.code,
   errorMessage: error.message,
+  optionData: board.optionData,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions | boardReducerActions>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<errorReducerActions | boardReducerActions>,
+) => ({
   resetError: bindActionCreators(errorActions.resetError, dispatch),
 });
 

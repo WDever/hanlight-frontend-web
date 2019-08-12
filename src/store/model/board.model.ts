@@ -25,16 +25,17 @@ export interface Board {
   write: boolean;
 }
 
-export interface ActiveReportData {
-  type: 'none' | 'board' | 'comment';
-  board_pk: number;
-  comment_pk?: number;
-  active: boolean;
-}
-
 export interface LikeListModel {
   user_name: string;
   user_image: string;
+}
+
+export interface OptionData {
+  type: 'none' | 'board' | 'comment';
+  board_pk: number;
+  comment_pk?: number;
+  content: string;
+  write: boolean;
 }
 
 type status = 'none' | 'pending' | 'success' | 'failure';
@@ -66,5 +67,8 @@ export interface BoardModel {
   reportStatus: status;
   likeStatus: status;
   deemBoardStatus: boolean;
-  activeReportData: ActiveReportData;
+  activeReportStatus: boolean;
+  optionData: OptionData;
+  editBoardToggleStatus: boolean;
+  editCommentToggleStatus: boolean;
 }

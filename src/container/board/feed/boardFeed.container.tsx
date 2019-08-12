@@ -4,7 +4,6 @@ import BoardFeedComponent from 'components/board/feed';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
-  ActiveReportData,
   AppState,
   Board,
   boardActions,
@@ -14,6 +13,7 @@ import {
   GetBoardCommentParams,
   GetBoardParams,
   LikeParams,
+  OptionData,
   PatchBoardParams,
   ReportParams,
 } from 'store';
@@ -36,7 +36,8 @@ export interface BoardFeedMethod {
   getBoardComment: (payload: GetBoardCommentParams) => void;
   resetBoard: () => void;
   deemBoard: (payload: boolean) => void;
-  activeReport(data: ActiveReportData): void;
+  activeReport(data: boolean): void;
+  optionToggle(payload: OptionData): void;
 }
 
 export interface BoardFeedOwnProps {
@@ -67,6 +68,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   resetBoard: bindActionCreators(boardActions.resetBoard, dispatch),
   deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
   activeReport: bindActionCreators(boardActions.activeReport, dispatch),
+  optionToggle: bindActionCreators(boardActions.optionToggle, dispatch),
 });
 
 const BoardFeedContainer = connect(

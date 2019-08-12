@@ -17,11 +17,16 @@ const initialState: BoardModel = {
   reportStatus: 'none',
   likeStatus: 'none',
   deemBoardStatus: false,
-  activeReportData: {
-    active: false,
+  activeReportStatus: false,
+  optionData: {
     type: 'none',
     board_pk: 0,
+    comment_pk: undefined,
+    content: '',
+    write: false,
   },
+  editBoardToggleStatus: false,
+  editCommentToggleStatus: false,
 };
 
 export const boardReducer = (
@@ -79,6 +84,8 @@ export const boardReducer = (
         draft.board[boardIndex] = {
           ...draft.board[boardIndex],
           ...action.payload,
+          // user_name: draft.board[boardIndex].user_name,
+          // user_image: draft.board[boardIndex].user_image,
           edited: true,
         };
         break;
@@ -97,6 +104,10 @@ export const boardReducer = (
             1,
           );
         }
+        break;
+
+      case 'EDIT_BOARD_TOGGLE':
+        draft.editBoardToggleStatus = action.payload;
         break;
 
       case 'DELETE_BOARD':
@@ -234,6 +245,10 @@ export const boardReducer = (
         }
         break;
 
+      case 'EDIT_COMMENT_TOGGLE':
+        draft.editCommentToggleStatus = action.payload;
+        break;
+
       case 'DELETE_BOARD_COMMENT':
         draft.deleteBoardCommentStatus = 'pending';
         break;
@@ -303,7 +318,7 @@ export const boardReducer = (
         }
         break;
       case 'ACTIVE_REPORT':
-        draft.activeReportData = action.payload;
+        draft.activeReportStatus = action.payload;
         break;
 
       case 'LIKE':
@@ -400,11 +415,14 @@ export const boardReducer = (
 
       case 'GET_LIKE_LIST_SUCCESS':
         draft.getLikeListStatus = 'success';
-        console.log(action.payload);
         break;
 
       case 'GET_LIKE_LIST_FAILURE':
         draft.getLikeListStatus = 'failure';
+        break;
+
+      case 'OPTION_TOGGLE':
+        draft.optionData = { ...action.payload };
         break;
 
       case 'DEEM_BOARD':

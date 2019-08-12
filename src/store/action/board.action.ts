@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios';
 import { Action } from 'redux';
 import {
-  ActiveReportData,
   Board,
   Comment,
   ErrorResponse,
   LikeListModel,
+  OptionData,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 
@@ -20,6 +20,7 @@ export const POST_BOARD_FAILURE = 'POST_BOARD_FAILURE';
 export const PATCH_BOARD = 'PATCH_BOARD';
 export const PATCH_BOARD_SUCCESS = 'PATCH_BOARD_SUCCESS';
 export const PATCH_BOARD_FAILURE = 'PATCH_BOARD_FAILURE';
+export const EDIT_BOARD_TOGGLE = 'EDIT_BOARD_TOGGLE';
 
 export const DELETE_BOARD = 'DELETE_BOARD';
 export const DELETE_BOARD_SUCCESS = 'DELETE_BOARD_SUCCESS';
@@ -36,6 +37,7 @@ export const POST_BOARD_COMMENT_FAILURE = 'POST_BOARD_COMMENT_FAILURE';
 export const PATCH_BOARD_COMMENT = 'PATCH_BOARD_COMMENT';
 export const PATCH_BOARD_COMMENT_SUCCESS = 'PATCH_BOARD_COMMENT_SUCCESS';
 export const PATCH_BOARD_COMMENT_FAILURE = 'PATCH_BOARD_COMMENT_FAILURE';
+export const EDIT_COMMENT_TOGGLE = 'EDIT_COMMENT_TOGGLE';
 
 export const DELETE_BOARD_COMMENT = 'DELETE_BOARD_COMMENT';
 export const DELETE_BOARD_COMMENT_SUCCESS = 'DELETE_BOARD_COMMENT_SUCCESS';
@@ -53,6 +55,8 @@ export const LIKE_FAILURE = 'LIKE_FAILURE';
 export const GET_LIKE_LIST = 'GET_LIKE_LIST';
 export const GET_LIKE_LIST_SUCCESS = 'GET_LIKE_LIST_SUCCESS';
 export const GET_LIKE_LIST_FAILURE = 'GET_LIKE_LIST_FAILURE';
+
+export const OPTION_TOGGLE = 'OPTION_TOGGLE';
 
 export const DEEM_BOARD = 'DEEM_BOARD';
 
@@ -205,6 +209,12 @@ export class PatchBoardFailure implements Action {
   ) {}
 }
 
+export class EditBoardToggle implements Action {
+  public readonly type = EDIT_BOARD_TOGGLE;
+
+  public constructor(public payload: boolean) {}
+}
+
 export class DeleteBoard implements Action {
   public readonly type = DELETE_BOARD;
 
@@ -295,6 +305,12 @@ export class PatchBoardCommentSuccess implements Action {
   ) {}
 }
 
+export class EditCommentToggle implements Action {
+  public readonly type = EDIT_COMMENT_TOGGLE;
+
+  public constructor(public payload: boolean) {}
+}
+
 export class PatchBoardCommentFailure implements Action {
   public readonly type = PATCH_BOARD_COMMENT_FAILURE;
 
@@ -350,7 +366,7 @@ export class ReportFailure implements Action {
 export class ActiveReport implements Action {
   public readonly type = ACTIVE_REPORT;
 
-  public constructor(public payload: ActiveReportData) {}
+  public constructor(public payload: boolean) {}
 }
 
 export class Like implements Action {
@@ -391,6 +407,12 @@ export class GetLikeListFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class OptionToggle implements Action {
+  public readonly type = OPTION_TOGGLE;
+
+  public constructor(public payload: OptionData) {}
+}
+
 export class DeemBoard implements Action {
   public readonly type = DEEM_BOARD;
 
@@ -405,6 +427,7 @@ export const boardActions = {
   getBoard: createStandardAction(GET_BOARD)<GetBoardParams>(),
   postBoard: createStandardAction(POST_BOARD)<PostBoardParams>(),
   patchBoard: createStandardAction(PATCH_BOARD)<PatchBoardParams>(),
+  editBoardToggle: createStandardAction(EDIT_BOARD_TOGGLE)<boolean>(),
   deleteBoard: createStandardAction(DELETE_BOARD)<DeleteBoardParams>(),
   getBoardCommemnt: createStandardAction(GET_BOARD_COMMENT)<
     GetBoardCommentParams
@@ -415,14 +438,16 @@ export const boardActions = {
   patchBoardCommemnt: createStandardAction(PATCH_BOARD_COMMENT)<
     PatchBoardCommentParams
   >(),
-  deleteBoardCommemnt: createStandardAction(DELETE_BOARD_COMMENT)<
+  editCommentToggle: createStandardAction(EDIT_COMMENT_TOGGLE)<boolean>(),
+  deleteBoardComment: createStandardAction(DELETE_BOARD_COMMENT)<
     DeleteBoardCommentParams
   >(),
   report: createStandardAction(REPORT)<ReportParams>(),
-  activeReport: createStandardAction(ACTIVE_REPORT)<ActiveReportData>(),
+  activeReport: createStandardAction(ACTIVE_REPORT)<boolean>(),
   like: createStandardAction(LIKE)<LikeParams>(),
   getLikeList: createStandardAction(GET_LIKE_LIST)<LikeParams>(),
-  deemBoard: createStandardAction(DEEM_BOARD)(),
+  optionToggle: createStandardAction(OPTION_TOGGLE)<OptionData>(),
+  deemBoard: createStandardAction(DEEM_BOARD)<boolean>(),
   resetBoard: createStandardAction(RESET_BOARD)(),
 };
 
@@ -436,6 +461,7 @@ export type boardReducerActions =
   | PatchBoard
   | PatchBoardSuccess
   | PatchBoardFailure
+  | EditBoardToggle
   | DeleteBoard
   | DeleteBoardSuccess
   | DeleteBoardFailure
@@ -448,6 +474,7 @@ export type boardReducerActions =
   | PatchBoardComment
   | PatchBoardCommentSuccess
   | PatchBoardCommentFailure
+  | EditCommentToggle
   | DeleteBoardComment
   | DeleteBoardCommentSuccess
   | DeleteBoardCommentFailure
@@ -461,5 +488,6 @@ export type boardReducerActions =
   | GetLikeList
   | GetLikeListSuccess
   | GetLikeListFailure
+  | OptionToggle
   | DeemBoard
   | ResetBoard;
