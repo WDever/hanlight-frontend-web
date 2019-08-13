@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import LikeListComponent from 'components/board/likeList';
 import BoradOptionComponent from 'components/board/option';
 import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
@@ -92,6 +93,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   errorCode,
   errorMessage,
   optionData,
+  likeListToggleStatus,
 }) => {
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -133,6 +135,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
       <Wrapper>
         {deemBoardStatus && <Deem />}
         {optionData.type !== 'none' && <BoradOptionComponent />}
+        {likeListToggleStatus && <LikeListComponent />}
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />

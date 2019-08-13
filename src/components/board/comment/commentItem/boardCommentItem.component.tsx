@@ -238,6 +238,8 @@ const CommentLikeWrapper = styled.div`
   align-items: center;
   margin-left: 0.25rem;
 
+  cursor: pointer;
+
   img {
     width: 12px;
     height: 12.5px;
@@ -289,6 +291,8 @@ interface CommentItemMethod {
   optionToggle(payload: OptionData): void;
   editCommentToggle(data: boolean): void;
   patchBoardComment(data: PatchBoardCommentParams): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
 
 const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
@@ -309,6 +313,8 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   editCommentToggle,
   optionData,
   patchBoardComment,
+  likeListToggle,
+  getLikeList,
 }) => {
   const {
     getBoardStatus,
@@ -399,7 +405,21 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
                   </CommentName>
                   {content}
                 </CommentContent>
-                <CommentLikeWrapper>
+                <CommentLikeWrapper
+                  onClick={
+                    likeCount
+                      ? () => {
+                          getLikeList({
+                            accessToken,
+                            type: 'comment',
+                            board_pk,
+                            comment_pk,
+                          });
+                          likeListToggle(true);
+                        }
+                      : () => alert('좋아요가 없습니다.')
+                  }
+                >
                   <img src={LikeIcon} alt="" />
                   <CommetLikeCount>{likeCount}</CommetLikeCount>
                 </CommentLikeWrapper>

@@ -28,6 +28,18 @@ const EditWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media ${Device.mobileL} {
+    width: 24rem;
+  }
+
+  @media ${Device.mobileM} {
+    width: 21rem;
+  }
+
+  @media ${Device.mobileS} {
+    width: 18rem;
+  }
 `;
 
 const EditTitleWrapper = styled.div`
@@ -37,17 +49,35 @@ const EditTitleWrapper = styled.div`
 
   display: flex;
   align-items: center;
+
+  @media ${Device.mobileL} {
+    height: 1.5rem;
+  }
+
+  @media ${Device.mobileM} {
+  }
+
+  @media ${Device.mobileS} {
+  }
 `;
 
 const EditTitle = styled.span`
   font-size: 0.875rem;
   margin-left: 0.75rem;
+
+  @media ${Device.mobileL} {
+    font-size: 0.625rem;
+  }
 `;
 
 const EditContentWrapper = styled.div`
   width: 100%;
   display: flex;
   margin-top: 2.25rem;
+
+  @media ${Device.mobileL} {
+    margin-top: 1.25rem;
+  }
 `;
 
 const EditContentText = styled.textarea<{ height: number }>`
@@ -69,6 +99,10 @@ const EditImgWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media ${Device.mobileL} {
+    width: 3.75rem;
+  }
 `;
 
 const EditFooter = styled.div`
@@ -80,6 +114,11 @@ const EditFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+
+  @media ${Device.mobileL} {
+    margin-top: 1.25rem;
+    height: 2.5rem;
+  }
 `;
 
 const EditButton = styled.button`
@@ -92,17 +131,28 @@ const EditButton = styled.button`
   background-color: #4470ff;
   border: 0;
   border-radius: 1rem;
+
+  @media ${Device.mobileL} {
+    width: 4.5rem;
+    height: 1.25rem;
+    font-size: 0.625rem;
+  }
 `;
 
 const FeedXButton = styled.span`
   width: 19px;
+  height: 10px;
   top: 17px;
   right: 11px;
-  height: 10px;
   border-radius: 1.25rem;
   position: absolute;
 
   cursor: pointer;
+
+  @media ${Device.mobileL} {
+    top: 12px;
+    right: 4px;
+  }
 
   &::before {
     transform: rotate(45deg);
@@ -205,13 +255,11 @@ const FeedEditComponent: React.FC = () => {
 
   const submitEdit = () => {
     if (content !== editContent) {
-      dispatch(
-        patchBoard({ accessToken, content: editContent, board_pk }),
-      );
+      dispatch(patchBoard({ accessToken, content: editContent, board_pk }));
     } else {
       close();
     }
-  }
+  };
 
   useEffect(() => {
     if (prevStatus === 'pending') {
@@ -245,11 +293,7 @@ const FeedEditComponent: React.FC = () => {
         />
       </EditContentWrapper>
       <EditFooter>
-        <EditButton
-          onClick={submitEdit}
-        >
-          수정
-        </EditButton>
+        <EditButton onClick={submitEdit}>수정</EditButton>
       </EditFooter>
     </EditWrapper>
   );

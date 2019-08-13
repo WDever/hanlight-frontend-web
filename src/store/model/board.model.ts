@@ -71,4 +71,6 @@ export interface BoardModel {
   optionData: OptionData;
   editBoardToggleStatus: boolean;
   editCommentToggleStatus: boolean;
+  likeList: LikeListModel[];
+  likeListToggleStatus: boolean;
 }

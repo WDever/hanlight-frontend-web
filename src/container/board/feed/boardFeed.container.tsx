@@ -1,5 +1,3 @@
-import * as React from 'react';
-
 import BoardFeedComponent from 'components/board/feed';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -38,6 +36,8 @@ export interface BoardFeedMethod {
   deemBoard: (payload: boolean) => void;
   activeReport(data: boolean): void;
   optionToggle(payload: OptionData): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
 
 export interface BoardFeedOwnProps {
@@ -69,6 +69,8 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   deemBoard: bindActionCreators(boardActions.deemBoard, dispatch),
   activeReport: bindActionCreators(boardActions.activeReport, dispatch),
   optionToggle: bindActionCreators(boardActions.optionToggle, dispatch),
+  likeListToggle: bindActionCreators(boardActions.likeListToggle, dispatch),
+  getLikeList: bindActionCreators(boardActions.getLikeList, dispatch),
 });
 
 const BoardFeedContainer = connect(

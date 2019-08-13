@@ -32,6 +32,7 @@ export interface BoardProps {
   errorCode: number;
   errorMessage: string;
   optionData: OptionData;
+  likeListToggleStatus: boolean;
 }
 
 export interface BoardMethod {
@@ -54,6 +55,7 @@ const mapStateToProps = ({ board, error, user }: AppState) => ({
   errorCode: error.code,
   errorMessage: error.message,
   optionData: board.optionData,
+  likeListToggleStatus: board.likeListToggleStatus,
 });
 
 const mapDispatchToProps = (

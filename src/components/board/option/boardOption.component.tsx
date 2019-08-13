@@ -29,8 +29,6 @@ const Wrapper = styled.div`
 const Hidden = styled.div`
   width: 100%;
   height: 100%;
-
-  /* z-index: -1; */
 `;
 
 export const OptionBox = styled.div`

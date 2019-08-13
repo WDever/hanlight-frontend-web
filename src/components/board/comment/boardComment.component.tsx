@@ -111,6 +111,8 @@ const BoardCommentComponent: React.FC<
           editCommentToggle={props.editCommentToggle}
           optionData={props.optionData}
           patchBoardComment={props.patchBoardCommemnt}
+          likeListToggle={props.likeListToggle}
+          getLikeList={props.getLikeList}
         />
       );
     });

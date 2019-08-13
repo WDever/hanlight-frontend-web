@@ -85,7 +85,9 @@ export default class BoardFeedComponent extends React.Component<
       deemBoardStatus,
       activeReport,
       boardApiStatus,
-      optionToggle
+      optionToggle,
+      likeListToggle,
+      getLikeList,
     } = this.props;
     const { getBoardComments } = this;
 
@@ -102,6 +104,8 @@ export default class BoardFeedComponent extends React.Component<
         activeReport={activeReport}
         boardApiStatus={boardApiStatus}
         optionToggle={optionToggle}
+        likeListToggle={likeListToggle}
+        getLikeList={getLikeList}
       />
     ));
   }

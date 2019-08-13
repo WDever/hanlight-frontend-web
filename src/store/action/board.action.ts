@@ -55,6 +55,7 @@ export const LIKE_FAILURE = 'LIKE_FAILURE';
 export const GET_LIKE_LIST = 'GET_LIKE_LIST';
 export const GET_LIKE_LIST_SUCCESS = 'GET_LIKE_LIST_SUCCESS';
 export const GET_LIKE_LIST_FAILURE = 'GET_LIKE_LIST_FAILURE';
+export const LIKE_LIST_TOGGLE = 'LIKE_LIST_TOGGLE';
 
 export const OPTION_TOGGLE = 'OPTION_TOGGLE';
 
@@ -110,19 +111,19 @@ export interface DeleteBoardCommentParams {
   comment_pk: number;
 }
 
+export interface LikeParams {
+  accessToken: string;
+  type: 'board' | 'comment';
+  board_pk: number;
+  comment_pk?: number;
+}
+
 export interface ReportParams {
   accessToken: string;
   type: 'board' | 'comment';
   board_pk: number;
   comment_pk?: number;
   content?: string;
-}
-
-export interface LikeParams {
-  accessToken: string;
-  type: 'board' | 'comment';
-  board_pk: number;
-  comment_pk?: number;
 }
 
 export interface GetLikeListResType {
@@ -407,6 +408,12 @@ export class GetLikeListFailure implements Action {
   public constructor(public payload: ErrorResponse) {}
 }
 
+export class LikeListToggle implements Action {
+  public readonly type = LIKE_LIST_TOGGLE;
+
+  public constructor(public payload: boolean) {}
+}
+
 export class OptionToggle implements Action {
   public readonly type = OPTION_TOGGLE;
 
@@ -446,6 +453,7 @@ export const boardActions = {
   activeReport: createStandardAction(ACTIVE_REPORT)<boolean>(),
   like: createStandardAction(LIKE)<LikeParams>(),
   getLikeList: createStandardAction(GET_LIKE_LIST)<LikeParams>(),
+  likeListToggle: createStandardAction(LIKE_LIST_TOGGLE)<boolean>(),
   optionToggle: createStandardAction(OPTION_TOGGLE)<OptionData>(),
   deemBoard: createStandardAction(DEEM_BOARD)<boolean>(),
   resetBoard: createStandardAction(RESET_BOARD)(),
@@ -488,6 +496,7 @@ export type boardReducerActions =
   | GetLikeList
   | GetLikeListSuccess
   | GetLikeListFailure
+  | LikeListToggle
   | OptionToggle
   | DeemBoard
   | ResetBoard;

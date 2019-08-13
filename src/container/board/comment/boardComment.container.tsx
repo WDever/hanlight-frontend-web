@@ -28,6 +28,8 @@ export interface BoardCommentMethod {
   report(data: ReportParams): void;
   activeReport(data: boolean): void;
   editCommentToggle(data: boolean): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
 
 export interface BoardCommentOwnProps {
@@ -72,6 +74,8 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
     boardActions.editCommentToggle,
     dispatch,
   ),
+  likeListToggle: bindActionCreators(boardActions.likeListToggle, dispatch),
+  getLikeList: bindActionCreators(boardActions.getLikeList, dispatch),
 });
 
 const BoardCommentContainer = connect(

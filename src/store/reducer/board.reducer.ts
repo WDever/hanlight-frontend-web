@@ -27,6 +27,8 @@ const initialState: BoardModel = {
   },
   editBoardToggleStatus: false,
   editCommentToggleStatus: false,
+  likeList: [],
+  likeListToggleStatus: false,
 };
 
 export const boardReducer = (
@@ -411,14 +413,20 @@ export const boardReducer = (
 
       case 'GET_LIKE_LIST':
         draft.getLikeListStatus = 'pending';
+        draft.likeList = [];
         break;
 
       case 'GET_LIKE_LIST_SUCCESS':
         draft.getLikeListStatus = 'success';
+        draft.likeList = state.likeList.concat(action.payload.like);
         break;
 
       case 'GET_LIKE_LIST_FAILURE':
         draft.getLikeListStatus = 'failure';
+        break;
+
+      case 'LIKE_LIST_TOGGLE':
+        draft.likeListToggleStatus = action.payload;
         break;
 
       case 'OPTION_TOGGLE':

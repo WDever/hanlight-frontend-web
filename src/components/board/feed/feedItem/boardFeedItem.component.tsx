@@ -14,12 +14,7 @@ import ReportIcon from 'lib/svg/report-icon.svg';
 import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import {
-  Board,
-  BoardApiModel,
-  LikeParams,
-  OptionData,
-} from 'store';
+import { Board, BoardApiModel, LikeParams, OptionData } from 'store';
 import styled, { css } from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -343,6 +338,14 @@ const LikeView = styled.div`
   color: #414141;
   margin-bottom: 1rem;
 
+  span {
+    cursor: pointer;
+
+    :hover {
+      color: #4470ff;
+    }
+  }
+
   @media ${Device.tabletL} {
     width: 91.5%;
     font-size: 1rem;
@@ -417,6 +420,8 @@ interface FeedItemMethod {
   deemBoard: (payload: boolean) => void;
   activeReport(data: boolean): void;
   optionToggle(payload: OptionData): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
 
 const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
@@ -429,6 +434,8 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   activeReport,
   boardApiStatus,
   optionToggle,
+  likeListToggle,
+  getLikeList,
 }) => {
   const {
     getBoardStatus,
@@ -457,7 +464,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     toggle: false,
     index: 0,
   });
-  const optionRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -502,12 +508,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     deemBoard(true);
   };
 
-  const setOptionFocus = () => {
-    if (optionRef && optionRef.current) {
-      optionRef.current.focus();
-    }
-  };
-
   return (
     <FeedWrapper key={board.pk}>
       <Feed>
@@ -533,16 +533,14 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             <FeedHeadOptionBtn
               src={Dotdotdot}
               alt=""
-              onClick={() =>{
+              onClick={() => {
                 optionToggle({
                   type: 'board',
                   board_pk: board.pk,
                   content: board.content,
-                  write: board.write
-                })
-              }
-                
-              }
+                  write: board.write,
+                });
+              }}
             />
           </div>
         </FeedHeadWrapper>
@@ -642,7 +640,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                             type: 'none',
                             board_pk: 0,
                             content: '',
-                            write: board.write
+                            write: board.write,
                           });
                         }}
                       />
@@ -655,7 +653,22 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <LikeWrapper>
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
-              <span> 좋아요 {board.likeCount}명</span>
+              <span
+                onClick={
+                  board.likeCount !== 0
+                    ? () => {
+                        likeListToggle(true);
+                        getLikeList({
+                          accessToken,
+                          type: 'board',
+                          board_pk: board.pk,
+                        });
+                      }
+                    : () => alert('좋아요가 없습니다.')
+                }
+              >
+                좋아요 {board.likeCount}명
+              </span>
             </LikeView>
             <LikeBtnWrapper>
               <LikeBtn
