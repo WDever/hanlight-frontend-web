@@ -53,12 +53,6 @@ const EditTitleWrapper = styled.div`
   @media ${Device.mobileL} {
     height: 1.5rem;
   }
-
-  @media ${Device.mobileM} {
-  }
-
-  @media ${Device.mobileS} {
-  }
 `;
 
 const EditTitle = styled.span`
@@ -77,6 +71,7 @@ const EditContentWrapper = styled.div`
 
   @media ${Device.mobileL} {
     margin-top: 1.25rem;
+    font-size: 11px;
   }
 `;
 
@@ -92,6 +87,10 @@ const EditContentText = styled.textarea<{ height: number }>`
   color: #1d2129;
   border: 0;
   outline: none;
+
+  @media ${Device.mobileL} {
+    font-size: 11px;
+  }
 `;
 
 const EditImgWrapper = styled.div`

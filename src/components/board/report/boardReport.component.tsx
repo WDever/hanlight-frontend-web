@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useInput, usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
@@ -17,20 +18,37 @@ const { useState, useEffect } = React;
 
 const ModalWrapper = styled.div`
   width: 100%;
-  min-width: 475px;
-  max-width: 700px;
+  width: 43.75rem;
   min-height: 13.375rem;
+
   margin-right: 1.25rem;
+
   position: absolute;
   top: 30%;
   z-index: 9;
+
   font-family: 'Spoqa Han Sans';
+
   background-color: #ffffff;
+
   border-radius: 4px;
   border: solid 1px #d1d1d1;
+
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  @media ${Device.mobileL} {
+    width: 24rem;
+  }
+
+  @media ${Device.mobileM} {
+    width: 21rem;
+  }
+
+  @media ${Device.mobileS} {
+    width: 18rem;
+  }
 `;
 
 const Head = styled.div`
@@ -44,6 +62,10 @@ const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  @media ${Device.mobileL} {
+    font-size: 0.625rem;
+  }
 `;
 
 const FeedXButton = styled.span`
@@ -77,6 +99,10 @@ const FeedXButton = styled.span`
 
 const Title = styled.span`
   margin-left: 1.5rem;
+
+  @media ${Device} {
+    margin-left: 0.75rem;
+  }
 `;
 
 const Form = styled.form`
@@ -90,6 +116,12 @@ const Form = styled.form`
   justify-content: space-between;
   align-items: flex-end;
 
+  @media ${Device.mobileL} {
+    width: calc(100% - 1.5rem);
+
+    font-size: 11px;
+  }
+
   textarea {
     min-height: 73.07%;
     font-size: 0.875rem;
@@ -100,6 +132,12 @@ const Form = styled.form`
     border: none;
     padding: 0;
     border-bottom: solid 1px #e5e5e5;
+
+    @media ${Device.mobileL} {
+      min-height: 77.5%;
+
+      font-size: 11px;
+    }
   }
 
   button {
@@ -113,19 +151,16 @@ const Form = styled.form`
     font-weight: bold;
     margin-bottom: 0.57rem;
     cursor: pointer;
+
+    border: none;
+
+    @media ${Device.mobileL} {
+      width: 4.5rem;
+      height: 1.25rem;
+      font-size: 0.625rem;
+    }
   }
 `;
-
-//   public componentDidUpdate(
-//     prevProps: BoardReportProps & BoardReportMethod & BoardReportOwnProps,
-//   ) {
-//     if (
-//       prevProps.reportStatus === 'pending' &&
-//       this.props.reportStatus === 'success'
-//     ) {
-//       this.close();
-//     }
-//   }
 
 const BoardReportComponent: React.FC = () => {
   const dispatch: Dispatch<boardReducerActions> = useDispatch();

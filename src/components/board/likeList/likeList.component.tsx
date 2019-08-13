@@ -9,7 +9,6 @@ import {
   boardActions,
   BoardModel,
   boardReducerActions,
-  UserModel,
   ErrorModel,
 } from 'store';
 import styled from 'styled-components';
@@ -55,6 +54,10 @@ const ListBox = styled.div`
   :last-of-type {
     border-bottom-right-radius: 0.25rem;
     border-bottom-left-radius: 0.25rem;
+  }
+
+  @media ${Device.tabletS} {
+    height: 26.25rem;
   }
 
   @media ${Device.mobileL} {
@@ -150,7 +153,9 @@ const LikeListComponent: React.FC = () => {
     state => state.board,
   );
   const { likeList } = useSelector<AppState, BoardModel>(state => state.board);
-  const { message: errMessage } = useSelector<AppState, ErrorModel>(state => state.error);
+  const { message: errMessage } = useSelector<AppState, ErrorModel>(
+    state => state.error,
+  );
 
   const { likeListToggle } = boardActions;
 
