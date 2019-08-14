@@ -5,26 +5,13 @@ import CommentOptionComponent from './comment';
 import FeedOptionComponent from './feed';
 import FeedEditComponent from './feed/edit';
 
-import { Device } from 'lib/styles';
+import { Deem, Device } from 'lib/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AppState, boardActions, BoardModel, boardReducerActions } from 'store';
 import styled from 'styled-components';
 
-const Wrapper = styled.div`
-  position: fixed;
-
-  width: 100%;
-  height: 100%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background-color: rgba(23, 23, 23, 0.6);
-
-  z-index: 2;
-`;
+const Wrapper = Deem;
 
 const Hidden = styled.div`
   width: 100%;

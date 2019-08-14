@@ -6,12 +6,16 @@ import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
 import EmptyLikeIcon from 'lib/svg/Empty-like.svg';
-import LeftArrow from 'lib/svg/left-arrow.svg';
 import LikeIcon from 'lib/svg/like.svg';
-import RightArrow from 'lib/svg/right-arrow.svg';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { Board, BoardApiModel, LikeParams, OptionData } from 'store';
+import {
+  Board,
+  BoardApiModel,
+  LikeParams,
+  OptionData,
+  PhotoDetailParams
+} from 'store';
 import styled, { css } from 'styled-components';
 
 const FeedWrapper = styled.div`
@@ -147,33 +151,6 @@ const FeedHeadOptionBtn = styled.img`
   }
 `;
 
-const FeedOptionWrapper = styled.div`
-  width: 6.875rem;
-  background-color: #ffffff;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-  position: absolute;
-  right: 0;
-  top: 2rem;
-  cursor: pointer;
-  z-index: 1;
-  outline: none;
-`;
-
-const FeedOption = styled.div`
-  width: 100%;
-  height: 2.125rem;
-  border: solid 0.5px #707070;
-  font-size: 0.75rem;
-
-  display: flex;
-  align-items: center;
-`;
-
-const FeedOptionImg = styled.img`
-  margin-left: 0.68rem;
-  margin-right: 0.7rem;
-`;
-
 const FeedBody = styled.div`
   width: 100%;
 
@@ -265,59 +242,6 @@ const FeedMoreImg = styled.div<{ img: string }>`
 const FeedMoreImgSpan = styled.span`
   font-size: 3rem;
   color: #ffffff;
-`;
-
-const FeedImgToggleWrapper = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  display: flex;
-  z-index: 3;
-`;
-
-const FeedImgToggle = styled.img`
-  width: 100%;
-  object-fit: contain;
-`;
-
-const FeedXButton = styled.span<{
-  width: number;
-  height: number;
-  top: number;
-  left: number;
-  color: string;
-}>`
-  position: absolute;
-  right: 0;
-  top: ${props => props.top}rem;
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-
-  &::before {
-    transform: rotate(45deg);
-  }
-  &::after {
-    transform: rotate(-45deg);
-  }
-
-  &::before,
-  &::after {
-    position: absolute;
-    left: ${props => props.left}px;
-    content: ' ';
-    height: ${props => props.height}px;
-    width: ${props => props.width}px;
-    border-radius: 1.25rem;
-    background-color: ${props => props.color};
-  }
-`;
-
-const FeedImgToggleArrow = styled.img`
-  position: absolute;
-  top: 45%;
-  cursor: pointer;
 `;
 
 const LikeWrapper = styled.div`
@@ -419,6 +343,7 @@ interface FeedItemMethod {
   optionToggle(payload: OptionData): void;
   likeListToggle(payload: boolean): void;
   getLikeList(payload: LikeParams): void;
+  photoDetailToggle(payload: PhotoDetailParams): void;
 }
 
 const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
@@ -433,13 +358,13 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
   optionToggle,
   likeListToggle,
   getLikeList,
+  photoDetailToggle,
 }) => {
   const {
     getBoardStatus,
     postBoardStatus,
     patchBoardStatus,
     deleteBoardStatus,
-    getLikeListStatus,
   } = boardApiStatus;
 
   const statusProps: {
@@ -454,13 +379,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
     | undefined = usePrevious(statusProps);
   const [page, setPage] = React.useState<number>(1);
-  const [imgToggle, setImgToggle] = React.useState<{
-    toggle: boolean;
-    index: number;
-  }>({
-    toggle: false,
-    index: 0,
-  });
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -471,10 +389,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             statusProps[status] !== 'pending',
         )
       ) {
-        if (imgToggle.toggle) {
-          setImgToggle({ toggle: false, index: 0 });
-          deemBoard(false);
-        }
         optionToggle({
           type: 'none',
           board_pk: 0,
@@ -483,14 +397,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
         });
       }
     }
-  }, [
-    activeReport,
-    board.pk,
-    deemBoard,
-    imgToggle.toggle,
-    prevStatusProps,
-    statusProps,
-  ]);
+  }, [activeReport, board.pk, deemBoard, prevStatusProps, statusProps]);
 
   const GetBoardComments = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -498,11 +405,6 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
       getBoardComments({ board_pk: board.pk, page });
       setPage(page + 1);
     }
-  };
-
-  const imgClicked = (index: number) => {
-    setImgToggle({ toggle: true, index });
-    deemBoard(true);
   };
 
   return (
@@ -545,58 +447,9 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <FeedContentWrapper>
             <FeedContent>{board.content}</FeedContent>
           </FeedContentWrapper>
-
           {board.files.length > 0 && (
             <FeedImgContainer>
               <FeedImgWrapper rows={Math.min(4, board.files.length)}>
-                {imgToggle.toggle && (
-                  <FeedImgToggleWrapper>
-                    <FeedXButton
-                      width={33}
-                      height={3}
-                      left={0}
-                      top={-1.25}
-                      color={'#ffffff'}
-                      onClick={() => {
-                        setImgToggle({ toggle: false, index: 0 });
-                        deemBoard(false);
-                      }}
-                    />
-                    {board.files[imgToggle.index - 1] && (
-                      <FeedImgToggleArrow
-                        src={LeftArrow}
-                        alt=""
-                        style={{
-                          left: 0,
-                          marginLeft: '1rem',
-                        }}
-                        onClick={() =>
-                          setImgToggle({
-                            ...imgToggle,
-                            index: imgToggle.index - 1,
-                          })
-                        }
-                      />
-                    )}
-                    {board.files[imgToggle.index + 1] && (
-                      <FeedImgToggleArrow
-                        src={RightArrow}
-                        alt=""
-                        style={{
-                          right: 0,
-                          marginRight: '1rem',
-                        }}
-                        onClick={() =>
-                          setImgToggle({
-                            ...imgToggle,
-                            index: imgToggle.index + 1,
-                          })
-                        }
-                      />
-                    )}
-                    <FeedImgToggle src={board.files[imgToggle.index]} alt="" />
-                  </FeedImgToggleWrapper>
-                )}
                 {board.files.slice(0, 4).map((file, i) => {
                   if (i === 3 && board.files.length === 5) {
                     return (
@@ -604,12 +457,10 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                         img={board.files[i]}
                         key={i}
                         onClick={() => {
-                          imgClicked(i);
-                          optionToggle({
-                            type: 'none',
-                            board_pk: 0,
-                            content: '',
-                            write: board.write,
+                          photoDetailToggle({
+                            status: true,
+                            board_pk: board.pk,
+                            idx: i,
                           });
                         }}
                       >
@@ -632,12 +483,10 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                         key={i}
                         src={file}
                         onClick={() => {
-                          imgClicked(i);
-                          optionToggle({
-                            type: 'none',
-                            board_pk: 0,
-                            content: '',
-                            write: board.write,
+                          photoDetailToggle({
+                            status: true,
+                            board_pk: board.pk,
+                            idx: i,
                           });
                         }}
                       />

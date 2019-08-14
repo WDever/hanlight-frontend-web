@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Device } from 'lib/styles';
+import { Deem, Device } from 'lib/styles';
 import LikeImg from 'lib/svg/like.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -16,20 +16,7 @@ import LikeListItemComponent from './likeListItem';
 
 const { useEffect } = React;
 
-const Wrapper = styled.div`
-  width: 100%;
-  height: 100%;
-
-  position: fixed;
-
-  background-color: rgba(23, 23, 23, 0.6);
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  z-index: 2;
-`;
+const Wrapper = Deem;
 
 const Hidden = styled.div`
   width: 100%;

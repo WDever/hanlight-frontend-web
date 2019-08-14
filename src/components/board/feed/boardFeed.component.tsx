@@ -88,6 +88,7 @@ export default class BoardFeedComponent extends React.Component<
       optionToggle,
       likeListToggle,
       getLikeList,
+      photoDetailToggle,
     } = this.props;
     const { getBoardComments } = this;
 
@@ -106,6 +107,7 @@ export default class BoardFeedComponent extends React.Component<
         optionToggle={optionToggle}
         likeListToggle={likeListToggle}
         getLikeList={getLikeList}
+        photoDetailToggle={photoDetailToggle}
       />
     ));
   }

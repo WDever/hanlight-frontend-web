@@ -227,7 +227,7 @@ const FeedEditComponent: React.FC = () => {
   const editRef = useRef(null);
   const prevStatus = usePrevious(patchBoardStatus);
 
-  const { optionToggle, deemBoard, patchBoard, editBoardToggle } = boardActions;
+  const { optionToggle, patchBoard, editBoardToggle } = boardActions;
 
   const close = () => {
     dispatch(
@@ -239,7 +239,6 @@ const FeedEditComponent: React.FC = () => {
       }),
     );
 
-    dispatch(deemBoard(false));
     dispatch(editBoardToggle(false));
   };
 

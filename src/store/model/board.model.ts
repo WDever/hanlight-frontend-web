@@ -38,6 +38,12 @@ export interface OptionData {
   write: boolean;
 }
 
+export interface PhotoDetailData {
+  status: boolean;
+  boardFiles: string[];
+  idx: number;
+}
+
 type status = 'none' | 'pending' | 'success' | 'failure';
 
 export interface BoardApiModel {
@@ -73,4 +79,5 @@ export interface BoardModel {
   editCommentToggleStatus: boolean;
   likeList: LikeListModel[];
   likeListToggleStatus: boolean;
+  photoDetailData: PhotoDetailData;
 }

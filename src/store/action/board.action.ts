@@ -57,6 +57,8 @@ export const GET_LIKE_LIST_SUCCESS = 'GET_LIKE_LIST_SUCCESS';
 export const GET_LIKE_LIST_FAILURE = 'GET_LIKE_LIST_FAILURE';
 export const LIKE_LIST_TOGGLE = 'LIKE_LIST_TOGGLE';
 
+export const PHOTO_DETAIL_TOGGLE = 'PHOTO_DETAIL_TOGGLE';
+
 export const OPTION_TOGGLE = 'OPTION_TOGGLE';
 
 export const DEEM_BOARD = 'DEEM_BOARD';
@@ -124,6 +126,12 @@ export interface ReportParams {
   board_pk: number;
   comment_pk?: number;
   content?: string;
+}
+
+export interface PhotoDetailParams {
+  status: boolean;
+  board_pk: number;
+  idx: number;
 }
 
 export interface GetLikeListResType {
@@ -414,6 +422,12 @@ export class LikeListToggle implements Action {
   public constructor(public payload: boolean) {}
 }
 
+export class PhotoDetailToggle implements Action {
+  public readonly type = PHOTO_DETAIL_TOGGLE;
+
+  public constructor(public payload: PhotoDetailParams) {}
+}
+
 export class OptionToggle implements Action {
   public readonly type = OPTION_TOGGLE;
 
@@ -454,6 +468,9 @@ export const boardActions = {
   like: createStandardAction(LIKE)<LikeParams>(),
   getLikeList: createStandardAction(GET_LIKE_LIST)<LikeParams>(),
   likeListToggle: createStandardAction(LIKE_LIST_TOGGLE)<boolean>(),
+  photoDetailToggle: createStandardAction(PHOTO_DETAIL_TOGGLE)<
+    PhotoDetailParams
+  >(),
   optionToggle: createStandardAction(OPTION_TOGGLE)<OptionData>(),
   deemBoard: createStandardAction(DEEM_BOARD)<boolean>(),
   resetBoard: createStandardAction(RESET_BOARD)(),
@@ -497,6 +514,7 @@ export type boardReducerActions =
   | GetLikeListSuccess
   | GetLikeListFailure
   | LikeListToggle
+  | PhotoDetailToggle
   | OptionToggle
   | DeemBoard
   | ResetBoard;

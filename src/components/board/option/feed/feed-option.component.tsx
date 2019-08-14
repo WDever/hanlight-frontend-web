@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { write } from 'fs';
-import { useInput } from 'lib/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
@@ -12,8 +10,6 @@ import {
   UserModel,
 } from 'store';
 import { BlueTxt, OptionBox, RedTxt } from '../boardOption.component';
-
-const { useState, useEffect } = React;
 
 interface FeedOptionProps {
   optionData: OptionData;

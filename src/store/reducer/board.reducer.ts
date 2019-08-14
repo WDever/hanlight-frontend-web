@@ -29,6 +29,11 @@ const initialState: BoardModel = {
   editCommentToggleStatus: false,
   likeList: [],
   likeListToggleStatus: false,
+  photoDetailData: {
+    status: false,
+    boardFiles: [],
+    idx: 0,
+  },
 };
 
 export const boardReducer = (
@@ -428,6 +433,21 @@ export const boardReducer = (
       case 'LIKE_LIST_TOGGLE':
         draft.likeListToggleStatus = action.payload;
         break;
+
+      case 'PHOTO_DETAIL_TOGGLE': {
+        const { status, board_pk, idx } = action.payload;
+        if (board_pk) {
+          const boardFiles = state.board.filter(
+            item => item.pk === action.payload.board_pk,
+          )[0].files;
+
+          draft.photoDetailData = { status, idx, boardFiles };
+        } else {
+          draft.photoDetailData = { status, idx, boardFiles: [] };
+        }
+
+        break;
+      }
 
       case 'OPTION_TOGGLE':
         draft.optionData = { ...action.payload };

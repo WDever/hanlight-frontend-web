@@ -9,6 +9,7 @@ import { usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
+import PhotoDetailComponent from './photoDetail';
 
 const { useEffect } = React;
 
@@ -94,6 +95,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   errorMessage,
   optionData,
   likeListToggleStatus,
+  photoDetailDataStatus,
 }) => {
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -136,6 +138,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         {deemBoardStatus && <Deem />}
         {optionData.type !== 'none' && <BoradOptionComponent />}
         {likeListToggleStatus && <LikeListComponent />}
+        {photoDetailDataStatus && <PhotoDetailComponent />}
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />

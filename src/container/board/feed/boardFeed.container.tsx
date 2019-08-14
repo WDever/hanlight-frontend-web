@@ -13,6 +13,7 @@ import {
   LikeParams,
   OptionData,
   PatchBoardParams,
+  PhotoDetailParams,
   ReportParams,
 } from 'store';
 
@@ -38,6 +39,7 @@ export interface BoardFeedMethod {
   optionToggle(payload: OptionData): void;
   likeListToggle(payload: boolean): void;
   getLikeList(payload: LikeParams): void;
+  photoDetailToggle(payload: PhotoDetailParams): void;
 }
 
 export interface BoardFeedOwnProps {
@@ -71,6 +73,7 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   optionToggle: bindActionCreators(boardActions.optionToggle, dispatch),
   likeListToggle: bindActionCreators(boardActions.likeListToggle, dispatch),
   getLikeList: bindActionCreators(boardActions.getLikeList, dispatch),
+  photoDetailToggle: bindActionCreators(boardActions.photoDetailToggle, dispatch),
 });
 
 const BoardFeedContainer = connect(
