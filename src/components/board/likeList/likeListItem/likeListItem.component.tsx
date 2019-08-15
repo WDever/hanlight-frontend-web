@@ -50,7 +50,6 @@ const ProfileImg = styled.div`
     width: 100%;
 
     border-radius: 100%;
-    border: 1px solid #d1d1d1;
   }
 `;
 

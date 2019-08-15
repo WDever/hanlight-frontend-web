@@ -30,8 +30,7 @@ const FeedImgToggleWrapper = styled.div`
 `;
 
 const FeedImgToggle = styled.img`
-  height: 90%;
-  width: 90%;
+  height: 100%;
   object-fit: contain;
 `;
 

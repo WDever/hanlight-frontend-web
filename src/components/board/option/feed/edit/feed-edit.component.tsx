@@ -181,7 +181,6 @@ const ProfileImg = styled.img<{ image: boolean }>`
       height: 2.69rem;
       margin-bottom: 0.56rem;
       border-radius: 100%;
-      border: 1px solid #d1d1d1;
 
       @media ${Device.tabletL} {
         height: 3.5rem;
@@ -243,7 +242,8 @@ const FeedEditComponent: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value.length <= 300) {
+    console.log(e.target.value.length);
+    if (e.target.value.length <= 600) {
       setEditContent(e.target.value);
       if (e.currentTarget.scrollHeight > editHeight) {
         setEditHeight(e.currentTarget.scrollHeight);

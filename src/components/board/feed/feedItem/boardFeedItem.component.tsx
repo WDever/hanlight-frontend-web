@@ -30,6 +30,7 @@ const FeedWrapper = styled.div`
     margin: 0;
     border: none;
     border-bottom: 1px solid #dbdbdb;
+    border-radius: 0;
     padding-bottom: 2.875rem;
   }
 
@@ -84,7 +85,6 @@ const ProfileImg = styled.img<{ image: boolean }>`
       height: 2.69rem;
       margin-bottom: 0.56rem;
       border-radius: 100%;
-      border: 1px solid #d1d1d1;
 
       @media ${Device.tabletL} {
         height: 3.5rem;

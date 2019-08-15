@@ -88,7 +88,6 @@ const ProfileImg = styled.img<{ image: boolean }>`
       css`
         height: 3.25rem;
         margin-bottom: 0.71rem;
-        border: 1px solid #d1d1d1;
         border-radius: 100%;
       `}
   }

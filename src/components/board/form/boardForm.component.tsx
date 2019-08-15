@@ -110,6 +110,7 @@ const FormWrapper = styled.div`
   @media ${Device.tabletL} {
     margin-bottom: 0;
     border: solid 1px #e7e7e7;
+    border-radius: 0;
   }
 
   display: flex;
@@ -153,7 +154,6 @@ ${({ image }) =>
     height: 2.69rem;
     margin-bottom: 0.56rem;
     border-radius: 100%;
-    border: 1px solid #d1d1d1;
 
     @media ${Device.mobileL} {
       height: 2rem;
