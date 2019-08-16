@@ -30,9 +30,9 @@
   },
   "scripts": {
     "start": "REACT_APP_CUSTOM_NODE_ENV=development react-scripts start",
-    "dev-build": "REACT_APP_CUSTOM_NODE_ENV=development react-scripts build",
-    "build": "REACT_APP_CUSTOM_NODE_ENV=production react-scripts build",
-    "test": "REACT_APP_CUSTOM_NODE_ENV=test react-scripts test",
+    "stage-build": "REACT_APP_CUSTOM_NODE_ENV=development react-scripts build",
+    "production-build": "REACT_APP_CUSTOM_NODE_ENV=production react-scripts build",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "browserslist": {

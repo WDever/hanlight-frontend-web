@@ -14,7 +14,7 @@ import {
   BoardApiModel,
   LikeParams,
   OptionData,
-  PhotoDetailParams
+  PhotoDetailParams,
 } from 'store';
 import styled, { css } from 'styled-components';
 
@@ -500,20 +500,18 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             <LikeView>
               <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
               <span
-                onClick={
-                  board.likeCount !== 0
-                    ? () => {
-                        likeListToggle(true);
-                        getLikeList({
-                          accessToken,
-                          type: 'board',
-                          board_pk: board.pk,
-                        });
-                      }
-                    : () => alert('좋아요가 없습니다.')
-                }
+                onClick={() => {
+                  if (board.likeCount !== 0) {
+                    likeListToggle(true);
+                    getLikeList({
+                      accessToken,
+                      type: 'board',
+                      board_pk: board.pk,
+                    });
+                  }
+                }}
               >
-                좋아요 {board.likeCount}명
+                좋아요 {board.likeCount}개
               </span>
             </LikeView>
             <LikeBtnWrapper>

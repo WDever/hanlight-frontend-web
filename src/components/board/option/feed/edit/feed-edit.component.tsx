@@ -242,7 +242,6 @@ const FeedEditComponent: React.FC = () => {
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(e.target.value.length);
     if (e.target.value.length <= 600) {
       setEditContent(e.target.value);
       if (e.currentTarget.scrollHeight > editHeight) {

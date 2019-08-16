@@ -16,13 +16,17 @@ import {
 } from 'store';
 import styled, { css } from 'styled-components';
 
-const { useState } = React;
+const { useState, useMemo } = React;
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 0.3125rem;
+
+  :last-of-type {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const OptionBtn = styled.img`
@@ -33,7 +37,7 @@ const OptionBtn = styled.img`
   outline: none;
 `;
 
-const CommentWrapper = styled.div<{ optionToggle?: boolean }>`
+const CommentWrapper = styled.div`
   width: 100%;
   display: flex;
   min-height: 3.5rem;
@@ -41,13 +45,13 @@ const CommentWrapper = styled.div<{ optionToggle?: boolean }>`
   align-items: center;
   position: relative;
 
-  ${OptionBtn} {
-    display: ${props => (props.optionToggle ? 'initial' : 'none')};
-  }
-
   &:hover {
     ${OptionBtn} {
       display: initial;
+
+      @media ${Device.mobileL} {
+        display: none;
+      }
     }
   }
 `;
@@ -57,6 +61,10 @@ const CommentLeftWrapper = styled.div`
   min-height: 3.5rem;
   display: flex;
   align-items: flex-start;
+
+  @media ${Device.mobileL} {
+    width: 100%;
+  }
 `;
 
 const CommentContentWrapper = styled.div`
@@ -117,7 +125,7 @@ const CommentName = styled.span`
   }
 `;
 
-const CommentContent = styled.div`
+const CommentContent = styled.div<{ isMobile: boolean }>`
   font-size: 0.81rem;
   color: #1d2129;
   padding: 0.375rem;
@@ -126,6 +134,8 @@ const CommentContent = styled.div`
 
   border-radius: 8px;
   background-color: #f2f3f5;
+
+  ${({ isMobile }) => (isMobile ? 'cursor: pointer' : '')};
 
   @media ${Device.tabletL} {
     vertical-align: middle;
@@ -294,6 +304,8 @@ interface CommentItemMethod {
   getLikeList(payload: LikeParams): void;
 }
 
+const mobileFilter = 'win16|win32|win64|macintel';
+
 const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   comment,
   date,
@@ -304,8 +316,6 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   like,
   likeStatus,
   accessToken,
-  deemBoard,
-  activeReport,
   boardApiStatus,
   optionToggle,
   editCommentToggleStatus,
@@ -346,6 +356,11 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   const { user_name, content, likeCount, edited, isLiked, write } = comment;
 
   const [editedContent, setEditedContent] = useInput(content);
+
+  const mobileCheck = useMemo(
+    () => mobileFilter.indexOf(navigator.platform.toLowerCase()),
+    [],
+  );
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -398,26 +413,37 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
               </Form>
             ) : (
               <CommentBody>
-                <CommentContent>
+                <CommentContent
+                  isMobile={mobileCheck === -1}
+                  onClick={() => {
+                    if (mobileCheck === -1) {
+                      optionToggle({
+                        type: 'comment',
+                        board_pk,
+                        comment_pk,
+                        content,
+                        write,
+                      });
+                    }
+                  }}
+                >
                   <CommentName>
                     {user_name ? user_name : '글 작성자'}
                   </CommentName>
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper
-                  onClick={
-                    likeCount
-                      ? () => {
-                          getLikeList({
-                            accessToken,
-                            type: 'comment',
-                            board_pk,
-                            comment_pk,
-                          });
-                          likeListToggle(true);
-                        }
-                      : () => alert('좋아요가 없습니다.')
-                  }
+                  onClick={() => {
+                    if (likeCount) {
+                      getLikeList({
+                        accessToken,
+                        type: 'comment',
+                        board_pk,
+                        comment_pk,
+                      });
+                      likeListToggle(true);
+                    }
+                  }}
                 >
                   <img src={LikeIcon} alt="" />
                   <CommetLikeCount>{likeCount}</CommetLikeCount>

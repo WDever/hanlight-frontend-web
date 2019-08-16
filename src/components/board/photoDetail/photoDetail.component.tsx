@@ -11,7 +11,6 @@ import styled from 'styled-components';
 const { useState } = React;
 
 const Wrapper = styled(Deem)`
-  align-items: flex-end;
 `;
 
 const FeedImgToggleWrapper = styled.div`
@@ -23,15 +22,20 @@ const FeedImgToggleWrapper = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 3;
-
-  @media ${Device.mobileL} {
-    height: 100%;
-  }
 `;
 
 const FeedImgToggle = styled.img`
-  height: 100%;
+  max-width: 100%;
+  height: calc(100% - 3.75rem);
+
+  align-self: flex-start;
+
   object-fit: contain;
+  z-index: 4;
+
+  @media ${Device.mobileL} {
+    max-width: 90%;
+  }
 `;
 
 const FeedXButton = styled.span`
@@ -42,6 +46,12 @@ const FeedXButton = styled.span`
   height: 32px;
   cursor: pointer;
   z-index: 4;
+
+  @media ${Device.mobileL} {
+    width: 22px;
+    right: 0;
+    top: 1rem;
+  }
 
   &::before {
     transform: rotate(45deg);
@@ -59,6 +69,10 @@ const FeedXButton = styled.span`
     width: 33px;
     border-radius: 1.25rem;
     background-color: ${props => props.color};
+
+    @media ${Device.mobileL} {
+      width: 22px;
+    }
   }
 `;
 
@@ -88,9 +102,8 @@ const PhotoDetailComponent: React.FC = () => {
         onClick={() =>
           dispatch(photoDetailToggle({ status: false, board_pk: 0, idx: 0 }))
         }
-      >
-        <FeedImgToggle src={boardFiles[index]} alt="" />
-      </FeedImgToggleWrapper>
+      />
+      <FeedImgToggle src={boardFiles[index]} alt="" />
       <FeedXButton
         color={'#ffffff'}
         onClick={() =>

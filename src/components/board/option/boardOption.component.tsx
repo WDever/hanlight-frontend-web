@@ -34,7 +34,7 @@ export const OptionBox = styled.div`
   }
 
   @media ${Device.mobileL} {
-    width: 11.6625rem;
+    width: 15rem;
   }
 
   button {
@@ -54,7 +54,7 @@ export const OptionBox = styled.div`
     }
 
     @media ${Device.mobileL} {
-      height: 2rem;
+      height: 2.5rem;
     }
 
     span {
@@ -62,7 +62,7 @@ export const OptionBox = styled.div`
       font-size: 19px;
 
       @media ${Device.mobileL} {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
 

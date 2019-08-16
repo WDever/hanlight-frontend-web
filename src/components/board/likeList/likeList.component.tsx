@@ -166,7 +166,7 @@ const LikeListComponent: React.FC = () => {
       <ListBox>
         <ListHeader>
           <img src={LikeImg} alt="like" />
-          <p>좋아요 {likeList.length}명</p>
+          <p>좋아요 {likeList.length}개</p>
           <FeedXButton onClick={() => dispatch(likeListToggle(false))} />
         </ListHeader>
         <LikeListWrapper>{LikeList}</LikeListWrapper>
