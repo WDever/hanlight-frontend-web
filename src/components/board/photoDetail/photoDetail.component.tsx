@@ -10,8 +10,7 @@ import styled from 'styled-components';
 
 const { useState } = React;
 
-const Wrapper = styled(Deem)`
-`;
+const Wrapper = styled(Deem)``;
 
 const FeedImgToggleWrapper = styled.div`
   position: absolute;
@@ -34,7 +33,9 @@ const FeedImgToggle = styled.img`
   z-index: 4;
 
   @media ${Device.mobileL} {
-    max-width: 90%;
+    margin-top: 2.375rem;
+
+    height: 85%;
   }
 `;
 
@@ -103,13 +104,13 @@ const PhotoDetailComponent: React.FC = () => {
           dispatch(photoDetailToggle({ status: false, board_pk: 0, idx: 0 }))
         }
       />
-      <FeedImgToggle src={boardFiles[index]} alt="" />
       <FeedXButton
         color={'#ffffff'}
         onClick={() =>
           dispatch(photoDetailToggle({ status: false, board_pk: 0, idx: 0 }))
         }
       />
+      <FeedImgToggle src={boardFiles[index]} alt="" />
       {boardFiles[index - 1] && (
         <FeedImgToggleArrow
           src={LeftArrow}
