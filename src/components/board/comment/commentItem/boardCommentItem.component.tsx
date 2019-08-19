@@ -1,11 +1,8 @@
 import { useInput, usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
-import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
-import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
-import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
 import {
   BoardApiModel,
@@ -16,7 +13,7 @@ import {
 } from 'store';
 import styled, { css } from 'styled-components';
 
-const { useState, useMemo } = React;
+const { useMemo } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -183,33 +180,6 @@ const Form = styled.form`
     outline: none;
     border: none;
   }
-`;
-
-const OptionWrapper = styled.div`
-  width: 6.875rem;
-  background-color: #ffffff;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-  position: absolute;
-  right: 0;
-  top: 50%;
-  cursor: pointer;
-  z-index: 1;
-  outline: none;
-`;
-
-const Option = styled.div`
-  width: 100%;
-  height: 2.125rem;
-  border: solid 0.5px #707070;
-  font-size: 0.75rem;
-
-  display: flex;
-  align-items: center;
-`;
-
-const OptionImg = styled.img`
-  margin-left: 0.68rem;
-  margin-right: 0.7rem;
 `;
 
 const CommentLikeBtn = styled.span`

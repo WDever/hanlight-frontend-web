@@ -457,7 +457,7 @@ export default class BoardFormComponent extends React.Component<
         accessToken: this.props.accessToken,
         content: this.state.content.trim(),
         files: this.state.files.map(v => v.file),
-        anonymous: this.state.type ? '1' : '0',
+        anonymous: this.state.type,
       });
     }
   };

@@ -60,20 +60,13 @@ const BoardCommentComponent: React.FC<
   const prevProps = usePrevious(props);
 
   const {
-    deleteBoardCommemnt,
-    patchBoardCommemnt,
-    accessToken,
     boardApiStatus,
     board_pk,
     optionToggle,
   } = props;
 
   const {
-    getBoardCommentStatus,
-    postBoardCommentStatus,
-    patchBoardCommentStatus,
     deleteBoardCommentStatus,
-    getLikeListStatus,
   } = boardApiStatus;
 
   React.useEffect(() => {

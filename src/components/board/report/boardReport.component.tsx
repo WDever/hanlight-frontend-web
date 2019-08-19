@@ -14,7 +14,7 @@ import {
 } from 'store';
 import styled from 'styled-components';
 
-const { useState, useEffect } = React;
+const { useEffect } = React;
 
 const ModalWrapper = styled.div`
   width: 100%;

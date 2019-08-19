@@ -79,7 +79,6 @@ const Feeds = styled.div`
 
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   deemBoardStatus,
-  resetError,
   likeStatus,
   reportStatus,
   getBoardStatus,

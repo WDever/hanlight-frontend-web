@@ -93,7 +93,7 @@ const postBoardApi = (data: PostBoardParams) => {
   }
 
   if (data.anonymous) {
-    formData.append('anonymous', data.anonymous);
+    formData.append('anonymous', data.anonymous ? '1' : '0');
   }
 
   formData.append('content', data.content);

@@ -12,14 +12,12 @@ const { useState } = React;
 
 const Wrapper = styled(Deem)``;
 
-const FeedImgToggleWrapper = styled.div`
+const Hidden = styled.div`
   position: absolute;
+
   width: 100%;
-  top: 0;
-  height: calc(100% - 3.75rem);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  height: 100%;
+
   z-index: 3;
 `;
 
@@ -99,7 +97,7 @@ const PhotoDetailComponent: React.FC = () => {
 
   return (
     <Wrapper>
-      <FeedImgToggleWrapper
+      <Hidden
         onClick={() =>
           dispatch(photoDetailToggle({ status: false, board_pk: 0, idx: 0 }))
         }
