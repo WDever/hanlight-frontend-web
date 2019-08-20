@@ -7,7 +7,7 @@ import {
 import { Device } from 'lib/styles';
 import BlueCheck from 'lib/svg/blue-check.svg';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
-import GreyCheck from 'lib/svg/grey-check.svg';
+import GrayCheck from 'lib/svg/gray-check.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled, { css } from 'styled-components';
 
@@ -507,7 +507,7 @@ export default class BoardFormComponent extends React.Component<
               <FormType onClick={this.handleFormType} checked={this.state.type}>
                 <span>익명</span>
                 <img
-                  src={this.state.type ? BlueCheck : GreyCheck}
+                  src={this.state.type ? BlueCheck : GrayCheck}
                   alt="form type"
                 />
               </FormType>
@@ -535,7 +535,7 @@ export default class BoardFormComponent extends React.Component<
                 >
                   <span>익명</span>
                   <img
-                    src={this.state.type ? BlueCheck : GreyCheck}
+                    src={this.state.type ? BlueCheck : GrayCheck}
                     alt="form type"
                   />
                 </FormTypeMobile>

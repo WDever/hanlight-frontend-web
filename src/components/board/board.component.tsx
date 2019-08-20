@@ -94,7 +94,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   errorMessage,
   optionData,
   likeListToggleStatus,
-  photoDetailDataStatus,
+  photoDetailStatus,
 }) => {
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -137,7 +137,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
         {deemBoardStatus && <Deem />}
         {optionData.type !== 'none' && <BoradOptionComponent />}
         {likeListToggleStatus && <LikeListComponent />}
-        {photoDetailDataStatus && <PhotoDetailComponent />}
+        {photoDetailStatus && <PhotoDetailComponent />}
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />

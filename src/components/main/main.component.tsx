@@ -73,7 +73,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
             <HeaderMenuContainer
               logout={() => {
                 resetUser();
-                window.android.logout();
               }}
             />
           )}

@@ -91,8 +91,6 @@ export const boardReducer = (
         draft.board[boardIndex] = {
           ...draft.board[boardIndex],
           ...action.payload,
-          // user_name: draft.board[boardIndex].user_name,
-          // user_image: draft.board[boardIndex].user_image,
           edited: true,
         };
         break;

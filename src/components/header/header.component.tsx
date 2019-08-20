@@ -128,21 +128,10 @@ const New = styled.div`
   font-weight: bold;
 `;
 
-declare global {
-  interface Window {
-    android: any;
-  }
-}
-
-window.android = {
-  logout: () => console.log('logout'),
-}
-
 const HeaderComponent: React.FC<
   HeaderProps & HeaderMethod & RouteComponentProps
 > = ({ name, history, location, resetUser, toggleMenu }) => {
   const logout = () => {
-    window.android.logout();
     resetUser();
     history.push('/user/login');
   };
