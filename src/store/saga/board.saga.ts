@@ -53,7 +53,6 @@ import {
   ReportParams,
   SET_ERROR,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const getBoardApi = (data: GetBoardParams) =>
   instance

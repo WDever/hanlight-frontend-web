@@ -1,11 +1,11 @@
 import * as React from 'react';
 
+import HMMainComponent from 'components/hanlight-music/main';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
 import { MainMethod, MainProps } from 'container/main';
 import ProfileContainer from 'container/profile';
-import { Device } from 'lib/styles';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
@@ -41,7 +41,6 @@ const MainComponents = () => (
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   history,
   location,
-  match,
   loginStatus,
   resetUser,
   toggleMenuStatus,
@@ -88,6 +87,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
+        <Route exact={true} path="/music" component={HMMainComponent} />
         <Route path="/hanseithon" component={HanseiThonPage} />
         <Redirect to="/error" />
       </Switch>
