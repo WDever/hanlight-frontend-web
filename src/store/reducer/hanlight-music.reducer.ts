@@ -10,7 +10,9 @@ const initialState: HanlightMusicModel = {
   hanlightStatus: {
     getMusicStatus: 'none',
     postMusicStatus: 'none',
+    getMusicSearchStatus: 'none',
   },
+  searchList: [],
 };
 
 export const hanlightMusicReducer = (
@@ -42,6 +44,19 @@ export const hanlightMusicReducer = (
 
       case 'POST_MUSIC_FAILURE':
         draft.hanlightStatus.postMusicStatus = 'failure';
+        break;
+
+      case 'GET_MUSIC_SEARCH':
+        draft.hanlightStatus.getMusicSearchStatus = 'pending';
+        break;
+
+      case 'GET_MUSIC_SEARCH_SUCCESS':
+        draft.hanlightStatus.getMusicSearchStatus = 'success';
+        draft.searchList = state.searchList.concat(action.payload.music);
+        break;
+
+      case 'GET_MUSIC_SEARCH_FAILURE':
+        draft.hanlightStatus.getMusicSearchStatus = 'failure';
         break;
 
       default:

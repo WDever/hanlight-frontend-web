@@ -1,5 +1,9 @@
 import { hanlightMusicInstance } from 'lib/baseUrl';
-import { GetMusicPayload, PostMusicPayload } from 'store/action';
+import {
+  GetMusicPayload,
+  GetMusicSearchPayload,
+  PostMusicPayload,
+} from 'store/action';
 
 export const getMusicRequest = (data: GetMusicPayload) =>
   hanlightMusicInstance
@@ -24,4 +28,17 @@ export const postMusicRequset = (data: PostMusicPayload) =>
         },
       },
     )
+    .then(res => res.data);
+
+export const getMusicSearchRequest = (data: GetMusicSearchPayload) =>
+  hanlightMusicInstance
+    .get('/api/music/search/', {
+      headers: {
+        Authorization: data.accessToken,
+      },
+      params: {
+        q: data.q,
+        type: data.type,
+      },
+    })
     .then(res => res.data);

@@ -27,7 +27,7 @@ const Empty = styled.div`
   width: 100%;
 `;
 
-const MainComponents = () => (
+const MainComponents: React.FC<{ test: boolean}> = ({ test }) => (
   <>
     <MainNoticePage />
     <MainTimePage />
@@ -80,7 +80,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       )}
 
       <Switch>
-        <Route exact={true} path="/" component={MainComponents} />
+        <Route exact={true} path="/" render={() => <MainComponents test={true} />} />
         <Route exact={true} path="/calendar" component={CalendarPage} />
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />

@@ -49,9 +49,13 @@ export interface PostMusicFailure extends Action {
   paylod: { err: ErrorResponse; origin: PostMusicPayload };
 }
 
-export interface GetMusicSearchPayload {}
+export interface GetMusicSearchPayload {
+  accessToken: string;
+  q: string;
+  type: 'song' | 'artist' | 'album';
+}
 
-export interface GetMusicSearchSuccessPayload {}
+export interface GetMusicSearchSuccessPayload extends GetMusicSuccessPayload {}
 
 export interface GetMusicSearch extends Action {
   readonly type: HanlightMusicTypes.GET_MUSIC_SEARCH;
@@ -60,7 +64,7 @@ export interface GetMusicSearch extends Action {
 
 export interface GetMusicSearchSuccess extends Action {
   readonly type: HanlightMusicTypes.GET_MUSIC_SEARCH_SUCCESS;
-  payload: GetMusicSearchPayload;
+  payload: GetMusicSearchSuccessPayload;
 }
 
 export interface GetMusicSearchFailure extends Action {
@@ -85,6 +89,6 @@ export type hanlightMusicReducerActions =
   | PostMusic
   | PostMusicSuccess
   | PostMusicFailure
-  | GetMusic
-  | GetMusicSuccess
-  | GetMusicFailure;
+  | GetMusicSearch
+  | GetMusicSearchSuccess
+  | GetMusicSearchFailure;
