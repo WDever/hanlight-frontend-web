@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
   HeaderMenuMethod,
@@ -78,14 +78,29 @@ const Profile = styled.div`
   align-items: flex-start;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.img<{ image: boolean }>`
   @media ${Device.tabletL} {
     width: 3.25rem;
     margin-left: 1.25rem;
+
+    ${({ image }) =>
+      image &&
+      css`
+        height: 3.25rem;
+        margin-bottom: 0.71rem;
+        border-radius: 100%;
+      `}
   }
   @media ${Device.mobileL} {
     width: 2.75rem;
     margin-left: 1rem;
+
+    ${({ image }) =>
+      image &&
+      css`
+        height: 2.75rem;
+        margin-bottom: 0.56rem;
+      `}
   }
 `;
 
@@ -185,7 +200,7 @@ const DownSide = styled.div`
 
 const HeaderMenuComponent: React.FC<
   HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
-> = ({ name, type, toggleMenu, logout, history }) => {
+> = ({ name, image, type, toggleMenu, logout, history }) => {
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -217,7 +232,11 @@ const HeaderMenuComponent: React.FC<
       <LeftWrapper>
         <Upside>
           <Profile>
-            <ProfileImg src={DefaultProfileImg} alt="" />
+            <ProfileImg
+              image={!!image}
+              src={image || DefaultProfileImg}
+              alt=""
+            />
             <Info>
               <Name>{name}님, 안녕하세요 ✨</Name>
               <UserType>{userType()}</UserType>

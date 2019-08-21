@@ -13,13 +13,26 @@ const initialState: BoardModel = {
   postBoardCommentStatus: 'none',
   patchBoardCommentStatus: 'none',
   deleteBoardCommentStatus: 'none',
+  getLikeListStatus: 'none',
   reportStatus: 'none',
   likeStatus: 'none',
   deemBoardStatus: false,
-  activeReportData: {
-    active: false,
+  activeReportStatus: false,
+  optionData: {
     type: 'none',
     board_pk: 0,
+    comment_pk: undefined,
+    content: '',
+    write: false,
+  },
+  editBoardToggleStatus: false,
+  editCommentToggleStatus: false,
+  likeList: [],
+  likeListToggleStatus: false,
+  photoDetailData: {
+    status: false,
+    boardFiles: [],
+    idx: 0,
   },
 };
 
@@ -96,6 +109,10 @@ export const boardReducer = (
             1,
           );
         }
+        break;
+
+      case 'EDIT_BOARD_TOGGLE':
+        draft.editBoardToggleStatus = action.payload;
         break;
 
       case 'DELETE_BOARD':
@@ -233,6 +250,10 @@ export const boardReducer = (
         }
         break;
 
+      case 'EDIT_COMMENT_TOGGLE':
+        draft.editCommentToggleStatus = action.payload;
+        break;
+
       case 'DELETE_BOARD_COMMENT':
         draft.deleteBoardCommentStatus = 'pending';
         break;
@@ -302,14 +323,14 @@ export const boardReducer = (
         }
         break;
       case 'ACTIVE_REPORT':
-        draft.activeReportData = action.payload;
+        draft.activeReportStatus = action.payload;
         break;
 
       case 'LIKE':
         {
           draft.likeStatus = 'pending';
 
-          const board = state.board.find(
+          const board = draft.board.find(
             board => board.pk === action.payload.board_pk,
           );
 
@@ -391,6 +412,43 @@ export const boardReducer = (
             }
           }
         }
+        break;
+
+      case 'GET_LIKE_LIST':
+        draft.getLikeListStatus = 'pending';
+        draft.likeList = [];
+        break;
+
+      case 'GET_LIKE_LIST_SUCCESS':
+        draft.getLikeListStatus = 'success';
+        draft.likeList = state.likeList.concat(action.payload.like);
+        break;
+
+      case 'GET_LIKE_LIST_FAILURE':
+        draft.getLikeListStatus = 'failure';
+        break;
+
+      case 'LIKE_LIST_TOGGLE':
+        draft.likeListToggleStatus = action.payload;
+        break;
+
+      case 'PHOTO_DETAIL_TOGGLE': {
+        const { status, board_pk, idx } = action.payload;
+        if (board_pk) {
+          const boardFiles = state.board.filter(
+            item => item.pk === action.payload.board_pk,
+          )[0].files;
+
+          draft.photoDetailData = { status, idx, boardFiles };
+        } else {
+          draft.photoDetailData = { status, idx, boardFiles: [] };
+        }
+
+        break;
+      }
+
+      case 'OPTION_TOGGLE':
+        draft.optionData = { ...action.payload };
         break;
 
       case 'DEEM_BOARD':
