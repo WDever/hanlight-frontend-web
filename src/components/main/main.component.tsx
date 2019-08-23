@@ -88,7 +88,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Route path="/hanseithon" component={HanseiThonPage} />
         <Redirect to="/error" />
       </Switch>
     </div>
