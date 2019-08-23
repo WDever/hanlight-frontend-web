@@ -9,7 +9,6 @@ import { Device } from 'lib/styles';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
-import HanseiThonPage from 'pages/hanseithon';
 import MealPage from 'pages/meal/detail-meal';
 import MainMealPage from 'pages/meal/main-meal';
 import NoticePage from 'pages/notice/detail-notice';
