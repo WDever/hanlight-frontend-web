@@ -15,7 +15,7 @@ import {
 } from 'store';
 import styled, { css } from 'styled-components';
 
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef, useMemo } = React;
 
 const EditWrapper = styled.div`
   width: 43.75rem;
@@ -222,7 +222,12 @@ const FeedEditComponent: React.FC = () => {
 
   const { optionToggle, patchBoard, editBoardToggle } = boardActions;
 
-  const isAnonymous = board.filter(item => item.pk === board_pk)[0].user_name;
+  const isAnonymous = useMemo(() => {
+    const selectedBoard = board.find(item => item.pk === board_pk)
+    if (selectedBoard) {
+      return selectedBoard.user_name;
+    }
+  }, []);
 
   const close = () => {
     dispatch(
@@ -264,7 +269,7 @@ const FeedEditComponent: React.FC = () => {
     }
   }, [prevStatus, patchBoardStatus]);
 
-  return (
+return (
     <EditWrapper>
       <FeedXButton color={'#9B9B9B'} onClick={close} />
       <EditTitleWrapper>
