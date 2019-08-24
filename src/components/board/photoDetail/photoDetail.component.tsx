@@ -33,7 +33,7 @@ const FeedImgToggle = styled.img`
   @media ${Device.mobileL} {
     margin-top: 2.375rem;
 
-    height: 85%;
+    max-height: 85%;
   }
 `;
 
