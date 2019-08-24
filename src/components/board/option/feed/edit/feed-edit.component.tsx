@@ -15,7 +15,7 @@ import {
 } from 'store';
 import styled, { css } from 'styled-components';
 
-const { useState, useEffect, useRef } = React;
+const { useState, useEffect, useRef, useMemo } = React;
 
 const EditWrapper = styled.div`
   width: 43.75rem;
@@ -205,19 +205,13 @@ const ProfileImg = styled.img<{ image: boolean }>`
 const FeedEditComponent: React.FC = () => {
   const dispatch: Dispatch<boardReducerActions> = useDispatch();
 
-  const { patchBoardStatus } = useSelector<AppState, BoardModel>(
-    state => state.board,
-  );
-  const { optionData } = useSelector<AppState, BoardModel>(
+  const { optionData, patchBoardStatus, board } = useSelector<AppState, BoardModel>(
     state => state.board,
   );
   const { message: errorMesage } = useSelector<AppState, ErrorModel>(
     state => state.error,
   );
-
-  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
-
-  const { image } = useSelector<AppState, UserModel>(state => state.user);
+  const { accessToken, image } = useSelector<AppState, UserModel>(state => state.user);
 
   const { board_pk, content } = optionData;
 
@@ -227,6 +221,13 @@ const FeedEditComponent: React.FC = () => {
   const prevStatus = usePrevious(patchBoardStatus);
 
   const { optionToggle, patchBoard, editBoardToggle } = boardActions;
+
+  const isAnonymous = useMemo(() => {
+    const selectedBoard = board.find(item => item.pk === board_pk)
+    if (selectedBoard) {
+      return selectedBoard.user_name;
+    }
+  }, []);
 
   const close = () => {
     dispatch(
@@ -268,7 +269,7 @@ const FeedEditComponent: React.FC = () => {
     }
   }, [prevStatus, patchBoardStatus]);
 
-  return (
+return (
     <EditWrapper>
       <FeedXButton color={'#9B9B9B'} onClick={close} />
       <EditTitleWrapper>
@@ -278,7 +279,7 @@ const FeedEditComponent: React.FC = () => {
         <EditImgWrapper>
           <ProfileImg
             image={!!image}
-            src={image ? image : DefaultProfileImage}
+            src={image && isAnonymous ? image : DefaultProfileImage}
             alt=""
           />
         </EditImgWrapper>

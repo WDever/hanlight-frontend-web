@@ -10,7 +10,9 @@ import styled from 'styled-components';
 
 const { useState } = React;
 
-const Wrapper = styled(Deem)``;
+const Wrapper = styled(Deem)`
+  height: calc(100% - 3.75rem);
+`;
 
 const Hidden = styled.div`
   position: absolute;
@@ -23,9 +25,7 @@ const Hidden = styled.div`
 
 const FeedImgToggle = styled.img`
   max-width: 100%;
-  height: calc(100% - 3.75rem);
-
-  align-self: flex-start;
+  max-height: 100%;
 
   object-fit: contain;
   z-index: 4;
@@ -44,7 +44,7 @@ const FeedXButton = styled.span`
   width: 32px;
   height: 32px;
   cursor: pointer;
-  z-index: 4;
+  z-index: 5;
 
   @media ${Device.mobileL} {
     width: 22px;

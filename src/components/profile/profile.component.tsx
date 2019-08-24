@@ -114,7 +114,7 @@ const TopImg = styled.img<{ image: boolean }>`
   }
   @media ${Device.mobileL} {
     width: 4rem;
-    margin-bottom: -1rem;
+    margin-bottom: -0.25rem;
   }
 `;
 
