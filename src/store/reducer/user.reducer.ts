@@ -182,7 +182,6 @@ export const userReducer = (
       case 'POST_USER_IMG_SUCCESS':
         draft.postUserImgStatus = 'success';
         draft.image = action.payload.user.image;
-
         break;
 
       case 'POST_USER_IMG_FAILURE':

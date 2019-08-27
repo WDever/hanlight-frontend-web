@@ -225,6 +225,8 @@ const FeedImg = styled.img<{ rows: number }>`
   height: 100%;
   object-fit: cover;
   cursor: pointer;
+
+  image-orientation: from-image;
 `;
 
 const FeedMoreImg = styled.div<{ img: string }>`

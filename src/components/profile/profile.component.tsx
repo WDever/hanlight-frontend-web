@@ -289,12 +289,20 @@ const ProfileComponent: React.FC<
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
-  const prevProps = usePrevious({ patchPasswordStatus, patchPhoneStatus });
+  const prevProps = usePrevious({
+    patchPasswordStatus,
+    patchPhoneStatus,
+    postUserImgStatus,
+  });
 
   useEffect(() => () => resetError(), []);
 
   useEffect(() => {
-    const statusProps = { patchPasswordStatus, patchPhoneStatus };
+    const statusProps = {
+      patchPasswordStatus,
+      patchPhoneStatus,
+      postUserImgStatus,
+    };
     if (prevProps) {
       if (prevProps.patchPasswordStatus === 'pending') {
         if (statusProps.patchPasswordStatus === 'success') {
@@ -313,17 +321,15 @@ const ProfileComponent: React.FC<
         ) {
           alert(errorMessage);
         }
+      } else if (prevProps.postUserImgStatus === 'pending') {
+        if (postUserImgStatus === 'success') {
+          alert('성공적으로 변경되었습니다.');
+        } else if (postUserImgStatus === 'failure') {
+          alert(errorMessage);
+        }
       }
     }
-  }, [patchPhoneStatus, patchPasswordStatus]);
-
-  useEffect(() => {
-    if (postUserImgStatus === 'success') {
-      alert('성공적으로 변경되었습니다.');
-    } else if (postUserImgStatus === 'failure') {
-      alert(errorMessage);
-    }
-  }, [postUserImgStatus]);
+  }, [patchPhoneStatus, patchPasswordStatus, postUserImgStatus]);
 
   const PatchPassword = (e: React.FormEvent) => {
     e.preventDefault();
