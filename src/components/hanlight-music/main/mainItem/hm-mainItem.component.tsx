@@ -8,9 +8,8 @@ const Wrapper = styled.div`
 
   background-color: #ffffff;
 
-  border-radius: 2rem;
-  border: solid 1px #dcdcdc;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.21);
+  border-radius: 1rem;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.16);
 
   display: flex;
   align-items: center;
@@ -42,10 +41,10 @@ const Title = styled.p`
 
 const Artist = styled.p`
   font-family: 'Spoqa Han Sans';
-  font-weight: bold;
-  font-size: 1rem;
+  font-size: 13px;
 
   margin: 0;
+  margin-left: 1.875rem;
 `;
 
 interface MainMusicItemProps {

@@ -3,7 +3,7 @@ import * as React from 'react';
 import ListIcon from 'lib/svg/hm-list-icon.svg';
 import SearchIcon from 'lib/svg/hm-search-icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { categoryType } from '../hanlight-music.component';
 
 const { useState, useEffect } = React;
@@ -13,22 +13,58 @@ const Wrapper = styled.div`
   height: 100%;
 
   background-color: #ffffff;
+
+  display: inline-flex;
+  flex-direction: column;
+
+  box-shadow: inset 0 15px 10px 0 rgba(0, 0, 0, 0.07);
+
+  border-top-left-radius: 0.6rem;
+
+  position: relative;
+
+  z-index: 1;
 `;
 
 const Block = styled.div<{ active: boolean }>`
   width: 100%;
   height: 3.875rem;
 
-  display: flex;
+  display: inline-flex;
   justify-content: center;
   align-items: center;
 
   box-sizing: border-box;
 
-  border-left: ${({active}) => active ? '7px solid #4470ff' : 'none'};
+  border-left: ${({ active }) =>
+    active ? '7px solid #4470ff' : '7px solid transparent'};
+
+  cursor: pointer;
+
+  box-shadow: ${({ active }) =>
+    active ? '-7px 3px 10px 0 rgba(0, 0, 0, 0.07)' : 'none'};
+
+  ${({ active }) =>
+    active &&
+    css`
+      background-color: #ffffff;
+      position: relative;
+      z-index: 3;
+    `}
 
   img {
     width: 1.375rem;
+  }
+
+  :first-of-type {
+    border-top-left-radius: 0.5rem;
+  }
+
+  div {
+    width: 7px;
+    height: 100%;
+
+    background-color: #4470ff;
   }
 `;
 

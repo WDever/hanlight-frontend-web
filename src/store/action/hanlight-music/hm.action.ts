@@ -8,7 +8,7 @@ export interface GetMusicPayload {
 }
 
 export interface GetMusicSuccessPayload {
-  music: HanlightMusicItem[];
+  musics: HanlightMusicItem[];
 }
 
 export interface GetMusic extends Action {

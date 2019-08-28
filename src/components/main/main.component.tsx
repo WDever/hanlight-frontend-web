@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import HMMainComponent from 'components/hanlight-music/main';
+import HMComponent from 'components/hanlight-music';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
@@ -87,7 +87,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Route exact={true} path="/music" component={HMMainComponent} />
+        <Route exact={true} path="/music" component={HMComponent} />
         <Route path="/hanseithon" component={HanseiThonPage} />
         <Redirect to="/error" />
       </Switch>

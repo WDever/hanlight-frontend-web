@@ -19,6 +19,10 @@ const Wrapper = styled.div`
   border-radius: 0.5rem;
 
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  /* flex-flow: column wrap; */
+  /* align-items: flex-start; */
 `;
 
 export type categoryType = 'list' | 'search';
