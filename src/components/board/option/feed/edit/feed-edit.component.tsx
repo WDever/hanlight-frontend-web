@@ -172,13 +172,14 @@ const FeedXButton = styled.span`
   }
 `;
 
-const ProfileImg = styled.img<{ image: boolean }>`
+const ProfileImg = styled.img<{ image: boolean; isAnonymous: boolean }>`
   width: 2.69rem;
+  height: ${({ isAnonymous, image }) =>
+    isAnonymous || !image ? '3.2rem' : '2.69rem'};
 
   ${({ image }) =>
     image &&
     css`
-      height: 2.69rem;
       margin-bottom: 0.56rem;
       border-radius: 100%;
 
@@ -191,27 +192,22 @@ const ProfileImg = styled.img<{ image: boolean }>`
         height: 2rem;
         margin-bottom: 0.43rem;
       }
-    `}
-
-    @media ${Device.tabletL} {
-      width: 3.5rem;
-    }
-
-    @media ${Device.mobileL} {
-      width: 2rem;
-    }
+    `};
 `;
 
 const FeedEditComponent: React.FC = () => {
   const dispatch: Dispatch<boardReducerActions> = useDispatch();
 
-  const { optionData, patchBoardStatus, board } = useSelector<AppState, BoardModel>(
-    state => state.board,
-  );
+  const { optionData, patchBoardStatus, board } = useSelector<
+    AppState,
+    BoardModel
+  >(state => state.board);
   const { message: errorMesage } = useSelector<AppState, ErrorModel>(
     state => state.error,
   );
-  const { accessToken, image } = useSelector<AppState, UserModel>(state => state.user);
+  const { accessToken, image } = useSelector<AppState, UserModel>(
+    state => state.user,
+  );
 
   const { board_pk, content } = optionData;
 
@@ -223,9 +219,10 @@ const FeedEditComponent: React.FC = () => {
   const { optionToggle, patchBoard, editBoardToggle } = boardActions;
 
   const isAnonymous = useMemo(() => {
-    const selectedBoard = board.find(item => item.pk === board_pk)
+    const selectedBoard = board.find(item => item.pk === board_pk);
     if (selectedBoard) {
-      return selectedBoard.user_name;
+      console.log(selectedBoard);
+      return selectedBoard.user_name ? false : true;
     }
   }, []);
 
@@ -269,7 +266,7 @@ const FeedEditComponent: React.FC = () => {
     }
   }, [prevStatus, patchBoardStatus]);
 
-return (
+  return (
     <EditWrapper>
       <FeedXButton color={'#9B9B9B'} onClick={close} />
       <EditTitleWrapper>
@@ -279,7 +276,8 @@ return (
         <EditImgWrapper>
           <ProfileImg
             image={!!image}
-            src={image && isAnonymous ? image : DefaultProfileImage}
+            isAnonymous={!!isAnonymous}
+            src={image && !isAnonymous ? image : DefaultProfileImage}
             alt=""
           />
         </EditImgWrapper>

@@ -34,6 +34,7 @@ export interface ProfileMethod {
   patchPhone: (payload: PatchPhoneParam) => void;
   resetError: () => void;
   postUserImg(payload: PostUserImgParmas): void;
+  resetUser(): void;
 }
 
 const mapStateToProps = ({ user, error }: AppState) => ({
@@ -59,6 +60,7 @@ const mapDispatchToProps = (
   patchPhone: bindActionCreators(userActions.patchPhone, dispatch),
   resetError: bindActionCreators(errorActions.resetError, dispatch),
   postUserImg: bindActionCreators(userActions.postUserImg, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 const ProfileContainer = withRouter(

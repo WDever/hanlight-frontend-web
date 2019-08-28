@@ -286,6 +286,7 @@ const ProfileComponent: React.FC<
   resetError,
   postUserImg,
   postUserImgStatus,
+  resetUser,
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
@@ -306,8 +307,10 @@ const ProfileComponent: React.FC<
     if (prevProps) {
       if (prevProps.patchPasswordStatus === 'pending') {
         if (statusProps.patchPasswordStatus === 'success') {
-          alert('성공적으로 변경되었습니다.');
+          alert('성공적으로 변경되었습니다.\n다시 로그인 해주세요.');
           setPassword('');
+          resetUser();
+          history.push('user/login/');
         } else if (statusProps.patchPasswordStatus === 'failure') {
           alert(errorMessage);
         }
