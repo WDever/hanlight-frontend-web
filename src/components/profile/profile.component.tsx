@@ -19,7 +19,7 @@ import { RouteComponentProps } from 'react-router';
 import styled, { css } from 'styled-components';
 import uuid from 'uuid';
 
-const { useEffect } = React;
+const { useEffect, useCallback } = React;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -286,6 +286,7 @@ const ProfileComponent: React.FC<
   resetError,
   postUserImg,
   postUserImgStatus,
+  resetUser,
 }) => {
   const [password, setPassword] = useInput('');
   const [tp, setTp] = useInput('');
@@ -294,6 +295,11 @@ const ProfileComponent: React.FC<
     patchPhoneStatus,
     postUserImgStatus,
   });
+
+  const logout = useCallback(() => {
+    resetUser();
+    resetUser();
+  }, []);
 
   useEffect(() => () => resetError(), []);
 
@@ -306,15 +312,17 @@ const ProfileComponent: React.FC<
     if (prevProps) {
       if (prevProps.patchPasswordStatus === 'pending') {
         if (statusProps.patchPasswordStatus === 'success') {
-          alert('성공적으로 변경되었습니다.');
+          alert('성공적으로 변경되었습니다.\n다시 로그인 해주세요.');
           setPassword('');
+          logout();
         } else if (statusProps.patchPasswordStatus === 'failure') {
           alert(errorMessage);
         }
       } else if (prevProps.patchPhoneStatus === 'pending') {
         if (statusProps.patchPhoneStatus === 'success') {
-          alert('성공적으로 변경되었습니다.');
+          alert('성공적으로 변경되었습니다.\n다시 로그인 해주세요.');
           setTp('');
+          logout();
         } else if (
           statusProps.patchPhoneStatus === 'failure' &&
           errorCode < 500

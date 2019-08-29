@@ -82,7 +82,7 @@ const ProfileImg = styled.img<{ image: boolean }>`
   ${({ image }) =>
     image &&
     css`
-      height: 2.69rem;
+      height: ${image ? '2.69rem' : '3.2rem'};
       margin-bottom: 0.56rem;
       border-radius: 100%;
 
