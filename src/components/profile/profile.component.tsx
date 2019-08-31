@@ -298,7 +298,7 @@ const ProfileComponent: React.FC<
 
   const logout = useCallback(() => {
     resetUser();
-    history.push('/user/login/');
+    history.push('/user/login');
   }, []);
 
   useEffect(() => () => resetError(), []);
