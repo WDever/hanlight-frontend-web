@@ -1,20 +1,29 @@
 import { useInput, usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
-import DeleteIcon from 'lib/svg/delete-icon.svg';
 import Dotdotdot from 'lib/svg/dotdotdot.svg';
-import EditIcon from 'lib/svg/edit-icon.svg';
 import LikeIcon from 'lib/svg/like.svg';
-import ReportIcon from 'lib/svg/report-icon.svg';
 import * as React from 'react';
-import { ActiveReportData, BoardApiModel, Comment, LikeParams } from 'store';
-import styled from 'styled-components';
+import {
+  BoardApiModel,
+  Comment,
+  LikeParams,
+  OptionData,
+  PatchBoardCommentParams,
+} from 'store';
+import styled, { css } from 'styled-components';
+
+const { useMemo } = React;
 
 const Wrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
   margin-top: 0.3125rem;
+
+  :last-of-type {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const OptionBtn = styled.img`
@@ -22,6 +31,7 @@ const OptionBtn = styled.img`
   width: 1.25rem;
   cursor: pointer;
   margin-bottom: 1rem;
+  outline: none;
 `;
 
 const CommentWrapper = styled.div`
@@ -35,6 +45,10 @@ const CommentWrapper = styled.div`
   &:hover {
     ${OptionBtn} {
       display: initial;
+
+      @media ${Device.mobileL} {
+        display: none;
+      }
     }
   }
 `;
@@ -44,6 +58,10 @@ const CommentLeftWrapper = styled.div`
   min-height: 3.5rem;
   display: flex;
   align-items: flex-start;
+
+  @media ${Device.mobileL} {
+    width: 100%;
+  }
 `;
 
 const CommentContentWrapper = styled.div`
@@ -54,17 +72,35 @@ const CommentContentWrapper = styled.div`
   width: 100%;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.img<{ image: boolean }>`
   width: 2.5rem;
   margin-right: 0.75rem;
 
-  @media ${Device.tabletL} {
-    width: 3.3rem;
-  }
+  ${({ image }) =>
+    image &&
+    css`
+      height: 2.5rem;
+      margin-bottom: 0.4rem;
+      border-radius: 100%;
 
-  @media ${Device.mobileL} {
-    width: 2rem;
-  }
+      @media ${Device.tabletL} {
+        height: 3.3rem;
+        margin-bottom: 0.625rem;
+      }
+
+      @media ${Device.mobileL} {
+        height: 2rem;
+        margin-bottom: 0.43rem;
+      }
+    `}
+
+    @media ${Device.tabletL} {
+      width: 3.3rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 2rem;
+    }
 `;
 
 const CommentBody = styled.div`
@@ -86,7 +122,7 @@ const CommentName = styled.span`
   }
 `;
 
-const CommentContent = styled.div`
+const CommentContent = styled.div<{ isMobile: boolean }>`
   font-size: 0.81rem;
   color: #1d2129;
   padding: 0.375rem;
@@ -95,6 +131,8 @@ const CommentContent = styled.div`
 
   border-radius: 8px;
   background-color: #f2f3f5;
+
+  ${({ isMobile }) => (isMobile ? 'cursor: pointer' : '')};
 
   @media ${Device.tabletL} {
     vertical-align: middle;
@@ -144,32 +182,6 @@ const Form = styled.form`
   }
 `;
 
-const OptionWrapper = styled.div`
-  width: 6.875rem;
-  background-color: #ffffff;
-  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.2);
-  position: absolute;
-  right: 0;
-  top: 50%;
-  cursor: pointer;
-  z-index: 1;
-`;
-
-const Option = styled.div`
-  width: 100%;
-  height: 2.125rem;
-  border: solid 0.5px #707070;
-  font-size: 0.75rem;
-
-  display: flex;
-  align-items: center;
-`;
-
-const OptionImg = styled.img`
-  margin-left: 0.68rem;
-  margin-right: 0.7rem;
-`;
-
 const CommentLikeBtn = styled.span`
   font-size: 0.75rem;
   margin-left: 0.4rem;
@@ -204,6 +216,8 @@ const CommentLikeWrapper = styled.div`
   display: flex;
   align-items: center;
   margin-left: 0.25rem;
+
+  cursor: pointer;
 
   img {
     width: 12px;
@@ -241,43 +255,45 @@ interface CommentItemProps {
   board_pk: number;
   comment_pk: number;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
+  userImage: string | null;
   accessToken: string;
   boardApiStatus: BoardApiModel;
   likeStatus: 'none' | 'pending' | 'success' | 'failure';
+  editCommentToggleStatus: boolean;
+  optionData: OptionData;
 }
 
 interface CommentItemMethod {
   deemBoard: (payload: boolean) => void;
   like(params: LikeParams): void;
-  handleOption({
-    action,
-    board_pk,
-    comment_pk,
-    content,
-  }: {
-    action: 'delete' | 'edit' | 'report';
-    board_pk: number;
-    comment_pk: number;
-    content?: string;
-  }): void;
-  setReportToggle(value: React.SetStateAction<boolean>): void;
-  activeReport(data: ActiveReportData): void;
+  activeReport(data: boolean): void;
+  optionToggle(payload: OptionData): void;
+  editCommentToggle(data: boolean): void;
+  patchBoardComment(data: PatchBoardCommentParams): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
+
+const mobileFilter = 'win16|win32|win64|macintel';
 
 const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
   comment,
   date,
-  handleOption,
   board_pk,
   comment_pk,
   userType,
+  userImage,
   like,
   likeStatus,
   accessToken,
-  deemBoard,
-  setReportToggle,
-  activeReport,
   boardApiStatus,
+  optionToggle,
+  editCommentToggleStatus,
+  editCommentToggle,
+  optionData,
+  patchBoardComment,
+  likeListToggle,
+  getLikeList,
 }) => {
   const {
     getBoardStatus,
@@ -288,6 +304,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   } = boardApiStatus;
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -300,14 +317,20 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   };
   const prevStatusProps:
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
     | undefined = usePrevious(statusProps);
+
   const { user_name, content, likeCount, edited, isLiked, write } = comment;
-  const [optionToggle, setOptionToggle] = React.useState<boolean>(false);
-  const [editToggle, setEditToggle] = React.useState<boolean>(false);
-  const [editedContent, setEditedContent] = useInput('');
+
+  const [editedContent, setEditedContent] = useInput(content);
+
+  const mobileCheck = useMemo(
+    () => mobileFilter.indexOf(navigator.platform.toLowerCase()),
+    [],
+  );
 
   React.useEffect(() => {
     if (prevStatusProps) {
@@ -318,23 +341,19 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
             statusProps[status] !== 'pending',
         )
       ) {
-        setOptionToggle(false);
-        if (editToggle) {
-          setEditToggle(false);
-          setEditedContent('');
-        }
+        optionToggle({ type: 'none', board_pk: 0, content: '', write });
       }
     }
   }, [statusProps]);
 
   const submitEdit = () => {
-    setEditToggle(!setEditToggle);
-    if (editedContent !== content || editedContent !== '') {
-      handleOption({
-        action: 'edit',
+    editCommentToggle(false);
+    if (editedContent !== content && editedContent !== '') {
+      patchBoardComment({
+        accessToken,
+        content: editedContent,
         board_pk,
         comment_pk,
-        content: editedContent,
       });
     }
   };
@@ -343,9 +362,13 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
     <Wrapper>
       <CommentWrapper>
         <CommentLeftWrapper>
-          <ProfileImg src={DefaultProfileImage} alt="" />
+          <ProfileImg
+            image={!!userImage}
+            src={userImage || DefaultProfileImage}
+            alt=""
+          />
           <CommentContentWrapper>
-            {editToggle ? (
+            {editCommentToggleStatus && optionData.comment_pk === comment_pk ? (
               <Form onSubmit={submitEdit}>
                 <input
                   type="text"
@@ -355,15 +378,43 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
                       setEditedContent(e);
                     }
                   }}
+                  autoFocus={true}
                 />
               </Form>
             ) : (
               <CommentBody>
-                <CommentContent>
-                  <CommentName>{user_name}</CommentName>
+                <CommentContent
+                  isMobile={mobileCheck === -1}
+                  onClick={() => {
+                    if (mobileCheck === -1) {
+                      optionToggle({
+                        type: 'comment',
+                        board_pk,
+                        comment_pk,
+                        content,
+                        write,
+                      });
+                    }
+                  }}
+                >
+                  <CommentName>
+                    {user_name ? user_name : '글 작성자'}
+                  </CommentName>
                   {content}
                 </CommentContent>
-                <CommentLikeWrapper>
+                <CommentLikeWrapper
+                  onClick={() => {
+                    if (likeCount) {
+                      getLikeList({
+                        accessToken,
+                        type: 'comment',
+                        board_pk,
+                        comment_pk,
+                      });
+                      likeListToggle(true);
+                    }
+                  }}
+                >
                   <img src={LikeIcon} alt="" />
                   <CommetLikeCount>{likeCount}</CommetLikeCount>
                 </CommentLikeWrapper>
@@ -395,56 +446,16 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
         <OptionBtn
           src={Dotdotdot}
           alt="comment option"
-          onClick={() => setOptionToggle(!optionToggle)}
+          onClick={() =>
+            optionToggle({
+              type: 'comment',
+              board_pk,
+              comment_pk,
+              content,
+              write,
+            })
+          }
         />
-        {optionToggle && (
-          <OptionWrapper>
-            {write && (
-              <>
-                <Option
-                  onClick={() => {
-                    handleOption({ action: 'edit', board_pk, comment_pk });
-                    setOptionToggle(false);
-                    setEditedContent(content);
-                    setEditToggle(!editToggle);
-                  }}
-                >
-                  <OptionImg src={EditIcon} alt="" />
-                  <span>댓글 수정</span>
-                </Option>
-                <Option
-                  onClick={() => {
-                    handleOption({
-                      action: 'delete',
-                      board_pk,
-                      comment_pk,
-                    });
-                    setOptionToggle(false);
-                  }}
-                >
-                  <OptionImg src={DeleteIcon} alt="" />
-                  <span>댓글 삭제</span>
-                </Option>
-              </>
-            )}
-            <Option
-              onClick={() => {
-                setOptionToggle(false);
-                setReportToggle(true);
-                activeReport({
-                  active: true,
-                  type: 'board',
-                  board_pk,
-                  comment_pk,
-                });
-                deemBoard(true);
-              }}
-            >
-              <OptionImg src={ReportIcon} alt="" />
-              <span>신고하기</span>
-            </Option>
-          </OptionWrapper>
-        )}
       </CommentWrapper>
     </Wrapper>
   );

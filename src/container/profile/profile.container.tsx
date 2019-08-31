@@ -8,6 +8,7 @@ import {
   errorReducerActions,
   PatchPhoneParam,
   PatchPwParam,
+  PostUserImgParmas,
   userActions,
   userReducerActions,
 } from 'store';
@@ -20,8 +21,10 @@ export interface ProfileProps {
   major: string | null;
   grade: number | null;
   classNum: number | null;
+  image: string | null;
   patchPasswordStatus: 'none' | 'pending' | 'success' | 'failure';
   patchPhoneStatus: 'none' | 'pending' | 'success' | 'failure';
+  postUserImgStatus: 'none' | 'pending' | 'success' | 'failure';
   errorMessage: string;
   errorCode: number;
 }
@@ -30,6 +33,8 @@ export interface ProfileMethod {
   patchPassword: (payload: PatchPwParam) => void;
   patchPhone: (payload: PatchPhoneParam) => void;
   resetError: () => void;
+  postUserImg(payload: PostUserImgParmas): void;
+  resetUser(): void;
 }
 
 const mapStateToProps = ({ user, error }: AppState) => ({
@@ -40,10 +45,12 @@ const mapStateToProps = ({ user, error }: AppState) => ({
   classNum: user.classNum,
   name: user.name,
   id: user.id,
+  image: user.image,
   patchPasswordStatus: user.patchPasswordStatus,
   patchPhoneStatus: user.patchPhoneStatus,
   errorCode: error.code,
   errorMessage: error.message,
+  postUserImgStatus: user.postUserImgStatus,
 });
 
 const mapDispatchToProps = (
@@ -52,6 +59,8 @@ const mapDispatchToProps = (
   patchPassword: bindActionCreators(userActions.patchPassword, dispatch),
   patchPhone: bindActionCreators(userActions.patchPhone, dispatch),
   resetError: bindActionCreators(errorActions.resetError, dispatch),
+  postUserImg: bindActionCreators(userActions.postUserImg, dispatch),
+  resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 
 const ProfileContainer = withRouter(

@@ -32,13 +32,18 @@ import {
   PatchPhone,
   PatchPhoneParam,
   PatchPwParam,
+  POST_USER_IMG,
+  POST_USER_IMG_FAILURE,
+  POST_USER_IMG_SUCCESS,
+  PostUserImg,
+  PostUserImgParmas,
   PW_RECOVERY,
   PW_RECOVERY_FAILURE,
   PW_RECOVERY_SUCCESS,
   PwRecovery,
   PwRecoveryParam,
-  REGISTER,
   Register,
+  REGISTER,
   REGISTER_FAILURE,
   REGISTER_SUCCESS,
   RegisterParam,
@@ -297,6 +302,38 @@ function* patchPhoneApiSaga(action: PatchPhone) {
   }
 }
 
+const postUserImgApi = (data: PostUserImgParmas) => {
+  const formData = new FormData();
+
+  if (data.file) {
+    formData.append('file', data.file);
+  }
+
+  return instance
+    .post('/api/user/image', formData, {
+      headers: {
+        access_token: data.accessToken,
+      },
+    })
+    .then(res => res.data);
+};
+
+function* postUserImgApiSaga(action: PostUserImg) {
+  if (action.type) {
+    try {
+      const response = yield call(postUserImgApi, action.payload);
+
+      yield put({ type: POST_USER_IMG_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: POST_USER_IMG_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 function* userSaga() {
   yield takeEvery(ID_RECOVERY, idRecoverySaga);
   yield takeEvery(PW_RECOVERY, pwRecoverySaga);
@@ -307,6 +344,7 @@ function* userSaga() {
   yield takeEvery(GET_USER, getUserApiSaga);
   yield takeEvery(PATCH_PASSWORD, patchPasswordApiSaga);
   yield takeEvery(PATCH_PHONE, patchPhoneApiSaga);
+  yield takeEvery(POST_USER_IMG, postUserImgApiSaga);
 }
 
 export { userSaga };

@@ -8,7 +8,7 @@ import {
 import { useInput } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -28,19 +28,35 @@ const Wrapper = styled.div`
     margin: 0.625rem 0;
   }
 `;
-
-const ProfileImg = styled.img`
+const ProfileImg = styled.img<{ image: boolean }>`
   width: 2.5rem;
   margin-right: 0.75rem;
-  vertical-align: middle;
 
-  @media ${Device.tabletL} {
-    width: 3.6rem;
-  }
+  ${({ image }) =>
+    image &&
+    css`
+      height: 2.5rem;
+      margin-bottom: 0.4rem;
+      border-radius: 100%;
 
-  @media ${Device.mobileL} {
-    width: 2rem;
-  }
+      @media ${Device.tabletL} {
+        height: 3.6rem;
+        margin-bottom: 0.75rem;
+      }
+
+      @media ${Device.mobileL} {
+        height: 2rem;
+        margin-bottom: 0.43rem;
+      }
+    `}
+
+    @media ${Device.tabletL} {
+      width: 3.6rem;
+    }
+
+    @media ${Device.mobileL} {
+      width: 2rem;
+    }
 `;
 
 const Form = styled.form`
@@ -94,8 +110,17 @@ const Form = styled.form`
 
 const CommentFormComponent: React.FC<
   CommentFormProps & CommentFormOwnProps & CommentFormMethod
-> = ({ board_pk, postBoardComment, postBoardCommentStatus, accessToken }) => {
+> = ({
+  board_pk,
+  board_userName,
+  board_write,
+  postBoardComment,
+  postBoardCommentStatus,
+  accessToken,
+  userImage,
+}) => {
   const [content, setContent] = useInput('');
+  const anonymous = !board_userName && board_write;
 
   const PostComment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -107,7 +132,11 @@ const CommentFormComponent: React.FC<
 
   return (
     <Wrapper>
-      <ProfileImg src={DefaultProfileImage} alt="Profile" />
+      <ProfileImg
+        image={!!userImage && !anonymous}
+        src={anonymous ? DefaultProfileImage : userImage || DefaultProfileImage}
+        alt="Profile"
+      />
       <Form>
         <input
           value={content}

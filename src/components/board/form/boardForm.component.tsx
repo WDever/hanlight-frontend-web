@@ -5,7 +5,9 @@ import {
   BoardFormProps,
 } from 'container/board/form/boardForm.container';
 import { Device } from 'lib/styles';
+import BlueCheck from 'lib/svg/blue-check.svg';
 import DefaultProfileImage from 'lib/svg/default-profile-image.svg';
+import GrayCheck from 'lib/svg/gray-check.svg';
 import PictureIcon from 'lib/svg/picture-icon.svg';
 import styled, { css } from 'styled-components';
 
@@ -16,8 +18,84 @@ const FormTitle = styled.div`
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 
+  display: flex;
+  justify-content: space-between;
+
+  span {
+    margin-left: 0.5rem;
+  }
+
   @media ${Device.tabletL} {
     display: none;
+  }
+`;
+
+const FormType = styled.div<{ checked: boolean }>`
+  margin-right: 1.5rem;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 1rem;
+
+    margin-top: 0.125rem;
+    margin-left: 0.25rem;
+
+    @media ${Device.tabletL} {
+      width: 1.125rem;
+
+      margin-left: 5px;
+    }
+
+    @media ${Device.mobileL} {
+      width: 0.75rem;
+
+      margin-left: 3px;
+    }
+  }
+
+  span {
+    font-family: 'Spoqa Han Sans';
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: ${({ checked }) => (checked ? '#4470ff' : '#d3d3d3')};
+
+    user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+
+    @media ${Device.tabletL} {
+      font-size: 1rem;
+    }
+
+    @media ${Device.mobileL} {
+      font-size: 11px;
+    }
+  }
+`;
+
+const FormTypeMobile = styled(FormType)`
+  margin: 0;
+
+  display: none;
+
+  font-size: 11px;
+
+  @media ${Device.tabletL} {
+    display: flex;
+  }
+
+  select {
+    margin-left: 0.75rem;
+
+    @media ${Device.mobileL} {
+      margin-left: 0.5rem;
+    }
+
+    font-size: 11px;
   }
 `;
 
@@ -32,6 +110,7 @@ const FormWrapper = styled.div`
   @media ${Device.tabletL} {
     margin-bottom: 0;
     border: solid 1px #e7e7e7;
+    border-radius: 0;
   }
 
   display: flex;
@@ -57,12 +136,6 @@ const FormBody = styled.div`
     margin-top: 1.25rem;
   }
 
-  @media ${Device.mobileL} {
-    img {
-      width: 2rem;
-    }
-  }
-
   width: 100%;
   margin-top: 1.75rem;
   margin-bottom: 1.75rem;
@@ -72,10 +145,30 @@ const FormBody = styled.div`
   justify-content: space-between;
 `;
 
+const ProfileImg = styled.img<{ image: boolean }>`
+    width: 2.69rem;
+
+${({ image }) =>
+  image &&
+  css`
+    height: 2.69rem;
+    margin-bottom: 0.56rem;
+    border-radius: 100%;
+
+    @media ${Device.mobileL} {
+      height: 2rem;
+    }
+  `}
+
+  @media ${Device.mobileL} {
+    width: 2rem;
+  }
+`;
+
 const FormBodyText = styled.textarea<{ height: number }>`
   width: 88%;
   height: ${props => props.height}px;
-  min-height: 3.3rem;
+  min-height: 3.4rem;
   font-family: inherit;
   font-size: 0.875rem;
   resize: none;
@@ -83,8 +176,14 @@ const FormBodyText = styled.textarea<{ height: number }>`
   box-sizing: border-box;
   outline: none;
 
+  @media ${Device.tabletL} {
+    width: 75%;
+  }
+
   @media ${Device.mobileL} {
     min-height: 2rem;
+
+    width: 65%;
   }
 `;
 
@@ -279,10 +378,12 @@ export default class BoardFormComponent extends React.Component<
     content: string;
     files: Array<{ file: File; preview: string }>;
     textAreaHeight: number;
+    type: boolean;
   } = {
     content: '',
     files: [],
     textAreaHeight: 0,
+    type: false,
   };
 
   public componentDidUpdate(prevProps: BoardFormProps & BoardFormMethod) {
@@ -356,8 +457,23 @@ export default class BoardFormComponent extends React.Component<
         accessToken: this.props.accessToken,
         content: this.state.content.trim(),
         files: this.state.files.map(v => v.file),
+        anonymous: this.state.type,
       });
     }
+  };
+
+  public handleFormType = () => {
+    this.setState(
+      (state: {
+        content: string;
+        files: Array<{ file: File; preview: string }>;
+        textAreaHeight: number;
+        type: boolean;
+      }) => ({
+        type: !state.type,
+      }),
+    );
+    console.log(this.state.type);
   };
 
   public render() {
@@ -387,17 +503,42 @@ export default class BoardFormComponent extends React.Component<
         this.props.userType === 'graduate' ? (
           <FormWrapper>
             <FormTitle>
-              <span style={{ marginLeft: '0.5rem' }}>대나무숲에 글 올리기</span>
+              <span>대나무숲에 글 올리기</span>
+              <FormType onClick={this.handleFormType} checked={this.state.type}>
+                <span>익명</span>
+                <img
+                  src={this.state.type ? BlueCheck : GrayCheck}
+                  alt="form type"
+                />
+              </FormType>
             </FormTitle>
             <FormContentWrapper>
               <FormBody>
-                <img src={DefaultProfileImage} alt="" />
+                <ProfileImg
+                  image={!this.state.type && !!this.props.userImage}
+                  src={
+                    !this.state.type
+                      ? this.props.userImage || DefaultProfileImage
+                      : DefaultProfileImage
+                  }
+                  alt=""
+                />
                 <FormBodyText
                   onChange={this.handleContent}
                   value={this.state.content}
                   height={this.state.textAreaHeight}
                   placeholder="대나무숲에 글을 남겨보세요!"
                 />
+                <FormTypeMobile
+                  onClick={this.handleFormType}
+                  checked={this.state.type}
+                >
+                  <span>익명</span>
+                  <img
+                    src={this.state.type ? BlueCheck : GrayCheck}
+                    alt="form type"
+                  />
+                </FormTypeMobile>
               </FormBody>
               <FormImageWrapper>{FormPreviews}</FormImageWrapper>
               <FormButtonWrapper>
