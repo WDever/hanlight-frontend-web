@@ -20,6 +20,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  
+  margin-bottom: 7rem;
 
   @media ${Device.tabletL} {
     width: 80%;

@@ -9,7 +9,6 @@ import ProfileContainer from 'container/profile';
 import CalendarPage from 'pages/calendar/detail-calendar';
 import MainCalendarPage from 'pages/calendar/main-calendar';
 import FooterPage from 'pages/footer';
-import HanseiThonPage from 'pages/hanseithon';
 import MealPage from 'pages/meal/detail-meal';
 import MainMealPage from 'pages/meal/main-meal';
 import NoticePage from 'pages/notice/detail-notice';
@@ -88,7 +87,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
         <Route exact={true} path="/music" component={HMComponent} />
-        <Route path="/hanseithon" component={HanseiThonPage} />
         <Redirect to="/error" />
       </Switch>
     </div>

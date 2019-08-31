@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import {
   HeaderMenuMethod,
@@ -11,7 +11,6 @@ import {
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
-import HanseithonIcon from 'lib/svg/hanseithon-main-title.svg';
 import Circle1 from 'lib/svg/header-menu-circle1.svg';
 import Circle2 from 'lib/svg/header-menu-circle2.svg';
 import Circle3 from 'lib/svg/header-menu-circle3.svg';
@@ -78,14 +77,29 @@ const Profile = styled.div`
   align-items: flex-start;
 `;
 
-const ProfileImg = styled.img`
+const ProfileImg = styled.img<{ image: boolean }>`
   @media ${Device.tabletL} {
     width: 3.25rem;
     margin-left: 1.25rem;
+
+    ${({ image }) =>
+      image &&
+      css`
+        height: 3.25rem;
+        margin-bottom: 0.71rem;
+        border-radius: 100%;
+      `}
   }
   @media ${Device.mobileL} {
     width: 2.75rem;
     margin-left: 1rem;
+
+    ${({ image }) =>
+      image &&
+      css`
+        height: 2.75rem;
+        margin-bottom: 0.56rem;
+      `}
   }
 `;
 
@@ -185,7 +199,7 @@ const DownSide = styled.div`
 
 const HeaderMenuComponent: React.FC<
   HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
-> = ({ name, type, toggleMenu, logout, history }) => {
+> = ({ name, image, type, toggleMenu, logout, history }) => {
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -217,7 +231,11 @@ const HeaderMenuComponent: React.FC<
       <LeftWrapper>
         <Upside>
           <Profile>
-            <ProfileImg src={DefaultProfileImg} alt="" />
+            <ProfileImg
+              image={!!image}
+              src={image || DefaultProfileImg}
+              alt=""
+            />
             <Info>
               <Name>{name}님, 안녕하세요 ✨</Name>
               <UserType>{userType()}</UserType>
@@ -255,10 +273,6 @@ const HeaderMenuComponent: React.FC<
             <Item name="profile" onClick={handleShortCut}>
               <ItemIcon src={InfoEditIcon} alt="" />
               <ItemSpan>정보수정</ItemSpan>
-            </Item>
-            <Item name="hanseithon" onClick={handleShortCut}>
-              <ItemIcon src={HanseithonIcon} alt="" />
-              <ItemSpan>한세톤</ItemSpan>
             </Item>
             <Item name="logout" onClick={handleShortCut}>
               <ItemIcon src={LogoutIcon} alt="" />

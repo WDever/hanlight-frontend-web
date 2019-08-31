@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import LikeListComponent from 'components/board/likeList';
+import BoradOptionComponent from 'components/board/option';
 import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';
@@ -7,6 +9,7 @@ import { usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
 import BoardRolePage from 'pages/board/role';
 import styled from 'styled-components';
+import PhotoDetailComponent from './photoDetail';
 
 const { useEffect } = React;
 
@@ -76,7 +79,6 @@ const Feeds = styled.div`
 
 const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   deemBoardStatus,
-  resetError,
   likeStatus,
   reportStatus,
   getBoardStatus,
@@ -87,8 +89,12 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
   postBoardCommentStatus,
   patchBoardCommentStatus,
   deleteBoardCommentStatus,
+  getLikeListStatus,
   errorCode,
   errorMessage,
+  optionData,
+  likeListToggleStatus,
+  photoDetailStatus,
 }) => {
   const statusProps: {
     [key: string]: 'none' | 'pending' | 'success' | 'failure';
@@ -102,19 +108,12 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     postBoardCommentStatus,
     patchBoardCommentStatus,
     deleteBoardCommentStatus,
+    getLikeListStatus,
   };
 
   const prevStatusProps:
     | { [key: string]: 'none' | 'pending' | 'success' | 'failure' }
     | undefined = usePrevious(statusProps);
-
-  useEffect(() => {
-    return () => {
-      if (errorCode < 500) {
-        resetError();
-      }
-    };
-  }, []);
 
   useEffect(() => {
     if (prevStatusProps) {
@@ -136,6 +135,9 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
     <Templete>
       <Wrapper>
         {deemBoardStatus && <Deem />}
+        {optionData.type !== 'none' && <BoradOptionComponent />}
+        {likeListToggleStatus && <LikeListComponent />}
+        {photoDetailStatus && <PhotoDetailComponent />}
         <BoardWrapper>
           <Feeds>
             <BoardFormContainer />
@@ -149,6 +151,7 @@ const BoardComponent: React.FC<BoardProps & BoardMethod> = ({
                 postBoardCommentStatus,
                 patchBoardCommentStatus,
                 deleteBoardCommentStatus,
+                getLikeListStatus,
               }}
               likeStatus={likeStatus}
               errorCode={errorCode}

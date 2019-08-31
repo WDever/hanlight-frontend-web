@@ -11,6 +11,7 @@ import {
 
 export interface HeaderMenuProps {
   name: string;
+  image: string | null;
   type: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
 }
 
@@ -24,6 +25,7 @@ export interface HeaderMenuOwnProps {
 
 const mapStateToProps = ({ user }: AppState, ownProps: HeaderMenuOwnProps) => ({
   name: user.name,
+  image: user.image,
   type: user.type,
   ...ownProps,
 });

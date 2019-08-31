@@ -21,6 +21,7 @@ export interface AppState {
 }
 
 export * from './timeTable.model';
+export * from './user.model';
 export * from './calendar.model';
 export * from './notice.model';
 export * from './meal.model';

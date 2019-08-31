@@ -4,7 +4,15 @@ import BoardComponent from 'components/board';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
-import { AppState, errorActions, errorReducerActions } from 'store';
+import {
+  AppState,
+  boardActions,
+  boardReducerActions,
+  errorActions,
+  errorReducerActions,
+  LikeParams,
+  OptionData,
+} from 'store';
 
 type status = 'none' | 'pending' | 'success' | 'failure';
 
@@ -20,15 +28,19 @@ export interface BoardProps {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
+  getLikeListStatus: status;
   errorCode: number;
   errorMessage: string;
+  optionData: OptionData;
+  likeListToggleStatus: boolean;
+  photoDetailStatus: boolean;
 }
 
 export interface BoardMethod {
   resetError: () => void;
 }
 
-const mapStateToProps = ({ board, error }: AppState) => ({
+const mapStateToProps = ({ board, error, user }: AppState) => ({
   deemBoardStatus: board.deemBoardStatus,
   likeStatus: board.likeStatus,
   reportStatus: board.reportStatus,
@@ -40,11 +52,17 @@ const mapStateToProps = ({ board, error }: AppState) => ({
   postBoardCommentStatus: board.postBoardCommentStatus,
   patchBoardCommentStatus: board.patchBoardCommentStatus,
   deleteBoardCommentStatus: board.deleteBoardCommentStatus,
+  getLikeListStatus: board.getLikeListStatus,
   errorCode: error.code,
   errorMessage: error.message,
+  optionData: board.optionData,
+  likeListToggleStatus: board.likeListToggleStatus,
+  photoDetailStatus: board.photoDetailData.status,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<errorReducerActions | boardReducerActions>,
+) => ({
   resetError: bindActionCreators(errorActions.resetError, dispatch),
 });
 

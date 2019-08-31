@@ -150,16 +150,6 @@ const HeaderComponent: React.FC<
           alt="Hanlight Logo"
         />
         <BtnsWrapper>
-          <HanseiThon>
-            <StyledNavLink
-              exact={true}
-              to="/hanseithon"
-              active={location.pathname.includes('/hanseithon')}
-            >
-              한세톤
-            </StyledNavLink>
-            <New>NEW</New>
-          </HanseiThon>
           <StyledNavLink
             exact={true}
             to="/notice"

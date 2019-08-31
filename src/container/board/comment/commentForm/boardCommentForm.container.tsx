@@ -19,7 +19,10 @@ export interface CommentFormMethod {
 
 export interface CommentFormOwnProps {
   board_pk: number;
+  board_write: boolean;
+  board_userName: string | null;
   accessToken: string;
+  userImage: string | null;
 }
 
 const mapStateToProps = (

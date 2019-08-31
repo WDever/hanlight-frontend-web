@@ -125,7 +125,7 @@ const ErrorComponent: React.FC<
           <Content>
             {onError
               ? message
-              : '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 옳바른지 확인해주세요.'}
+              : '죄송합니다. 찾으시는 페이지가 존재하지 않습니다. URL과 인터넷 연결 상태가 올바른지 확인해주세요.'}
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>
         </LeftWrapper>
