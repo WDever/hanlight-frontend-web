@@ -11,7 +11,6 @@ import {
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
-import HanseithonIcon from 'lib/svg/hanseithon-main-title.svg';
 import Circle1 from 'lib/svg/header-menu-circle1.svg';
 import Circle2 from 'lib/svg/header-menu-circle2.svg';
 import Circle3 from 'lib/svg/header-menu-circle3.svg';
@@ -274,10 +273,6 @@ const HeaderMenuComponent: React.FC<
             <Item name="profile" onClick={handleShortCut}>
               <ItemIcon src={InfoEditIcon} alt="" />
               <ItemSpan>정보수정</ItemSpan>
-            </Item>
-            <Item name="hanseithon" onClick={handleShortCut}>
-              <ItemIcon src={HanseithonIcon} alt="" />
-              <ItemSpan>한세톤</ItemSpan>
             </Item>
             <Item name="logout" onClick={handleShortCut}>
               <ItemIcon src={LogoutIcon} alt="" />
