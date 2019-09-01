@@ -4,6 +4,7 @@ import HMMainComponent from 'components/hanlight-music/main';
 import { Deem } from 'lib/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import HMSearchComponent from './search';
 import HMSideBarComponent from './sideBar';
 
 const { useState, useEffect } = React;
@@ -21,8 +22,6 @@ const Wrapper = styled.div`
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.25);
 
   display: flex;
-  /* flex-flow: column wrap; */
-  /* align-items: flex-start; */
 `;
 
 export type categoryType = 'list' | 'search';
@@ -34,7 +33,13 @@ const HanlightMusicComponent: React.FC = () => {
     <BackGround>
       <Wrapper>
         <HMSideBarComponent category={category} setCategory={setCategory} />
-        <HMMainComponent />
+        {category === 'list' ? (
+          <HMMainComponent />
+        ) : category === 'search' ? (
+          <HMSearchComponent />
+        ) : (
+          <></>
+        )}
       </Wrapper>
     </BackGround>
   );

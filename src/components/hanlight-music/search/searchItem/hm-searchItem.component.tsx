@@ -74,6 +74,10 @@ const Artist = styled.p`
   font-family: 'Spoqa Han Sans';
   font-size: 1rem;
 
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
   margin: 0;
 `;
 

@@ -27,7 +27,7 @@ export const hanlightMusicReducer = (
 
       case 'GET_MUSIC_SUCCESS':
         draft.hanlightStatus.getMusicStatus = 'success';
-        draft.musicList = state.musicList.concat(action.payload.musics);
+        draft.musicList = action.payload.musics;
         break;
 
       case 'GET_MUSIC_FAILURE':
@@ -52,7 +52,13 @@ export const hanlightMusicReducer = (
 
       case 'GET_MUSIC_SEARCH_SUCCESS':
         draft.hanlightStatus.getMusicSearchStatus = 'success';
-        draft.searchList = state.searchList.concat(action.payload.musics);
+        draft.searchList.length = 0;
+        console.log(action.payload);
+        console.log(state.searchList);
+        console.log(draft.searchList);
+        draft.searchList = action.payload.musics;
+        console.log(state.searchList);
+        console.log(draft.searchList);
         break;
 
       case 'GET_MUSIC_SEARCH_FAILURE':

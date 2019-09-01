@@ -1,7 +1,16 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { GetMusic, hanlightMusicActions } from 'store';
-import { HanlightMusicTypes, PostMusic, SET_ERROR } from 'store/action';
-import { getMusicRequest, postMusicRequset } from './hm.request';
+import {
+  GetMusicSearch,
+  HanlightMusicTypes,
+  PostMusic,
+  SET_ERROR,
+} from 'store/action';
+import {
+  getMusicRequest,
+  getMusicSearchRequest,
+  postMusicRequset,
+} from './hm.request';
 
 function* getMusicSaga(action: GetMusic) {
   if (action.type) {
@@ -41,7 +50,27 @@ function* postMusicSaga(action: PostMusic) {
   }
 }
 
+function* getMusicSearch(action: GetMusicSearch) {
+  if (action.type) {
+    try {
+      const response = yield call(getMusicSearchRequest, action.payload);
+
+      yield put({
+        type: HanlightMusicTypes.GET_MUSIC_SEARCH_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: HanlightMusicTypes.GET_MUSIC_SEARCH_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 export function* hanlightMusicSaga() {
   yield takeEvery(HanlightMusicTypes.GET_MUSIC, getMusicSaga);
   yield takeEvery(HanlightMusicTypes.POST_MUSIC, postMusicSaga);
+  yield takeEvery(HanlightMusicTypes.GET_MUSIC_SEARCH, getMusicSearch);
 }

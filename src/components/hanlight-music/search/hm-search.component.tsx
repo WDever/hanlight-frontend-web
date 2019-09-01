@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useInput, usePrevious } from 'lib/hooks';
+import NoResultImg from 'lib/svg/no-result.svg';
 import SearchIcon from 'lib/svg/search.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -60,8 +61,6 @@ const SearchBar = styled.form`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  /* margin-bottom: 1.875rem; */
 
   input {
     font-size: 1.25rem;
@@ -129,6 +128,33 @@ const SubmitBtn = styled.button<{ select: boolean }>`
   border: solid 1px #4470ff;
 `;
 
+const StyledTxt = styled.div`
+  width: 100%;
+  height: 100%;
+
+  font-family: 'yg-jalnan';
+  font-size: 1.25rem;
+
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 1;
+
+  p {
+  }
+
+  span {
+    color: #4470ff;
+  }
+
+  img {
+  }
+`;
+
 type CategoryType = 'song' | 'artist' | 'album';
 
 export interface MusicItem {
@@ -150,9 +176,9 @@ const HMSearchComponent: React.FC = () => {
 
   const { getMusicSearch, postMusic } = hanlightMusicActions;
 
-  const { getMusicSearchStatus } = hanlightStatus;
+  const { getMusicSearchStatus, postMusicStatus } = hanlightStatus;
 
-  const prevStatus = usePrevious({ getMusicSearchStatus });
+  const prevStatus = usePrevious({ getMusicSearchStatus, postMusicStatus });
   const [input, setInput] = useInput('');
   const [category, setCategory] = useState<CategoryType>('song');
   const [selectedItem, setSelectedItem] = useState<MusicItem>({
@@ -197,7 +223,7 @@ const HMSearchComponent: React.FC = () => {
             );
           })
         : [],
-    [getMusicSearch, searchList, selectedItem, select],
+    [getMusicSearchStatus, searchList, selectedItem, select],
   );
 
   useEffect(() => {
@@ -207,9 +233,15 @@ const HMSearchComponent: React.FC = () => {
         getMusicSearchStatus === 'failure'
       ) {
         alert(errorMessage);
+      } else if (prevStatus.postMusicStatus === 'pending') {
+        if (postMusicStatus === 'success') {
+          alert('성공적으로 노래를 신청했습니다.');
+        } else if (postMusicStatus === 'failure') {
+          alert(errorMessage);
+        }
       }
     }
-  }, [getMusicSearchStatus]);
+  }, [getMusicSearchStatus, postMusicStatus, prevStatus]);
 
   return (
     <Wrapper>
@@ -244,7 +276,24 @@ const HMSearchComponent: React.FC = () => {
           <img src={SearchIcon} alt="search" />
         </button>
       </SearchBar>
-      <ListWrapper>{SearchList}</ListWrapper>
+      <ListWrapper>
+        {getMusicSearchStatus === 'none' ? (
+          <StyledTxt>
+            <p>
+              <span>노래</span>를 검색해보세요!
+            </p>
+          </StyledTxt>
+        ) : searchList.length !== 0 || getMusicSearchStatus === 'pending' ? (
+          SearchList
+        ) : (
+          <StyledTxt>
+            <img src={NoResultImg} alt="no result" />
+            <p>
+              검색 결과가&nbsp;<span>없습니다.</span>
+            </p>
+          </StyledTxt>
+        )}
+      </ListWrapper>
       <SubmitBtn select={select} onClick={submitSong}>
         예약하기
       </SubmitBtn>

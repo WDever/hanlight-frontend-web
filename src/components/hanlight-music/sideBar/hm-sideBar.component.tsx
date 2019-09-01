@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   display: inline-flex;
   flex-direction: column;
 
-  box-shadow: inset 0 15px 10px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: inset 0 0px 10px 0 rgba(0, 0, 0, 0.07);
 
   border-top-left-radius: 0.6rem;
 
