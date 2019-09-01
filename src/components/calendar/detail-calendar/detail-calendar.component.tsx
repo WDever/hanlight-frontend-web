@@ -104,7 +104,7 @@ const Select = styled.select`
 
 const CalendarWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 12.5rem);
+  grid-template-columns: repeat(auto-fill, 12.5rem);
   grid-column-gap: 0.5rem;
   grid-row-gap: 4.4rem;
   justify-content: space-between;

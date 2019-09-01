@@ -88,9 +88,6 @@ const SearchBar = styled.form`
 
     margin-right: 1.25rem;
   }
-
-  img {
-  }
 `;
 
 const ListWrapper = styled.div`
@@ -98,7 +95,7 @@ const ListWrapper = styled.div`
   height: 19.75rem;
 
   display: grid;
-  grid-template-columns: repeat(2, auto);
+  grid-template-columns: repeat(auto-fill, minmax(20.625rem, auto));
   grid-auto-rows: minmax(min-content, max-content);
   grid-column-gap: 17px;
   grid-row-gap: 1rem;
