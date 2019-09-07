@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 interface ItemProps {
   today: boolean;
-  year: number;
+  year: string;
   month: string;
   date: number;
   contents: string;
@@ -104,7 +104,7 @@ const DetailCalendarItem: React.FC<ItemProps> = ({
       <ContentsWrapper>
         <DateWrapper>
           {moment({
-            year,
+            year: Number(year),
             month: Number(month) - 1,
             date,
             hour: 23,

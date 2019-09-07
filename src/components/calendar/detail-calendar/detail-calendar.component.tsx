@@ -177,7 +177,7 @@ const DetailCalendarComponent: React.FC<
 
         return (
           <DetailCalendarItem
-            year={Number(selectedYear)}
+            year={selectedYear}
             month={selectedMonth}
             date={item.date}
             contents={item.detail}
