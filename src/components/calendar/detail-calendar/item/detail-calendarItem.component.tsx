@@ -12,7 +12,7 @@ interface ItemProps {
   contents: string;
 }
 
-const Wrapper = styled.div<{ today: boolean }>`
+const Wrapper = styled.div`
   width: 100%;
   max-width: 12.5rem;
   height: 16.575rem;
@@ -100,7 +100,7 @@ const DetailCalendarItem: React.FC<ItemProps> = ({
   contents,
 }) => {
   return (
-    <Wrapper today={today}>
+    <Wrapper>
       <ContentsWrapper>
         <DateWrapper>
           {moment({
