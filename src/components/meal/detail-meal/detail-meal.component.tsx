@@ -146,6 +146,20 @@ export default class DetailMealComponent extends React.Component<
     }
   }
 
+  public getWeekDayMoments = (
+    start: moment.Moment,
+    end: moment.Moment,
+    arr: moment.Moment[] = [],
+  ): moment.Moment[] => {
+    if (start.isAfter(end)) {
+      return arr;
+    } else if (start.day() === 0 || start.day() === 6) {
+      return this.getWeekDayMoments(moment(start).add(1, 'day'), end, arr);
+    }
+    const array = arr.concat(start);
+    return this.getWeekDayMoments(moment(start).add(1, 'day'), end, array);
+  };
+
   public render() {
     const { meals } = this.state;
     const { getMealMonthStatus } = this.props;
@@ -159,51 +173,56 @@ export default class DetailMealComponent extends React.Component<
     ] = [[], [], [], [], []];
 
     if (getMealMonthStatus === 'success') {
-      const dates = moment()
-        .endOf('month')
-        .get('date');
+      const moments = this.getWeekDayMoments(
+        moment()
+          .date(1)
+          .startOf('week')
+          .day(1),
+        moment().endOf('month'),
+      );
 
-      new Array(dates)
-        .fill(null)
-        .map((_, i) => i + 1)
-        .filter(
-          date =>
-            moment({ date }).get('day') !== 0 &&
-            moment({ date }).get('day') !== 6,
-        )
-        .forEach(date => {
-          const mealMoment = moment({
-            date,
-          });
-          const mealIndex = meals.findIndex(meal => meal.date === date);
-          const dateString = mealMoment.format('MM월 DD일');
-          const todayBool = moment().get('date') === mealMoment.get('date');
-          const day = days[mealMoment.get('d')];
-          const week = Math.ceil(date / 7) - 1;
-          if (mealIndex >= 0) {
-            MealList[week].push(
-              <DetailMealItem
-                key={date}
-                item={meals[mealIndex].detail.split(',')}
-                date={dateString}
-                today={todayBool}
-                day={day}
-                _ref={ref => (todayBool ? (this.itemScroll = ref) : undefined)}
-              />,
-            );
-          } else {
-            MealList[week].push(
-              <DetailMealItem
-                key={date}
-                item={'급식정보가\n없습니다'}
-                date={dateString}
-                today={todayBool}
-                day={day}
-                _ref={ref => (todayBool ? (this.itemScroll = ref) : undefined)}
-              />,
-            );
-          }
-        });
+      moments.forEach(mealMoment => {
+        const mealIndex = meals.findIndex(
+          meal =>
+            meal.date === mealMoment.date() &&
+            meal.month === mealMoment.month() + 1,
+        );
+        const dateString = mealMoment.format('MM월 DD일');
+        const todayBool = moment().get('date') === mealMoment.get('date');
+        const day = days[mealMoment.get('d')];
+        const lastMonthCheck: boolean =
+          moment().get('month') !== mealMoment.get('month');
+        const week = lastMonthCheck
+          ? 0
+          : mealMoment.week() -
+            moment()
+              .date(1)
+              .startOf('week')
+              .week();
+        if (mealIndex >= 0) {
+          MealList[week].push(
+            <DetailMealItem
+              key={mealMoment.date()}
+              item={meals[mealIndex].detail.split(',')}
+              date={dateString}
+              today={todayBool}
+              day={day}
+              _ref={ref => (todayBool ? (this.itemScroll = ref) : undefined)}
+            />,
+          );
+        } else {
+          MealList[week].push(
+            <DetailMealItem
+              key={mealMoment.date()}
+              item={'급식정보가\n없습니다'}
+              date={dateString}
+              today={todayBool}
+              day={day}
+              _ref={ref => (todayBool ? (this.itemScroll = ref) : undefined)}
+            />,
+          );
+        }
+      });
 
       MealList.forEach((list, i, arr) => {
         if (list.length < 5) {
