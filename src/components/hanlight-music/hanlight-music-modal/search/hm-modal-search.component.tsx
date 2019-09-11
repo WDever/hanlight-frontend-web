@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { useInput, usePrevious } from 'lib/hooks';
+import { Device } from 'lib/styles';
 import NoResultImg from 'lib/svg/no-result.svg';
 import SearchIcon from 'lib/svg/search.svg';
 import { useDispatch, useSelector } from 'react-redux';
@@ -35,9 +36,15 @@ const CategoryWrapper = styled.div`
   width: 42.375rem;
 
   font-family: 'yg-jalnan';
-  font-size: 1.375rem;
+  font-size: 1.25rem;
 
   margin: 3.875rem 0 1.25rem 0;
+
+  @media ${Device.tabletL} {
+    width: 35rem;
+
+    margin: 4rem 0 1.25rem 0;
+  }
 `;
 
 const Category = styled.span<{ active: boolean }>`
@@ -46,6 +53,11 @@ const Category = styled.span<{ active: boolean }>`
   margin-right: 1.25rem;
 
   color: ${({ active }) => (active ? '#4470ff' : '#000000')};
+  font-size: ${({ active }) => (active ? '1.375rem' : '1.25rem')};
+
+  @media ${Device.tabletL} {
+    font-size: ${({ active }) => (active ? '1.125rem' : '1rem')};
+  }
 `;
 
 const SearchBar = styled.form`
@@ -62,6 +74,11 @@ const SearchBar = styled.form`
   justify-content: space-between;
   align-items: center;
 
+  @media ${Device.tabletL} {
+    width: 35.3125rem;
+    min-height: 2.3125rem;
+  }
+
   input {
     font-size: 1.25rem;
     font-family: 'Spoqa Han Sans';
@@ -74,6 +91,10 @@ const SearchBar = styled.form`
     border-radius: 1rem;
 
     margin-left: 1.25rem;
+
+    @media ${Device.tabletL} {
+      font-size: 1rem;
+    }
   }
 
   button {
@@ -86,7 +107,7 @@ const SearchBar = styled.form`
 
     border-radius: 1rem;
 
-    margin-right: 1.25rem;
+    margin-right: 1.2rem;
   }
 `;
 
@@ -106,6 +127,16 @@ const ListWrapper = styled.div`
   overflow-y: scroll;
 
   position: relative;
+
+  @media ${Device.tabletL} {
+    height: 16.5rem;
+
+    grid-template-columns: repeat(auto-fill, minmax(16.875rem, auto));
+    grid-column-gap: 15px;
+    grid-row-gap: 15px;
+
+    margin: 1.25rem 0 1.5rem 0;
+  }
 `;
 
 const SubmitBtn = styled.button<{ select: boolean }>`
@@ -123,6 +154,13 @@ const SubmitBtn = styled.button<{ select: boolean }>`
 
   border-radius: 0.5rem;
   border: solid 1px #4470ff;
+
+  @media ${Device.tabletL} {
+    width: 6.875rem;
+    height: 2.625rem;
+
+    font-size: 1rem;
+  }
 `;
 
 const StyledTxt = styled.div`
@@ -141,6 +179,10 @@ const StyledTxt = styled.div`
 
   z-index: 1;
 
+  @media ${Device.tabletL} {
+    font-size: 1rem;
+  }
+
   p {
   }
 
@@ -149,17 +191,20 @@ const StyledTxt = styled.div`
   }
 
   img {
+    @media ${Device.tabletL} {
+      width: 2.5rem;
+    }
   }
 `;
 
-type CategoryType = 'song' | 'artist' | 'album';
+type CategoryType = 'song' | 'artist' | 'album' | '';
 
 export interface MusicItem {
   title: string;
   album: number;
 }
 
-const HMSearchComponent: React.FC = () => {
+const HMModalSearchComponent: React.FC = () => {
   const dispatch: Dispatch<hanlightMusicReducerActions> = useDispatch();
 
   const { searchList, hanlightStatus } = useSelector<
@@ -177,7 +222,7 @@ const HMSearchComponent: React.FC = () => {
 
   const prevStatus = usePrevious({ getMusicSearchStatus, postMusicStatus });
   const [input, setInput] = useInput('');
-  const [category, setCategory] = useState<CategoryType>('song');
+  const [category, setCategory] = useState<CategoryType>('');
   const [selectedItem, setSelectedItem] = useState<MusicItem>({
     title: '',
     album: 0,
@@ -238,11 +283,14 @@ const HMSearchComponent: React.FC = () => {
         }
       }
     }
-  }, [getMusicSearchStatus, postMusicStatus, prevStatus]);
+  }, [getMusicSearchStatus, postMusicStatus, prevStatus, errorMessage]);
 
   return (
     <Wrapper>
       <CategoryWrapper>
+        <Category active={category === ''} onClick={() => setCategory('')}>
+          전체
+        </Category>
         <Category
           active={category === 'song'}
           onClick={() => setCategory('song')}
@@ -291,11 +339,11 @@ const HMSearchComponent: React.FC = () => {
           </StyledTxt>
         )}
       </ListWrapper>
-      <SubmitBtn select={select} onClick={submitSong}>
+      <SubmitBtn select={select} onClick={submitSong} disabled={!select}>
         예약하기
       </SubmitBtn>
     </Wrapper>
   );
 };
 
-export default HMSearchComponent;
+export default HMModalSearchComponent;

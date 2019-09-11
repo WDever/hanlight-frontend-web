@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import HMComponent from 'components/hanlight-music';
+import HMModalComponent from 'components/hanlight-music/hanlight-music-modal';
+import HMPageComponent from 'components/hanlight-music/hanlight-music-page';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
@@ -26,8 +27,11 @@ const Empty = styled.div`
   width: 100%;
 `;
 
-const MainComponents: React.FC<{ test: boolean}> = ({ test }) => (
+const MainComponents: React.FC<{ toggleHMStatus: boolean }> = ({
+  toggleHMStatus,
+}) => (
   <>
+    {toggleHMStatus && <HMModalComponent />}
     <MainNoticePage />
     <MainTimePage />
     <MainMealPage />
@@ -43,6 +47,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   loginStatus,
   resetUser,
   toggleMenuStatus,
+  toggleHMStatus,
 }) => {
   useEffect(() => {
     if (loginStatus === 'failure') {
@@ -79,14 +84,18 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       )}
 
       <Switch>
-        <Route exact={true} path="/" render={() => <MainComponents test={true} />} />
+        <Route
+          exact={true}
+          path="/"
+          render={() => <MainComponents toggleHMStatus={toggleHMStatus} />}
+        />
         <Route exact={true} path="/calendar" component={CalendarPage} />
         <Route exact={true} path="/meal" component={MealPage} />
         <Route exact={true} path="/timetable" component={TimeTablePage} />
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Route exact={true} path="/music" component={HMComponent} />
+        <Route exact={true} path="/music" component={HMPageComponent} />
         <Redirect to="/error" />
       </Switch>
     </div>

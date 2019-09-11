@@ -13,6 +13,7 @@ const initialState: HanlightMusicModel = {
     getMusicSearchStatus: 'none',
   },
   searchList: [],
+  toggleHMstatus: false,
 };
 
 export const hanlightMusicReducer = (
@@ -64,6 +65,15 @@ export const hanlightMusicReducer = (
       case 'GET_MUSIC_SEARCH_FAILURE':
         draft.hanlightStatus.getMusicSearchStatus = 'failure';
         break;
+
+      case 'TOGGLE_HM':
+        draft.toggleHMstatus = action.payload;
+
+      case 'RESET_SEARCH_LIST':
+        draft.hanlightStatus.getMusicSearchStatus = 'none';
+        draft.hanlightStatus.getMusicStatus = 'none';
+        draft.hanlightStatus.postMusicStatus = 'none';
+        draft.searchList = [];
 
       default:
         break;

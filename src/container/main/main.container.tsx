@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  hanlightMusicActions,
   userActions,
   userReducerActions,
 } from 'store';
@@ -11,20 +12,20 @@ import {
 export interface MainProps {
   loginStatus: 'none' | 'pending' | 'success' | 'failure';
   toggleMenuStatus: boolean;
+  toggleHMStatus: boolean;
 }
 
 export interface MainMethod {
   resetUser(): void;
 }
 
-const mapStateToProps = ({ user, util }: AppState) => ({
+const mapStateToProps = ({ user, util, hanlightMusic }: AppState) => ({
   loginStatus: user.loginStatus,
   toggleMenuStatus: util.toggleMenuStatus,
+  toggleHMStatus: hanlightMusic.toggleHMstatus,
 });
 
-const mapDispatchToProps = (
-  dispatch: Dispatch<userReducerActions>,
-) => ({
+const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
 });
 

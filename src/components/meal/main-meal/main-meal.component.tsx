@@ -1,13 +1,108 @@
 import { MainMealMethod, MainMealProps } from 'container/meal/main-meal';
 import { usePrevious } from 'lib/hooks';
 import { Device } from 'lib/styles';
+import DefaultHMBtnNote from 'lib/svg/hm-note-default.svg';
+import ColoredHMBtnNote from 'lib/svg/hm-note.svg';
 import MealOrderIllust from 'lib/svg/meal-order-illust.svg';
 import moment from 'moment';
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import MainMealItem from './item';
 
-const { useEffect } = React;
+const { useEffect, useState } = React;
+
+const TitleWrapper = styled.div`
+  max-width: 81rem;
+  width: 90%;
+  margin-bottom: 2.5rem;
+
+  display: flex;
+  justify-content: space-between;
+
+  @media ${Device.tabletL} {
+    margin-bottom: 1.39rem;
+  }
+  @media ${Device.mobileL} {
+    margin-bottom: 1rem;
+  }
+`;
+
+const Title = styled.div`
+  font-family: 'yg-jalnan';
+  font-size: 1.875rem;
+
+  @media ${Device.tabletL} {
+    font-size: 1.5rem;
+  }
+  @media ${Device.mobileL} {
+    font-size: 1rem;
+  }
+`;
+
+const AllViewBtn = styled(Link)`
+  display: none;
+
+  @media ${Device.tabletL} {
+    display: unset;
+    color: #6787ec;
+    text-decoration: none;
+    font-size: 1rem;
+    font-family: 'Spoqa Han Sans';
+    margin-right: 1.5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  @media ${Device.mobileL} {
+    font-size: 0.69rem;
+  }
+`;
+
+const HMBtn = styled.button`
+  font-family: 'yg-jalnan';
+  font-size: 1.875rem;
+
+  background-color: #ffffff;
+  outline: none;
+  border: none;
+
+  cursor: pointer;
+
+  :hover {
+    color: #4470ff;
+  }
+
+  @media ${Device.tabletL} {
+    display: none;
+  }
+`;
+
+const ComponentWrapper = styled.div`
+  max-width: 81rem;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  @media ${Device.tabletL} {
+    width: 95%;
+    max-width: unset;
+    margin-left: 5%;
+    position: relative;
+    flex: 1;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  &::-webkit-scrollbar {
+    display: none !important;
+  }
+  &::-webkit-overflow-scrolling {
+    display: none;
+  }
+`;
 
 const ListWrapper = styled.div`
   display: flex;
@@ -102,7 +197,10 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
   mealOrder,
   getMealWeekStatus,
   accessToken,
+  toggleHM,
 }) => {
+  const [isHover, setIsHover] = useState<boolean>(false);
+
   useEffect(() => {
     getMeal({ accessToken, sort: 'week' });
     getMealOrder({ accessToken });
@@ -152,46 +250,65 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
         ];
 
   return (
-    <ListWrapper>
-      {MealList}
-      <MoreBox>
-        <>
-          <OrderWrapper>
-            {getMealOrderStatus === 'success' && (
-              <>
-                <span>급식 순서</span>
-                <Order>
-                  {mealOrder.split('-').map((order, i) => {
-                    if (i === 0) {
-                      return (
-                        <>
-                          <span
-                            key={i}
-                            style={{ color: '#4470ff', fontWeight: 'bold' }}
-                          >
-                            {order}
-                          </span>
-                          &nbsp;-> &nbsp;
-                        </>
-                      );
-                    } else if (i === 1) {
-                      return (
-                        <>
-                          <span key={i}>{order}</span>&nbsp;->&nbsp;
-                        </>
-                      );
-                    } else {
-                      return <span key={i}>{order}</span>;
-                    }
-                  })}
-                </Order>
-              </>
-            )}
-          </OrderWrapper>
-          <OrderImg src={MealOrderIllust} alt="" />
-        </>
-      </MoreBox>
-    </ListWrapper>
+    <>
+      <TitleWrapper>
+        <Title>급식 정보</Title>
+        <AllViewBtn to="/meal">전체보기</AllViewBtn>
+        <HMBtn
+          onMouseOver={() => setIsHover(true)}
+          onMouseLeave={() => setIsHover(false)}
+          onClick={() => toggleHM(true)}
+        >
+          한빛 뮤직
+          <img
+            src={isHover ? ColoredHMBtnNote : DefaultHMBtnNote}
+            alt="hanlight music button"
+          />
+        </HMBtn>
+      </TitleWrapper>
+      <ComponentWrapper>
+        <ListWrapper>
+          {MealList}
+          <MoreBox>
+            <>
+              <OrderWrapper>
+                {getMealOrderStatus === 'success' && (
+                  <>
+                    <span>급식 순서</span>
+                    <Order>
+                      {mealOrder.split('-').map((order, i) => {
+                        if (i === 0) {
+                          return (
+                            <>
+                              <span
+                                key={i}
+                                style={{ color: '#4470ff', fontWeight: 'bold' }}
+                              >
+                                {order}
+                              </span>
+                              &nbsp;-> &nbsp;
+                            </>
+                          );
+                        } else if (i === 1) {
+                          return (
+                            <>
+                              <span key={i}>{order}</span>&nbsp;->&nbsp;
+                            </>
+                          );
+                        } else {
+                          return <span key={i}>{order}</span>;
+                        }
+                      })}
+                    </Order>
+                  </>
+                )}
+              </OrderWrapper>
+              <OrderImg src={MealOrderIllust} alt="" />
+            </>
+          </MoreBox>
+        </ListWrapper>
+      </ComponentWrapper>
+    </>
   );
 };
 

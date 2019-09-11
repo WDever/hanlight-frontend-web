@@ -1,10 +1,11 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import ListIcon from 'lib/svg/hm-list-icon.svg';
 import SearchIcon from 'lib/svg/hm-search-icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import styled, { css } from 'styled-components';
-import { categoryType } from '../hanlight-music.component';
+import { categoryType } from '../hanlight-music-modal.component';
 
 const { useState, useEffect } = React;
 
@@ -24,6 +25,10 @@ const Wrapper = styled.div`
   position: relative;
 
   z-index: 1;
+
+  @media ${Device.tabletL} {
+    width: 3.375rem;
+  }
 `;
 
 const Block = styled.div<{ active: boolean }>`
@@ -52,8 +57,16 @@ const Block = styled.div<{ active: boolean }>`
       z-index: 3;
     `}
 
+  @media ${Device.tabletL} {
+    height: 3.2rem;
+  }
+
   img {
     width: 1.375rem;
+
+    @media ${Device.tabletL} {
+      width: 1.125rem;
+    }
   }
 
   :first-of-type {

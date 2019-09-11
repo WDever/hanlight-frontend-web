@@ -7,6 +7,8 @@ import {
   AppState,
   GetMealOrderParams,
   GetMealParams,
+  hanlightMusicActions,
+  hanlightMusicReducerActions,
   mealActions,
   MealItem,
   mealReducerActions,
@@ -23,31 +25,10 @@ export interface MainMealProps {
 export interface MainMealMethod {
   getMeal(params: GetMealParams): void;
   getMealOrder(params: GetMealOrderParams): void;
+  toggleHM(params: boolean): void;
 }
 
-const MainMealContainer: React.FC<MainMealProps & MainMealMethod> = ({
-  getMeal,
-  getMealOrder,
-  mealWeekList,
-  mealOrder,
-  getMealWeekStatus,
-  getMealOrderStatus,
-  accessToken,
-}) => {
-  return (
-    <MainMealComponent
-      getMeal={getMeal}
-      getMealOrder={getMealOrder}
-      getMealOrderStatus={getMealOrderStatus}
-      mealWeekList={mealWeekList}
-      mealOrder={mealOrder}
-      getMealWeekStatus={getMealWeekStatus}
-      accessToken={accessToken}
-    />
-  );
-};
-
-const mapStateToProps = ({ user, meal }: AppState) => ({
+const mapStateToProps = ({ user, meal, hanlightMusic }: AppState) => ({
   mealWeekList: meal.mealWeekList,
   mealOrder: meal.mealOrder,
   getMealWeekStatus: meal.getMealWeekStatus,
@@ -55,12 +36,17 @@ const mapStateToProps = ({ user, meal }: AppState) => ({
   accessToken: user.accessToken,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
+const mapDispatchToProps = (
+  dispatch: Dispatch<mealReducerActions | hanlightMusicReducerActions>,
+) => ({
   getMeal: bindActionCreators(mealActions.getMeal, dispatch),
   getMealOrder: bindActionCreators(mealActions.getMealOrder, dispatch),
+  toggleHM: bindActionCreators(hanlightMusicActions.toggleHM, dispatch),
 });
 
-export default connect(
+const MainMealContainer = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(MainMealContainer);
+)(MainMealComponent);
+
+export default MainMealContainer;

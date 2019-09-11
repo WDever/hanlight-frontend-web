@@ -41,6 +41,7 @@ function* postMusicSaga(action: PostMusic) {
         payload: response.data,
       });
     } catch (e) {
+      console.log(e);
       yield put({
         type: SET_ERROR,
         name: HanlightMusicTypes.POST_MUSIC_FAILURE,

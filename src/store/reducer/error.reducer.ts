@@ -17,6 +17,7 @@ export const errorReducer = (
   produce(state, draft => {
     switch (action.type) {
       case 'SET_ERROR':
+        console.log(action.payload);
         if (action.payload.err.response) {
           draft.onError += 1;
           draft.code = action.payload.err.response.data.code;

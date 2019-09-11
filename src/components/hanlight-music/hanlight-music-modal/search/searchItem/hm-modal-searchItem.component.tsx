@@ -1,8 +1,9 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import { HanlightMusicAlbum } from 'store';
 import styled from 'styled-components';
-import { MusicItem } from '../hm-search.component';
+import { MusicItem } from '../hm-modal-search.component';
 
 const { useState } = React;
 
@@ -28,6 +29,11 @@ const Wrapper = styled.div<{ active: boolean }>`
 
   cursor: pointer;
 
+  @media ${Device.tabletL} {
+    width: 16.875rem;
+    height: 4.875rem;
+  }
+
   :first-of-type,
   :nth-of-type(2) {
     margin-top: 1rem;
@@ -44,6 +50,13 @@ const AlbumImg = styled.img`
   height: 4rem;
 
   margin: 0 0.75rem 0 1.05rem;
+
+  @media ${Device.tabletL} {
+    width: 3.4375rem;
+    height: 3.4375rem;
+
+    margin: 0 0.75rem 0 0.875rem;
+  }
 `;
 
 const ContentWrapper = styled.div`
@@ -68,6 +81,10 @@ const Title = styled.h1`
 
   margin: 0;
   margin-bottom: 0.25rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.875rem;
+  }
 `;
 
 const Artist = styled.p`
@@ -79,9 +96,13 @@ const Artist = styled.p`
   white-space: nowrap;
 
   margin: 0;
+
+  @media ${Device.tabletL} {
+    font-size: 0.75rem;
+  }
 `;
 
-interface SearchItemProps {
+export interface SearchItemProps {
   title: string;
   album: HanlightMusicAlbum;
   setSelectedItem: React.Dispatch<React.SetStateAction<MusicItem>>;
@@ -90,7 +111,7 @@ interface SearchItemProps {
   selectedItem: MusicItem;
 }
 
-const HMSearchItemComponent: React.FC<SearchItemProps> = ({
+const HMModalSearchItemComponent: React.FC<SearchItemProps> = ({
   title,
   album,
   setSelect,
@@ -102,7 +123,10 @@ const HMSearchItemComponent: React.FC<SearchItemProps> = ({
   return (
     <Wrapper
       onClick={() => {
-        if (selectedItem.album === album.album_id) {
+        if (
+          selectedItem.title === title &&
+          selectedItem.album === album.album_id
+        ) {
           setSelect(!select);
           setSelected(!selected);
         } else {
@@ -112,7 +136,11 @@ const HMSearchItemComponent: React.FC<SearchItemProps> = ({
 
         setSelectedItem({ title, album: album.album_id });
       }}
-      active={selected && album.album_id === selectedItem.album}
+      active={
+        selected &&
+        title === selectedItem.title &&
+        album.album_id === selectedItem.album
+      }
     >
       <AlbumImg src={album.image_url} alt="album art" />
       <ContentWrapper>
@@ -123,4 +151,4 @@ const HMSearchItemComponent: React.FC<SearchItemProps> = ({
   );
 };
 
-export default HMSearchItemComponent;
+export default HMModalSearchItemComponent;

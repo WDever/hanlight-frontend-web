@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import { usePrevious } from 'lib/hooks';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
@@ -12,68 +11,40 @@ import {
   UserModel,
 } from 'store';
 import styled from 'styled-components';
-import HMEmptyItemComponent from './emptyItem';
-import HMMainItemComponent from './mainItem';
 
-const { useState, useEffect, useMemo } = React;
+import HMPageEmptyItemComponent from './emptyItem';
+import HMPageMainItemComponent from './mainItem';
+
+const { useState, useEffect, useMemo, useCallback } = React;
 
 const Wrapper = styled.div`
-  width: calc(100% - 4rem);
+  width: 100%;
   height: 100%;
-
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-
-  position: relative;
-
-  z-index: 2;
-`;
-
-const Title = styled.div`
-  width: 42.375rem;
-
-  display: flex;
-
-  margin: 3.875rem 0 1.875rem 0;
-
-  span {
-    font-family: 'yg-jalnan';
-    font-size: 1.375rem;
-  }
-`;
-
-const ListWrapper = styled.div`
-  width: 42.375rem;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
 
   position: relative;
 `;
 
 const EmptyTxt = styled.div`
-  width: 100%;
-  height: 98%;
-
   font-family: 'yg-jalnan';
-  font-size: 1.25rem;
+  font-size: 1rem;
 
   position: absolute;
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  top: 10rem;
 
-  z-index: 1;  
+  z-index: 1;
 
   span {
     color: #4470ff;
   }
 `;
 
-const HMMAinComponent: React.FC = () => {
+const HMPageMainComponent: React.FC = () => {
   const dispatch: Dispatch<hanlightMusicReducerActions> = useDispatch();
 
   const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
@@ -86,25 +57,7 @@ const HMMAinComponent: React.FC = () => {
   );
 
   const { getMusicStatus } = hanlightStatus;
-
   const { getMusic } = hanlightMusicActions;
-
-  const prevStatus = usePrevious({ getMusicStatus });
-
-  useEffect(() => {
-    if (prevStatus) {
-      if (
-        prevStatus.getMusicStatus === 'pending' &&
-        getMusicStatus === 'failure'
-      ) {
-        alert(errorMessage);
-      }
-    }
-  }, [getMusicStatus]);
-
-  useEffect(() => {
-    dispatch(getMusic({ accessToken }));
-  }, []);
 
   const MusicList = useMemo(
     () =>
@@ -114,37 +67,36 @@ const HMMAinComponent: React.FC = () => {
             .map((item, i) => {
               if (item) {
                 return (
-                  <HMMainItemComponent
-                    key={i}
+                  <HMPageMainItemComponent
                     title={item.title}
                     albumImage={item.album.image_url}
                     artist={item.album.artist}
                     pk={i + 1}
+                    key={i}
                   />
                 );
               } else {
-                return <HMEmptyItemComponent pk={i + 1} />;
+                return <HMPageEmptyItemComponent pk={i + 1} />;
               }
             })
         : [],
     [getMusicStatus, musicList],
   );
 
+  useEffect(() => {
+    dispatch(getMusic({ accessToken }));
+  }, []);
+
   return (
     <Wrapper>
-      <Title>
-        <span>신청목록</span>
-      </Title>
-      <ListWrapper>
-        {musicList.length === 0 && (
-          <EmptyTxt>
-            신청된 곡이 <span>없습니다.</span>
-          </EmptyTxt>
-        )}
-        {MusicList}
-      </ListWrapper>
+      {musicList.length === 0 && (
+        <EmptyTxt>
+          신청된 곡이 <span>없습니다.</span>
+        </EmptyTxt>
+      )}
+      {MusicList}
     </Wrapper>
   );
 };
 
-export default HMMAinComponent;
+export default HMPageMainComponent;

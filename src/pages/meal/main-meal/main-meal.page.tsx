@@ -94,14 +94,7 @@ const ListWrapper = styled.div`
 const MainMealPage: React.FC = () => {
   return (
     <Template>
-      <TitleWrapper>
-        <Title>급식 정보</Title>
-        <AllViewBtn to="/meal">전체보기</AllViewBtn>
-      </TitleWrapper>
-
-      <ListWrapper>
-        <MealContainer />
-      </ListWrapper>
+      <MealContainer />
     </Template>
   );
 };

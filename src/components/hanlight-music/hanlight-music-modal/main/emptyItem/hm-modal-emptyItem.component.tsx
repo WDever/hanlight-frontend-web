@@ -1,9 +1,10 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 42.25rem;
+  width: 100%;
   height: 3.125rem;
 
   background-color: #ffffff;
@@ -15,6 +16,27 @@ const Wrapper = styled.div`
 
   display: flex;
   align-items: center;
+
+  opacity: 0.8;
+
+  position: relative;
+
+  @media ${Device.tabletL} {
+    height: 2.5rem;
+  }
+`;
+
+const Cover = styled.div`
+  background-color: #ffffff;
+
+  opacity: 0.8;
+
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+
+  border-radius: 1rem;
 `;
 
 const Number = styled.p`
@@ -22,9 +44,13 @@ const Number = styled.p`
   font-family: 'yg-jalnan';
 
   margin: 0 2.25rem 0 1.25rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.875rem;
+  }
 `;
 
-const AlbumImage = styled.img`
+const AlbumImage = styled.div`
   width: 2.25rem;
   height: 2.25rem;
 
@@ -39,6 +65,10 @@ const Title = styled.p`
   font-size: 1rem;
 
   margin: 0;
+
+  @media ${Device.tabletL} {
+    font-size: 15px;
+  }
 `;
 
 const Artist = styled.p`
@@ -47,29 +77,26 @@ const Artist = styled.p`
 
   margin: 0;
   margin-left: 1.875rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.75rem;
+  }
 `;
 
-interface MainMusicItemProps {
+interface EmptyItemProps {
   pk: number;
-  albumImage: string;
-  title: string;
-  artist: string;
 }
 
-const HMMainItemComponent: React.FC<MainMusicItemProps> = ({
-  pk,
-  albumImage,
-  title,
-  artist,
-}) => {
+const HMModalEmptyItemComponent: React.FC<EmptyItemProps> = ({ pk }) => {
   return (
     <Wrapper>
+      <Cover />
       <Number>{pk}</Number>
-      <AlbumImage src={albumImage} alt="album art" />
-      <Title>{title}</Title>
-      <Artist>{artist}</Artist>
+      <AlbumImage />
+      <Title>-</Title>
+      <Artist>-</Artist>
     </Wrapper>
   );
 };
 
-export default HMMainItemComponent;
+export default HMModalEmptyItemComponent;

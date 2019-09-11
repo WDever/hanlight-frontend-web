@@ -4,4 +4,5 @@ export interface HanlightMusicModel {
   musicList: HanlightMusicItem[];
   hanlightStatus: HanlightMusicStatus;
   searchList: HanlightMusicItem[];
+  toggleHMstatus: boolean;
 }

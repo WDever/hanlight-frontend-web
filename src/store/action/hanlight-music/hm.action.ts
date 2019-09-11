@@ -52,7 +52,7 @@ export interface PostMusicFailure extends Action {
 export interface GetMusicSearchPayload {
   accessToken: string;
   q: string;
-  type: 'song' | 'artist' | 'album';
+  type: 'song' | 'artist' | 'album' | '';
 }
 
 export interface GetMusicSearchSuccessPayload extends GetMusicSuccessPayload {}
@@ -72,7 +72,22 @@ export interface GetMusicSearchFailure extends Action {
   paylod: { err: ErrorResponse; origin: GetMusicSearchPayload };
 }
 
-const { GET_MUSIC, POST_MUSIC, GET_MUSIC_SEARCH } = HanlightMusicTypes;
+export interface ToggleHM extends Action {
+  readonly type: HanlightMusicTypes.TOGGLE_HM;
+  payload: boolean;
+}
+
+export interface ResetSearchList extends Action {
+  readonly type: HanlightMusicTypes.RESET_SEARCH_LIST;
+}
+
+const {
+  GET_MUSIC,
+  POST_MUSIC,
+  GET_MUSIC_SEARCH,
+  TOGGLE_HM,
+  RESET_SEARCH_LIST,
+} = HanlightMusicTypes;
 
 export const hanlightMusicActions = {
   getMusic: createStandardAction(GET_MUSIC)<GetMusicPayload>(),
@@ -80,6 +95,8 @@ export const hanlightMusicActions = {
   getMusicSearch: createStandardAction(GET_MUSIC_SEARCH)<
     GetMusicSearchPayload
   >(),
+  toggleHM: createStandardAction(TOGGLE_HM)<boolean>(),
+  resetSearchList: createStandardAction(RESET_SEARCH_LIST)(),
 };
 
 export type hanlightMusicReducerActions =
@@ -91,4 +108,6 @@ export type hanlightMusicReducerActions =
   | PostMusicFailure
   | GetMusicSearch
   | GetMusicSearchSuccess
-  | GetMusicSearchFailure;
+  | GetMusicSearchFailure
+  | ToggleHM
+  | ResetSearchList;

@@ -1,9 +1,10 @@
 import * as React from 'react';
 
+import { Device } from 'lib/styles';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: 42.25rem;
+  width: 100%;
   height: 3.125rem;
 
   background-color: #ffffff;
@@ -16,22 +17,9 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
 
-  opacity: 0.8;
-
-  position: relative;
-`;
-
-const Cover = styled.div`
-  background-color: #ffffff;
-
-  opacity: 0.8;
-
-  width: 100%;
-  height: 100%;
-
-  position: absolute;
-
-  border-radius: 1rem;
+  @media ${Device.tabletL} {
+    height: 2.5rem;
+  }
 `;
 
 const Number = styled.p`
@@ -39,15 +27,26 @@ const Number = styled.p`
   font-family: 'yg-jalnan';
 
   margin: 0 2.25rem 0 1.25rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.875rem;
+  }
 `;
 
-const AlbumImage = styled.div`
+const AlbumImage = styled.img`
   width: 2.25rem;
   height: 2.25rem;
 
   background-color: #f3f3f3;
 
   margin-right: 2.25rem;
+
+  @media ${Device.tabletL} {
+    width: 1.875rem;
+    height: 1.875rem;
+
+    margin-right: 1.875rem;
+  }
 `;
 
 const Title = styled.p`
@@ -56,6 +55,10 @@ const Title = styled.p`
   font-size: 1rem;
 
   margin: 0;
+
+  @media ${Device.tabletL} {
+    font-size: 15px;
+  }
 `;
 
 const Artist = styled.p`
@@ -64,22 +67,33 @@ const Artist = styled.p`
 
   margin: 0;
   margin-left: 1.875rem;
+
+  @media ${Device.tabletL} {
+    font-size: 0.75rem;
+  }
 `;
 
-interface EmptyItemProps {
+interface MainMusicItemProps {
   pk: number;
+  albumImage: string;
+  title: string;
+  artist: string;
 }
 
-const HMEmptyItemComponent: React.FC<EmptyItemProps> = ({ pk }) => {
+const HMModalMainItemComponent: React.FC<MainMusicItemProps> = ({
+  pk,
+  albumImage,
+  title,
+  artist,
+}) => {
   return (
     <Wrapper>
-      <Cover />
       <Number>{pk}</Number>
-      <AlbumImage />
-      <Title>-</Title>
-      <Artist>-</Artist>
+      <AlbumImage src={albumImage} alt="album art" />
+      <Title>{title}</Title>
+      <Artist>{artist}</Artist>
     </Wrapper>
   );
 };
 
-export default HMEmptyItemComponent;
+export default HMModalMainItemComponent;

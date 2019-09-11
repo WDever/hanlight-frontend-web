@@ -11,6 +11,7 @@ interface FailureAction extends Action {
 
 export function* ErrorSaga(action: FailureAction) {
   if (action.name) {
+    console.log(action.payload);
     console.log(action.payload.err.response);
     console.log(action.payload.err);
     yield put({ type: action.name, payload: action.payload });

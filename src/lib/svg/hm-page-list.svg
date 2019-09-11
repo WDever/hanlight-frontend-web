@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="구성_요소_5_16" width="16" height="12.6" data-name="구성 요소 5 – 16" viewBox="0 0 16 12.6">
+    <defs>
+        <style>
+            .cls-1{fill:#555}
+        </style>
+    </defs>
+    <rect id="사각형_1511" width="16" height="2" class="cls-1" data-name="사각형 1511" rx="1"/>
+    <rect id="사각형_1512" width="16" height="2" class="cls-1" data-name="사각형 1512" rx="1" transform="translate(0 5.3)"/>
+    <rect id="사각형_1513" width="16" height="2" class="cls-1" data-name="사각형 1513" rx="1" transform="translate(0 10.6)"/>
+</svg>

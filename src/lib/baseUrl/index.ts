@@ -8,5 +8,5 @@ export const instance = axios.create({
 });
 
 export const hanlightMusicInstance = axios.create({
-  baseURL: 'http://52.79.48.113',
+  baseURL: 'http://15.164.226.31',
 });
