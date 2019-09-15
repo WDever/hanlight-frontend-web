@@ -16,6 +16,7 @@ function* getMusicSaga(action: GetMusic) {
   if (action.type) {
     try {
       const response = yield call(getMusicRequest, action.payload);
+      console.log(response);
 
       yield put({
         type: HanlightMusicTypes.GET_MUSIC_SUCCESS,
@@ -35,6 +36,7 @@ function* postMusicSaga(action: PostMusic) {
   if (action.type) {
     try {
       const response = yield call(postMusicRequset, action.payload);
+      console.log(response);
 
       yield put({
         type: HanlightMusicTypes.POST_MUSIC_SUCCESS,

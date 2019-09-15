@@ -54,12 +54,7 @@ export const hanlightMusicReducer = (
       case 'GET_MUSIC_SEARCH_SUCCESS':
         draft.hanlightStatus.getMusicSearchStatus = 'success';
         draft.searchList.length = 0;
-        console.log(action.payload);
-        console.log(state.searchList);
-        console.log(draft.searchList);
         draft.searchList = action.payload.musics;
-        console.log(state.searchList);
-        console.log(draft.searchList);
         break;
 
       case 'GET_MUSIC_SEARCH_FAILURE':

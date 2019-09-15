@@ -14,6 +14,7 @@ import {
 import styled from 'styled-components';
 
 import { MusicItem } from 'components/hanlight-music/hanlight-music-modal/search/hm-modal-search.component';
+import NoResultImg from 'lib/svg/no-result.svg';
 import { Dispatch } from 'redux';
 import { CategoryTypes } from '../hanlight-music-page';
 import HMPageSearchItemComponent from './searchItem';
@@ -82,6 +83,8 @@ const SearchBarWrapper = styled.form`
 const ListWrapper = styled.section`
   width: 100%;
 
+  height: 100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,6 +108,35 @@ const SubmitBtn = styled.button`
   font-weight: bold;
   font-size: 1.125rem;
   color: #ffffff;
+`;
+
+const NoResult = styled.section`
+  font-family: 'yg-jalnan';
+  font-size: 1rem;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  p {
+    font-family: 'yg-jalnan';
+    font-size: inherit;
+  }
+
+  span {
+    font-family: 'yg-jalnan';
+    font-size: inherit;
+    color: #4470ff;
+  }
 `;
 
 const HMPageSearchComponent: React.FC<{ category: CategoryTypes }> = ({
@@ -175,7 +207,6 @@ const HMPageSearchComponent: React.FC<{ category: CategoryTypes }> = ({
 
   useEffect(() => {
     if (prevStatus) {
-    console.log('hmpageuseeffect');
       if (
         prevStatus.getMusicSearchStatus === 'pending' &&
         getMusicSearchStatus === 'failure'
@@ -204,7 +235,20 @@ const HMPageSearchComponent: React.FC<{ category: CategoryTypes }> = ({
           <img src={SearchIcon} alt="search icon" />
         </button>
       </SearchBarWrapper>
-      <ListWrapper>{SearchList}</ListWrapper>
+      <ListWrapper>
+        {searchList.length === 0 &&
+        getMusicSearchStatus !== 'none' &&
+        getMusicSearchStatus !== 'pending' ? (
+          <NoResult>
+            <img src={NoResultImg} alt="no result" />
+            <p>
+              검색결과가 <span>없습니다.</span>
+            </p>
+          </NoResult>
+        ) : (
+          SearchList
+        )}
+      </ListWrapper>
       {select && <SubmitBtn onClick={submitSong}>예약하기</SubmitBtn>}
     </Wrapper>
   );
