@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="woncoin" width="20" height="20" viewBox="0 0 20 20">
+    <defs>
+        <style>
+            .cls-1{fill:#ffde82}.cls-2{fill:#ffecb6}.cls-3{fill:#ffa814;font-size:12px;font-family:GodoM,Godo M}.cls-4,.cls-5{stroke:none}.cls-5{fill:#fb0}
+        </style>
+    </defs>
+    <g id="패스_81" class="cls-1" data-name="패스 81">
+        <path d="M10 19.5C4.762 19.5.5 15.238.5 10S4.762.5 10 .5s9.5 4.262 9.5 9.5-4.262 9.5-9.5 9.5z" class="cls-4"/>
+        <path d="M10 1c-4.963 0-9 4.037-9 9s4.037 9 9 9 9-4.037 9-9-4.037-9-9-9m0-1c5.523 0 10 4.477 10 10s-4.477 10-10 10S0 15.523 0 10 4.477 0 10 0z" class="cls-5"/>
+    </g>
+    <circle id="타원_3" cx="7.5" cy="7.5" r="7.5" class="cls-2" data-name="타원 3" transform="translate(2 1)"/>
+    <text id="_" class="cls-3" data-name="\" transform="translate(4 14)">
+        <tspan x="0" y="0">\</tspan>
+    </text>
+</svg>

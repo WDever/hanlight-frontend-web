@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import FestivalComponent from 'components/festival';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
@@ -17,13 +18,32 @@ import MainTimePage from 'pages/timer';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
 import MainTimeTablePage from 'pages/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const { useEffect } = React;
 
 const Empty = styled.div`
   height: 3.75rem;
   width: 100%;
+`;
+
+const Template = styled.div<{ toggleMenuStatus: boolean; dark: boolean }>`
+  ${({ toggleMenuStatus }) =>
+    toggleMenuStatus &&
+    css`
+      overflow: hidden;
+      position: fixed;
+      width: 100%;
+      height: 100%;
+    `}
+
+  ${({ dark }) =>
+    dark &&
+    css`
+      background-color: #313131;
+    `}
+
+    overflow: hidden;
 `;
 
 const MainComponents = () => (
@@ -52,19 +72,10 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     }
   }, [loginStatus]);
 
+  const isDark = location.pathname.includes('/festival');
+
   return loginStatus === 'success' ? (
-    <div
-      style={
-        toggleMenuStatus
-          ? {
-              overflow: 'hidden',
-              position: 'fixed',
-              width: '100%',
-              height: '100%',
-            }
-          : undefined
-      }
-    >
+    <Template toggleMenuStatus={toggleMenuStatus} dark={isDark}>
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
@@ -87,9 +98,10 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
+        <Route path="/festival" component={FestivalComponent} />
         <Redirect to="/error" />
       </Switch>
-    </div>
+    </Template>
   ) : (
     <></>
   );

@@ -11,6 +11,8 @@ import {
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
+import FestivalBat from 'lib/svg/festival-bat.svg';
+import FestivalIcon from 'lib/svg/festival-icon.svg';
 import HanseithonIcon from 'lib/svg/hanseithon-main-title.svg';
 import Circle1 from 'lib/svg/header-menu-circle1.svg';
 import Circle2 from 'lib/svg/header-menu-circle2.svg';
@@ -47,10 +49,11 @@ const Wrapper = styled.div`
   }
 `;
 
-const LeftWrapper = styled.div`
+const LeftWrapper = styled.div<{ dark: boolean }>`
   height: 100%;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: #ffffff;
+  background-color: ${({ dark }) => (dark ? '#484848' : '#ffffff')};
+  color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
 
   @media ${Device.tabletL} {
     width: 70%;
@@ -60,11 +63,11 @@ const LeftWrapper = styled.div`
   }
 `;
 
-const Upside = styled.div`
+const Upside = styled.div<{ dark: boolean }>`
   position: relative;
   width: 100%;
   height: 6.5rem;
-  border-bottom: solid 1px #e8e8e8;
+  border-bottom: solid 1px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
 
   display: flex;
   justify-content: center;
@@ -157,14 +160,15 @@ const ItemWrapper = styled.div`
   }
 `;
 
-const Item = styled.button`
+const Item = styled.button<{ dark: boolean }>`
   width: 100%;
   height: 3rem;
   padding: 0;
   margin: 0;
   border: 0;
-  border-bottom: solid 0.5px #e8e8e8;
+  border-bottom: solid 0.5px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
   background-color: rgba(255, 255, 255, 0);
+  color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
 
   display: flex;
   align-items: center;
@@ -200,7 +204,9 @@ const DownSide = styled.div`
 
 const HeaderMenuComponent: React.FC<
   HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
-> = ({ name, image, type, toggleMenu, logout, history }) => {
+> = ({ name, image, type, toggleMenu, logout, history, location }) => {
+  const isDark = location.pathname.includes('/festival');
+
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -229,8 +235,8 @@ const HeaderMenuComponent: React.FC<
 
   return (
     <Wrapper>
-      <LeftWrapper>
-        <Upside>
+      <LeftWrapper dark={isDark}>
+        <Upside dark={isDark}>
           <Profile>
             <ProfileImg
               image={!!image}
@@ -242,53 +248,61 @@ const HeaderMenuComponent: React.FC<
               <UserType>{userType()}</UserType>
             </Info>
           </Profile>
+          {!isDark && (
+            <CircleIcon
+              src={Circle1}
+              style={{ top: '-50%', left: '54%' }}
+              alt=""
+            />
+          )}
           <CircleIcon
-            src={Circle1}
-            style={{ top: '-50%', left: '54%' }}
+            src={isDark ? FestivalBat : Circle2}
+            style={{ right: '0', bottom: 0 }}
             alt=""
           />
-          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt="" />
         </Upside>
         <DownSide>
           <ItemWrapper>
-            <Item name="notice" onClick={handleShortCut}>
+            <Item name="festival" onClick={handleShortCut} dark={isDark}>
+              <ItemIcon src={FestivalIcon} alt="" />
+              <ItemSpan>한마당</ItemSpan>
+            </Item>
+            <Item name="notice" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={NoticeIcon} alt="" />
               <ItemSpan>공지사항</ItemSpan>
             </Item>
-            <Item name="timetable" onClick={handleShortCut}>
+            <Item name="timetable" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={TimetableIcon} alt="" />
               <ItemSpan>시간표</ItemSpan>
             </Item>
-            <Item name="calendar" onClick={handleShortCut}>
+            <Item name="calendar" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={CalendarIcon} alt="" />
               <ItemSpan>학사일정</ItemSpan>
             </Item>
-            <Item name="board" onClick={handleShortCut}>
+            <Item name="board" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={BambooIcon} alt="" />
               <ItemSpan>대나무숲</ItemSpan>
             </Item>
-            <Item name="meal" onClick={handleShortCut}>
+            <Item name="meal" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={MealIcon} alt="" />
               <ItemSpan>급식표</ItemSpan>
             </Item>
-            <Item name="profile" onClick={handleShortCut}>
+            <Item name="profile" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={InfoEditIcon} alt="" />
               <ItemSpan>정보수정</ItemSpan>
             </Item>
-            <Item name="hanseithon" onClick={handleShortCut}>
-              <ItemIcon src={HanseithonIcon} alt="" />
-              <ItemSpan>한세톤</ItemSpan>
-            </Item>
-            <Item name="logout" onClick={handleShortCut}>
+            <Item name="logout" onClick={handleShortCut} dark={isDark}>
               <ItemIcon src={LogoutIcon} alt="" />
               <ItemSpan>로그아웃</ItemSpan>
             </Item>
           </ItemWrapper>
-          <CircleIcon
-            src={Circle3}
-            style={{ width: '100%', bottom: 0 }}
-            alt=""
-          />
+          {!isDark && (
+            <CircleIcon
+              src={Circle3}
+              style={{ width: '100%', bottom: 0 }}
+              alt=""
+            />
+          )}
         </DownSide>
       </LeftWrapper>
       <RightWrapper onClick={() => toggleMenu(false)} />

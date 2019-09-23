@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="구성_요소_15_37" width="51.117" height="28.461" data-name="구성 요소 15 – 37" viewBox="0 0 51.117 28.461">
+    <defs>
+        <style>
+            .cls-1{fill:#b1b1b1}.cls-2{fill:none;stroke:#b1b1b1;stroke-width:2px}
+        </style>
+    </defs>
+    <g id="그룹_298" data-name="그룹 298" transform="translate(-267.162 -251.843)">
+        <path id="빼기_14" d="M392.5 14.228l-1.5-1.5L403.728 0l12.728 12.728-1.5 1.5L403.728 3 392.5 14.228z" class="cls-1" data-name="빼기 14" transform="translate(-123.839 266.075)"/>
+        <path id="선_1" d="M0 19L19 0" class="cls-2" data-name="선 1" transform="translate(290.5 260.5)"/>
+    </g>
+    <path id="다각형_2" d="M6 0l6 12H0z" class="cls-1" data-name="다각형 2" transform="rotate(45 21.316 51.46)"/>
+</svg>
