@@ -144,7 +144,7 @@ const HMPageSearchComponent: React.FC<{ category: CategoryTypes }> = ({
 }) => {
   const dispatch: Dispatch<hanlightMusicReducerActions> = useDispatch();
 
-  const { searchList, hanlightStatus } = useSelector<
+  const { searchList, hanlightMusicStatus } = useSelector<
     AppState,
     HanlightMusicModel
   >(state => state.hanlightMusic);
@@ -155,7 +155,7 @@ const HMPageSearchComponent: React.FC<{ category: CategoryTypes }> = ({
 
   const { getMusicSearch, postMusic } = hanlightMusicActions;
 
-  const { getMusicSearchStatus, postMusicStatus } = hanlightStatus;
+  const { getMusicSearchStatus, postMusicStatus } = hanlightMusicStatus;
 
   const prevStatus = usePrevious({ getMusicSearchStatus, postMusicStatus });
 

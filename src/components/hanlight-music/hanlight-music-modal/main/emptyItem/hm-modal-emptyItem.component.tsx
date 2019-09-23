@@ -17,7 +17,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
 
-  opacity: 0.8;
+  opacity: 0.3;
 
   position: relative;
 

@@ -7,7 +7,7 @@ import {
 
 const initialState: HanlightMusicModel = {
   musicList: [],
-  hanlightStatus: {
+  hanlightMusicStatus: {
     getMusicStatus: 'none',
     postMusicStatus: 'none',
     getMusicSearchStatus: 'none',
@@ -23,51 +23,51 @@ export const hanlightMusicReducer = (
   produce(state, draft => {
     switch (action.type) {
       case 'GET_MUSIC':
-        draft.hanlightStatus.getMusicStatus = 'pending';
+        draft.hanlightMusicStatus.getMusicStatus = 'pending';
         break;
 
       case 'GET_MUSIC_SUCCESS':
-        draft.hanlightStatus.getMusicStatus = 'success';
+        draft.hanlightMusicStatus.getMusicStatus = 'success';
         draft.musicList = action.payload.musics;
         break;
 
       case 'GET_MUSIC_FAILURE':
-        draft.hanlightStatus.getMusicStatus = 'failure';
+        draft.hanlightMusicStatus.getMusicStatus = 'failure';
         break;
 
       case 'POST_MUSIC':
-        draft.hanlightStatus.postMusicStatus = 'pending';
+        draft.hanlightMusicStatus.postMusicStatus = 'pending';
         break;
 
       case 'POST_MUSIC_SUCCESS':
-        draft.hanlightStatus.postMusicStatus = 'success';
+        draft.hanlightMusicStatus.postMusicStatus = 'success';
         break;
 
       case 'POST_MUSIC_FAILURE':
-        draft.hanlightStatus.postMusicStatus = 'failure';
+        draft.hanlightMusicStatus.postMusicStatus = 'failure';
         break;
 
       case 'GET_MUSIC_SEARCH':
-        draft.hanlightStatus.getMusicSearchStatus = 'pending';
+        draft.hanlightMusicStatus.getMusicSearchStatus = 'pending';
         break;
 
       case 'GET_MUSIC_SEARCH_SUCCESS':
-        draft.hanlightStatus.getMusicSearchStatus = 'success';
+        draft.hanlightMusicStatus.getMusicSearchStatus = 'success';
         draft.searchList.length = 0;
         draft.searchList = action.payload.musics;
         break;
 
       case 'GET_MUSIC_SEARCH_FAILURE':
-        draft.hanlightStatus.getMusicSearchStatus = 'failure';
+        draft.hanlightMusicStatus.getMusicSearchStatus = 'failure';
         break;
 
       case 'TOGGLE_HM':
         draft.toggleHMstatus = action.payload;
 
       case 'RESET_SEARCH_LIST':
-        draft.hanlightStatus.getMusicSearchStatus = 'none';
-        draft.hanlightStatus.getMusicStatus = 'none';
-        draft.hanlightStatus.postMusicStatus = 'none';
+        draft.hanlightMusicStatus.getMusicSearchStatus = 'none';
+        draft.hanlightMusicStatus.getMusicStatus = 'none';
+        draft.hanlightMusicStatus.postMusicStatus = 'none';
         draft.searchList = [];
 
       default:

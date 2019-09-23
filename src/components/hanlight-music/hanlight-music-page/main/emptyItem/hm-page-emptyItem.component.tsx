@@ -9,14 +9,14 @@ const Wrapper = styled.section`
   background-color: #ffffff;
 
   border-radius: 0.75rem;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.19);
 
   margin-bottom: 0.625rem;
 
   display: flex;
   align-items: center;
 
-  opacity: 0.8;
+  opacity: 0.3;
 
   position: relative;
 `;

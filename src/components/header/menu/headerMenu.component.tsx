@@ -8,6 +8,7 @@ import {
   HeaderMenuOwnProps,
   HeaderMenuProps,
 } from 'container/header/menu/headerMenu.container';
+import HMIcon from 'lib/png/hm-icon.png';
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
@@ -269,6 +270,10 @@ const HeaderMenuComponent: React.FC<
             <Item name="meal" onClick={handleShortCut}>
               <ItemIcon src={MealIcon} alt="" />
               <ItemSpan>급식표</ItemSpan>
+            </Item>
+            <Item name="music" onClick={handleShortCut}>
+              <ItemIcon src={HMIcon} alt="" />
+              <ItemSpan>한빛뮤직</ItemSpan>
             </Item>
             <Item name="profile" onClick={handleShortCut}>
               <ItemIcon src={InfoEditIcon} alt="" />

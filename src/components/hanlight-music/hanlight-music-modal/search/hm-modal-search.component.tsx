@@ -52,7 +52,7 @@ const Category = styled.span<{ active: boolean }>`
 
   margin-right: 1.25rem;
 
-  color: ${({ active }) => (active ? '#4470ff' : '#000000')};
+  color: ${({ active }) => (active ? '#4470ff' : '#a3a3a3')};
   font-size: ${({ active }) => (active ? '1.375rem' : '1.25rem')};
 
   @media ${Device.tabletL} {
@@ -122,7 +122,9 @@ const ListWrapper = styled.div`
   grid-row-gap: 1rem;
   justify-content: center;
 
-  margin: 1.875rem 0 1.4rem 0;
+  background-color: #ffffff;
+
+  padding: 0.875rem 0 1rem 0;
 
   overflow-y: scroll;
 
@@ -136,6 +138,40 @@ const ListWrapper = styled.div`
     grid-row-gap: 15px;
 
     margin: 1.25rem 0 1.5rem 0;
+  }
+`;
+
+const Blur = styled.div`
+  position: relative;
+
+  width: 100%;
+
+  margin: 1rem 0;
+
+  ::before {
+    content: '';
+
+    position: absolute;
+    top: 0;
+
+    width: 100%;
+    height: 0.875rem;
+
+    background: linear-gradient(white, rgba(255, 255, 255, 0.001));
+
+    z-index: 1;
+  }
+
+  ::after {
+    content: '';
+
+    position: absolute;
+    bottom: 0;
+
+    width: 100%;
+    height: 0.875rem;
+
+    background: linear-gradient(rgba(255, 255, 255, 0.001), white);
   }
 `;
 
@@ -207,7 +243,7 @@ export interface MusicItem {
 const HMModalSearchComponent: React.FC = () => {
   const dispatch: Dispatch<hanlightMusicReducerActions> = useDispatch();
 
-  const { searchList, hanlightStatus } = useSelector<
+  const { searchList, hanlightMusicStatus } = useSelector<
     AppState,
     HanlightMusicModel
   >(state => state.hanlightMusic);
@@ -218,7 +254,7 @@ const HMModalSearchComponent: React.FC = () => {
 
   const { getMusicSearch, postMusic } = hanlightMusicActions;
 
-  const { getMusicSearchStatus, postMusicStatus } = hanlightStatus;
+  const { getMusicSearchStatus, postMusicStatus } = hanlightMusicStatus;
 
   const prevStatus = usePrevious({ getMusicSearchStatus, postMusicStatus });
   const [input, setInput] = useInput('');
@@ -270,7 +306,9 @@ const HMModalSearchComponent: React.FC = () => {
 
   useEffect(() => {
     if (prevStatus) {
-      if (
+      if (getMusicSearchStatus === 'pending') {
+        setSelect(false);
+      } else if (
         prevStatus.getMusicSearchStatus === 'pending' &&
         getMusicSearchStatus === 'failure'
       ) {
@@ -321,27 +359,31 @@ const HMModalSearchComponent: React.FC = () => {
           <img src={SearchIcon} alt="search" />
         </button>
       </SearchBar>
-      <ListWrapper>
-        {getMusicSearchStatus === 'none' ? (
-          <StyledTxt>
-            <p>
-              <span>노래</span>를 검색해보세요!
-            </p>
-          </StyledTxt>
-        ) : searchList.length !== 0 || getMusicSearchStatus === 'pending' ? (
-          SearchList
-        ) : (
-          <StyledTxt>
-            <img src={NoResultImg} alt="no result" />
-            <p>
-              검색 결과가&nbsp;<span>없습니다.</span>
-            </p>
-          </StyledTxt>
-        )}
-      </ListWrapper>
-      <SubmitBtn select={select} onClick={submitSong} disabled={!select}>
-        예약하기
-      </SubmitBtn>
+      <Blur>
+        <ListWrapper>
+          {getMusicSearchStatus === 'none' ? (
+            <StyledTxt>
+              <p>
+                <span>노래</span>를 검색해보세요!
+              </p>
+            </StyledTxt>
+          ) : searchList.length !== 0 || getMusicSearchStatus === 'pending' ? (
+            SearchList
+          ) : (
+            <StyledTxt>
+              <img src={NoResultImg} alt="no result" />
+              <p>
+                검색 결과가&nbsp;<span>없습니다.</span>
+              </p>
+            </StyledTxt>
+          )}
+        </ListWrapper>
+      </Blur>
+      {getMusicSearchStatus !== 'none' && getMusicSearchStatus !== 'pending' && (
+        <SubmitBtn select={select} onClick={submitSong} disabled={!select}>
+          예약하기
+        </SubmitBtn>
+      )}
     </Wrapper>
   );
 };

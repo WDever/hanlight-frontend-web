@@ -1,9 +1,7 @@
 import * as React from 'react';
 
-import { Device } from 'lib/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { Dispatch } from 'redux';
-import { hanlightMusicActions, hanlightMusicReducerActions } from 'store';
+import { useSelector } from 'react-redux';
+import { AppState, HanlightMusicModel } from 'store';
 import styled from 'styled-components';
 
 import HMPageList from 'lib/svg/hm-page-list.svg';
@@ -35,7 +33,7 @@ const TitleWrapper = styled.div`
 
   h2 {
     font-family: 'yg-jalnan';
-    font-size: 1.125rem;
+    font-size: 15px;
 
     margin: 0;
   }
@@ -55,7 +53,7 @@ const CategoryWrapper = styled.section`
 const Category = styled.span<{ selected: boolean }>`
   font-size: ${({ selected }) => (selected ? '15px' : '13px')};
   font-family: 'yg-jalnan';
-  color: ${({ selected }) => (selected ? '#4470ff' : '#000000')};
+  color: ${({ selected }) => (selected ? '#4470ff' : '#a3a3a3')};
 
   margin: 0;
   margin-right: 0.625rem;
@@ -67,6 +65,12 @@ export type pageType = 'main' | 'search';
 export type CategoryTypes = '' | 'song' | 'artist' | 'album';
 
 const HanlightMusicPageComponent: React.FC = () => {
+  const { hanlightMusicStatus } = useSelector<AppState, HanlightMusicModel>(
+    state => state.hanlightMusic,
+  );
+
+  const { getMusicSearchStatus } = hanlightMusicStatus;
+
   const [page, setPage] = useState<pageType>('main');
   const [category, setCategory] = useState<CategoryTypes>('');
 

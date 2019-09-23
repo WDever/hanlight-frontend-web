@@ -20,12 +20,13 @@ const Wrapper = styled.div<{ active: boolean }>`
       ? '0 3px 20px 0 rgba(68, 112, 255, 0.3)'
       : '0 3px 10px 0 rgba(0, 0, 0, 0.21)'};
 
-  border: ${({ active }) => active && 'solid 1px #4470ff'};
+  border: ${({ active }) =>
+    active ? 'solid 1px #4470ff' : 'solid 1px #ffffff'};
 
   display: flex;
   align-items: center;
 
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 
   cursor: pointer;
 
@@ -34,14 +35,9 @@ const Wrapper = styled.div<{ active: boolean }>`
     height: 4.875rem;
   }
 
-  :first-of-type,
-  :nth-of-type(2) {
-    margin-top: 1rem;
-  }
-
   :last-of-type,
   :nth-last-child(2) {
-    margin-bottom: 1rem;
+    margin-bottom: 0.875rem;
   }
 `;
 
@@ -119,7 +115,6 @@ const HMModalSearchItemComponent: React.FC<SearchItemProps> = ({
   select,
   selectedItem,
 }) => {
-  const [selected, setSelected] = useState<boolean>(false);
   return (
     <Wrapper
       onClick={() => {
@@ -128,16 +123,14 @@ const HMModalSearchItemComponent: React.FC<SearchItemProps> = ({
           selectedItem.album === album.album_id
         ) {
           setSelect(!select);
-          setSelected(!selected);
         } else {
           setSelect(true);
-          setSelected(true);
         }
 
         setSelectedItem({ title, album: album.album_id });
       }}
       active={
-        selected &&
+        select &&
         title === selectedItem.title &&
         album.album_id === selectedItem.album
       }

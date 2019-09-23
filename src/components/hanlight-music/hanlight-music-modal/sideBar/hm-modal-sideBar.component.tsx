@@ -20,7 +20,8 @@ const Wrapper = styled.div`
 
   box-shadow: inset 0 0px 10px 0 rgba(0, 0, 0, 0.07);
 
-  border-top-left-radius: 0.6rem;
+  border-top-left-radius: 0.5rem;
+  border-bottom-left-radius: 0.5rem;
 
   position: relative;
 

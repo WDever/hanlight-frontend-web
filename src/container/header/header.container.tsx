@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
   AppState,
+  hanlightMusicActions,
+  hanlightMusicReducerActions,
   userActions,
   userReducerActions,
   utilActions,
@@ -24,7 +26,9 @@ const mapStateToProps = ({ user }: AppState) => ({
 });
 
 const mapDispatchToProps = (
-  dispatch: Dispatch<userReducerActions | utilReducerActions>,
+  dispatch: Dispatch<
+    userReducerActions | utilReducerActions | hanlightMusicReducerActions
+  >,
 ) => ({
   resetUser: bindActionCreators(userActions.resetUser, dispatch),
   toggleMenu: bindActionCreators(utilActions.toggleMenu, dispatch),

@@ -61,7 +61,7 @@ const AllViewBtn = styled(Link)`
 
 const HMBtn = styled.button`
   font-family: 'yg-jalnan';
-  font-size: 1.875rem;
+  font-size: 1.5rem;
 
   background-color: #ffffff;
   outline: none;
@@ -75,6 +75,10 @@ const HMBtn = styled.button`
 
   @media ${Device.tabletL} {
     display: none;
+  }
+
+  img {
+    margin-left: 0.625rem;
   }
 `;
 

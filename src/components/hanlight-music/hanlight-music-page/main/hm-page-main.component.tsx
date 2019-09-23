@@ -48,7 +48,7 @@ const HMPageMainComponent: React.FC = () => {
   const dispatch: Dispatch<hanlightMusicReducerActions> = useDispatch();
 
   const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
-  const { hanlightStatus, musicList } = useSelector<
+  const { hanlightMusicStatus, musicList } = useSelector<
     AppState,
     HanlightMusicModel
   >(state => state.hanlightMusic);
@@ -56,7 +56,7 @@ const HMPageMainComponent: React.FC = () => {
     state => state.error,
   );
 
-  const { getMusicStatus } = hanlightStatus;
+  const { getMusicStatus } = hanlightMusicStatus;
   const { getMusic } = hanlightMusicActions;
 
   const MusicList = useMemo(
