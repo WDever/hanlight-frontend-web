@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { Location } from 'history';
 import { usePrevious } from 'lib/hooks';
 import { AppState, FestivalModel } from 'store';
-import ChargeCoomponent from './charge';
+import ChargeComponent from './charge';
 import FSMainComponent from './main';
 import FSModalComponent from './modal';
 import PayComponent from './pay';
@@ -19,7 +19,7 @@ const FestivalComponent: React.FC<
 > = ({ location, history }) => {
   const prevLocation = usePrevious({ location });
   const [locationState, setLocaionState] = useState<Location>(location);
-  const [payStatus, setPayStatus] = useState<boolean>(false);
+  const [payPageStatus, setPayPageStatus] = useState<boolean>(false);
   const { modalData } = useSelector<AppState, FestivalModel>(
     state => state.festival,
   );
@@ -27,9 +27,10 @@ const FestivalComponent: React.FC<
   useEffect(() => {
     if (prevLocation && location.state && location.state.pay) {
       setLocaionState(prevLocation.location);
-      setPayStatus(true);
+      setPayPageStatus(true);
     } else {
       setLocaionState(location);
+      setPayPageStatus(false);
     }
   }, [location, history]);
 
@@ -37,8 +38,12 @@ const FestivalComponent: React.FC<
     <>
       {modalData.status && <FSModalComponent />}
       <Switch location={locationState}>
-        <Route exact={true} path="/festival" component={FSMainComponent} />
-        {payStatus && (
+        <Route
+          exact={true}
+          path="/festival"
+          render={() => <FSMainComponent payStatus={payPageStatus} />}
+        />
+        {payPageStatus && (
           <>
             <Route path="/festival/pay" />
             <Route path="/festival/charge" />
@@ -46,10 +51,10 @@ const FestivalComponent: React.FC<
         )}
         <Redirect to="/error" />
       </Switch>
-      {payStatus && (
+      {payPageStatus && (
         <>
           <Route path="/festival/pay" component={PayComponent} />
-          <Route path="/festival/charge" component={ChargeCoomponent} />
+          <Route path="/festival/charge" component={ChargeComponent} />
         </>
       )}
     </>

@@ -2,12 +2,12 @@ import { produce } from 'immer';
 import { festivalActions, FestivalModel, festivalReducerActions } from 'store';
 
 const initialState: FestivalModel = {
+  shopList: {},
   modalData: {
     status: false,
     data: {
       type: '',
       content: '',
-      acceptEvent() {},
     },
   },
 };
@@ -27,11 +27,8 @@ export const festivalReducer = (
           draft.modalData.data = {
             type: '',
             content: '',
-            acceptEvent() {},
           };
         }
-        console.log(action.payload);
-        console.log(state.modalData);
         break;
 
       default:

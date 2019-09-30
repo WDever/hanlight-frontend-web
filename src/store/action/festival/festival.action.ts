@@ -13,7 +13,6 @@ export interface ToggleModalPayload {
   data?: {
     type: modalType;
     content: string | PayItemType[];
-    acceptEvent(): void;
   };
 }
 

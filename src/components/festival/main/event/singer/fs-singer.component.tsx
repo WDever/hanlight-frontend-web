@@ -92,10 +92,21 @@ const ExData = [
 const ExData2 = 0;
 const isVoted = true;
 
-const FSMaskComponent: React.FC = () => {
+const FSSingerComponent: React.FC = () => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
 
-  const available = 9000 <= Number(moment().format('Hmmss'));
+  const openTime = 9000 <= Number(moment().format('Hmmss'));
+
+  const voteFunc = (name: string) =>
+    dispatch(
+      festivalActions.toggleModal({
+        status: true,
+        data: {
+          type: 'singer',
+          content: name,
+        },
+      }),
+    );
 
   const participantList = ExData.map((item, i) => (
     <Wrapper key={i}>
@@ -105,18 +116,7 @@ const FSMaskComponent: React.FC = () => {
       <VoteBtn
         voted={item.key === ExData2}
         disabled={isVoted}
-        onClick={() =>
-          dispatch(
-            festivalActions.toggleModal({
-              status: true,
-              data: {
-                type: 'mask',
-                content: item.name,
-                acceptEvent: () => alert(`${item.name}에게 투표`),
-              },
-            }),
-          )
-        }
+        onClick={() => voteFunc(item.name)}
       >
         {item.key === ExData2 && isVoted ? '투표완료' : '투표하기'}
       </VoteBtn>
@@ -125,7 +125,7 @@ const FSMaskComponent: React.FC = () => {
 
   return (
     <>
-      {available ? (
+      {openTime ? (
         participantList
       ) : (
         <NotNowBox>
@@ -138,4 +138,4 @@ const FSMaskComponent: React.FC = () => {
   );
 };
 
-export default FSMaskComponent;
+export default FSSingerComponent;

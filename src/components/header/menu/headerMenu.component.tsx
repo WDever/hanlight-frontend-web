@@ -146,7 +146,7 @@ const CircleIcon = styled.img`
   position: absolute;
 `;
 
-const ItemWrapper = styled.div`
+const ItemWrapper = styled.div<{ dark: boolean }>`
   width: 66%;
   margin-top: 1rem;
   position: absolute;
@@ -158,17 +158,20 @@ const ItemWrapper = styled.div`
   @media ${Device.mobileL} {
     margin-left: 1.125rem;
   }
+
+  button {
+    border-bottom: solid 0.5px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
+    color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
+  }
 `;
 
-const Item = styled.button<{ dark: boolean }>`
+const Item = styled.button`
   width: 100%;
   height: 3rem;
   padding: 0;
   margin: 0;
   border: 0;
-  border-bottom: solid 0.5px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
   background-color: rgba(255, 255, 255, 0);
-  color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
 
   display: flex;
   align-items: center;
@@ -262,36 +265,36 @@ const HeaderMenuComponent: React.FC<
           />
         </Upside>
         <DownSide>
-          <ItemWrapper>
-            <Item name="festival" onClick={handleShortCut} dark={isDark}>
+          <ItemWrapper dark={isDark}>
+            <Item name="festival" onClick={handleShortCut}>
               <ItemIcon src={FestivalIcon} alt="" />
               <ItemSpan>한마당</ItemSpan>
             </Item>
-            <Item name="notice" onClick={handleShortCut} dark={isDark}>
+            <Item name="notice" onClick={handleShortCut}>
               <ItemIcon src={NoticeIcon} alt="" />
               <ItemSpan>공지사항</ItemSpan>
             </Item>
-            <Item name="timetable" onClick={handleShortCut} dark={isDark}>
+            <Item name="timetable" onClick={handleShortCut}>
               <ItemIcon src={TimetableIcon} alt="" />
               <ItemSpan>시간표</ItemSpan>
             </Item>
-            <Item name="calendar" onClick={handleShortCut} dark={isDark}>
+            <Item name="calendar" onClick={handleShortCut}>
               <ItemIcon src={CalendarIcon} alt="" />
               <ItemSpan>학사일정</ItemSpan>
             </Item>
-            <Item name="board" onClick={handleShortCut} dark={isDark}>
+            <Item name="board" onClick={handleShortCut}>
               <ItemIcon src={BambooIcon} alt="" />
               <ItemSpan>대나무숲</ItemSpan>
             </Item>
-            <Item name="meal" onClick={handleShortCut} dark={isDark}>
+            <Item name="meal" onClick={handleShortCut}>
               <ItemIcon src={MealIcon} alt="" />
               <ItemSpan>급식표</ItemSpan>
             </Item>
-            <Item name="profile" onClick={handleShortCut} dark={isDark}>
+            <Item name="profile" onClick={handleShortCut}>
               <ItemIcon src={InfoEditIcon} alt="" />
               <ItemSpan>정보수정</ItemSpan>
             </Item>
-            <Item name="logout" onClick={handleShortCut} dark={isDark}>
+            <Item name="logout" onClick={handleShortCut}>
               <ItemIcon src={LogoutIcon} alt="" />
               <ItemSpan>로그아웃</ItemSpan>
             </Item>

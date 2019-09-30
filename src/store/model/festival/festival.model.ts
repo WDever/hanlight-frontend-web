@@ -1,9 +1,10 @@
 import { ReactElement } from 'react';
+import { FSShopListModel } from './festival.shop';
 
 export type modalType =
   | ''
   | 'lol'
-  | 'mask'
+  | 'singer'
   | 'payment'
   | 'refund'
   | 'refund-check'
@@ -21,10 +22,11 @@ export interface ModalDataType {
   data: {
     type: modalType;
     content: string | PayItemType[];
-    acceptEvent(): void;
   };
 }
 
 export interface FestivalModel {
+  shopList: FSShopListModel;
+
   modalData: ModalDataType;
 }

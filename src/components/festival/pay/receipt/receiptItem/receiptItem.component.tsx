@@ -11,7 +11,6 @@ const { useState, useEffect } = React;
 
 const Wrapper = styled.section`
   width: 100%;
-  min-height: 3.5rem;
 
   border-radius: 0.375rem;
 
@@ -24,6 +23,8 @@ const Wrapper = styled.section`
   font-family: 'Spoqa Han Sans';
 
   margin-bottom: 0.5rem;
+
+  position: relative;
 `;
 
 const InnerBox = styled.article`
@@ -118,6 +119,20 @@ const BoothPlusBtn = styled.span<{ toggle: boolean }>`
   }
 `;
 
+const DetailWrapper = styled.article`
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  background-color: #3c3c3c;
+
+  margin-top: 0.5rem;
+
+  position: relative;
+`;
+
 const ContentWrapper = styled.section`
   width: 90.24%;
 
@@ -126,6 +141,8 @@ const ContentWrapper = styled.section`
 
   font-family: 'Spoqa Han Sans';
   font-size: 0.875rem;
+
+  margin-top: 0.5rem;
 
   article {
     width: 100%;
@@ -382,97 +399,79 @@ const ReceiptItemComponent: React.FC<
 
   if (type === 'payment') {
     return (
-      <>
-        <Wrapper>
-          <InnerBox>
-            <BoothTitle toggle={toggle}>
-              <span>{name}</span>
-              <p>37초 전</p>
-            </BoothTitle>
-            <h2>
-              {!toggle && <Red>- {numberWithComma(totalPrice)}원</Red>}
-              <BoothPlusBtn
-                toggle={toggle}
-                onClick={() => setToggle(!toggle)}
-              />
-            </h2>
-          </InnerBox>
-          {toggle && (
-            <>
-              <ContentWrapper>{itemList}</ContentWrapper>
-              <ContentSeperator />
-              <PriceWrapper>
-                <article>
-                  <h1>
-                    총 <TotalPrice>{numberWithComma(totalPrice)}원</TotalPrice>
-                  </h1>
-                </article>
-                <article>
-                  <h1>
-                    구매 후 잔액
-                    <RemainPrice>
-                      {numberWithComma(userMoney - totalPrice)}원
-                    </RemainPrice>
-                  </h1>
-                </article>
-              </PriceWrapper>
-              <BtnWrapper used={used !== ''}>
-                {used === 'use' ? (
-                  <h1>사용 완료</h1>
-                ) : used === 'refund' ? (
-                  <h1>환불 완료</h1>
-                ) : (
-                  <>
-                    <AcceptBtn
-                      onClick={() =>
-                        dispatch(
-                          toggleModal({
-                            status: true,
-                            data: {
-                              type: 'use',
-                              content: items,
-                              acceptEvent: () => alert('사용'),
-                            },
-                          }),
-                        )
-                      }
-                    >
-                      구매 확인
-                    </AcceptBtn>
-                    <RefundBtn
-                      onClick={() =>
-                        dispatch(
-                          toggleModal({
-                            status: true,
-                            data: {
-                              type: 'refund',
-                              content: items,
-                              acceptEvent: () =>
-                                dispatch(
-                                  toggleModal({
-                                    status: true,
-                                    data: {
-                                      type: 'refund-check',
-                                      content: '',
-                                      acceptEvent: () => {},
-                                      // dispatch some action and useEffect call toggle Modal
-                                    },
-                                  }),
-                                ),
-                            },
-                          }),
-                        )
-                      }
-                    >
-                      환불
-                    </RefundBtn>
-                  </>
-                )}
-              </BtnWrapper>
-            </>
-          )}
-        </Wrapper>
-      </>
+      <Wrapper>
+        <InnerBox>
+          <BoothTitle toggle={toggle}>
+            <span>{name}</span>
+            <p>37초 전</p>
+          </BoothTitle>
+          <h2>
+            {!toggle && <Red>- {numberWithComma(totalPrice)}원</Red>}
+            <BoothPlusBtn toggle={toggle} onClick={() => setToggle(!toggle)} />
+          </h2>
+        </InnerBox>
+        {toggle && (
+          <DetailWrapper>
+            <ContentWrapper>{itemList}</ContentWrapper>
+            <ContentSeperator />
+            <PriceWrapper>
+              <article>
+                <h1>
+                  총 <TotalPrice>{numberWithComma(totalPrice)}원</TotalPrice>
+                </h1>
+              </article>
+              <article>
+                <h1>
+                  구매 후 잔액
+                  <RemainPrice>
+                    {numberWithComma(userMoney - totalPrice)}원
+                  </RemainPrice>
+                </h1>
+              </article>
+            </PriceWrapper>
+            <BtnWrapper used={used !== ''}>
+              {used === 'use' ? (
+                <h1>사용 완료</h1>
+              ) : used === 'refund' ? (
+                <h1>환불 완료</h1>
+              ) : (
+                <>
+                  <AcceptBtn
+                    onClick={() =>
+                      dispatch(
+                        toggleModal({
+                          status: true,
+                          data: {
+                            type: 'use',
+                            content: items,
+                          },
+                        }),
+                      )
+                    }
+                  >
+                    구매 확인
+                  </AcceptBtn>
+                  <RefundBtn
+                    onClick={() =>
+                      dispatch(
+                        toggleModal({
+                          status: true,
+                          data: {
+                            type: 'refund',
+                            content: items,
+                          },
+                        }),
+                      )
+                    }
+                  >
+                    환불
+                  </RefundBtn>
+                </>
+              )}
+            </BtnWrapper>
+          </DetailWrapper>
+        )}
+      </Wrapper>
     );
   } else {
     return (

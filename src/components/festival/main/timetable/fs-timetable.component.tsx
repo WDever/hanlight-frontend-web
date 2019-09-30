@@ -80,13 +80,11 @@ const ActivableDiv = styled.div<{ now: boolean }>`
   color: ${({ now }) => (now ? '#90aaff' : 'inherit')};
 `;
 
-type periodType = 'first' | 'second';
-
 interface TableItemType {
   period: number;
   content: Array<{
     time: string;
-    activity: string[];
+    activity: string;
   }>;
 }
 
@@ -95,8 +93,20 @@ const firstData: TableItemType[] = [
     period: 1,
     content: [
       {
-        time: '08 : 40 ~ 09 : 20',
-        activity: ['개회 및 학교장 연설', '전자화폐 설명'],
+        time: '08 : 40 ~ 08 : 50',
+        activity: '개회식',
+      },
+      {
+        time: '08 : 50 ~ 09 : 00',
+        activity: '반별 부스 홍보',
+      },
+      {
+        time: '09 : 00 ~ 09 : 10',
+        activity: '전자화폐 사용 방법 설명',
+      },
+      {
+        time: '09 : 10 ~ 09 : 20',
+        activity: '교장님 말씀',
       },
     ],
   },
@@ -105,15 +115,15 @@ const firstData: TableItemType[] = [
     content: [
       {
         time: '09 : 20 ~ 12 : 00',
-        activity: ['반별 부스 체험'],
+        activity: '반별 부스 활동',
       },
       {
         time: '12 : 00 ~ 12 : 30',
-        activity: ['반별 뒷정리'],
+        activity: '교실 정돈',
       },
       {
         time: '12 : 30 ~ 13 : 20',
-        activity: ['점심'],
+        activity: '점심시간',
       },
     ],
   },
@@ -125,129 +135,101 @@ const secondData: TableItemType[] = [
     content: [
       {
         time: '13 : 20 ~ 13 : 40',
-        activity: ['장기자랑'],
+        activity: '장기자랑',
       },
       {
-        time: '13 : 40 ~ 14 : 05',
-        activity: ['패션쇼 / 평가 및 수상'],
+        time: '13 : 30 ~ 14 : 00',
+        activity: '패션쇼',
+      },
+      {
+        time: '14 : 00 ~ 14 : 05',
+        activity: '패션쇼 평가 및 수상',
       },
       {
         time: '14 : 05 ~ 14 : 15',
-        activity: ['찬조 공연'],
+        activity: '찬조 1팀 공연',
       },
       {
-        time: '14 : 15 ~ 15 : 05',
-        activity: ['한챔스 결승 / 우승 소감 발표'],
+        time: '14 : 15 ~ 15 : 00',
+        activity: '한챔스 결승',
       },
       {
-        time: '15 : 05 ~ 15 : 35',
-        activity: ['복면가왕 / 우승자 발표'],
+        time: '15 : 00 ~ 15 : 05',
+        activity: '한챔스 우승 소감 발표',
       },
+      {
+        time: '15 : 05 ~ 15 : 30',
+        activity: '복면가왕',
+      },
+      { time: '15 : 30 ~ 15 : 35', activity: '복면가왕 우승자 발표' },
       {
         time: '15 : 35 ~ 15 : 45',
-        activity: ['찬조 공연2'],
+        activity: '찬조 2팀 공연',
       },
       {
         time: '15 : 45 ~ 16 : 10',
-        activity: ['밴드부'],
+        activity: '밴드부',
       },
       {
         time: '16 : 10 ~ 16 : 20',
-        activity: ['학교장 총평 및 폐식사'],
+        activity: '시상식 및 폐회식',
       },
       {
         time: '16 : 20 ~ 16 : 30',
-        activity: ['교실 정리', '설문조사 및 부스활동 결과 제출'],
+        activity: '종례 및 귀가',
       },
     ],
   },
 ];
 
 const FSTimetableComponent: React.FC = () => {
-  const [period, setPeriod] = useState<periodType>('first');
+  const [period, setPeriod] = useState<number>(1);
 
-  const timetable =
-    period === 'first'
-      ? firstData.map((item, i) => {
-          return (
-            <>
-              <TimetablaTitle>{item.period}부</TimetablaTitle>
-              <TableWrapper>
-                <TimetableGrid>
-                  {item.content.map((val, idx) => {
-                    const time = val.time.split('~').map(str => str.trim());
+  const timetableFunc = (
+    item: TableItemType,
+    i: number,
+    org: TableItemType[],
+  ) => (
+    <>
+      <TimetablaTitle>{item.period}부</TimetablaTitle>
+      <TableWrapper>
+        <TimetableGrid>
+          {item.content.map((val, idx) => {
+            const time = val.time.split('~').map(str => str.trim());
 
-                    const now = moment(moment().format('kk : mm')).isBetween(
-                      moment(time[0], 'kk : mm'),
-                      moment(time[1], 'kk : mm'),
-                    );
+            const now = moment(moment().format('kk : mm')).isBetween(
+              moment(time[0], 'kk : mm'),
+              moment(time[1], 'kk : mm'),
+            );
 
-                    return (
-                      <>
-                        <ActivableDiv now={now}>{val.time}</ActivableDiv>
-                        <ActivableDiv now={now}>
-                          {val.activity.map((actVal, actIdx) => (
-                            <p key={actIdx}>{actVal}</p>
-                          ))}
-                        </ActivableDiv>
-                      </>
-                    );
-                  })}
-                </TimetableGrid>
-              </TableWrapper>
-            </>
-          );
-        })
-      : period === 'second'
-      ? secondData.map((itme, i) => (
-          <>
-            <TimetablaTitle>{itme.period}부</TimetablaTitle>
-            <TableWrapper>
-              <TimetableGrid>
-                {itme.content.map((val, idx) => {
-                  const time = val.time.split('~').map(str => str.trim());
+            return (
+              <>
+                <ActivableDiv now={now}>{val.time}</ActivableDiv>
+                <ActivableDiv now={now}>{val.activity}</ActivableDiv>
+              </>
+            );
+          })}
+        </TimetableGrid>
+      </TableWrapper>
+    </>
+  );
 
-                  const now = moment(moment().format('kk : mm')).isBetween(
-                    moment(time[0], 'kk : mm'),
-                    moment(time[1], 'kk : mm'),
-                  );
-
-                  return (
-                    <>
-                      <ActivableDiv now={now}>{val.time}</ActivableDiv>
-                      <ActivableDiv now={now}>
-                        {val.activity.map((actVal, actIdx) => (
-                          <p key={actIdx}>{actVal}</p>
-                        ))}
-                      </ActivableDiv>
-                    </>
-                  );
-                })}
-              </TimetableGrid>
-            </TableWrapper>
-          </>
-        ))
-      : [];
+  const timetable = [
+    firstData.map(timetableFunc),
+    secondData.map(timetableFunc),
+  ];
 
   return (
     <Wrapper>
       <SeparatorWrapper>
-        <SeparatorBtn
-          onClick={() => setPeriod('first')}
-          active={period === 'first'}
-        >
+        <SeparatorBtn onClick={() => setPeriod(1)} active={period === 1}>
           1~2부
         </SeparatorBtn>
-        <SeparatorBtn
-          onClick={() => setPeriod('second')}
-          active={period === 'second'}
-        >
+        <SeparatorBtn onClick={() => setPeriod(2)} active={period === 2}>
           3부
         </SeparatorBtn>
       </SeparatorWrapper>
-      {/* {period === 'first' && timetable}
-      {period === 'second' && timetable} */}
-      {timetable}
+      {timetable[period - 1]}
     </Wrapper>
   );
 };

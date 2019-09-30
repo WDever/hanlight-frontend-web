@@ -29,3 +29,4 @@ export * from './error.model';
 export * from './board.model';
 export * from './util.model';
 export * from './festival';
+export * from './common';

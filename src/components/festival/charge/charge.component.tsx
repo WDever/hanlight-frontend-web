@@ -226,7 +226,7 @@ const CheckBtn = styled.button`
 
 const Type = true;
 
-const ChargeCoomponent: React.FC<RouteComponentProps> = ({ history }) => {
+const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
   const [animate, setAnimate] = useState<boolean>(false);
 
   useEffect(() => {
@@ -296,4 +296,4 @@ const ChargeCoomponent: React.FC<RouteComponentProps> = ({ history }) => {
   );
 };
 
-export default withRouter(ChargeCoomponent);
+export default withRouter(ChargeComponent);

@@ -6,8 +6,17 @@ import { PayItemType } from 'store';
 import styled from 'styled-components';
 import ReceiptItemComponent from './receiptItem';
 
+const Wrapper = styled.section`
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 const MoneyWrapper = styled.section`
-  width: 18.625rem;
+  width: 82.5%;
 
   margin-top: 7.25rem;
 
@@ -67,6 +76,78 @@ export const ExData: ExDataBoothType[] = [
   {
     name: 'G 101 - PUBA',
     type: 'payment',
+    used: 'use',
+    items: [
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+    ],
+  },
+  {
+    name: '충전',
+    type: 'charge',
+    items: [],
+    used: '',
+  },
+  {
+    name: 'G 101 - PUBA',
+    type: 'payment',
+    used: '',
+    items: [
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+    ],
+  },
+  {
+    name: '충전',
+    type: 'charge',
+    items: [],
+    used: '',
+  },
+  {
+    name: 'G 101 - PUBA',
+    type: 'payment',
+    used: '',
+    items: [
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+    ],
+  },
+  {
+    name: '충전',
+    type: 'charge',
+    items: [],
+    used: '',
+  },
+  {
+    name: 'G 101 - PUBA',
+    type: 'payment',
+    used: '',
+    items: [
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+    ],
+  },
+  {
+    name: '충전',
+    type: 'charge',
+    items: [],
+    used: '',
+  },
+  {
+    name: 'G 101 - PUBA',
+    type: 'payment',
     used: '',
     items: [
       { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
@@ -98,7 +179,7 @@ const ReceiptComponent: React.FC = () => {
   ));
 
   return (
-    <>
+    <Wrapper>
       <MoneyWrapper>
         <Money>
           구매 총액<Red>{numberWithComma(36000)}원</Red>
@@ -108,7 +189,7 @@ const ReceiptComponent: React.FC = () => {
         </Money>
       </MoneyWrapper>
       <ListWrapper>{receiptList}</ListWrapper>
-    </>
+    </Wrapper>
   );
 };
 

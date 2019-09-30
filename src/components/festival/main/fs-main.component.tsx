@@ -12,11 +12,8 @@ import ActiveGraphIcon from 'lib/svg/graph-active-icon.svg';
 import GraphIcon from 'lib/svg/graph-icon.svg';
 import CoinIcon from 'lib/svg/woncoin.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  AppState,
-  UserModel,
-} from 'store';
+import { Link, RouteComponentProps } from 'react-router-dom';
+import { AppState, UserModel } from 'store';
 import styled from 'styled-components';
 
 import EsportsComponent from './eSports';
@@ -38,6 +35,8 @@ const Wrapper = styled.article`
   width: 91%;
   min-width: 20.5rem;
   height: 100%;
+
+  margin-bottom: 2rem;
 
   display: flex;
   flex-direction: column;
@@ -193,11 +192,11 @@ const PosterWrapper = styled.div`
   }
 `;
 
-type btnType = '' | 'lol' | 'timetable' | 'event' | 'sales';
+type pageType = '' | 'lol' | 'timetable' | 'event' | 'sales';
 
 interface BtnDataType {
   name: string;
-  key: btnType;
+  key: pageType;
   img: string;
   activeImg: string;
 }
@@ -214,8 +213,8 @@ const BtnData: BtnDataType[] = [
   { name: '매출', key: 'sales', img: GraphIcon, activeImg: ActiveGraphIcon },
 ];
 
-const FSMainComponent: React.FC = () => {
-  const [selectedItem, setSelectedItem] = useState<btnType>('');
+const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
+  const [selectedItem, setSelectedItem] = useState<pageType>('');
 
   const { name } = useSelector<AppState, UserModel>(state => state.user);
 
@@ -281,18 +280,22 @@ const FSMainComponent: React.FC = () => {
           </PayBtnWrapper>
         </PayBox>
         <BtnWrapper>{BtnList}</BtnWrapper>
-        {selectedItem === 'lol' ? (
-          <EsportsComponent />
-        ) : selectedItem === 'timetable' ? (
-          <FSTimetableComponent />
-        ) : selectedItem === 'event' ? (
-          <FSEventComponent />
-        ) : selectedItem === 'sales' ? (
-          <FSSalesComponent />
+        {!payStatus ? (
+          selectedItem === 'lol' ? (
+            <EsportsComponent />
+          ) : selectedItem === 'timetable' ? (
+            <FSTimetableComponent />
+          ) : selectedItem === 'event' ? (
+            <FSEventComponent />
+          ) : selectedItem === 'sales' ? (
+            <FSSalesComponent />
+          ) : (
+            <PosterWrapper>
+              <img src={Poster} alt="hansei festival poster" />
+            </PosterWrapper>
+          )
         ) : (
-          <PosterWrapper>
-            <img src={Poster} alt="hansei festival poster" />
-          </PosterWrapper>
+          <></>
         )}
       </Wrapper>
     </Template>

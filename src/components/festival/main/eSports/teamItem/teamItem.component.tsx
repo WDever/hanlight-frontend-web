@@ -102,6 +102,20 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
     </Members>
   ));
 
+  const btnTxt = isVoted ? '투표완료' : '투표하기';
+
+  const voteFunc = () => {
+    dispatch(
+      festivalActions.toggleModal({
+        status: true,
+        data: {
+          type: 'lol',
+          content: teamName,
+        },
+      }),
+    );
+  };
+
   return (
     <Wrapper>
       <TeamName>{teamName}</TeamName>
@@ -109,21 +123,10 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
       <Btn
         isVoted={isVoted}
         voteTo={voteTo === 0}
-        onClick={() =>
-          dispatch(
-            festivalActions.toggleModal({
-              status: true,
-              data: {
-                type: 'lol',
-                content: teamName,
-                acceptEvent: () => alert(`${teamName}에 투표`),
-              },
-            }),
-          )
-        }
+        onClick={voteFunc}
         disabled={isVoted}
       >
-        {isVoted ? '투표완료' : '투표하기'} ({ratio}%)
+        {btnTxt} ({ratio}%)
       </Btn>
     </Wrapper>
   );

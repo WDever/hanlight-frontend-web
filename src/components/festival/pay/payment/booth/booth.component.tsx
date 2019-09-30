@@ -1,11 +1,14 @@
 import * as React from 'react';
 
 import { numberWithComma } from 'lib/functions';
-import { PayItemType } from 'store';
+import {
+  FSShopItemModel,
+  FSShopListModel,
+  FSShopModel,
+  PayItemType,
+} from 'store';
 import styled from 'styled-components';
 import { ExDataBoothType } from '../payment.component';
-
-const { useState } = React;
 
 const BoothPlusBtn = styled.span<{ toggle: boolean }>`
   width: 1rem;
@@ -59,7 +62,7 @@ const BoothBox = styled.section<{ toggle: boolean }>`
   }
 
   h1 {
-    font-family: 'Spoqa Hans Sans';
+    font-family: 'Spoqa Han Sans';
     font-size: 1rem;
     font-weight: bold;
     color: #e5e5e5;
@@ -117,7 +120,7 @@ const BoothItemBox = styled.section`
 `;
 
 const ItemControlBtnWrapper = styled.section`
-  width: 17%;
+  width: 20%;
 
   font-family: 'Spoqa Han Sans';
   font-size: 0.875rem;
@@ -158,67 +161,65 @@ const ItemControlBtn = styled.span<{ plus: boolean }>`
 `;
 
 export interface BoothProps {
-  floor: string;
-  booths: ExDataBoothType[];
-  data: PayItemType[];
-  setData: React.Dispatch<React.SetStateAction<PayItemType[]>>;
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
+  booths: FSShopModel[];
+  itemList: PayItemType[];
+  setItemList: React.Dispatch<React.SetStateAction<PayItemType[]>>;
+  totalPrice: number;
+  setTotalPrice: React.Dispatch<React.SetStateAction<number>>;
+  toggleBooth: number;
+  setToggleBooth: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const BoothComponent: React.FC<BoothProps> = ({
   booths,
-  data,
-  setData,
-  floor,
-  count,
-  setCount,
+  itemList,
+  setItemList,
+  totalPrice,
+  setTotalPrice,
+  toggleBooth,
+  setToggleBooth,
 }) => {
-  const [toggle, setToggle] = useState<number>(0);
-
   const controlItem = (
-    floor: string,
-    boothPk: number,
     item_pk: number,
     price: number,
     name: string,
     type: 'increment' | 'decrement',
   ) => {
+    const index: number = itemList.findIndex(val => val.item_pk === item_pk);
+
     if (type === 'increment') {
-      if (data.findIndex(dataVal => dataVal.item_pk === item_pk) === -1) {
-        setData([...data, { name, price, item_pk, amount: 1 }]);
-      } else {
-        const result = data.map(item => {
+      if (index === -1) {
+        setItemList([...itemList, { name, price, item_pk, amount: 1 }]);
+        setTotalPrice((totalPrice += price));
+        return;
+      }
+
+      const result = itemList.map((item: PayItemType) => {
+        if (item.item_pk === item_pk) {
+          item.amount += 1;
+        }
+        return item;
+      });
+
+      setItemList(result);
+      setTotalPrice((totalPrice += price));
+    } else if (type === 'decrement') {
+      if (index !== -1) {
+        if (itemList[index].amount === 0) {
+          setItemList(itemList.filter(item => item.item_pk !== item_pk));
+          setTotalPrice((totalPrice -= price));
+          return;
+        }
+        const result = itemList.map((item: PayItemType) => {
           if (item.item_pk === item_pk) {
-            item.amount += 1;
+            item.amount -= 1;
           }
 
           return item;
         });
 
-        setData(result);
-      }
-
-      setCount((count += price));
-    } else if (type === 'decrement') {
-      if (data.findIndex(dataVal => dataVal.item_pk === item_pk) !== -1) {
-        if (
-          data[data.findIndex(dataVal => dataVal.item_pk === item_pk)]
-            .amount === 0
-        ) {
-          setData(data.filter(item => item.item_pk !== item_pk));
-        } else {
-          const result = data.map(item => {
-            if (item.item_pk === item_pk) {
-              item.amount -= 1;
-            }
-
-            return item;
-          });
-
-          setData(result);
-          setCount((count -= price));
-        }
+        setItemList(result);
+        setTotalPrice((totalPrice -= price));
       }
     }
   };
@@ -227,63 +228,61 @@ const BoothComponent: React.FC<BoothProps> = ({
     return (
       <>
         <BoothBox
-          toggle={toggle === i + 1}
+          toggle={toggleBooth === item.pk}
           onClick={
-            toggle === i + 1 ? () => setToggle(0) : () => setToggle(i + 1)
+            toggleBooth === item.pk
+              ? () => setToggleBooth(0)
+              : () => setToggleBooth(item.pk)
           }
         >
           <div>
-            <h1>{item.name}</h1>
-            <BoothPlusBtn toggle={toggle === i + 1} />
+            <h1>
+              {item.className} - {item.name}
+            </h1>
+            <BoothPlusBtn toggle={toggleBooth === item.pk} />
           </div>
         </BoothBox>
-        {toggle === i + 1 && (
+        {toggleBooth === item.pk && (
           <ListWrapper>
-            {item.items.map((val, idx) => {
-              return (
-                <BoothItemBox key={idx}>
-                  <h1>{val.name}</h1>
-                  <h2>{numberWithComma(val.price)} 원</h2>
-                  <ItemControlBtnWrapper>
-                    <ItemControlBtn
-                      plus={false}
-                      onClick={() =>
-                        controlItem(
-                          floor,
-                          item.booth_pk,
-                          val.item_pk,
-                          val.price,
-                          val.name,
-                          'decrement',
-                        )
-                      }
-                    />
-                    {data.findIndex(
-                      dataVal => dataVal.item_pk === val.item_pk,
-                    ) !== -1
-                      ? data[
-                          data.findIndex(
-                            dataVal => dataVal.item_pk === val.item_pk,
+            {item.shopItem.map(
+              (item: FSShopItemModel, idx: number, org: FSShopItemModel[]) => {
+                const selectedItem = itemList.find(
+                  val => val.item_pk === item.pk,
+                );
+
+                return (
+                  <BoothItemBox key={item.pk}>
+                    <h1>{item.name}</h1>
+                    <h2>{numberWithComma(item.price)} 원</h2>
+                    <ItemControlBtnWrapper>
+                      <ItemControlBtn
+                        plus={false}
+                        onClick={() =>
+                          controlItem(
+                            item.pk,
+                            item.price,
+                            item.name,
+                            'decrement',
                           )
-                        ].amount
-                      : 0}
-                    <ItemControlBtn
-                      plus={true}
-                      onClick={() =>
-                        controlItem(
-                          floor,
-                          item.booth_pk,
-                          val.item_pk,
-                          val.price,
-                          val.name,
-                          'increment',
-                        )
-                      }
-                    />
-                  </ItemControlBtnWrapper>
-                </BoothItemBox>
-              );
-            })}
+                        }
+                      />
+                      {selectedItem ? selectedItem.amount : 0}
+                      <ItemControlBtn
+                        plus={true}
+                        onClick={() =>
+                          controlItem(
+                            item.pk,
+                            item.price,
+                            item.name,
+                            'increment',
+                          )
+                        }
+                      />
+                    </ItemControlBtnWrapper>
+                  </BoothItemBox>
+                );
+              },
+            )}
           </ListWrapper>
         )}
       </>

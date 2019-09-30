@@ -1,5 +1,6 @@
 import * as React from 'react';
 
+import { numberWithComma } from 'lib/functions';
 import { DefaultBoxOpacity } from 'lib/styles';
 import styled from 'styled-components';
 
@@ -33,7 +34,7 @@ const Title = styled.section`
   }
 `;
 
-const ItemBox = styled.section`
+const Box = styled.section`
   width: 100%;
   height: 2.5rem;
 
@@ -50,10 +51,6 @@ const ItemBox = styled.section`
   color: #e4e4e4;
 
   margin: 0 0 0.5rem 0;
-
-  :last-of-type {
-    margin-bottom: 0.625rem;
-  }
 
   h1 {
     margin: 0 0 0 15px;
@@ -92,19 +89,31 @@ const ItemBox = styled.section`
     font-family: inherit;
     font-size: inherit;
     font-weight: normal;
+
+    text-align: right;
   }
+`;
+
+const TotalSaleBox = styled(Box)`
+  margin-top: 0.625rem;
 `;
 
 const Separator = styled.hr`
   width: 100%;
 
-  margin: 0;
+  margin: 0.125rem 0 0 0;
 
   border: none;
   border-bottom: 1px solid #ffffff;
 `;
 
-const ExData = [
+interface ExDataType {
+  name: string;
+  amount: number;
+  price: number;
+}
+
+const ExData: ExDataType[] = [
   { name: '고구마', amount: 19, price: 1000 },
   { name: '감자', amount: 12, price: 1000 },
   { name: '탄감자', amount: 4, price: 500 },
@@ -113,21 +122,20 @@ const ExData = [
 const ExData2 = { rank: 3, totalAmount: 35 };
 
 const FSSalesComponent: React.FC = () => {
-  const [totalSales, setTotalSales] = useState<number>(() => {
-    let result: number = 0;
-    ExData.map(item => {
-      result += item.amount * item.price;
-    });
-    return result;
-  });
+  const [totalSales, setTotalSales] = useState<number>(() =>
+    ExData.reduce(
+      (acc: number, cur: ExDataType): number => (acc += cur.amount * cur.price),
+      0,
+    ),
+  );
 
   const itemList = ExData.map((item, i) => {
     return (
-      <ItemBox key={i}>
+      <Box key={i}>
         <h1>{item.name}</h1>
         <h2>{item.amount}개</h2>
         <h3>{item.amount * item.price}원</h3>
-      </ItemBox>
+      </Box>
     );
   });
 
@@ -139,13 +147,13 @@ const FSSalesComponent: React.FC = () => {
       </Title>
       {itemList}
       <Separator />
-      <ItemBox>
+      <TotalSaleBox>
         <h1>
           <span>전체 매출</span> {ExData2.rank}위
         </h1>
         <h2>{ExData2.totalAmount}개</h2>
-        <h3>{totalSales}원</h3>
-      </ItemBox>
+        <h3>{numberWithComma(totalSales)}원</h3>
+      </TotalSaleBox>
     </>
   );
 };

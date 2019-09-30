@@ -16,8 +16,7 @@ const { useState, useEffect } = React;
 
 const Template = styled.article<{ state: TransitionStatus }>`
   width: 100%;
-  min-height: 100vh;
-  max-height: 100vh;
+  height: 100%;
 
   display: flex;
   justify-content: center;
@@ -31,18 +30,11 @@ const Template = styled.article<{ state: TransitionStatus }>`
 
   transition: 0.3s;
 
-  position: absolute;
+  overflow: hidden;
+
+  position: fixed;
   top: 0;
   z-index: 11;
-`;
-
-const Wrapper = styled.section`
-  width: 100%;
-  min-height: 100%;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 `;
 
 const CategoryTab = styled.section`
@@ -85,6 +77,9 @@ const PayComponent: React.FC<RouteComponentProps> = ({ history, location }) => {
   const [category, setCategory] = useState<categoryType>('payment');
   const [animate, setAnimate] = useState<boolean>(false);
 
+  const changeCategory = (e: React.MouseEvent<HTMLButtonElement>) =>
+    setCategory(e.currentTarget.name as categoryType);
+
   useEffect(() => {
     setAnimate(true);
 
@@ -101,28 +96,24 @@ const PayComponent: React.FC<RouteComponentProps> = ({ history, location }) => {
     >
       {state => (
         <Template state={state}>
-          <Wrapper>
-            <FSHeaderComponent setAnimate={setAnimate} />
-            <CategoryTab>
-              <CategoryBtn
-                onClick={() => setCategory('payment')}
-                active={category === 'payment'}
-              >
-                결제
-              </CategoryBtn>
-              <CategoryBtn
-                onClick={() => setCategory('receipt')}
-                active={category === 'receipt'}
-              >
-                영수증
-              </CategoryBtn>
-            </CategoryTab>
-            {category === 'payment' ? (
-              <PaymentComponent />
-            ) : (
-              <ReceiptComponent />
-            )}
-          </Wrapper>
+          <FSHeaderComponent setAnimate={setAnimate} />
+          <CategoryTab>
+            <CategoryBtn
+              name="payment"
+              onClick={changeCategory}
+              active={category === 'payment'}
+            >
+              결제
+            </CategoryBtn>
+            <CategoryBtn
+              name="receipt"
+              onClick={changeCategory}
+              active={category === 'receipt'}
+            >
+              영수증
+            </CategoryBtn>
+          </CategoryTab>
+          {category === 'payment' ? <PaymentComponent /> : <ReceiptComponent />}
         </Template>
       )}
     </Transition>

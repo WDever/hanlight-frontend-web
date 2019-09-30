@@ -36,7 +36,7 @@ const StampWrapper = styled(Wrapper)`
   }
 `;
 
-const TxtWrapper = styled(Wrapper)`
+const ContentWrapper = styled(Wrapper)`
   flex-direction: column;
   margin-top: 15px;
 
@@ -64,20 +64,18 @@ const TxtWrapper = styled(Wrapper)`
 const EX_STAMP_COUNT = 2;
 
 const FSSTampComponent: React.FC = () => {
-  const StampList = Array(5)
-    .fill(null)
-    .map((item, i) => (
-      <img
-        key={i}
-        src={i + 1 <= EX_STAMP_COUNT ? ActiveStamp : EmptyStamp}
-        alt="stamp"
-      />
-    ));
+  const StampList = [...Array(5)].map((item, i) => (
+    <img
+      key={i}
+      src={i + 1 <= EX_STAMP_COUNT ? ActiveStamp : EmptyStamp}
+      alt="stamp"
+    />
+  ));
 
   return (
     <>
       <StampWrapper>{StampList}</StampWrapper>
-      <TxtWrapper>
+      <ContentWrapper>
         <p>
           <span>Step1)</span> 부스에 참여하고 도장을 발급당한다.
         </p>
@@ -87,7 +85,7 @@ const FSSTampComponent: React.FC = () => {
         <p>
           <span>Step3)</span> 추첨을 통해 당첨당하면 문화상품권.
         </p>
-      </TxtWrapper>
+      </ContentWrapper>
     </>
   );
 };
