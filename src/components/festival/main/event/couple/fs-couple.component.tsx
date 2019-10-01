@@ -1,9 +1,19 @@
 import * as React from 'react';
 
 import { DefaultBoxOpacity } from 'lib/styles';
-import { useDispatch, useSelector } from 'react-redux';
-import styled from 'styled-components';
 import HeartSvg from 'lib/svg/couple-heart.svg';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  UserModel,
+} from 'store';
+import styled from 'styled-components';
+
+const { useEffect } = React;
 
 const Title = styled.h1`
   margin: 25px 0 15px 0;
@@ -69,12 +79,24 @@ const TxtWrapper = styled.section`
 `;
 
 const FSCoupleComponent: React.FC = () => {
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { getMatchNumber } = festivalActions;
+
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { coupleNumber, festivalStatus } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
+
+  useEffect(() => {
+    dispatch(getMatchNumber({ accessToken }));
+  }, [accessToken]);
+
   return (
     <>
       <Title>나의 짝 번호는?</Title>
       <NumberWrapper>
         <img src={HeartSvg} alt="heart" />
-        <h1>234</h1>
+        <h1>{coupleNumber}</h1>
       </NumberWrapper>
       <TxtWrapper>
         <p>

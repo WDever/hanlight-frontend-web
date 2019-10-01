@@ -1,9 +1,21 @@
 import * as React from 'react';
 
-import { CompletelyBoxOpacity, DefaultBoxOpacity } from 'lib/styles';
+import { usePrevious } from 'lib/hooks';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  ErrorModel,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSLolTeamModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 import TeamItemComponent from './teamItem';
+
+const { useEffect } = React;
 
 const Wrapper = styled.article`
   width: 100%;
@@ -21,40 +33,56 @@ const VS = styled.h1`
   margin: 0.75rem 0;
 `;
 
-const ExTeam = [
-  { name: '김성민', stuNum: 'H2203', leader: true },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-];
-
-const ExTeam2 = [
-  { name: '김우혁', stuNum: 'G1101', leader: true },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-  { name: '김성민', stuNum: 'H2203', leader: false },
-];
-
 const EsportsComponent: React.FC = () => {
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { getLolTeam } = festivalActions;
+
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
+    state => state.error,
+  );
+  const { teams, festivalStatus } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
+
+  const { getLolTeamStatus, postLolVoteStatus } = festivalStatus;
+
+  const prevStatus = usePrevious({ postLolVoteStatus });
+
+  const teamList =
+    getLolTeamStatus === 'success'
+      ? teams.map((item: FSLolTeamModel, i: number, org: FSLolTeamModel[]) => (
+          <TeamItemComponent
+            key={item.pk}
+            members={item.member}
+            teamName={item.name}
+            ratio={item.voteRatio}
+            isVoted={item.isVote}
+            userVoted={org.some(item => item.isVote)}
+            teamPk={item.pk}
+          />
+        ))
+      : [];
+
+  useEffect(() => {
+    dispatch(getLolTeam({ accessToken }));
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (prevStatus && prevStatus.postLolVoteStatus === 'pending') {
+      if (postLolVoteStatus === 'success') {
+        alert('투표 성공');
+      } else if (postLolVoteStatus === 'failure') {
+        alert(errorMessage);
+      }
+    }
+  }, [prevStatus, postLolVoteStatus]);
+
   return (
     <Wrapper>
-      <TeamItemComponent
-        members={ExTeam}
-        teamName="아이언이라도 좋아해줄 수 있나요?"
-        ratio={52.1}
-        isVoted={false}
-        voteTo={0}
-      />
+      {teamList[0]}
       <VS>vs</VS>
-      <TeamItemComponent
-        members={ExTeam2}
-        teamName="우리 학생회가 이렇게 귀여울리가 없어"
-        ratio={47.9}
-        isVoted={false}
-        voteTo={0}
-      />
+      {teamList[1]}
     </Wrapper>
   );
 };

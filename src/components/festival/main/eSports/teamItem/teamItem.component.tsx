@@ -3,7 +3,11 @@ import * as React from 'react';
 import { DefaultBoxOpacity } from 'lib/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
-import { festivalActions, festivalReducerActions } from 'store';
+import {
+  festivalActions,
+  festivalReducerActions,
+  FSLolTeamMemberModel,
+} from 'store';
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
@@ -52,7 +56,7 @@ const Members = styled.h1`
   }
 `;
 
-const Btn = styled.button<{ voteTo: boolean; isVoted: boolean }>`
+const Btn = styled.button<{ isVoted: boolean }>`
   border: none;
   outline: none;
 
@@ -61,8 +65,8 @@ const Btn = styled.button<{ voteTo: boolean; isVoted: boolean }>`
 
   border-radius: 0.375rem;
 
-  background-color: ${({ voteTo, isVoted }) =>
-    voteTo && isVoted ? '#9f69e0' : isVoted ? '#818181' : '#6488ff'};
+  background-color: ${({ disabled, isVoted }) =>
+    disabled && isVoted ? '#9f69e0' : !disabled ? '#6488ff' : '#818181'};
 
   color: #454545;
   font-size: 13px;
@@ -72,18 +76,13 @@ const Btn = styled.button<{ voteTo: boolean; isVoted: boolean }>`
   margin-bottom: 1.25rem;
 `;
 
-interface MemberType {
-  name: string;
-  stuNum: string;
-  leader?: boolean;
-}
-
 interface TeamItemProps {
   teamName: string;
-  members: MemberType[];
-  ratio: number;
+  members: FSLolTeamMemberModel[];
+  ratio: string;
   isVoted: boolean;
-  voteTo: number;
+  userVoted: boolean;
+  teamPk: number;
 }
 
 const TeamItemComponent: React.FC<TeamItemProps> = ({
@@ -91,14 +90,15 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
   members,
   ratio,
   isVoted,
-  voteTo,
+  userVoted,
+  teamPk,
 }) => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
 
   const memberList = members.map((item, i) => (
     <Members key={i}>
       {item.leader && '👑'}
-      {item.stuNum} {item.name}
+      {item.studentId} {item.name}
     </Members>
   ));
 
@@ -111,6 +111,10 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
         data: {
           type: 'lol',
           content: teamName,
+          team: {
+            name: teamName,
+            teamPk,
+          },
         },
       }),
     );
@@ -120,13 +124,8 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
     <Wrapper>
       <TeamName>{teamName}</TeamName>
       <MembersWrapper>{memberList}</MembersWrapper>
-      <Btn
-        isVoted={isVoted}
-        voteTo={voteTo === 0}
-        onClick={voteFunc}
-        disabled={isVoted}
-      >
-        {btnTxt} ({ratio}%)
+      <Btn isVoted={isVoted} onClick={voteFunc} disabled={userVoted}>
+        {btnTxt} ({ratio})
       </Btn>
     </Wrapper>
   );

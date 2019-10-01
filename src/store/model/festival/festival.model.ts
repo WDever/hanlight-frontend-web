@@ -1,32 +1,20 @@
-import { ReactElement } from 'react';
-import { FSShopListModel } from './festival.shop';
-
-export type modalType =
-  | ''
-  | 'lol'
-  | 'singer'
-  | 'payment'
-  | 'refund'
-  | 'refund-check'
-  | 'use';
-
-export interface PayItemType {
-  name: string;
-  price: number;
-  item_pk: number;
-  amount: number;
-}
-
-export interface ModalDataType {
-  status: boolean;
-  data: {
-    type: modalType;
-    content: string | PayItemType[];
-  };
-}
+import {
+  FSLolTeamModel,
+  FSShopListModel,
+  FSSingerModel,
+  FSTimetableModel,
+  ModalDataType,
+} from './festival.info';
+import { FSStatus } from './festival.status';
 
 export interface FestivalModel {
   shopList: FSShopListModel;
+  teams: FSLolTeamModel[];
+  coupleNumber: number;
+  singers: FSSingerModel[];
+  fsTimetable: FSTimetableModel[];
+
+  festivalStatus: FSStatus;
 
   modalData: ModalDataType;
 }

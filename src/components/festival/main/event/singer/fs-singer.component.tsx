@@ -1,11 +1,22 @@
 import * as React from 'react';
 
+import { usePrevious } from 'lib/hooks';
 import { DefaultBoxOpacity } from 'lib/styles';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
-import { festivalActions, festivalReducerActions } from 'store';
+import {
+  AppState,
+  ErrorModel,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSSingerModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
+
+const { useEffect, useMemo } = React;
 
 const Wrapper = styled.article`
   width: 100%;
@@ -81,47 +92,75 @@ const NotNowBox = styled.section`
   }
 `;
 
-const ExData = [
-  { name: '짧게는 이정도 길이', key: 0 },
-  { name: '길어봤자 띄어쓰기 하면 이정도', key: 1 },
-  { name: '별로 안답답해보이지 않나?', key: 2 },
-  { name: '나 남소 받았다', key: 3 },
-  { name: '얘 완전 귀여움ㅋㅋㅋㅋ', key: 4 },
-];
-
-const ExData2 = 0;
-const isVoted = true;
-
 const FSSingerComponent: React.FC = () => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { getSinger } = festivalActions;
 
-  const openTime = 9000 <= Number(moment().format('Hmmss'));
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { singers, festivalStatus } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
+  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
+    state => state.error,
+  );
 
-  const voteFunc = (name: string) =>
+  const { getSingerStatus, postSingerVoteStatus } = festivalStatus;
+
+  const prevStatus = usePrevious({ postSingerVoteStatus });
+
+  const openTime = 90000 <= Number(moment().format('Hmmss'));
+
+  const voteFunc = (name: string, singerPk: number) =>
     dispatch(
       festivalActions.toggleModal({
         status: true,
         data: {
           type: 'singer',
           content: name,
+          singer: {
+            name,
+            singerPk,
+          },
         },
       }),
     );
 
-  const participantList = ExData.map((item, i) => (
-    <Wrapper key={i}>
-      <NameBox>
-        <h1>{item.name}</h1>
-      </NameBox>
-      <VoteBtn
-        voted={item.key === ExData2}
-        disabled={isVoted}
-        onClick={() => voteFunc(item.name)}
-      >
-        {item.key === ExData2 && isVoted ? '투표완료' : '투표하기'}
-      </VoteBtn>
-    </Wrapper>
-  ));
+  const participantList = useMemo(
+    () =>
+      getSingerStatus === 'success'
+        ? singers.map(
+            (item: FSSingerModel, i: number, org: FSSingerModel[]) => (
+              <Wrapper key={i}>
+                <NameBox>
+                  <h1>{item.name}</h1>
+                </NameBox>
+                <VoteBtn
+                  voted={item.isVote}
+                  disabled={org.some(item => item.isVote)}
+                  onClick={() => voteFunc(item.name, item.pk)}
+                >
+                  {item.isVote ? '투표완료' : '투표하기'}
+                </VoteBtn>
+              </Wrapper>
+            ),
+          )
+        : [],
+    [getSingerStatus, singers],
+  );
+
+  useEffect(() => {
+    dispatch(getSinger({ accessToken }));
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (prevStatus && prevStatus.postSingerVoteStatus === 'pending') {
+      if (postSingerVoteStatus === 'failure') {
+        alert(errorMessage);
+      } else if (postSingerVoteStatus === 'success') {
+        alert('투표 성공');
+      }
+    }
+  }, [postSingerVoteStatus, prevStatus]);
 
   return (
     <>
