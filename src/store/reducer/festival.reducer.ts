@@ -157,7 +157,7 @@ export const festivalReducer = (
 
       case 'POST_ADMIN_MONEY_SUCCESS':
         draft.festivalStatus.postAdminMoneyStatus = 'success';
-        draft.adminChargeList.push(action.payload);
+        draft.adminChargeList.push(action.payload.charge);
         break;
 
       case 'POST_ADMIN_MONEY_FAILURE':
