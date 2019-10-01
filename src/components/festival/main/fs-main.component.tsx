@@ -13,13 +13,14 @@ import GraphIcon from 'lib/svg/graph-icon.svg';
 import CoinIcon from 'lib/svg/woncoin.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { AppState, UserModel } from 'store';
+import { AppState, UserModel, festivalReducerActions, festivalActions, FestivalModel } from 'store';
 import styled from 'styled-components';
 
 import EsportsComponent from './eSports';
 import FSEventComponent from './event';
 import FSSalesComponent from './sales';
 import FSTimetableComponent from './timetable';
+import { Dispatch } from 'redux';
 
 const { useState, useMemo } = React;
 
@@ -230,8 +231,17 @@ const BtnData: BtnDataType[] = [
 
 const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
   const [selectedItem, setSelectedItem] = useState<pageType>('');
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { adminBool } = useSelector<AppState, FestivalModel>(state => state.festival);
+
+  const { getAdminBool } = festivalActions;
 
   const { name } = useSelector<AppState, UserModel>(state => state.user);
+
+  React.useEffect(() => {
+    dispatch(getAdminBool({ accessToken }));
+  }, [])
 
   const BtnList = useMemo(
     () =>
@@ -294,7 +304,7 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
             </PayBtn>
           </PayBtnWrapper>
         </PayBox>
-        {isAdmin && (
+        {adminBool && (
           <AdminBox>
             <h1>한마당 페이 충전</h1>
             <AdminBtnWrapper>

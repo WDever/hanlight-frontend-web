@@ -10,6 +10,7 @@ import {
   PayItemType,
   PaySalesModel,
   SingerModalType,
+  FSUserModel,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 import { GetTimetable } from '../timeTable.action';
@@ -211,6 +212,93 @@ export interface PostAdminMoneyFailure extends Action {
   payload: { err: ErrorResponse; origin: PostAdminMoneyPayload };
 }
 
+export interface PostAdminMoneyApproveInterface {
+  accessToken: string
+  charge_pk: number;
+}
+export interface PostAdminMoneyApproveSuccessInterface {
+  charge_pk: number;
+}
+export interface PostAdminMoneyApprove extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY_APPROVE;
+  payload: PostAdminMoneyApproveInterface;
+}
+
+export interface PostAdminMoneyApproveSuccess extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY_APPROVE_SUCCESS;
+  payload: PostAdminMoneyApproveSuccessInterface;
+}
+
+export interface PostAdminMoneyApproveFailure extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY_APPROVE_FAILURE;
+  payload: { err: ErrorResponse; origin: PostAdminMoneyPayload };
+}
+
+export interface GetAdminMoneyListPayload {
+  accessToken: string;
+}
+export interface GetAdminMoneyListSuccessPayload {
+  charge: AdminMoneyModel[]
+}
+
+export interface GetAdminMoneyList extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST;
+  payload: GetAdminMoneyListPayload
+}
+export interface GetAdminMoneyListSuccess extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST_SUCCESS;
+  payload: GetAdminMoneyListSuccessPayload
+}
+export interface GetAdminMoneyListFailure extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST_FAILURE;
+  payload: { err: ErrorResponse; origin: GetAdminMoneyListPayload };
+}
+
+export interface GetMoneyPayload {
+  accessToken: string;
+}
+
+export interface GetMoneySuccessPayload {
+  user: FSUserModel
+}
+
+export interface GetMoney extends Action {
+  readonly type: FestivalTypes.GET_MONEY;
+  payload: GetMoneyPayload;
+}
+
+export interface GetMoneySuccess extends Action {
+  readonly type: FestivalTypes.GET_MONEY_SUCCESS;
+  payload: GetMoneySuccessPayload;
+}
+
+export interface GetMoneyFailure extends Action {
+  readonly type: FestivalTypes.GET_MONEY_FAILURE;
+  payload: { error: ErrorResponse, origin: GetMoneyPayload }
+}
+
+export interface GetAdminBoolPayload {
+  accessToken: string;
+}
+export interface GetAdminBoolSuccessPayload {
+  adminBool: boolean;
+}
+
+export interface GetAdminBool extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_BOOL;
+  payload: GetAdminBoolPayload;
+}
+
+export interface GetAdminBoolSuccess extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_BOOL_SUCCESS;
+  payload: GetAdminBoolSuccessPayload;
+}
+
+export interface GetAdminBoolFailure extends Action {
+  readonly type: FestivalTypes.GET_ADMIN_BOOL_FAILURE;
+  payload: { error: ErrorResponse, origin: GetAdminBoolPayload }
+}
+
 const {
   TOGGLE_MODAL,
   GET_LOL_TEAM,
@@ -221,6 +309,10 @@ const {
   GET_FS_TIMETABLE,
   GET_PAY_SHOP_PURCHASE,
   POST_ADMIN_MONEY,
+  GET_MONEY,
+  GET_ADMIN_MONEY_LIST,
+  GET_ADMIN_BOOL,
+  POST_ADMIN_MONEY_APPROVE,
 } = FestivalTypes;
 
 export const festivalActions = {
@@ -240,6 +332,18 @@ export const festivalActions = {
   >(),
   postAdminMoney: createStandardAction(POST_ADMIN_MONEY)<
     PostAdminMoneyPayload
+  >(),
+  getAdminMoneyList: createStandardAction(GET_ADMIN_MONEY_LIST)<
+    GetAdminMoneyListPayload
+  >(),
+  getMoney: createStandardAction(GET_MONEY)<
+    GetMoneyPayload
+  >(),
+  getAdminBool: createStandardAction(GET_ADMIN_BOOL)<
+    GetAdminBoolPayload
+  >(),
+  postAdminMoneyApprove: createStandardAction(POST_ADMIN_MONEY_APPROVE)<
+    PostAdminMoneyApproveInterface
   >(),
 };
 
@@ -268,4 +372,16 @@ export type festivalReducerActions =
   | GetPayShopPurchaseFailure
   | PostAdminMoney
   | PostAdminMoneySuccess
-  | PostAdminMoneyFailure;
+  | PostAdminMoneyFailure
+  | GetAdminMoneyList
+  | GetAdminMoneyListSuccess
+  | GetAdminMoneyListFailure
+  | GetMoney
+  | GetMoneySuccess
+  | GetMoneyFailure
+  | GetAdminBool
+  | GetAdminBoolSuccess
+  | GetAdminBoolFailure
+  | PostAdminMoneyApprove
+  | PostAdminMoneyApproveSuccess
+  | PostAdminMoneyApproveFailure;

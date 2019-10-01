@@ -9,6 +9,10 @@ import {
   PostAdminMoney,
   PostLolVote,
   PostSingerVote,
+  GetMoney,
+  GetAdminMoneyList,
+  GetAdminBool,
+  PostAdminMoneyApprove,
 } from 'store/action';
 import {
   getFsTimetableRequest,
@@ -19,6 +23,10 @@ import {
   postAdminMoneyRequest,
   postLolVoteRequest,
   postSingerVoteRequest,
+  getMoneyRequest,
+  getAdminMoneyListRequest,
+  getAdminBoolRequest,
+  postAdminMoneyApproveRequest,
 } from './festival.request';
 
 function* getLolTeamSaga(action: GetLolTeam) {
@@ -172,6 +180,84 @@ function* postAdminMoneySaga(action: PostAdminMoney) {
     }
   }
 }
+function* getAdminMoneyListSaga(action: GetAdminMoneyList) {
+  if (action.type) {
+    try {
+      const response = yield call(getAdminMoneyListRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_ADMIN_MONEY_LIST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_ADMIN_MONEY_LIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* getMoneySaga(action: GetMoney) {
+  if (action.type) {
+    try {
+      const response = yield call(getMoneyRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_MONEY_SUCCESS,
+        payload: response.data,
+      });
+
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_MONEY_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* getAdminBoolSaga(action: GetAdminBool) {
+  if (action.type) {
+    try {
+      const response = yield call(getAdminBoolRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_ADMIN_BOOL_SUCCESS,
+        payload: response.data,
+      });
+
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_ADMIN_BOOL_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* postAdminMoneyApproveSaga(action: PostAdminMoneyApprove) {
+  if (action.type) {
+    try {
+      const response = yield call(postAdminMoneyApproveRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.POST_ADMIN_MONEY_APPROVE_SUCCESS,
+        payload: action.payload.charge_pk,
+      });
+
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.POST_ADMIN_MONEY_APPROVE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
 
 export function* festivalSaga() {
   yield takeEvery(FestivalTypes.GET_LOL_TEAM, getLolTeamSaga);
@@ -182,4 +268,8 @@ export function* festivalSaga() {
   yield takeEvery(FestivalTypes.GET_FS_TIMETABLE, getFsTimetableSaga);
   yield takeEvery(FestivalTypes.GET_PAY_SHOP_PURCHASE, getPayShopPurchaseSaga);
   yield takeEvery(FestivalTypes.POST_ADMIN_MONEY, postAdminMoneySaga);
+  yield takeEvery(FestivalTypes.GET_ADMIN_MONEY_LIST, getAdminMoneyListSaga);
+  yield takeEvery(FestivalTypes.GET_MONEY, getMoneySaga);
+  yield takeEvery(FestivalTypes.GET_ADMIN_BOOL, getAdminBoolSaga);
+  yield takeEvery(FestivalTypes.POST_ADMIN_MONEY_APPROVE, postAdminMoneyApproveSaga);
 }

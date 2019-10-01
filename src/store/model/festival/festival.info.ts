@@ -98,3 +98,8 @@ export interface AdminMoneyModel {
   amount: number;
   confirmed: boolean;
 }
+
+export interface FSUserModel {
+  money: number;
+  lastApproval: string;
+}

@@ -6,6 +6,7 @@ import {
   FSTimetableModel,
   ModalDataType,
   PaySalesModel,
+  FSUserModel,
 } from './festival.info';
 import { FSStatus } from './festival.status';
 
@@ -22,4 +23,8 @@ export interface FestivalModel {
   festivalStatus: FSStatus;
 
   modalData: ModalDataType;
+
+  user: FSUserModel;
+  adminBool: boolean;
+  
 }
