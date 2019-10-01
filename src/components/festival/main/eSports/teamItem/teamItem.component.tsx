@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { DefaultBoxOpacity } from 'lib/styles';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
@@ -104,20 +105,26 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
 
   const btnTxt = isVoted ? '투표완료' : '투표하기';
 
+  const openTime =
+    141500 <= Number(moment().format('Hmmss')) &&
+    Number(moment().format('Hmmss')) <= 150000;
+
   const voteFunc = () => {
-    dispatch(
-      festivalActions.toggleModal({
-        status: true,
-        data: {
-          type: 'lol',
-          content: teamName,
-          team: {
-            name: teamName,
-            teamPk,
-          },
-        },
-      }),
-    );
+    openTime
+      ? dispatch(
+          festivalActions.toggleModal({
+            status: true,
+            data: {
+              type: 'lol',
+              content: teamName,
+              team: {
+                name: teamName,
+                teamPk,
+              },
+            },
+          }),
+        )
+      : alert('아직 투표 시간이 아닙니다.');
   };
 
   return (

@@ -1,6 +1,7 @@
 import * as React from 'react';
 
 import { usePrevious } from 'lib/hooks';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {

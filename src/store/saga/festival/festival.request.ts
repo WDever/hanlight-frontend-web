@@ -1,9 +1,11 @@
-import { instance } from 'lib/baseUrl';
+import { instance, payInstance } from 'lib/baseUrl';
 import {
   GetFsTimetablePayload,
   GetLolTeamPayload,
   GetMatchPayload,
+  GetPayShopPurchasePayload,
   GetSingerPayload,
+  PostAdminMoneyPayload,
   PostLolVotePayload,
   PostSingerVotePayload,
 } from 'store/action';
@@ -64,4 +66,26 @@ export const getFsTimetableRequest = (payload: GetFsTimetablePayload) =>
         access_token: payload.accessToken,
       },
     })
+    .then(res => res.data);
+
+export const getPayShopPurchaseRequest = (payload: GetPayShopPurchasePayload) =>
+  payInstance
+    .get('/api/shop/purchase', {
+      headers: {
+        authorization: payload.accessToken,
+      },
+    })
+    .then(res => res.data);
+
+export const postAdminMoneyRequest = (payload: PostAdminMoneyPayload) =>
+  payInstance
+    .post(
+      '/api/admin/money',
+      { user_pk: payload.userPk, amount: payload.amount },
+      {
+        headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    )
     .then(res => res.data);

@@ -2,9 +2,20 @@ import * as React from 'react';
 
 import { numberWithComma } from 'lib/functions';
 import { DefaultBoxOpacity } from 'lib/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  ErrorModel,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  PaySalesItemModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 
-const { useState, useMemo } = React;
+const { useState, useEffect } = React;
 
 const Title = styled.section`
   width: 100%;
@@ -107,6 +118,31 @@ const Separator = styled.hr`
   border-bottom: 1px solid #ffffff;
 `;
 
+const AccessBlockBox = styled.section`
+  width: 100%;
+  min-height: 15.625rem;
+
+  border-radius: 0.375rem;
+
+  background-color: ${DefaultBoxOpacity};
+
+  margin-top: 0.625rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    font-family: 'yg-jalnan';
+    font-size: 1rem;
+    color: #e4e4e4;
+
+    span {
+      color: #ff5677;
+    }
+  }
+`;
+
 interface ExDataType {
   name: string;
   amount: number;
@@ -122,38 +158,61 @@ const ExData: ExDataType[] = [
 const ExData2 = { rank: 3, totalAmount: 35 };
 
 const FSSalesComponent: React.FC = () => {
-  const [totalSales, setTotalSales] = useState<number>(() =>
-    ExData.reduce(
-      (acc: number, cur: ExDataType): number => (acc += cur.amount * cur.price),
-      0,
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { getShopPurchase } = festivalActions;
+
+  const { accessToken, name: userName, type } = useSelector<
+    AppState,
+    UserModel
+  >(state => state.user);
+  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
+    state => state.error,
+  );
+  const { shopPurchase, festivalStatus } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
+
+  const itemList = shopPurchase.itmes.map(
+    (item: PaySalesItemModel, i: number) => (
+      <Box key={i}>
+        <h1>{item.name}</h1>
+        <h2>{item.count}개</h2>
+        <h3>{item.totalPrice}원</h3>
+      </Box>
     ),
   );
 
-  const itemList = ExData.map((item, i) => {
-    return (
-      <Box key={i}>
-        <h1>{item.name}</h1>
-        <h2>{item.amount}개</h2>
-        <h3>{item.amount * item.price}원</h3>
-      </Box>
-    );
-  });
+  useEffect(() => {
+    if (type !== 'student') {
+      return;
+    }
+
+    dispatch(getShopPurchase({ accessToken }));
+  }, [accessToken]);
 
   return (
     <>
-      <Title>
-        <h1>하나둘셋넷다섯여섯일곱여럽아홉열열하나열둘열셋열넷</h1>의 실시간
-        매출
-      </Title>
-      {itemList}
-      <Separator />
-      <TotalSaleBox>
-        <h1>
-          <span>전체 매출</span> {ExData2.rank}위
-        </h1>
-        <h2>{ExData2.totalAmount}개</h2>
-        <h3>{numberWithComma(totalSales)}원</h3>
-      </TotalSaleBox>
+      {type === 'student' ? (
+        <>
+          <Title>
+            <h1>{userName}</h1>의 실시간 매출
+          </Title>
+          {itemList}
+          <Separator />
+          <TotalSaleBox>
+            <h2>{ExData2.totalAmount}개</h2>
+            <h3>{numberWithComma(shopPurchase.totalPrice)}원</h3>
+          </TotalSaleBox>
+        </>
+      ) : (
+        <>
+          <AccessBlockBox>
+            <h1>
+              매출 확인 권한이 <span>없습니다.</span>
+            </h1>
+          </AccessBlockBox>
+        </>
+      )}
     </>
   );
 };

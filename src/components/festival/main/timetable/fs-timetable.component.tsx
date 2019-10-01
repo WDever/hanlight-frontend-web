@@ -1,11 +1,22 @@
 import * as React from 'react';
 
+import { usePrevious } from 'lib/hooks';
 import { CompletelyBoxOpacity, DefaultBoxOpacity } from 'lib/styles';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  ErrorModel,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSTimetableModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const Wrapper = styled.article`
   width: 100%;
@@ -35,7 +46,7 @@ const SeparatorBtn = styled.button<{ active: boolean }>`
   outline: none;
 `;
 
-const TimetablaTitle = styled.h1`
+const TimetableTitle = styled.h1`
   font-size: 0.875rem;
   font-family: 'Spoqa Han Sans';
   font-weight: bold;
@@ -80,144 +91,64 @@ const ActivableDiv = styled.div<{ now: boolean }>`
   color: ${({ now }) => (now ? '#90aaff' : 'inherit')};
 `;
 
-interface TableItemType {
-  period: number;
-  content: Array<{
-    time: string;
-    activity: string;
-  }>;
-}
-
-const firstData: TableItemType[] = [
-  {
-    period: 1,
-    content: [
-      {
-        time: '08 : 40 ~ 08 : 50',
-        activity: '개회식',
-      },
-      {
-        time: '08 : 50 ~ 09 : 00',
-        activity: '반별 부스 홍보',
-      },
-      {
-        time: '09 : 00 ~ 09 : 10',
-        activity: '전자화폐 사용 방법 설명',
-      },
-      {
-        time: '09 : 10 ~ 09 : 20',
-        activity: '교장님 말씀',
-      },
-    ],
-  },
-  {
-    period: 2,
-    content: [
-      {
-        time: '09 : 20 ~ 12 : 00',
-        activity: '반별 부스 활동',
-      },
-      {
-        time: '12 : 00 ~ 12 : 30',
-        activity: '교실 정돈',
-      },
-      {
-        time: '12 : 30 ~ 13 : 20',
-        activity: '점심시간',
-      },
-    ],
-  },
-];
-
-const secondData: TableItemType[] = [
-  {
-    period: 3,
-    content: [
-      {
-        time: '13 : 20 ~ 13 : 40',
-        activity: '장기자랑',
-      },
-      {
-        time: '13 : 30 ~ 14 : 00',
-        activity: '패션쇼',
-      },
-      {
-        time: '14 : 00 ~ 14 : 05',
-        activity: '패션쇼 평가 및 수상',
-      },
-      {
-        time: '14 : 05 ~ 14 : 15',
-        activity: '찬조 1팀 공연',
-      },
-      {
-        time: '14 : 15 ~ 15 : 00',
-        activity: '한챔스 결승',
-      },
-      {
-        time: '15 : 00 ~ 15 : 05',
-        activity: '한챔스 우승 소감 발표',
-      },
-      {
-        time: '15 : 05 ~ 15 : 30',
-        activity: '복면가왕',
-      },
-      { time: '15 : 30 ~ 15 : 35', activity: '복면가왕 우승자 발표' },
-      {
-        time: '15 : 35 ~ 15 : 45',
-        activity: '찬조 2팀 공연',
-      },
-      {
-        time: '15 : 45 ~ 16 : 10',
-        activity: '밴드부',
-      },
-      {
-        time: '16 : 10 ~ 16 : 20',
-        activity: '시상식 및 폐회식',
-      },
-      {
-        time: '16 : 20 ~ 16 : 30',
-        activity: '종례 및 귀가',
-      },
-    ],
-  },
-];
-
 const FSTimetableComponent: React.FC = () => {
-  const [period, setPeriod] = useState<number>(1);
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { getFsTimetable } = festivalActions;
 
-  const timetableFunc = (
-    item: TableItemType,
-    i: number,
-    org: TableItemType[],
-  ) => (
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
+    state => state.error,
+  );
+  const { festivalStatus, fsTimetable } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
+
+  const { getFsTimetableStatus } = festivalStatus;
+
+  const [period, setPeriod] = useState<number>(1);
+  const prevStatus = usePrevious({ getFsTimetableStatus });
+
+  const timetable = [...Array(3)].map((item, i) => (
     <>
-      <TimetablaTitle>{item.period}부</TimetablaTitle>
+      <TimetableTitle>{i + 1}부</TimetableTitle>
       <TableWrapper>
         <TimetableGrid>
-          {item.content.map((val, idx) => {
+          {fsTimetable.map((val: FSTimetableModel, idx: number) => {
             const time = val.time.split('~').map(str => str.trim());
-
             const now = moment(moment().format('kk : mm')).isBetween(
               moment(time[0], 'kk : mm'),
               moment(time[1], 'kk : mm'),
             );
 
+            if (val.part !== i + 1) {
+              return;
+            }
+
             return (
               <>
                 <ActivableDiv now={now}>{val.time}</ActivableDiv>
-                <ActivableDiv now={now}>{val.activity}</ActivableDiv>
+                <ActivableDiv now={now}>{val.detail}</ActivableDiv>
               </>
             );
           })}
         </TimetableGrid>
       </TableWrapper>
     </>
-  );
+  ));
 
-  const timetable = [
-    firstData.map(timetableFunc),
-    secondData.map(timetableFunc),
-  ];
+  useEffect(() => {
+    dispatch(getFsTimetable({ accessToken }));
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (
+      prevStatus &&
+      prevStatus.getFsTimetableStatus === 'pending' &&
+      getFsTimetableStatus === 'failure'
+    ) {
+      alert(errorMessage);
+    }
+  }, [prevStatus, getFsTimetableStatus]);
 
   return (
     <Wrapper>
@@ -229,7 +160,13 @@ const FSTimetableComponent: React.FC = () => {
           3부
         </SeparatorBtn>
       </SeparatorWrapper>
-      {timetable[period - 1]}
+      {period === 1 && (
+        <>
+          {timetable[0]}
+          {timetable[1]}
+        </>
+      )}
+      {period === 2 && timetable[2]}
     </Wrapper>
   );
 };

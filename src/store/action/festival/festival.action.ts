@@ -1,5 +1,6 @@
 import { Action } from 'redux';
 import {
+  AdminMoneyModel,
   ErrorResponse,
   FSLolTeamModel,
   FSSingerModel,
@@ -7,6 +8,7 @@ import {
   LolModalType,
   modalType,
   PayItemType,
+  PaySalesModel,
   SingerModalType,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
@@ -167,6 +169,48 @@ export interface GetFsTimetableFailure extends Action {
   payload: { err: ErrorResponse; origin: GetFsTimetablePayload };
 }
 
+export interface GetPayShopPurchasePayload extends GetLolTeamPayload {}
+
+export interface GetPayShopPurchaseSuccessPayload extends PaySalesModel {}
+
+export interface GetPayShopPurchase extends Action {
+  readonly type: FestivalTypes.GET_PAY_SHOP_PURCHASE;
+  payload: GetPayShopPurchasePayload;
+}
+
+export interface GetPayShopPurchaseSuccess extends Action {
+  readonly type: FestivalTypes.GET_PAY_SHOP_PURCHASE_SUCCESS;
+  payload: GetPayShopPurchaseSuccessPayload;
+}
+
+export interface GetPayShopPurchaseFailure extends Action {
+  readonly type: FestivalTypes.GET_PAY_SHOP_PURCHASE_FAILURE;
+  payload: { err: ErrorResponse; origin: GetPayShopPurchasePayload };
+}
+
+export interface PostAdminMoneyPayload {
+  accessToken: string;
+  userPk: string;
+  amount: number;
+}
+
+export interface PostAdminMoneySuccessPayload extends AdminMoneyModel {}
+
+export interface PostAdminMoney extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY;
+  payload: PostAdminMoneyPayload;
+}
+
+export interface PostAdminMoneySuccess extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY_SUCCESS;
+  payload: PostAdminMoneySuccessPayload;
+}
+
+export interface PostAdminMoneyFailure extends Action {
+  readonly type: FestivalTypes.POST_ADMIN_MONEY_FAILURE;
+  payload: { err: ErrorResponse; origin: PostAdminMoneyPayload };
+}
+
 const {
   TOGGLE_MODAL,
   GET_LOL_TEAM,
@@ -175,6 +219,8 @@ const {
   POST_SINGER_VOTE,
   POST_LOL_VOTE,
   GET_FS_TIMETABLE,
+  GET_PAY_SHOP_PURCHASE,
+  POST_ADMIN_MONEY,
 } = FestivalTypes;
 
 export const festivalActions = {
@@ -188,6 +234,12 @@ export const festivalActions = {
   postLolVote: createStandardAction(POST_LOL_VOTE)<PostLolVotePayload>(),
   getFsTimetable: createStandardAction(GET_FS_TIMETABLE)<
     GetFsTimetablePayload
+  >(),
+  getShopPurchase: createStandardAction(GET_PAY_SHOP_PURCHASE)<
+    GetPayShopPurchasePayload
+  >(),
+  postAdminMoney: createStandardAction(POST_ADMIN_MONEY)<
+    PostAdminMoneyPayload
   >(),
 };
 
@@ -210,4 +262,10 @@ export type festivalReducerActions =
   | PostLolVoteFailure
   | GetFsTimetable
   | GetFsTimetableSuccess
-  | GetFsTimetableFailure;
+  | GetFsTimetableFailure
+  | GetPayShopPurchase
+  | GetPayShopPurchaseSuccess
+  | GetPayShopPurchaseFailure
+  | PostAdminMoney
+  | PostAdminMoneySuccess
+  | PostAdminMoneyFailure;

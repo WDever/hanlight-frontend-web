@@ -78,3 +78,23 @@ export interface FSTimetableModel {
   detail: string;
   time: string;
 }
+
+export interface PaySalesItemModel {
+  name: string;
+  count: number;
+  totalPrice: number;
+}
+
+export interface PaySalesModel {
+  itmes: PaySalesItemModel[];
+  totalPrice: number;
+}
+
+export interface AdminMoneyModel {
+  pk: number;
+  admin_pk: number;
+  user_pk: string;
+  user_name: string;
+  amount: number;
+  confirmed: boolean;
+}

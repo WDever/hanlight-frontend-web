@@ -8,15 +8,22 @@ const initialState: FestivalModel = {
   coupleNumber: 0,
   singers: [],
   fsTimetable: [],
+  shopPurchase: {
+    itmes: [],
+    totalPrice: 0,
+  },
+  adminChargeList: [],
   festivalStatus: {
     getShopListStatus: 'none',
     getLolTeamStatus: 'none',
     getMatchStatus: 'none',
     getSingerStatus: 'none',
     getFsTimetableStatus: 'none',
+    getShopPurchaseStatus: 'none',
 
     postSingerVoteStatus: 'none',
     postLolVoteStatus: 'none',
+    postAdminMoneyStatus: 'none',
   },
   modalData: {
     status: false,
@@ -119,6 +126,32 @@ export const festivalReducer = (
 
       case 'GET_FS_TIMETABLE_FAILURE':
         draft.festivalStatus.getFsTimetableStatus = 'failure';
+        break;
+
+      case 'GET_PAY_SHOP_PURCHASE':
+        draft.festivalStatus.getShopPurchaseStatus = 'pending';
+        break;
+
+      case 'GET_PAY_SHOP_PURCHASE_SUCCESS':
+        draft.festivalStatus.getShopPurchaseStatus = 'success';
+        draft.shopPurchase = action.payload;
+        break;
+
+      case 'GET_PAY_SHOP_PURCHASE_FAILURE':
+        draft.festivalStatus.getShopPurchaseStatus = 'failure';
+        break;
+
+      case 'POST_ADMIN_MONEY':
+        draft.festivalStatus.postAdminMoneyStatus = 'pending';
+        break;
+
+      case 'POST_ADMIN_MONEY_SUCCESS':
+        draft.festivalStatus.postAdminMoneyStatus = 'success';
+        draft.adminChargeList.push(action.payload);
+        break;
+
+      case 'POST_ADMIN_MONEY_FAILURE':
+        draft.festivalStatus.postAdminMoneyStatus = 'failure';
         break;
 
       case 'TOGGLE_MODAL':

@@ -6,7 +6,9 @@ export interface FSStatus {
   getMatchStatus: status;
   getSingerStatus: status;
   getFsTimetableStatus: status;
+  getShopPurchaseStatus: status;
 
   postSingerVoteStatus: status;
   postLolVoteStatus: status;
+  postAdminMoneyStatus: status;
 }

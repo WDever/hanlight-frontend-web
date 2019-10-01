@@ -129,6 +129,19 @@ const PayBtn = styled(Link)<{ left: boolean }>`
   margin-right: ${({ left }) => (left ? '1.375rem' : '0')};
 `;
 
+const AdminBox = styled(PayBox)`
+  h1 {
+    font-family: 'Spoqa Han Sans';
+
+    span {
+      color: #6488ff;
+    }
+  }
+`;
+
+const AdminBtnWrapper = PayBtnWrapper;
+const AdminBtn = PayBtn;
+
 const BtnWrapper = styled.section`
   width: 100%;
 
@@ -139,7 +152,7 @@ const BtnWrapper = styled.section`
   background-color: ${CompletelyBoxOpacity};
 `;
 
-const Btn = styled.button<{ selected: boolean }>`
+const CatBtn = styled.button<{ selected: boolean }>`
   width: calc(100% / 4);
   height: 5.125rem;
 
@@ -201,6 +214,8 @@ interface BtnDataType {
   activeImg: string;
 }
 
+const isAdmin = true;
+
 const BtnData: BtnDataType[] = [
   { name: '한챔스', key: 'lol', img: LoLIcon, activeImg: ActiveLoLIcon },
   {
@@ -221,7 +236,7 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
   const BtnList = useMemo(
     () =>
       BtnData.map((item, idx) => (
-        <Btn
+        <CatBtn
           onClick={() => {
             if (selectedItem !== item.key) {
               setSelectedItem(item.key);
@@ -237,7 +252,7 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
             alt="each icon"
           />
           {item.name}
-        </Btn>
+        </CatBtn>
       )),
     [selectedItem, setSelectedItem],
   );
@@ -279,6 +294,16 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
             </PayBtn>
           </PayBtnWrapper>
         </PayBox>
+        {isAdmin && (
+          <AdminBox>
+            <h1>한마당 페이 충전</h1>
+            <AdminBtnWrapper>
+              <AdminBtn to="/festival/admin" left={false}>
+                충전
+              </AdminBtn>
+            </AdminBtnWrapper>
+          </AdminBox>
+        )}
         <BtnWrapper>{BtnList}</BtnWrapper>
         {!payStatus ? (
           selectedItem === 'lol' ? (

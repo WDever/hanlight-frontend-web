@@ -4,7 +4,9 @@ import {
   FestivalTypes,
   GetFsTimetable,
   GetMatch,
+  GetPayShopPurchase,
   GetSinger,
+  PostAdminMoney,
   PostLolVote,
   PostSingerVote,
 } from 'store/action';
@@ -12,7 +14,9 @@ import {
   getFsTimetableRequest,
   getLolTeamRequest,
   getMatchRequest,
+  getPayShopPurchaseRequest,
   getSingerRequest,
+  postAdminMoneyRequest,
   postLolVoteRequest,
   postSingerVoteRequest,
 } from './festival.request';
@@ -131,6 +135,44 @@ function* getFsTimetableSaga(action: GetFsTimetable) {
   }
 }
 
+function* getPayShopPurchaseSaga(action: GetPayShopPurchase) {
+  if (action.type) {
+    try {
+      const response = yield call(getPayShopPurchaseRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_PAY_SHOP_PURCHASE_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_PAY_SHOP_PURCHASE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* postAdminMoneySaga(action: PostAdminMoney) {
+  if (action.type) {
+    try {
+      const response = yield call(postAdminMoneyRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.POST_ADMIN_MONEY_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.POST_ADMIN_MONEY_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 export function* festivalSaga() {
   yield takeEvery(FestivalTypes.GET_LOL_TEAM, getLolTeamSaga);
   yield takeEvery(FestivalTypes.GET_MATCH, getMatchSaga);
@@ -138,4 +180,6 @@ export function* festivalSaga() {
   yield takeEvery(FestivalTypes.POST_SINGER_VOTE, postSingerVoteSaga);
   yield takeEvery(FestivalTypes.POST_LOL_VOTE, postLolVoteSaga);
   yield takeEvery(FestivalTypes.GET_FS_TIMETABLE, getFsTimetableSaga);
+  yield takeEvery(FestivalTypes.GET_PAY_SHOP_PURCHASE, getPayShopPurchaseSaga);
+  yield takeEvery(FestivalTypes.POST_ADMIN_MONEY, postAdminMoneySaga);
 }

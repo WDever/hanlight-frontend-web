@@ -7,12 +7,15 @@ import styled from 'styled-components';
 import { Location } from 'history';
 import { usePrevious } from 'lib/hooks';
 import { AppState, FestivalModel } from 'store';
+import FSAdminComponent from './admin';
 import ChargeComponent from './charge';
 import FSMainComponent from './main';
 import FSModalComponent from './modal';
 import PayComponent from './pay';
 
 const { useEffect, useState } = React;
+
+const isAdmin = true;
 
 const FestivalComponent: React.FC<
   RouteComponentProps<{}, {}, { pay: boolean }>
@@ -48,6 +51,9 @@ const FestivalComponent: React.FC<
             <Route path="/festival/pay" />
             <Route path="/festival/charge" />
           </>
+        )}
+        {isAdmin && (
+          <Route path="/festival/admin" component={FSAdminComponent} />
         )}
         <Redirect to="/error" />
       </Switch>
