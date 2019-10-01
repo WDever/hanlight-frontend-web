@@ -195,7 +195,9 @@ export interface PostAdminMoneyPayload {
   amount: number;
 }
 
-export interface PostAdminMoneySuccessPayload extends AdminMoneyModel {}
+export interface PostAdminMoneySuccessPayload {
+  charge: AdminMoneyModel;
+}
 
 export interface PostAdminMoney extends Action {
   readonly type: FestivalTypes.POST_ADMIN_MONEY;

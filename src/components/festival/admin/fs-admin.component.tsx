@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import { useInput, usePrevious } from 'lib/hooks';
+import { useInput } from 'lib/hooks';
 import QrReader from 'react-qr-reader';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import {
   AppState,
-  ErrorModel,
   festivalActions,
   FestivalModel,
   festivalReducerActions,
@@ -14,13 +13,11 @@ import {
   AdminMoneyModel,
 } from 'store';
 import styled from 'styled-components';
-import { Device } from 'lib/styles';
 
 const { useState, useEffect } = React;
 
 const Wrapper = styled.article`
   width: 100%;
-  height: 100vh;
 
   background-color: #313131;
 `;
@@ -72,16 +69,10 @@ const FSAdminComponent: React.FC = () => {
   const { postAdminMoney, getAdminMoneyList, postAdminMoneyApprove } = festivalActions;
 
   const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
-  const { singers, festivalStatus, adminChargeList } = useSelector<AppState, FestivalModel>(
+  const { festivalStatus, adminChargeList } = useSelector<AppState, FestivalModel>(
     state => state.festival,
   );
-  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
-    state => state.error,
-  );
-
-  const { getSingerStatus, postSingerVoteStatus, postAdminMoneyApproveStatus } = festivalStatus;
-
-  const prevStatus = usePrevious({ postSingerVoteStatus });
+  const { postAdminMoneyStatus, postAdminMoneyApproveStatus } = festivalStatus;
 
   const [userPk, setUserPk] = useState<string>('');
   const [amount, setAmount] = useInput('');
@@ -97,11 +88,14 @@ const FSAdminComponent: React.FC = () => {
   }
   const onError = (error: string) => alert(error);
 
-  const list = adminChargeList.filter((charge: AdminMoneyModel) => charge.confirmed === false).map((charge: AdminMoneyModel) => (
-            <li>
-              <span>{charge.user_name}</span>님 <span>{charge.amount}원</span> <button disabled={postAdminMoneyApproveStatus === 'pending'} style={{backgroundColor: 'white'}} onClick={() => dispatch(postAdminMoneyApprove({ accessToken, charge_pk: charge.pk }))}>승인</button>
-            </li>
-          ));
+  console.log(adminChargeList);
+
+  const list = adminChargeList/* .filter((charge: AdminMoneyModel) => charge.confirmed === false) */
+    .map((charge: AdminMoneyModel) => (
+    <li>
+      <span>{charge.user_name}</span>님 <span>{charge.amount}원</span> <button disabled={postAdminMoneyApproveStatus === 'pending'} style={{backgroundColor: 'white'}} onClick={() => dispatch(postAdminMoneyApprove({ accessToken, charge_pk: charge.pk }))}>승인</button>
+    </li>
+  ));
 
   return (
     <Wrapper>
@@ -117,7 +111,7 @@ const FSAdminComponent: React.FC = () => {
       </ButtonWrapper>
 
       <ul>
-        {list}
+        {list.reverse()}
       </ul>
     </Wrapper>
   );
