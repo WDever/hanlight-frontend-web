@@ -8,6 +8,10 @@ import {
   PostAdminMoneyPayload,
   PostLolVotePayload,
   PostSingerVotePayload,
+  GetMoneyPayload,
+  GetAdminMoneyListPayload,
+  GetAdminBoolPayload,
+  PostAdminMoneyApproveInterface,
 } from 'store/action';
 
 export const getLolTeamRequest = (payload: GetLolTeamPayload) =>
@@ -89,3 +93,47 @@ export const postAdminMoneyRequest = (payload: PostAdminMoneyPayload) =>
       },
     )
     .then(res => res.data);
+
+export const getAdminMoneyListRequest = (payload: GetAdminMoneyListPayload) =>
+  payInstance
+    .get(
+      '/api/admin/money/deposit/list',
+      {
+        headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    )
+    .then(res => res.data);
+
+
+
+export const getMoneyRequest = (payload: GetMoneyPayload) =>
+  payInstance
+    .get(
+      '/api/user/money',
+      { headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    ).then(res => res.data);
+
+export const getAdminBoolRequest = (payload: GetAdminBoolPayload) =>
+  payInstance
+    .get(
+      '/api/admin',
+      { headers: {
+          authorization: payload.accessToken,
+        },
+      },
+    ).then(res => res.data);
+
+export const postAdminMoneyApproveRequest = (payload: PostAdminMoneyApproveInterface) =>
+  payInstance
+    .post(
+      '/api/admin/money/deposit/approve',
+      { charge_pk: payload.charge_pk },
+      {headers: {
+          authorization: payload.accessToken,
+        },}
+    ).then(res => res.data);

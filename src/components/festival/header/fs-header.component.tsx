@@ -74,9 +74,10 @@ const XBtn = styled.span`
 
 interface FSHeaderProps {
   setAnimate: React.Dispatch<React.SetStateAction<boolean>>;
+  onClick?(): void;
 }
 
-const FSHeaderComponent: React.FC<FSHeaderProps> = ({ setAnimate }) => {
+const FSHeaderComponent: React.FC<FSHeaderProps> = ({ setAnimate, onClick }) => {
   return (
     <PayHeaderWrapper>
       <PayHeaderInnerBox>
@@ -86,6 +87,7 @@ const FSHeaderComponent: React.FC<FSHeaderProps> = ({ setAnimate }) => {
       <XBtn
         onClick={() => {
           setAnimate(false);
+          if (onClick) onClick();
         }}
       />
     </PayHeaderWrapper>

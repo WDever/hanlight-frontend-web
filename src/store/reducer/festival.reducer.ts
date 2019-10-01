@@ -8,6 +8,7 @@ const initialState: FestivalModel = {
   coupleNumber: 0,
   singers: [],
   fsTimetable: [],
+  adminBool: false,
   shopPurchase: {
     itmes: [],
     totalPrice: 0,
@@ -24,6 +25,11 @@ const initialState: FestivalModel = {
     postSingerVoteStatus: 'none',
     postLolVoteStatus: 'none',
     postAdminMoneyStatus: 'none',
+    postAdminMoneyApproveStatus: 'none',
+
+    getMoneyStatus: 'none',
+    getAdminMoneyListStatus: 'none',
+    getAdminBoolStatus: 'none',
   },
   modalData: {
     status: false,
@@ -31,6 +37,10 @@ const initialState: FestivalModel = {
       type: '',
       content: '',
     },
+  },
+  user: {
+    money: 0,
+    lastApproval: '',
   },
 };
 
@@ -154,6 +164,17 @@ export const festivalReducer = (
         draft.festivalStatus.postAdminMoneyStatus = 'failure';
         break;
 
+      case 'GET_ADMIN_MONEY_LIST':
+        draft.festivalStatus.getAdminMoneyListStatus = 'pending';
+        break;
+      case 'GET_ADMIN_MONEY_LIST_SUCCESS':
+        draft.festivalStatus.getAdminMoneyListStatus = 'success';
+        draft.adminChargeList = action.payload.charge;
+        break;
+      case 'GET_ADMIN_MONEY_LIST_FAILURE':
+        draft.festivalStatus.getAdminMoneyListStatus = 'failure';
+        break;
+
       case 'TOGGLE_MODAL':
         if (action.payload.status && action.payload.data) {
           draft.modalData.status = true;
@@ -167,6 +188,41 @@ export const festivalReducer = (
         }
         break;
 
+      case 'GET_MONEY':
+        draft.festivalStatus.getMoneyStatus = 'pending';
+        break;
+      case 'GET_MONEY_SUCCESS':
+        draft.festivalStatus.getMoneyStatus = 'success';
+        draft.user = action.payload.user;
+        break;
+      case 'GET_MONEY_FAILURE':
+        draft.festivalStatus.getMoneyStatus = 'failure';
+        break;
+      
+      case 'GET_ADMIN_BOOL':
+        draft.festivalStatus.getAdminBoolStatus = 'pending';
+        break;
+
+      case 'GET_ADMIN_BOOL_SUCCESS':
+        draft.festivalStatus.getAdminBoolStatus = 'success';
+        draft.adminBool = action.payload.adminBool;
+        break;
+      case 'GET_ADMIN_BOOL_FAILURE':
+        draft.festivalStatus.getAdminBoolStatus = 'failure';
+        break;
+
+      case 'POST_ADMIN_MONEY_APPROVE':
+        draft.festivalStatus.postAdminMoneyApproveStatus = 'pending';
+        break;
+      case 'POST_ADMIN_MONEY_APPROVE_SUCCESS':
+        draft.festivalStatus.postAdminMoneyApproveStatus = 'success';
+        draft.adminChargeList = draft.adminChargeList.filter(v => v.pk !== action.payload.charge_pk);
+        
+        break;
+      case 'POST_ADMIN_MONEY_APPROVE_FAILURE':
+        draft.festivalStatus.postAdminMoneyApproveStatus = 'failure';
+        break;
+        
       default:
         break;
     }

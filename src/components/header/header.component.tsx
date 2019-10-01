@@ -211,9 +211,6 @@ const HeaderComponent: React.FC<
   };
 
   const isDark = location.pathname.includes('/festival');
-  const isPay =
-    location.pathname.includes('/festival/pay') ||
-    location.pathname.includes('/festival/charge');
 
   return (
     <>

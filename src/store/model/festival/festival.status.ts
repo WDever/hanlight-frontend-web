@@ -11,4 +11,9 @@ export interface FSStatus {
   postSingerVoteStatus: status;
   postLolVoteStatus: status;
   postAdminMoneyStatus: status;
+  getAdminMoneyListStatus: status;
+  postAdminMoneyApproveStatus: status;
+
+  getMoneyStatus: status;
+  getAdminBoolStatus: status;
 }

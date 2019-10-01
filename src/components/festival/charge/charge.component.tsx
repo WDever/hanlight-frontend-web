@@ -7,6 +7,12 @@ import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import styled from 'styled-components';
 import FSHeaderComponent from '../header';
+import { festivalReducerActions, festivalActions, AppState, FestivalModel, UserModel, FSStatus, FSUserModel } from 'store';
+import { Dispatch } from 'redux';
+import { usePrevious } from 'lib/hooks';
+import * as jwt from 'jsonwebtoken';
+import QRCode from 'qrcode.react';
+import { number } from 'prop-types';
 
 const { useState, useEffect } = React;
 
@@ -50,11 +56,12 @@ const Title = styled.h1`
   margin: 4.75rem 0 0 0;
 `;
 
-const QrImg = styled.img`
+const QrImg = styled(QRCode)`
   width: 8rem;
   height: 8rem;
-
-  margin: 5.125rem 0 1.5rem 0;
+  padding: 1rem;
+  background-color: #ffffff;
+}
 `;
 
 const Name = styled.h1`
@@ -224,18 +231,54 @@ const CheckBtn = styled.button`
   bottom: 0%;
 `;
 
-const Type = true;
+interface DecodedToken {
+  pk: string;
+}
+
+interface ChargeInfo { prevMoney: number, money: number, approval: string; }
+
+enum PageType {
+  page1 = 'page1',
+  page2 = 'page2'
+}
 
 const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+  const { accessToken, name, major, grade, classNum, studentNum } = useSelector<AppState, UserModel>(state => state.user);
+  const { money, lastApproval } = useSelector<AppState, FSUserModel>(state => state.festival.user);
+  const { getMoneyStatus } = useSelector<AppState, FSStatus>(state => state.festival.festivalStatus)
+  const { getMoney } = festivalActions;
+
   const [animate, setAnimate] = useState<boolean>(false);
+  const [page, setPage] = useState<PageType>(PageType.page1);
+  const [intervalNum, setIntervalNum] = useState<number>();
+  const prevMoney = usePrevious(money);
+  const prevMoneyStatus = usePrevious(getMoneyStatus)
+  const [chargeInfo, setChargeInfo] = useState<ChargeInfo>();
+
+  const studentInfo: string = `${major}${grade}${classNum}${studentNum}`;
+  const GetMoney = () => dispatch(getMoney({ accessToken }));
 
   useEffect(() => {
+    if (prevMoneyStatus === 'pending' && getMoneyStatus === 'success' && prevMoney !== undefined && prevMoney < money) {
+      setChargeInfo({ prevMoney, money, approval: lastApproval });
+      setPage(PageType.page2);
+    }
+  }, [money]);
+
+  useEffect(() => {
+    setIntervalNum(setInterval(GetMoney, 3000));
+
     if (history.action !== 'PUSH') {
       history.push('/festival');
     }
 
     setAnimate(true);
+
+    return () => clearInterval(intervalNum);
   }, []);
+
+  const { pk }: DecodedToken = jwt.decode(accessToken) as DecodedToken;
 
   return (
     <Transition
@@ -246,12 +289,12 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
       {state => (
         <Template state={state}>
           <Wrapper>
-            <FSHeaderComponent setAnimate={setAnimate} />
-            {Type ? (
+            <FSHeaderComponent setAnimate={setAnimate} onClick={() => clearInterval(intervalNum)} />
+            {page === PageType.page1 ? (
               <>
                 <Title>충전하기</Title>
-                <QrImg />
-                <Name>H2221 최민규</Name>
+                <QrImg value={pk} size={120} />
+                <Name>{studentInfo} {name}</Name>
                 <Txt>
                   환전소에서 현금이나 계좌이체를
                   <br />
@@ -269,21 +312,21 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
                 <ChargeEndTxt>충전완료</ChargeEndTxt>
                 <ChargerInfo>
                   <h1>
-                    승인자 <span>홍재영</span> 님이
+                    승인자 <span>{(chargeInfo as ChargeInfo).approval as string}</span> 님이
                   </h1>
                   <h2>
-                    <span>10,000원 충전</span>
+                    <span>{(chargeInfo as ChargeInfo).money - (chargeInfo as ChargeInfo).prevMoney}</span>
                   </h2>
                 </ChargerInfo>
                 <MoneyWrapper>
                   <Separator />
                   <article>
                     <h1>충전 전 잔액</h1>
-                    <h2>12,000원</h2>
+                    <h2>{(chargeInfo as ChargeInfo).prevMoney}</h2>
                   </article>
                   <article>
                     <h1>충전 후 잔액</h1>
-                    <h2>25,000원</h2>
+                    <h2>{money}</h2>
                   </article>
                 </MoneyWrapper>
                 <CheckBtn onClick={() => setAnimate(false)}>확인</CheckBtn>
