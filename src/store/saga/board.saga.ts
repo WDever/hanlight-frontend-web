@@ -17,12 +17,16 @@ import {
   GET_BOARD_COMMENT_SUCCESS,
   GET_BOARD_FAILURE,
   GET_BOARD_SUCCESS,
+  GET_LIKE_LIST,
+  GET_LIKE_LIST_FAILURE,
+  GET_LIKE_LIST_SUCCESS,
   GetBoard,
   GetBoardComment,
   GetBoardCommentParams,
   GetBoardParams,
-  Like,
+  GetLikeList,
   LIKE,
+  Like,
   LIKE_FAILURE,
   LIKE_SUCCESS,
   LikeParams,
@@ -53,7 +57,6 @@ import {
   ReportParams,
   SET_ERROR,
 } from '../action';
-import { ErrorSaga } from './error.saga';
 
 const getBoardApi = (data: GetBoardParams) =>
   instance
@@ -89,7 +92,7 @@ const postBoardApi = (data: PostBoardParams) => {
   }
 
   if (data.anonymous) {
-    formData.append('anonymous', data.anonymous);
+    formData.append('anonymous', data.anonymous ? '1' : '0');
   }
 
   formData.append('content', data.content);
@@ -362,6 +365,7 @@ const reportApi = (data: ReportParams) =>
       },
     )
     .then(res => res.data);
+
 function* reportApiSaga(action: Report) {
   if (action.type) {
     try {
@@ -378,6 +382,36 @@ function* reportApiSaga(action: Report) {
   }
 }
 
+const getLikeListApi = (data: LikeParams) =>
+  instance
+    .get('/api/board/like', {
+      headers: {
+        access_token: data.accessToken,
+      },
+      params: {
+        type: data.type,
+        board_pk: data.board_pk,
+        comment_pk: data.comment_pk,
+      },
+    })
+    .then(res => res.data);
+
+function* getLikeListApiSaga(action: GetLikeList) {
+  if (action.type) {
+    try {
+      const response = yield call(getLikeListApi, action.payload);
+
+      yield put({ type: GET_LIKE_LIST_SUCCESS, payload: response.data });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: GET_LIKE_LIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
 export function* boardSaga() {
   yield takeEvery(GET_BOARD, getBoardApiSaga);
   yield takeEvery(POST_BOARD, postBoardApiSaga);
@@ -388,5 +422,6 @@ export function* boardSaga() {
   yield takeEvery(PATCH_BOARD_COMMENT, patchBoardCommentApiSaga);
   yield takeEvery(DELETE_BOARD_COMMENT, deleteBoardCommentApiSaga);
   yield takeEvery(LIKE, likeApiSaga);
+  yield takeEvery(GET_LIKE_LIST, getLikeListApiSaga);
   yield takeEvery(REPORT, reportApiSaga);
 }

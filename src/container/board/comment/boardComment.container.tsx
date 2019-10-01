@@ -2,7 +2,6 @@ import BoardCommentComponent from 'components/board/comment';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {
-  ActiveReportData,
   AppState,
   boardActions,
   BoardApiModel,
@@ -10,6 +9,7 @@ import {
   Comment,
   DeleteBoardCommentParams,
   LikeParams,
+  OptionData,
   PatchBoardCommentParams,
   ReportParams,
 } from 'store';
@@ -18,13 +18,18 @@ export interface BoardCommentProps {
   accessToken: string;
   userType: 'none' | 'student' | 'teacher' | 'graduate' | 'parent';
   userImage: string | null;
+  editCommentToggleStatus: boolean;
+  optionData: OptionData;
 }
 
 export interface BoardCommentMethod {
   deleteBoardCommemnt(data: DeleteBoardCommentParams): void;
   patchBoardCommemnt(data: PatchBoardCommentParams): void;
   report(data: ReportParams): void;
-  activeReport(data: ActiveReportData): void;
+  activeReport(data: boolean): void;
+  editCommentToggle(data: boolean): void;
+  likeListToggle(payload: boolean): void;
+  getLikeList(payload: LikeParams): void;
 }
 
 export interface BoardCommentOwnProps {
@@ -39,7 +44,7 @@ export interface BoardCommentOwnProps {
   boardApiStatus: BoardApiModel;
   like(data: LikeParams): void;
   GetBoardComments(e: React.MouseEvent<HTMLButtonElement>): void;
-  setReportToggle(value: React.SetStateAction<boolean>): void;
+  optionToggle(payload: OptionData): void;
 }
 
 const mapStateToProps = (
@@ -49,12 +54,14 @@ const mapStateToProps = (
   accessToken: user.accessToken,
   userType: user.type,
   userImage: user.image,
+  editCommentToggleStatus: board.editCommentToggleStatus,
+  optionData: board.optionData,
   ...ownProps,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   deleteBoardCommemnt: bindActionCreators(
-    boardActions.deleteBoardCommemnt,
+    boardActions.deleteBoardComment,
     dispatch,
   ),
   patchBoardCommemnt: bindActionCreators(
@@ -63,6 +70,12 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   ),
   report: bindActionCreators(boardActions.report, dispatch),
   activeReport: bindActionCreators(boardActions.activeReport, dispatch),
+  editCommentToggle: bindActionCreators(
+    boardActions.editCommentToggle,
+    dispatch,
+  ),
+  likeListToggle: bindActionCreators(boardActions.likeListToggle, dispatch),
+  getLikeList: bindActionCreators(boardActions.getLikeList, dispatch),
 });
 
 const BoardCommentContainer = connect(

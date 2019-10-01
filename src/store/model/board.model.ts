@@ -12,8 +12,8 @@ export interface Comment {
 
 export interface Board {
   pk: number;
-  user_name: string;
-  user_image: string;
+  user_name: string | null;
+  user_image: string | null;
   content: string;
   files: string[];
   createdAt: string;
@@ -25,11 +25,23 @@ export interface Board {
   write: boolean;
 }
 
-export interface ActiveReportData {
+export interface LikeListModel {
+  user_name: string;
+  user_image: string;
+}
+
+export interface OptionData {
   type: 'none' | 'board' | 'comment';
   board_pk: number;
   comment_pk?: number;
-  active: boolean;
+  content: string;
+  write: boolean;
+}
+
+export interface PhotoDetailData {
+  status: boolean;
+  boardFiles: string[];
+  idx: number;
 }
 
 type status = 'none' | 'pending' | 'success' | 'failure';
@@ -43,6 +55,7 @@ export interface BoardApiModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
+  getLikeListStatus: status;
 }
 
 export interface BoardModel {
@@ -56,8 +69,15 @@ export interface BoardModel {
   postBoardCommentStatus: status;
   patchBoardCommentStatus: status;
   deleteBoardCommentStatus: status;
+  getLikeListStatus: status;
   reportStatus: status;
   likeStatus: status;
   deemBoardStatus: boolean;
-  activeReportData: ActiveReportData;
+  activeReportStatus: boolean;
+  optionData: OptionData;
+  editBoardToggleStatus: boolean;
+  editCommentToggleStatus: boolean;
+  likeList: LikeListModel[];
+  likeListToggleStatus: boolean;
+  photoDetailData: PhotoDetailData;
 }

@@ -60,44 +60,14 @@ const BoardCommentComponent: React.FC<
   const prevProps = usePrevious(props);
 
   const {
-    deleteBoardCommemnt,
-    patchBoardCommemnt,
-    accessToken,
     boardApiStatus,
     board_pk,
+    optionToggle,
   } = props;
 
   const {
-    getBoardCommentStatus,
-    postBoardCommentStatus,
-    patchBoardCommentStatus,
     deleteBoardCommentStatus,
   } = boardApiStatus;
-
-  const handleOption = ({
-    action,
-    board_pk,
-    comment_pk,
-    content,
-  }: {
-    action: 'delete' | 'edit' | 'report';
-    board_pk: number;
-    comment_pk: number;
-    content?: string;
-  }) => {
-    if (action === 'delete' && deleteBoardCommentStatus !== 'pending') {
-      window.confirm('정말로 삭제하시겠습니까?') &&
-        deleteBoardCommemnt({
-          accessToken,
-          board_pk,
-          comment_pk,
-        });
-      SelectedBoardPk.current = board_pk;
-    } else if (action === 'edit' && patchBoardCommentStatus && content) {
-      patchBoardCommemnt({ accessToken, content, board_pk, comment_pk });
-      SelectedBoardPk.current = board_pk;
-    }
-  };
 
   React.useEffect(() => {
     if (prevProps && board_pk === SelectedBoardPk.current) {
@@ -121,16 +91,21 @@ const BoardCommentComponent: React.FC<
           comment_pk={item.pk}
           date={moment(item.createdAt).format('lll')}
           board_pk={props.board_pk}
-          handleOption={handleOption}
           userType={props.userType}
           userImage={item.user_image}
           accessToken={props.accessToken}
           like={props.like}
           likeStatus={props.likeStatus}
           deemBoard={props.deemBoard}
-          setReportToggle={props.setReportToggle}
           activeReport={props.activeReport}
           boardApiStatus={boardApiStatus}
+          optionToggle={optionToggle}
+          editCommentToggleStatus={props.editCommentToggleStatus}
+          editCommentToggle={props.editCommentToggle}
+          optionData={props.optionData}
+          patchBoardComment={props.patchBoardCommemnt}
+          likeListToggle={props.likeListToggle}
+          getLikeList={props.getLikeList}
         />
       );
     });

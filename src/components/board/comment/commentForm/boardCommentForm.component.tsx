@@ -38,7 +38,6 @@ const ProfileImg = styled.img<{ image: boolean }>`
       height: 2.5rem;
       margin-bottom: 0.4rem;
       border-radius: 100%;
-      border: 1px solid #d1d1d1;
 
       @media ${Device.tabletL} {
         height: 3.6rem;

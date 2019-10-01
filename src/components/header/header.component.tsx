@@ -1,22 +1,41 @@
 import { HeaderMethod, HeaderProps } from 'container/header';
-import { Device } from 'lib/styles';
+import { Device, transitions } from 'lib/styles';
+import DarkLogoSvg from 'lib/svg/hanlight-dark-logo.svg';
 import LogoSvg from 'lib/svg/hanlight-logo.svg';
 import * as React from 'react';
 import { NavLink, RouteComponentProps } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
-const HeaderWrapper = styled.div`
+const Base = styled.div`
+  width: 100%;
+  height: 3.75rem;
+
+  background-color: #313131;
+
+  position: fixed;
+  z-index: 9;
+`;
+
+const HeaderWrapper = styled.div<{ dark: boolean }>`
   display: flex;
   justify-content: center;
+  align-items: center;
   box-shadow: 0 6px 40px 0 rgba(129, 129, 129, 0.1);
   width: 100%;
   height: 3.75rem;
   position: fixed;
-  background-color: #ffffff;
+  background-color: ${({ dark }) =>
+    dark ? 'rgba(255, 255, 255, 0.07)' : '#ffffff'};
   z-index: 10;
 
+  ${({ dark }) =>
+    dark &&
+    css`
+      animation: ${transitions.HeaderDarker} 1.5s;
+    `}
+
   @media ${Device.tabletL} {
-    border-bottom: 1px solid #e9e9e9;
+    border-bottom: ${({ dark }) => (dark ? 'none' : '1px solid #e9e9e9')};
     box-shadow: none;
   }
 `;
@@ -34,9 +53,9 @@ const InnerBox = styled.div`
   }
 `;
 
-const LogoImg = styled.img`
-  width: 5rem;
+const LogoImg = styled.img<{ dark: boolean }>`
   height: 1.775rem;
+
   cursor: pointer;
 `;
 
@@ -106,15 +125,70 @@ const MenuIcon = styled.div`
   }
 `;
 
-const MenuSpan = styled.span`
+const MenuSpan = styled.span<{ dark: boolean }>`
   content: ${' '};
   width: 1.25rem;
   height: 0.125rem;
-  background-color: #707070;
+  background-color: ${({ dark }) => (dark ? '#ffffff' : '#707070')};
+  opacity: ${({ dark }) => (dark ? '0.6' : 'none')};
 `;
 
-const HanseiThon = styled.div`
+const PayHeaderWrapper = styled(HeaderWrapper)`
+  background-color: #313131;
+
+  @media ${Device.tabletL} {
+    border-bottom: 1px solid #313131;
+  }
+`;
+
+const PayHeaderInnerBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-family: 'yg-jalnan';
+  font-size: 1.5rem;
+  color: #e4e4e4;
+
+  span {
+    margin-left: 0.25rem;
+  }
+
   position: relative;
+`;
+
+const XBtn = styled.span`
+  width: 1.375rem;
+  height: 1.375rem;
+
+  position: absolute;
+
+  border-radius: 1.25rem;
+
+  cursor: pointer;
+
+  right: 1.125rem;
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+
+  &::before,
+  &::after {
+    height: 1px;
+    width: 1.375rem;
+
+    position: absolute;
+    top: 50%;
+
+    content: ' ';
+
+    background-color: #707070;
+  }
 `;
 
 const New = styled.div`
@@ -136,85 +210,84 @@ const HeaderComponent: React.FC<
     history.push('/user/login');
   };
 
+  const isDark = location.pathname.includes('/festival');
+  const isPay =
+    location.pathname.includes('/festival/pay') ||
+    location.pathname.includes('/festival/charge');
+
   return (
-    <HeaderWrapper>
-      <InnerBox>
-        <MenuIcon onClick={() => toggleMenu(true)}>
-          <MenuSpan />
-          <MenuSpan style={{ width: '16px' }} />
-          <MenuSpan />
-        </MenuIcon>
-        <LogoImg
-          onClick={() => history.push('/')}
-          src={LogoSvg}
-          alt="Hanlight Logo"
-        />
-        <BtnsWrapper>
-          <HanseiThon>
+    <>
+      {isDark && <Base />}
+      <HeaderWrapper dark={isDark}>
+        <InnerBox>
+          <MenuIcon onClick={() => toggleMenu(true)}>
+            <MenuSpan dark={isDark} />
+            <MenuSpan dark={isDark} style={{ width: '16px' }} />
+            <MenuSpan dark={isDark} />
+          </MenuIcon>
+          <LogoImg
+            onClick={() => history.push('/')}
+            src={isDark ? DarkLogoSvg : LogoSvg}
+            dark={isDark}
+            alt="Hanlight Logo"
+          />
+          <BtnsWrapper>
             <StyledNavLink
               exact={true}
-              to="/hanseithon"
-              active={location.pathname.includes('/hanseithon')}
+              to="/notice"
+              active={location.pathname.includes('/notice')}
             >
-              한세톤
+              공지사항
             </StyledNavLink>
-            <New>NEW</New>
-          </HanseiThon>
-          <StyledNavLink
-            exact={true}
-            to="/notice"
-            active={location.pathname.includes('/notice')}
-          >
-            공지사항
-          </StyledNavLink>
-          <StyledNavLink
-            exact={true}
-            to="/meal"
-            active={location.pathname.includes('/meal')}
-          >
-            급식
-          </StyledNavLink>
-          <StyledNavLink
-            exact={true}
-            to="/timetable"
-            active={location.pathname.includes('/timetable')}
-          >
-            시간표
-          </StyledNavLink>
-          <StyledNavLink
-            exact={true}
-            to="/calendar"
-            active={location.pathname.includes('/calendar')}
-          >
-            학사일정
-          </StyledNavLink>
-          <StyledNavLink
-            exact={true}
-            to="/board"
-            active={location.pathname.includes('/board')}
-          >
-            대나무숲
-          </StyledNavLink>
-          <Provider>|</Provider>
-          <SpanWrapper>
-            <NameSpan>{name}</NameSpan>
-            &nbsp;님
-          </SpanWrapper>
-          <SpanWrapper>
             <StyledNavLink
               exact={true}
-              to="/profile"
-              active={location.pathname.includes('/user/profile')}
+              to="/meal"
+              active={location.pathname.includes('/meal')}
             >
-              정보 수정
+              급식
             </StyledNavLink>
-          </SpanWrapper>
-          <SpanWrapper onClick={logout}>
-            <SpanBtn>로그아웃</SpanBtn>
-          </SpanWrapper>
-        </BtnsWrapper>
-      </InnerBox>
-    </HeaderWrapper>
+            <StyledNavLink
+              exact={true}
+              to="/timetable"
+              active={location.pathname.includes('/timetable')}
+            >
+              시간표
+            </StyledNavLink>
+            <StyledNavLink
+              exact={true}
+              to="/calendar"
+              active={location.pathname.includes('/calendar')}
+            >
+              학사일정
+            </StyledNavLink>
+            <StyledNavLink
+              exact={true}
+              to="/board"
+              active={location.pathname.includes('/board')}
+            >
+              대나무숲
+            </StyledNavLink>
+            <Provider>|</Provider>
+            <SpanWrapper>
+              <NameSpan>{name}</NameSpan>
+              &nbsp;님
+            </SpanWrapper>
+            <SpanWrapper>
+              <StyledNavLink
+                exact={true}
+                to="/profile"
+                active={location.pathname.includes('/user/profile')}
+              >
+                정보 수정
+              </StyledNavLink>
+            </SpanWrapper>
+            <SpanWrapper onClick={logout}>
+              <SpanBtn>로그아웃</SpanBtn>
+            </SpanWrapper>
+          </BtnsWrapper>
+        </InnerBox>
+      </HeaderWrapper>
+    </>
   );
 };
 

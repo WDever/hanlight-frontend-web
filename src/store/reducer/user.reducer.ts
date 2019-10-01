@@ -2,6 +2,16 @@ import { produce } from 'immer';
 import { userReducerActions } from '../action';
 import { UserModel } from '../model/user.model';
 
+declare global {
+  interface Window {
+    android: any;
+  }
+}
+
+window.android = {
+  logout: () => console.log('logout'),
+};
+
 const initialState: UserModel = {
   signKey: '',
   id: '',
@@ -124,6 +134,7 @@ export const userReducer = (
 
       case 'RESET_USER':
         localStorage.clear();
+        window.android.logout();
         return initialState;
 
       case 'GET_USER':
@@ -171,7 +182,6 @@ export const userReducer = (
       case 'POST_USER_IMG_SUCCESS':
         draft.postUserImgStatus = 'success';
         draft.image = action.payload.user.image;
-
         break;
 
       case 'POST_USER_IMG_FAILURE':

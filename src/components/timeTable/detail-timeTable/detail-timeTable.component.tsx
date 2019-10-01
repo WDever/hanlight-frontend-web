@@ -132,10 +132,10 @@ const DetailTimeTableComponent: React.FC<
   };
 
   const timeArr = [
-    '(8:40 ~ 9:20)',
-    '(9:30 ~ 10:20)',
-    '(10:30 ~ 11:20)',
-    '(11:30 ~ 12:20)',
+    '(8:40 ~ 9:30)',
+    '(9:40 ~ 10:30)',
+    '(10:40 ~ 11:30)',
+    '(11:40 ~ 12:30)',
     '(13:20 ~ 14:10)',
     '(14:20 ~ 15:10)',
     '(15:20 ~ 16:10)',
@@ -189,7 +189,7 @@ const DetailTimeTableComponent: React.FC<
         <thead>
           <tr>
             <Th now={false}>
-              <Img src={LogoSvg} alt='logo' />
+              <Img src={LogoSvg} alt="logo" />
             </Th>
             {days.map((day, j) => (
               <Th key={j} now={moment().get('d') === j + 1}>

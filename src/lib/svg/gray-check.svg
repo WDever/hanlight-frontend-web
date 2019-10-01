@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="17.691" height="17.691" viewBox="0 0 17.691 17.691">
+    <defs>
+        <style>
+            .cls-1{fill:#fff;stroke:#d3d3d3}.cls-2{fill:#d3d3d3}.cls-3{stroke:none}.cls-4{fill:none}
+        </style>
+    </defs>
+    <g id="그룹_633" data-name="그룹 633">
+        <g id="타원_271" class="cls-1" data-name="타원 271">
+            <circle cx="8.845" cy="8.845" r="8.845" class="cls-3"/>
+            <circle cx="8.845" cy="8.845" r="8.345" class="cls-4"/>
+        </g>
+        <path id="Checkbox" d="M4.649 7.8L1 4.154l.866-.866 2.783 2.721L9.658 1l.866.866z" class="cls-2" transform="translate(3.423 4.897)"/>
+    </g>
+</svg>
