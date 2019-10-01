@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="구성_요소_4_54" width="33" height="31.099" data-name="구성 요소 4 – 54" viewBox="0 0 33 31.099">
+    <defs>
+        <style>
+            .cls-1,.cls-5{fill:none}.cls-1{stroke:#b1b1b1;stroke-width:2px}.cls-2{fill:#b1b1b1}.cls-3{fill:#313131}.cls-4{stroke:none}
+        </style>
+    </defs>
+    <g id="그룹_295" data-name="그룹 295" transform="translate(-207 -247.5)">
+        <g id="사각형_180" class="cls-1" data-name="사각형 180" transform="translate(207 250.599)">
+            <rect width="28" height="26" class="cls-4" rx="2"/>
+            <rect width="26" height="24" x="1" y="1" class="cls-5" rx="1"/>
+        </g>
+        <path id="선_16" d="M0 0h26" class="cls-1" data-name="선 16" transform="translate(207.5 258.025)"/>
+        <path id="선_17" d="M0 4V0" class="cls-1" data-name="선 17" transform="translate(214.5 247.5)"/>
+        <path id="선_18" d="M0 4V0" class="cls-1" data-name="선 18" transform="translate(227.5 247.5)"/>
+        <path id="선_19" d="M0 4V0" class="cls-1" data-name="선 19" transform="translate(214.5 247.5)"/>
+    </g>
+    <circle id="타원_4" cx="11.5" cy="11.5" r="11.5" class="cls-2" data-name="타원 4" transform="translate(10 8.099)"/>
+    <rect id="사각형_185" width="2" height="10" class="cls-3" data-name="사각형 185" rx="1" transform="translate(20 11.099)"/>
+    <rect id="사각형_186" width="2" height="9" class="cls-3" data-name="사각형 186" rx="1" transform="rotate(90 4.95 24.05)"/>
+</svg>

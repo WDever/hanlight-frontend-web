@@ -189,7 +189,7 @@ const DetailTimeTableComponent: React.FC<
         <thead>
           <tr>
             <Th now={false}>
-              <Img src={LogoSvg} alt='logo' />
+              <Img src={LogoSvg} alt="logo" />
             </Th>
             {days.map((day, j) => (
               <Th key={j} now={moment().get('d') === j + 1}>
