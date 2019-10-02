@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" id="hanlight-logo" width="40" height="23.529" viewBox="0 0 40 23.529">
+    <defs>
+        <style>
+            .cls-1{fill:url(#linear-gradient)}.cls-2{fill:url(#linear-gradient-2)}.cls-3{fill:url(#linear-gradient-3)}
+        </style>
+        <linearGradient id="linear-gradient" x1=".94" x2="-.058" y1=".141" y2=".974" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#3fd5bd"/>
+            <stop offset="1" stop-color="#288ffc"/>
+        </linearGradient>
+        <linearGradient id="linear-gradient-2" x1="1.117" x2="-.117" y1=".067" y2=".949" xlink:href="#linear-gradient"/>
+        <linearGradient id="linear-gradient-3" x1="1.938" x2="-.938" y1=".165" y2=".851" xlink:href="#linear-gradient"/>
+    </defs>
+    <path id="패스_88" d="M266.5 0v4.706h-9.43V0zm-4.713 23.529h-4.717V9.412h4.713zm-7.07 0H250V9.412h4.713zm0-18.824H250V0h4.713z" class="cls-1" data-name="패스 88" transform="translate(-226.496)"/>
+    <path id="패스_89" d="M89.139 0v4.706H75V0zm-4.713 9.412v4.706H75V9.412zm4.713 9.412v4.706H75v-4.706z" class="cls-2" data-name="패스 89" transform="translate(-67.947)"/>
+    <path id="패스_90" d="M0 0h4.713v23.529H0z" class="cls-3" data-name="패스 90"/>
+</svg>
