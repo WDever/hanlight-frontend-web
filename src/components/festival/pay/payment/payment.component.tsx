@@ -419,18 +419,7 @@ const PaymentComponent: React.FC<
       <ListWrapper>{floorList}</ListWrapper>
       <SubmitBtn
         disabled={totalPrice <= 0 || user.money < totalPrice}
-        onClick={() =>
-          dispatch(
-            toggleModal({
-              status: true,
-              data: {
-                type: 'payment',
-                content: itemList,
-                shop: { shop_pk: 0, items: itemList },
-              },
-            }),
-          )
-        }
+        onClick={() => alert('부스 운영이 종료되었습니다.')}
       >
         {totalPrice > 0 &&
           totalPrice <= user.money &&
