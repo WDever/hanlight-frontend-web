@@ -8,7 +8,6 @@ import {
   PayItemType,
 } from 'store';
 import styled from 'styled-components';
-import { ExDataBoothType } from '../payment.component';
 
 const BoothPlusBtn = styled.span<{ toggle: boolean }>`
   width: 1rem;
@@ -244,7 +243,7 @@ const BoothComponent: React.FC<BoothProps> = ({
                   setToggleBooth(item.pk);
                   setItemList([]);
                   setTotalPrice(0);
-              }
+                }
           }
         >
           <div>
@@ -259,7 +258,7 @@ const BoothComponent: React.FC<BoothProps> = ({
             {item.shopItem.map(
               (val: FSShopItemModel, idx: number, org: FSShopItemModel[]) => {
                 const selectedItem = itemList.find(
-                  val => val.item_pk === item.pk,
+                  valA => valA.item_pk === val.pk,
                 );
 
                 return (

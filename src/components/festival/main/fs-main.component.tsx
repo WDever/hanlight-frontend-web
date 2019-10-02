@@ -13,15 +13,22 @@ import GraphIcon from 'lib/svg/graph-icon.svg';
 import CoinIcon from 'lib/svg/woncoin.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { AppState, UserModel, festivalReducerActions, festivalActions, FestivalModel, FSUserModel } from 'store';
+import {
+  AppState,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSUserModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 
+import { numberWithComma } from 'lib/functions';
+import { Dispatch } from 'redux';
 import EsportsComponent from './eSports';
 import FSEventComponent from './event';
 import FSSalesComponent from './sales';
 import FSTimetableComponent from './timetable';
-import { Dispatch } from 'redux';
-import { numberWithComma } from 'lib/functions';
 
 const { useState, useMemo } = React;
 
@@ -234,17 +241,21 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
   const [selectedItem, setSelectedItem] = useState<pageType>('');
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
   const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
-  const { adminBool } = useSelector<AppState, FestivalModel>(state => state.festival);
+  const { adminBool } = useSelector<AppState, FestivalModel>(
+    state => state.festival,
+  );
 
   const { getAdminBool, getMoney } = festivalActions;
 
   const { name } = useSelector<AppState, UserModel>(state => state.user);
-  const { money } = useSelector<AppState, FSUserModel>(state => state.festival.user);
+  const { money } = useSelector<AppState, FSUserModel>(
+    state => state.festival.user,
+  );
 
   React.useEffect(() => {
     dispatch(getAdminBool({ accessToken }));
     dispatch(getMoney({ accessToken }));
-  }, [])
+  }, []);
 
   const BtnList = useMemo(
     () =>
@@ -289,10 +300,6 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
                 state: {
                   pay: true,
                 },
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                alert('결제 오픈은 서버의 안정을 위하여 환전이 어느 정도 진행된 뒤에 오픈됩니다!');
               }}
               left={true}
             >
