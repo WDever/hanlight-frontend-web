@@ -14,6 +14,7 @@ const initialState: FestivalModel = {
     totalPrice: 0,
   },
   adminChargeList: [],
+  receiptList: [],
   festivalStatus: {
     getShopListStatus: 'none',
     getLolTeamStatus: 'none',
@@ -21,11 +22,14 @@ const initialState: FestivalModel = {
     getSingerStatus: 'none',
     getFsTimetableStatus: 'none',
     getShopPurchaseStatus: 'none',
+    getReceiptListStatus: 'none',
 
     postSingerVoteStatus: 'none',
     postLolVoteStatus: 'none',
     postAdminMoneyStatus: 'none',
     postAdminMoneyApproveStatus: 'none',
+    postShopPurchaseStatus: 'none',
+    postReceiptConfirmStatus: 'none',
 
     getMoneyStatus: 'none',
     getAdminMoneyListStatus: 'none',
@@ -198,7 +202,7 @@ export const festivalReducer = (
       case 'GET_MONEY_FAILURE':
         draft.festivalStatus.getMoneyStatus = 'failure';
         break;
-      
+
       case 'GET_ADMIN_BOOL':
         draft.festivalStatus.getAdminBoolStatus = 'pending';
         break;
@@ -216,13 +220,70 @@ export const festivalReducer = (
         break;
       case 'POST_ADMIN_MONEY_APPROVE_SUCCESS':
         draft.festivalStatus.postAdminMoneyApproveStatus = 'success';
-        draft.adminChargeList = draft.adminChargeList.filter(v => v.pk !== action.payload.charge_pk);
-        
+        draft.adminChargeList = draft.adminChargeList.filter(
+          v => v.pk !== action.payload.charge_pk,
+        );
+
         break;
       case 'POST_ADMIN_MONEY_APPROVE_FAILURE':
         draft.festivalStatus.postAdminMoneyApproveStatus = 'failure';
         break;
-        
+
+      case 'GET_SHOP_LIST':
+        draft.festivalStatus.getShopListStatus = 'pending';
+        break;
+
+      case 'GET_SHOP_LIST_SUCCESS':
+        draft.festivalStatus.getShopListStatus = 'success';
+        draft.shopList = action.payload.shop;
+        break;
+
+      case 'GET_SHOP_LIST_FAILURE':
+        draft.festivalStatus.getShopListStatus = 'failure';
+        break;
+
+      case 'POST_SHOP_PURCHASE':
+        draft.festivalStatus.postShopPurchaseStatus = 'pending';
+        break;
+
+      case 'POST_SHOP_PURCHASE_SUCCESS':
+        draft.festivalStatus.postShopPurchaseStatus = 'success';
+        break;
+
+      case 'POST_SHOP_PURCHASE_FAILURE':
+        draft.festivalStatus.postShopPurchaseStatus = 'failure';
+        break;
+
+      case 'GET_RECEIPT_LIST':
+        draft.festivalStatus.getReceiptListStatus = 'pending';
+        break;
+
+      case 'GET_RECEIPT_LIST_SUCCESS':
+        draft.festivalStatus.getReceiptListStatus = 'success';
+        draft.receiptList = action.payload.receipt;
+        break;
+
+      case 'GET_RECEIPT_LIST_FAILURE':
+        draft.festivalStatus.getReceiptListStatus = 'failure';
+        break;
+
+      case 'POST_RECEIPT_CONFIRM':
+        draft.festivalStatus.postReceiptConfirmStatus = 'pending';
+        break;
+
+      case 'POST_RECEIPT_CONFIRM_SUCCESS':
+        draft.festivalStatus.postReceiptConfirmStatus = 'success';
+        draft.receiptList.forEach(item => {
+          if (item.pk === action.payload.receipt_pk) {
+            item.confirm = true;
+          }
+        });
+        break;
+
+      case 'POST_RECEIPT_CONFIRM_FAILURE':
+        draft.festivalStatus.postReceiptConfirmStatus = 'failure';
+        break;
+
       default:
         break;
     }

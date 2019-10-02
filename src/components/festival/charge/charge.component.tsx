@@ -1,18 +1,25 @@
 import * as React from 'react';
 
+import * as jwt from 'jsonwebtoken';
+import { usePrevious } from 'lib/hooks';
 import DarkLogoSvg from 'lib/png/dark-logo@3x.png';
+import QRCode from 'qrcode.react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSStatus,
+  FSUserModel,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 import FSHeaderComponent from '../header';
-import { festivalReducerActions, festivalActions, AppState, FestivalModel, UserModel, FSStatus, FSUserModel } from 'store';
-import { Dispatch } from 'redux';
-import { usePrevious } from 'lib/hooks';
-import * as jwt from 'jsonwebtoken';
-import QRCode from 'qrcode.react';
-import { number } from 'prop-types';
 
 const { useState, useEffect } = React;
 
@@ -235,32 +242,48 @@ interface DecodedToken {
   pk: string;
 }
 
-interface ChargeInfo { prevMoney: number, money: number, approval: string; }
+interface ChargeInfo {
+  prevMoney: number;
+  money: number;
+  approval: string;
+}
 
 enum PageType {
   page1 = 'page1',
-  page2 = 'page2'
+  page2 = 'page2',
 }
 
 const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
-  const { accessToken, name, major, grade, classNum, studentNum } = useSelector<AppState, UserModel>(state => state.user);
-  const { money, lastApproval } = useSelector<AppState, FSUserModel>(state => state.festival.user);
-  const { getMoneyStatus } = useSelector<AppState, FSStatus>(state => state.festival.festivalStatus)
+  const { accessToken, name, major, grade, classNum, studentNum } = useSelector<
+    AppState,
+    UserModel
+  >(state => state.user);
+  const { money, lastApproval } = useSelector<AppState, FSUserModel>(
+    state => state.festival.user,
+  );
+  const { getMoneyStatus } = useSelector<AppState, FSStatus>(
+    state => state.festival.festivalStatus,
+  );
   const { getMoney } = festivalActions;
 
   const [animate, setAnimate] = useState<boolean>(false);
   const [page, setPage] = useState<PageType>(PageType.page1);
   const [intervalNum, setIntervalNum] = useState<number>();
   const prevMoney = usePrevious(money);
-  const prevMoneyStatus = usePrevious(getMoneyStatus)
+  const prevMoneyStatus = usePrevious(getMoneyStatus);
   const [chargeInfo, setChargeInfo] = useState<ChargeInfo>();
 
   const studentInfo: string = `${major}${grade}${classNum}${studentNum}`;
   const GetMoney = () => dispatch(getMoney({ accessToken }));
 
   useEffect(() => {
-    if (prevMoneyStatus === 'pending' && getMoneyStatus === 'success' && prevMoney !== undefined && prevMoney < money) {
+    if (
+      prevMoneyStatus === 'pending' &&
+      getMoneyStatus === 'success' &&
+      prevMoney !== undefined &&
+      prevMoney < money
+    ) {
       setChargeInfo({ prevMoney, money, approval: lastApproval });
       setPage(PageType.page2);
     }
@@ -289,12 +312,17 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
       {state => (
         <Template state={state}>
           <Wrapper>
-            <FSHeaderComponent setAnimate={setAnimate} onClick={() => clearInterval(intervalNum)} />
+            <FSHeaderComponent
+              setAnimate={setAnimate}
+              onClick={() => clearInterval(intervalNum)}
+            />
             {page === PageType.page1 ? (
               <>
                 <Title>충전하기</Title>
                 <QrImg value={pk} size={120} />
-                <Name>{studentInfo} {name}</Name>
+                <Name>
+                  {studentInfo} {name}
+                </Name>
                 <Txt>
                   환전소에서 현금이나 계좌이체를
                   <br />
@@ -312,10 +340,15 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
                 <ChargeEndTxt>충전완료</ChargeEndTxt>
                 <ChargerInfo>
                   <h1>
-                    승인자 <span>{(chargeInfo as ChargeInfo).approval as string}</span> 님이
+                    승인자{' '}
+                    <span>{(chargeInfo as ChargeInfo).approval as string}</span>{' '}
+                    님이
                   </h1>
                   <h2>
-                    <span>{(chargeInfo as ChargeInfo).money - (chargeInfo as ChargeInfo).prevMoney}</span>
+                    <span>
+                      {(chargeInfo as ChargeInfo).money -
+                        (chargeInfo as ChargeInfo).prevMoney}
+                    </span>
                   </h2>
                 </ChargerInfo>
                 <MoneyWrapper>

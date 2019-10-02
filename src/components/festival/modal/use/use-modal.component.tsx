@@ -7,6 +7,9 @@ import {
   festivalActions,
   FestivalModel,
   festivalReducerActions,
+  FSReciptItemModel,
+  FSReciptModel,
+  UserModel,
 } from 'store';
 import styled from 'styled-components';
 import FSBaseModalComponent from '../base';
@@ -28,13 +31,16 @@ const Blue = styled.span`
 
 const UseModalComponent: React.FC = () => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
-  const { toggleModal } = festivalActions;
+  const { toggleModal, postReceiptConfirm } = festivalActions;
 
   const { modalData } = useSelector<AppState, FestivalModel>(
     state => state.festival,
   );
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
 
-  const { content } = modalData.data;
+  const { content, receiptItem } = modalData.data;
+
+  const receipt_pk: number = receiptItem ? receiptItem : 0;
 
   const itemList =
     content instanceof Array
@@ -53,7 +59,8 @@ const UseModalComponent: React.FC = () => {
 
   const Content = <>{itemList}</>;
 
-  const useFunc = () => {};
+  const useFunc = () =>
+    dispatch(postReceiptConfirm({ accessToken, receipt_pk }));
 
   return (
     <FSBaseModalComponent

@@ -3,14 +3,18 @@ import {
   AdminMoneyModel,
   ErrorResponse,
   FSLolTeamModel,
+  FSReciptItemModel,
+  FSReciptModel,
+  FSShopListModel,
   FSSingerModel,
   FSTimetableModel,
+  FSUserModel,
   LolModalType,
   modalType,
   PayItemType,
   PaySalesModel,
+  ShopSortType,
   SingerModalType,
-  FSUserModel,
 } from 'store/model';
 import { createStandardAction } from 'typesafe-actions';
 import { GetTimetable } from '../timeTable.action';
@@ -23,6 +27,8 @@ export interface ToggleModalPayload {
     content: string | PayItemType[];
     singer?: SingerModalType;
     team?: LolModalType;
+    shop?: { shop_pk: number; items: PayItemType[] };
+    receiptItem?: number;
   };
 }
 
@@ -213,7 +219,7 @@ export interface PostAdminMoneyFailure extends Action {
 }
 
 export interface PostAdminMoneyApproveInterface {
-  accessToken: string
+  accessToken: string;
   charge_pk: number;
 }
 export interface PostAdminMoneyApproveSuccessInterface {
@@ -238,16 +244,16 @@ export interface GetAdminMoneyListPayload {
   accessToken: string;
 }
 export interface GetAdminMoneyListSuccessPayload {
-  charge: AdminMoneyModel[]
+  charge: AdminMoneyModel[];
 }
 
 export interface GetAdminMoneyList extends Action {
   readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST;
-  payload: GetAdminMoneyListPayload
+  payload: GetAdminMoneyListPayload;
 }
 export interface GetAdminMoneyListSuccess extends Action {
   readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST_SUCCESS;
-  payload: GetAdminMoneyListSuccessPayload
+  payload: GetAdminMoneyListSuccessPayload;
 }
 export interface GetAdminMoneyListFailure extends Action {
   readonly type: FestivalTypes.GET_ADMIN_MONEY_LIST_FAILURE;
@@ -259,7 +265,7 @@ export interface GetMoneyPayload {
 }
 
 export interface GetMoneySuccessPayload {
-  user: FSUserModel
+  user: FSUserModel;
 }
 
 export interface GetMoney extends Action {
@@ -274,7 +280,7 @@ export interface GetMoneySuccess extends Action {
 
 export interface GetMoneyFailure extends Action {
   readonly type: FestivalTypes.GET_MONEY_FAILURE;
-  payload: { error: ErrorResponse, origin: GetMoneyPayload }
+  payload: { error: ErrorResponse; origin: GetMoneyPayload };
 }
 
 export interface GetAdminBoolPayload {
@@ -296,7 +302,100 @@ export interface GetAdminBoolSuccess extends Action {
 
 export interface GetAdminBoolFailure extends Action {
   readonly type: FestivalTypes.GET_ADMIN_BOOL_FAILURE;
-  payload: { error: ErrorResponse, origin: GetAdminBoolPayload }
+  payload: { error: ErrorResponse; origin: GetAdminBoolPayload };
+}
+
+export interface GetShopListPayload {
+  accessToken: string;
+  sort: ShopSortType;
+}
+
+export interface GetShopListSuccessPayload {
+  shop: FSShopListModel;
+}
+
+export interface GetShopList extends Action {
+  readonly type: FestivalTypes.GET_SHOP_LIST;
+  payload: GetShopListPayload;
+}
+
+export interface GetShopListSuccess extends Action {
+  readonly type: FestivalTypes.GET_SHOP_LIST_SUCCESS;
+  payload: GetShopListSuccessPayload;
+}
+
+export interface GetShopListFailure extends Action {
+  readonly type: FestivalTypes.GET_SHOP_LIST_FAILURE;
+  payload: { err: ErrorResponse; origin: GetShopListPayload };
+}
+
+export interface PostShopPurchasePayload {
+  accessToken: string;
+  shopPk: number;
+  items: PayItemType[];
+}
+
+export interface PostShopPurchaseSuccessPayload {
+  user: {
+    money: number;
+  };
+  receipt: FSReciptModel;
+}
+
+export interface PostShopPurchase extends Action {
+  readonly type: FestivalTypes.POST_SHOP_PURCHASE;
+  payload: PostShopPurchasePayload;
+}
+
+export interface PostShopPurchaseSuccess extends Action {
+  readonly type: FestivalTypes.POST_SHOP_PURCHASE_SUCCESS;
+  payload: PostShopPurchaseSuccessPayload;
+}
+
+export interface PostShopPurchaseFailure extends Action {
+  readonly type: FestivalTypes.POST_SHOP_PURCHASE_FAILURE;
+  payload: { err: ErrorResponse; origin: PostShopPurchasePayload };
+}
+
+export interface GetReceiptListPayload extends GetLolTeamPayload {}
+
+export interface GetReceiptListSuccessPayload {
+  receipt: FSReciptModel[];
+}
+
+export interface GetReceiptList extends Action {
+  readonly type: FestivalTypes.GET_RECEIPT_LIST;
+  payload: GetReceiptListPayload;
+}
+
+export interface GetReceiptListSuccess extends Action {
+  readonly type: FestivalTypes.GET_RECEIPT_LIST_SUCCESS;
+  payload: GetReceiptListSuccessPayload;
+}
+
+export interface GetReceiptListFailure extends Action {
+  readonly type: FestivalTypes.GET_RECEIPT_LIST_FAILURE;
+  payload: { err: ErrorResponse; origin: GetReceiptListPayload };
+}
+
+export interface PostReceiptConfirmPayload {
+  accessToken: string;
+  receipt_pk: number;
+}
+
+export interface PostReceiptConfirm extends Action {
+  readonly type: FestivalTypes.POST_RECEIPT_CONFIRM;
+  payload: PostReceiptConfirmPayload;
+}
+
+export interface PostReceiptConfirmSuccess extends Action {
+  readonly type: FestivalTypes.POST_RECEIPT_CONFIRM_SUCCESS;
+  payload: PostReceiptConfirmPayload;
+}
+
+export interface PostReceiptConfirmFailure extends Action {
+  readonly type: FestivalTypes.POST_RECEIPT_CONFIRM_FAILURE;
+  payload: { err: ErrorResponse; origin: PostReceiptConfirmPayload };
 }
 
 const {
@@ -313,6 +412,10 @@ const {
   GET_ADMIN_MONEY_LIST,
   GET_ADMIN_BOOL,
   POST_ADMIN_MONEY_APPROVE,
+  GET_SHOP_LIST,
+  POST_SHOP_PURCHASE,
+  GET_RECEIPT_LIST,
+  POST_RECEIPT_CONFIRM,
 } = FestivalTypes;
 
 export const festivalActions = {
@@ -336,14 +439,20 @@ export const festivalActions = {
   getAdminMoneyList: createStandardAction(GET_ADMIN_MONEY_LIST)<
     GetAdminMoneyListPayload
   >(),
-  getMoney: createStandardAction(GET_MONEY)<
-    GetMoneyPayload
-  >(),
-  getAdminBool: createStandardAction(GET_ADMIN_BOOL)<
-    GetAdminBoolPayload
-  >(),
+  getMoney: createStandardAction(GET_MONEY)<GetMoneyPayload>(),
+  getAdminBool: createStandardAction(GET_ADMIN_BOOL)<GetAdminBoolPayload>(),
   postAdminMoneyApprove: createStandardAction(POST_ADMIN_MONEY_APPROVE)<
     PostAdminMoneyApproveInterface
+  >(),
+  getShopList: createStandardAction(GET_SHOP_LIST)<GetShopListPayload>(),
+  postShopPurchase: createStandardAction(POST_SHOP_PURCHASE)<
+    PostShopPurchasePayload
+  >(),
+  getReceiptList: createStandardAction(GET_RECEIPT_LIST)<
+    GetReceiptListPayload
+  >(),
+  postReceiptConfirm: createStandardAction(POST_RECEIPT_CONFIRM)<
+    PostReceiptConfirmPayload
   >(),
 };
 
@@ -384,4 +493,16 @@ export type festivalReducerActions =
   | GetAdminBoolFailure
   | PostAdminMoneyApprove
   | PostAdminMoneyApproveSuccess
-  | PostAdminMoneyApproveFailure;
+  | PostAdminMoneyApproveFailure
+  | GetShopList
+  | GetShopListSuccess
+  | GetShopListFailure
+  | PostShopPurchase
+  | PostShopPurchaseSuccess
+  | PostShopPurchaseFailure
+  | GetReceiptList
+  | GetReceiptListSuccess
+  | GetReceiptListFailure
+  | PostReceiptConfirm
+  | PostReceiptConfirmSuccess
+  | PostReceiptConfirmFailure;
