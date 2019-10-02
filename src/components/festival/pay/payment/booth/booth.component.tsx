@@ -70,8 +70,9 @@ const BoothBox = styled.section<{ toggle: boolean }>`
   }
 `;
 
-const ListWrapper = styled.section`
+const ListWrapper = styled.section<{ amount: number }>`
   width: 100%;
+  min-height: ${({ amount }) => amount * 2.5}rem;
 
   background-color: #464646;
 
@@ -254,7 +255,7 @@ const BoothComponent: React.FC<BoothProps> = ({
           </div>
         </BoothBox>
         {toggleBooth === item.pk && (
-          <ListWrapper>
+          <ListWrapper amount={item.shopItem.length}>
             {item.shopItem.map(
               (val: FSShopItemModel, idx: number, org: FSShopItemModel[]) => {
                 const selectedItem = itemList.find(
