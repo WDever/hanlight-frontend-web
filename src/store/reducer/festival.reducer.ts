@@ -148,8 +148,9 @@ export const festivalReducer = (
 
       case 'GET_PAY_SHOP_PURCHASE_SUCCESS':
         draft.festivalStatus.getShopPurchaseStatus = 'success';
-        console.log(draft.shopPurchase)
         draft.shopPurchase = action.payload;
+        console.log(action.payload);
+        console.log(state.shopPurchase);
         break;
 
       case 'GET_PAY_SHOP_PURCHASE_FAILURE':

@@ -106,8 +106,8 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
   const btnTxt = isVoted ? '투표완료' : '투표하기';
 
   const openTime =
-    141500 <= Number(moment().format('Hmmss')) &&
-    Number(moment().format('Hmmss')) <= 150000;
+    132000 <= Number(moment().format('Hmmss')) &&
+    Number(moment().format('Hmmss')) <= 141000;
 
   const voteFunc = () => {
     openTime
@@ -124,7 +124,9 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
             },
           }),
         )
-      : alert('아직 투표 시간이 아닙니다.');
+      : alert(
+          '아직 투표 시간이 아닙니다.\n투표 가능 시간은 1시 20분 ~ 2시 10분 입니다.',
+        );
   };
 
   return (
