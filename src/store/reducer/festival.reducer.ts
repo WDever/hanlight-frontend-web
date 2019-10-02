@@ -10,7 +10,7 @@ const initialState: FestivalModel = {
   fsTimetable: [],
   adminBool: false,
   shopPurchase: {
-    itmes: [],
+    items: [],
     totalPrice: 0,
   },
   adminChargeList: [],
@@ -144,6 +144,7 @@ export const festivalReducer = (
 
       case 'GET_PAY_SHOP_PURCHASE_SUCCESS':
         draft.festivalStatus.getShopPurchaseStatus = 'success';
+        console.log(draft.shopPurchase)
         draft.shopPurchase = action.payload;
         break;
 

@@ -86,7 +86,7 @@ export interface PaySalesItemModel {
 }
 
 export interface PaySalesModel {
-  itmes: PaySalesItemModel[];
+  items: PaySalesItemModel[];
   totalPrice: number;
 }
 

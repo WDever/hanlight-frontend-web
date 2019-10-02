@@ -57,7 +57,7 @@ const FSEventComponent: React.FC = () => {
         </Btn>
         <Btn
           name="couple"
-          onClick={changeCategory}
+          onClick={() => alert('이벤트 참여 시간이 아닙니다!')}
           active={category === 'couple'}
         >
           짝찾기
