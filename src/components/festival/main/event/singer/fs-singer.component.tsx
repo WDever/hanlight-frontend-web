@@ -112,7 +112,7 @@ const FSSingerComponent: React.FC = () => {
     150500 <= Number(moment().format('Hmmss')) &&
     Number(moment().format('Hmmss')) <= 153000;
 
-  const voteFunc = (name: string, singerPk: number) =>
+  const voteFunc = (name: string, singerPk: number) => openTime ?
     dispatch(
       festivalActions.toggleModal({
         status: true,
@@ -125,7 +125,7 @@ const FSSingerComponent: React.FC = () => {
           },
         },
       }),
-    );
+    ) : alert('투표 시간이 아닙니다.');
 
   const participantList = useMemo(
     () =>

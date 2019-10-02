@@ -125,7 +125,7 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
           }),
         )
       : alert(
-          '아직 투표 시간이 아닙니다.\n투표 가능 시간은 1시 20분 ~ 2시 10분 입니다.',
+          '투표 시간이 아닙니다.\n투표 가능 시간은 1시 20분 ~ 2시 10분 입니다.',
         );
   };
 
