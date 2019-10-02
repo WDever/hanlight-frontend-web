@@ -109,23 +109,25 @@ const FSSingerComponent: React.FC = () => {
   const prevStatus = usePrevious({ postSingerVoteStatus });
 
   const openTime =
-    150500 <= Number(moment().format('Hmmss')) &&
-    Number(moment().format('Hmmss')) <= 153000;
+    160000 <= Number(moment().format('Hmmss')) &&
+    Number(moment().format('Hmmss')) <= 163000;
 
-  const voteFunc = (name: string, singerPk: number) => openTime ?
-    dispatch(
-      festivalActions.toggleModal({
-        status: true,
-        data: {
-          type: 'singer',
-          content: name,
-          singer: {
-            name,
-            singerPk,
-          },
-        },
-      }),
-    ) : alert('투표 시간이 아닙니다.');
+  const voteFunc = (name: string, singerPk: number) =>
+    openTime
+      ? dispatch(
+          festivalActions.toggleModal({
+            status: true,
+            data: {
+              type: 'singer',
+              content: name,
+              singer: {
+                name,
+                singerPk,
+              },
+            },
+          }),
+        )
+      : alert('투표 시간이 아닙니다.');
 
   const participantList = useMemo(
     () =>
