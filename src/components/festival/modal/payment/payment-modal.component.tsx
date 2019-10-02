@@ -9,9 +9,11 @@ import {
   FestivalModel,
   festivalReducerActions,
   PayItemType,
+  UserModel,
 } from 'store';
 import styled from 'styled-components';
 
+import { constants } from 'crypto';
 import FSBaseModalComponent from '../base';
 
 const { useState } = React;
@@ -45,10 +47,21 @@ const Blue = styled.span`
 const PayModalComponent: React.FC<RouteComponentProps> = ({ history }) => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
 
+  const { postShopPurchase } = festivalActions;
+
   const { modalData } = useSelector<AppState, FestivalModel>(
     state => state.festival,
   );
-  const { content } = modalData.data;
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+
+  const { content, shop } = modalData.data;
+
+  const shopData: { shop_pk: number; items: PayItemType[] } = shop
+    ? shop
+    : {
+        shop_pk: 0,
+        items: [{ shop_pk: 0, name: '', price: 0, item_pk: 0, amount: 0 }],
+      };
 
   const numberWithComma = (num: number) =>
     num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -90,8 +103,13 @@ const PayModalComponent: React.FC<RouteComponentProps> = ({ history }) => {
   );
 
   const paymentFunc = () => {
-    // some dispatch
-    history.push('/festival/pay/receipt');
+    dispatch(
+      postShopPurchase({
+        accessToken,
+        shopPk: shopData.items[0].shop_pk,
+        items: shopData.items,
+      }),
+    );
   };
 
   return (

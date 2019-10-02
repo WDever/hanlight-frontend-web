@@ -113,7 +113,7 @@ const PayComponent: React.FC<RouteComponentProps> = ({ history, location }) => {
               영수증
             </CategoryBtn>
           </CategoryTab>
-          {category === 'payment' ? <PaymentComponent /> : <ReceiptComponent />}
+          {category === 'payment' ? <PaymentComponent setPage={setCategory} /> : <ReceiptComponent />}
         </Template>
       )}
     </Transition>

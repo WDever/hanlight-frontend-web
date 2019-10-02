@@ -6,13 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import { Dispatch } from 'redux';
 import {
+  AppState,
   festivalActions,
+  FestivalModel,
   festivalReducerActions,
   FSShopListModel,
   PayItemType,
+  UserModel,
 } from 'store';
 import styled from 'styled-components';
 
+import { usePrevious } from 'lib/hooks';
+import { categoryType } from '../pay.component';
 import BoothComponent from './booth';
 
 const { useMemo } = React;
@@ -115,7 +120,7 @@ const Floor = styled.h1`
   margin: 1rem 0 0.5rem 0;
 `;
 
-export type paymentCategoryType = 'default' | 'popular' | 'sales';
+export type paymentCategoryType = 'default' | 'popular' | 'sale';
 
 export interface ExDataItemType {
   item_pk: number;
@@ -270,10 +275,31 @@ export interface CountDataType {
 
 const FloorList = ['-1', '1', '2', '3', '4', '5'];
 
-const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
+const PaymentComponent: React.FC<
+  RouteComponentProps & {
+    setPage: React.Dispatch<React.SetStateAction<categoryType>>;
+  }
+> = ({ history, setPage }) => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
 
-  const { toggleModal } = festivalActions;
+  const { toggleModal, getShopList, getMoney } = festivalActions;
+
+  const { shopList, festivalStatus, user } = useSelector<
+    AppState,
+    FestivalModel
+  >(state => state.festival);
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+
+  const {
+    getShopListStatus,
+    postShopPurchaseStatus,
+    postReceiptConfirmStatus,
+  } = festivalStatus;
+  const prevStatus = usePrevious({
+    getShopListStatus,
+    postShopPurchaseStatus,
+    postReceiptConfirmStatus,
+  });
 
   const [category, setCategory] = useState<paymentCategoryType>('default');
   const [totalPrice, setTotalPrice] = useState<number>(0);
@@ -283,44 +309,46 @@ const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
   const changeCatgory = (e: React.MouseEvent<HTMLButtonElement>) =>
     setCategory(e.currentTarget.name as paymentCategoryType);
 
-  const shopList = useMemo(
+  const floorList = useMemo(
     () =>
-      FloorList.map((location: string, i: number, org: string[]) => {
-        if (!ExData[location]) {
-          return;
-        }
+      getShopListStatus === 'success'
+        ? FloorList.map((location: string, i: number, org: string[]) => {
+            if (!shopList[location]) {
+              return;
+            }
 
-        if (category === 'default') {
-          return (
-            <>
-              <Floor>{location === '-1' ? 'B1' : location}층</Floor>
-              <BoothComponent
-                key={i}
-                booths={ExData[location]}
-                totalPrice={totalPrice}
-                setTotalPrice={setTotalPrice}
-                itemList={itemList}
-                setItemList={setItemList}
-                toggleBooth={toggleBooth}
-                setToggleBooth={setToggleBooth}
-              />
-            </>
-          );
-        } else {
-          return (
-            <BoothComponent
-              key={i}
-              booths={ExData[location]}
-              totalPrice={totalPrice}
-              setTotalPrice={setTotalPrice}
-              itemList={itemList}
-              setItemList={setItemList}
-              toggleBooth={toggleBooth}
-              setToggleBooth={setToggleBooth}
-            />
-          );
-        }
-      }),
+            if (category === 'default') {
+              return (
+                <>
+                  <Floor>{location === '-1' ? 'B1' : location}층</Floor>
+                  <BoothComponent
+                    key={i}
+                    booths={shopList[location]}
+                    totalPrice={totalPrice}
+                    setTotalPrice={setTotalPrice}
+                    itemList={itemList}
+                    setItemList={setItemList}
+                    toggleBooth={toggleBooth}
+                    setToggleBooth={setToggleBooth}
+                  />
+                </>
+              );
+            } else {
+              return (
+                <BoothComponent
+                  key={i}
+                  booths={shopList[location]}
+                  totalPrice={totalPrice}
+                  setTotalPrice={setTotalPrice}
+                  itemList={itemList}
+                  setItemList={setItemList}
+                  toggleBooth={toggleBooth}
+                  setToggleBooth={setToggleBooth}
+                />
+              );
+            }
+          })
+        : [],
     [
       category,
       toggleBooth,
@@ -329,8 +357,33 @@ const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
       setTotalPrice,
       itemList,
       setItemList,
+      shopList,
+      getShopListStatus,
     ],
   );
+
+  useEffect(() => {
+    dispatch(getShopList({ accessToken, sort: category }));
+    dispatch(getMoney({ accessToken }));
+  }, [accessToken]);
+
+  useEffect(() => {
+    if (prevStatus && prevStatus.postShopPurchaseStatus === 'pending') {
+      if (postShopPurchaseStatus === 'success') {
+        setPage('receipt');
+      } else if (postShopPurchaseStatus === 'failure') {
+        alert('결제 실패');
+      }
+    }
+
+    if (prevStatus && prevStatus.postReceiptConfirmStatus === 'pending') {
+      if (postReceiptConfirmStatus === 'success') {
+        alert('사용 되었습니다.');
+      } else if (postReceiptConfirmStatus === 'failure') {
+        alert('구매 확인 실패');
+      }
+    }
+  }, [postShopPurchaseStatus]);
 
   return (
     <Wrapper>
@@ -351,8 +404,8 @@ const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
             인기
           </Category>
           <Category
-            name="sales"
-            active={category === 'sales'}
+            name="sale"
+            active={category === 'sale'}
             onClick={changeCatgory}
           >
             매출
@@ -360,12 +413,12 @@ const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
         </section>
         <h2>
           <img src={CoinIcon} alt="Coin" />
-          {numberWithComma(30000)}원
+          {numberWithComma(user.money)}원
         </h2>
       </Header>
-      <ListWrapper>{shopList}</ListWrapper>
+      <ListWrapper>{floorList}</ListWrapper>
       <SubmitBtn
-        disabled={totalPrice <= 0}
+        disabled={totalPrice <= 0 || user.money < totalPrice}
         onClick={() =>
           dispatch(
             toggleModal({
@@ -373,12 +426,16 @@ const PaymentComponent: React.FC<RouteComponentProps> = ({ history }) => {
               data: {
                 type: 'payment',
                 content: itemList,
+                shop: { shop_pk: 0, items: itemList },
               },
             }),
           )
         }
       >
-        {totalPrice > 0 && `${numberWithComma(totalPrice)}원`} 결제하기
+        {totalPrice > 0 &&
+          totalPrice <= user.money &&
+          `${numberWithComma(totalPrice)}원`}{' '}
+        {totalPrice <= user.money ? '결제하기' : '잔액부족'}
       </SubmitBtn>
     </Wrapper>
   );

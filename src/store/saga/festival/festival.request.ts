@@ -1,18 +1,24 @@
 import { instance, payInstance } from 'lib/baseUrl';
 import {
+  GetAdminBoolPayload,
+  GetAdminMoneyListPayload,
   GetFsTimetablePayload,
   GetLolTeamPayload,
   GetMatchPayload,
+  GetMoneyPayload,
   GetPayShopPurchasePayload,
+  GetReceiptListPayload,
+  GetShopListPayload,
   GetSingerPayload,
+  PostAdminMoneyApproveInterface,
   PostAdminMoneyPayload,
   PostLolVotePayload,
+  PostReceiptConfirm,
+  PostReceiptConfirmPayload,
+  PostShopPurchasePayload,
   PostSingerVotePayload,
-  GetMoneyPayload,
-  GetAdminMoneyListPayload,
-  GetAdminBoolPayload,
-  PostAdminMoneyApproveInterface,
 } from 'store/action';
+import { PayItemType } from 'store/model';
 
 export const getLolTeamRequest = (payload: GetLolTeamPayload) =>
   instance
@@ -96,8 +102,38 @@ export const postAdminMoneyRequest = (payload: PostAdminMoneyPayload) =>
 
 export const getAdminMoneyListRequest = (payload: GetAdminMoneyListPayload) =>
   payInstance
-    .get(
-      '/api/admin/money/deposit/list',
+    .get('/api/admin/money/deposit/list', {
+      headers: {
+        authorization: payload.accessToken,
+      },
+    })
+    .then(res => res.data);
+
+export const getMoneyRequest = (payload: GetMoneyPayload) =>
+  payInstance
+    .get('/api/user/money', {
+      headers: {
+        authorization: payload.accessToken,
+      },
+    })
+    .then(res => res.data);
+
+export const getAdminBoolRequest = (payload: GetAdminBoolPayload) =>
+  payInstance
+    .get('/api/admin', {
+      headers: {
+        authorization: payload.accessToken,
+      },
+    })
+    .then(res => res.data);
+
+export const postAdminMoneyApproveRequest = (
+  payload: PostAdminMoneyApproveInterface,
+) =>
+  payInstance
+    .post(
+      '/api/admin/money/deposit/approve',
+      { charge_pk: payload.charge_pk },
       {
         headers: {
           authorization: payload.accessToken,
@@ -106,34 +142,53 @@ export const getAdminMoneyListRequest = (payload: GetAdminMoneyListPayload) =>
     )
     .then(res => res.data);
 
-
-
-export const getMoneyRequest = (payload: GetMoneyPayload) =>
+export const getShopListRequest = (payload: GetShopListPayload) =>
   payInstance
-    .get(
-      '/api/user/money',
-      { headers: {
-          authorization: payload.accessToken,
-        },
+    .get('/api/shop', {
+      headers: {
+        authorization: payload.accessToken,
       },
-    ).then(res => res.data);
-
-export const getAdminBoolRequest = (payload: GetAdminBoolPayload) =>
-  payInstance
-    .get(
-      '/api/admin',
-      { headers: {
-          authorization: payload.accessToken,
-        },
+      params: {
+        sort: payload.sort,
       },
-    ).then(res => res.data);
+    })
+    .then(res => res.data);
 
-export const postAdminMoneyApproveRequest = (payload: PostAdminMoneyApproveInterface) =>
+export const postShopPurchaseRequest = (payload: PostShopPurchasePayload) =>
   payInstance
     .post(
-      '/api/admin/money/deposit/approve',
-      { charge_pk: payload.charge_pk },
-      {headers: {
+      '/api/shop/purchase',
+      {
+        shop_pk: payload.shopPk,
+        items: payload.items.map((items: PayItemType) => ({
+          pk: items.item_pk,
+          count: items.amount,
+        })),
+      },
+      {
+        headers: { authorization: payload.accessToken },
+      },
+    )
+    .then(res => res.data);
+
+export const getReceiptListRequest = (payload: GetReceiptListPayload) =>
+  payInstance
+    .get('api/receipt', {
+      headers: { authorization: payload.accessToken },
+    })
+    .then(res => res.data);
+
+export const postReceiptConfirmRequest = (payload: PostReceiptConfirmPayload) =>
+  payInstance
+    .post(
+      '/api/receipt/confirm',
+      {
+        receipt_pk: payload.receipt_pk,
+      },
+      {
+        headers: {
           authorization: payload.accessToken,
-        },}
-    ).then(res => res.data);
+        },
+      },
+    )
+    .then(res => res.data);

@@ -8,7 +8,6 @@ import {
   PayItemType,
 } from 'store';
 import styled from 'styled-components';
-import { ExDataBoothType } from '../payment.component';
 
 const BoothPlusBtn = styled.span<{ toggle: boolean }>`
   width: 1rem;
@@ -180,6 +179,7 @@ const BoothComponent: React.FC<BoothProps> = ({
   setToggleBooth,
 }) => {
   const controlItem = (
+    shop_pk: number,
     item_pk: number,
     price: number,
     name: string,
@@ -189,7 +189,10 @@ const BoothComponent: React.FC<BoothProps> = ({
 
     if (type === 'increment') {
       if (index === -1) {
-        setItemList([...itemList, { name, price, item_pk, amount: 1 }]);
+        setItemList([
+          ...itemList,
+          { shop_pk, name, price, item_pk, amount: 1 },
+        ]);
         setTotalPrice((totalPrice += price));
         return;
       }
@@ -231,8 +234,16 @@ const BoothComponent: React.FC<BoothProps> = ({
           toggle={toggleBooth === item.pk}
           onClick={
             toggleBooth === item.pk
-              ? () => setToggleBooth(0)
-              : () => setToggleBooth(item.pk)
+              ? () => {
+                  setToggleBooth(0);
+                  setItemList([]);
+                  setTotalPrice(0);
+                }
+              : () => {
+                  setToggleBooth(item.pk);
+                  setItemList([]);
+                  setTotalPrice(0);
+                }
           }
         >
           <div>
@@ -245,23 +256,24 @@ const BoothComponent: React.FC<BoothProps> = ({
         {toggleBooth === item.pk && (
           <ListWrapper>
             {item.shopItem.map(
-              (item: FSShopItemModel, idx: number, org: FSShopItemModel[]) => {
+              (val: FSShopItemModel, idx: number, org: FSShopItemModel[]) => {
                 const selectedItem = itemList.find(
-                  val => val.item_pk === item.pk,
+                  valA => valA.item_pk === val.pk,
                 );
 
                 return (
-                  <BoothItemBox key={item.pk}>
-                    <h1>{item.name}</h1>
-                    <h2>{numberWithComma(item.price)} 원</h2>
+                  <BoothItemBox key={val.pk}>
+                    <h1>{val.name}</h1>
+                    <h2>{numberWithComma(val.price)} 원</h2>
                     <ItemControlBtnWrapper>
                       <ItemControlBtn
                         plus={false}
                         onClick={() =>
                           controlItem(
                             item.pk,
-                            item.price,
-                            item.name,
+                            val.pk,
+                            val.price,
+                            val.name,
                             'decrement',
                           )
                         }
@@ -272,8 +284,9 @@ const BoothComponent: React.FC<BoothProps> = ({
                         onClick={() =>
                           controlItem(
                             item.pk,
-                            item.price,
-                            item.name,
+                            val.pk,
+                            val.price,
+                            val.name,
                             'increment',
                           )
                         }

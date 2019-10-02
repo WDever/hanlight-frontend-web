@@ -1,10 +1,21 @@
 import * as React from 'react';
 
 import { numberWithComma } from 'lib/functions';
+import { usePrevious } from 'lib/hooks';
 import { useDispatch, useSelector } from 'react-redux';
-import { PayItemType } from 'store';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  PayItemType,
+  UserModel,
+} from 'store';
 import styled from 'styled-components';
 import ReceiptItemComponent from './receiptItem';
+
+const { useEffect, useState } = React;
 
 const Wrapper = styled.section`
   width: 100%;
@@ -78,11 +89,11 @@ export const ExData: ExDataBoothType[] = [
     type: 'payment',
     used: 'use',
     items: [
-      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
-      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
-      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
-      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
-      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5, shop_pk: 0 },
     ],
   },
   {
@@ -96,11 +107,11 @@ export const ExData: ExDataBoothType[] = [
     type: 'payment',
     used: '',
     items: [
-      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
-      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
-      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
-      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
-      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5, shop_pk: 0 },
     ],
   },
   {
@@ -114,11 +125,11 @@ export const ExData: ExDataBoothType[] = [
     type: 'payment',
     used: '',
     items: [
-      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
-      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
-      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
-      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
-      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5, shop_pk: 0 },
     ],
   },
   {
@@ -132,11 +143,11 @@ export const ExData: ExDataBoothType[] = [
     type: 'payment',
     used: '',
     items: [
-      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
-      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
-      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
-      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
-      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5, shop_pk: 0 },
     ],
   },
   {
@@ -150,11 +161,11 @@ export const ExData: ExDataBoothType[] = [
     type: 'payment',
     used: '',
     items: [
-      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1 },
-      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2 },
-      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3 },
-      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4 },
-      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5 },
+      { name: '프렌치 토스트', price: 1000, item_pk: 0, amount: 1, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 2000, item_pk: 1, amount: 2, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 3000, item_pk: 2, amount: 3, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 4000, item_pk: 3, amount: 4, shop_pk: 0 },
+      { name: '프렌치 토스트', price: 5000, item_pk: 4, amount: 5, shop_pk: 0 },
     ],
   },
   {
@@ -166,29 +177,45 @@ export const ExData: ExDataBoothType[] = [
 ];
 
 const ReceiptComponent: React.FC = () => {
-  const receiptList = ExData.map((item, i) => (
+  const dispatch: Dispatch<festivalReducerActions> = useDispatch();
+
+  const { getReceiptList } = festivalActions;
+
+  const { shopList, festivalStatus, user, receiptList } = useSelector<
+    AppState,
+    FestivalModel
+  >(state => state.festival);
+  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+
+  const { getReceiptListStatus } = festivalStatus;
+  const prevStatus = usePrevious({ getReceiptListStatus });
+
+  const mappedReceiptList = receiptList.map((item, i) => (
     <ReceiptItemComponent
-      name={item.name}
-      type={item.type}
-      items={item.items}
-      userMoney={60000}
-      chargedMoney={60000}
-      used={item.used}
+      pk={item.pk}
+      shop_name={item.shop_name}
+      moneyAfter={item.moneyAfter}
+      moneyBefore={item.moneyBefore}
+      price={item.price}
+      confirm={item.confirm}
+      cancel={item.cancel}
+      createdAt={item.createdAt}
+      receiptItem={item.receiptItem}
+      userMoney={user.money}
       key={i}
     />
   ));
 
+  useEffect(() => {
+    dispatch(getReceiptList({ accessToken }));
+  }, []);
+
   return (
     <Wrapper>
       <MoneyWrapper>
-        <Money>
-          구매 총액<Red>{numberWithComma(36000)}원</Red>
-        </Money>
-        <Money>
-          충전 총액<Blue>{numberWithComma(36000)}원</Blue>
-        </Money>
+        <Money/>
       </MoneyWrapper>
-      <ListWrapper>{receiptList}</ListWrapper>
+      <ListWrapper>{mappedReceiptList}</ListWrapper>
     </Wrapper>
   );
 };

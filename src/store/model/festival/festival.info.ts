@@ -8,6 +8,7 @@ export type modalType =
   | 'use';
 
 export interface PayItemType {
+  shop_pk: number;
   name: string;
   price: number;
   item_pk: number;
@@ -31,6 +32,8 @@ export interface ModalDataType {
     content: string | PayItemType[];
     singer?: SingerModalType;
     team?: LolModalType;
+    shop?: { shop_pk: number; items: PayItemType[] };
+    receiptItem?: number;
   };
 }
 
@@ -102,4 +105,24 @@ export interface AdminMoneyModel {
 export interface FSUserModel {
   money: number;
   lastApproval: string;
+}
+
+export type ShopSortType = 'default' | 'popular' | 'sale';
+
+export interface FSReciptItemModel {
+  name: string;
+  count: number;
+  totalPrice: number;
+}
+
+export interface FSReciptModel {
+  pk: number;
+  shop_name: string;
+  moneyBefore: number;
+  moneyAfter: number;
+  price: number;
+  confirm: boolean;
+  cancel: boolean;
+  createdAt: string;
+  receiptItem: FSReciptItemModel[];
 }

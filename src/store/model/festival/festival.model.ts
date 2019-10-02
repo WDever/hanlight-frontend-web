@@ -1,12 +1,13 @@
 import {
   AdminMoneyModel,
   FSLolTeamModel,
+  FSReciptModel,
   FSShopListModel,
   FSSingerModel,
   FSTimetableModel,
+  FSUserModel,
   ModalDataType,
   PaySalesModel,
-  FSUserModel,
 } from './festival.info';
 import { FSStatus } from './festival.status';
 
@@ -17,6 +18,7 @@ export interface FestivalModel {
   singers: FSSingerModel[];
   fsTimetable: FSTimetableModel[];
   shopPurchase: PaySalesModel;
+  receiptList: FSReciptModel[];
 
   adminChargeList: AdminMoneyModel[];
 
@@ -26,5 +28,4 @@ export interface FestivalModel {
 
   user: FSUserModel;
   adminBool: boolean;
-  
 }

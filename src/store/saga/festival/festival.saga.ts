@@ -1,32 +1,44 @@
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { GetLolTeam, SET_ERROR } from 'store';
 import {
+  festivalActions,
   FestivalTypes,
+  GetAdminBool,
+  GetAdminMoneyList,
   GetFsTimetable,
   GetMatch,
+  GetMoney,
   GetPayShopPurchase,
+  GetReceiptList,
+  GetReceiptListPayload,
+  GetShopList,
   GetSinger,
   PostAdminMoney,
-  PostLolVote,
-  PostSingerVote,
-  GetMoney,
-  GetAdminMoneyList,
-  GetAdminBool,
   PostAdminMoneyApprove,
+  PostLolVote,
+  PostReceiptConfirm,
+  PostReceiptConfirmPayload,
+  PostShopPurchase,
+  PostShopPurchasePayload,
+  PostSingerVote,
 } from 'store/action';
 import {
+  getAdminBoolRequest,
+  getAdminMoneyListRequest,
   getFsTimetableRequest,
   getLolTeamRequest,
   getMatchRequest,
+  getMoneyRequest,
   getPayShopPurchaseRequest,
+  getReceiptListRequest,
+  getShopListRequest,
   getSingerRequest,
+  postAdminMoneyApproveRequest,
   postAdminMoneyRequest,
   postLolVoteRequest,
+  postReceiptConfirmRequest,
+  postShopPurchaseRequest,
   postSingerVoteRequest,
-  getMoneyRequest,
-  getAdminMoneyListRequest,
-  getAdminBoolRequest,
-  postAdminMoneyApproveRequest,
 } from './festival.request';
 
 function* getLolTeamSaga(action: GetLolTeam) {
@@ -208,7 +220,6 @@ function* getMoneySaga(action: GetMoney) {
         type: FestivalTypes.GET_MONEY_SUCCESS,
         payload: response.data,
       });
-
     } catch (e) {
       yield put({
         type: SET_ERROR,
@@ -228,7 +239,6 @@ function* getAdminBoolSaga(action: GetAdminBool) {
         type: FestivalTypes.GET_ADMIN_BOOL_SUCCESS,
         payload: response.data,
       });
-
     } catch (e) {
       yield put({
         type: SET_ERROR,
@@ -248,11 +258,86 @@ function* postAdminMoneyApproveSaga(action: PostAdminMoneyApprove) {
         type: FestivalTypes.POST_ADMIN_MONEY_APPROVE_SUCCESS,
         payload: action.payload.charge_pk,
       });
-
     } catch (e) {
       yield put({
         type: SET_ERROR,
         name: FestivalTypes.POST_ADMIN_MONEY_APPROVE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* getShopListSaga(action: GetShopList) {
+  if (action.type) {
+    try {
+      const response = yield call(getShopListRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_SHOP_LIST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_SHOP_LIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* postShopPurchaseSaga(action: PostShopPurchase) {
+  if (action.type) {
+    try {
+      const response = yield call(postShopPurchaseRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.POST_SHOP_PURCHASE_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.POST_SHOP_PURCHASE_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* getReceiptListSaga(action: GetReceiptList) {
+  if (action.type) {
+    try {
+      const response = yield call(getReceiptListRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.GET_RECEIPT_LIST_SUCCESS,
+        payload: response.data,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.GET_RECEIPT_LIST_FAILURE,
+        payload: { err: e, origin: action.payload },
+      });
+    }
+  }
+}
+
+function* postReceiptConfirmSaga(action: PostReceiptConfirm) {
+  if (action.type) {
+    try {
+      const response = yield call(postReceiptConfirmRequest, action.payload);
+
+      yield put({
+        type: FestivalTypes.POST_RECEIPT_CONFIRM_SUCCESS,
+        payload: action.payload,
+      });
+    } catch (e) {
+      yield put({
+        type: SET_ERROR,
+        name: FestivalTypes.POST_RECEIPT_CONFIRM_FAILURE,
         payload: { err: e, origin: action.payload },
       });
     }
@@ -271,5 +356,12 @@ export function* festivalSaga() {
   yield takeEvery(FestivalTypes.GET_ADMIN_MONEY_LIST, getAdminMoneyListSaga);
   yield takeEvery(FestivalTypes.GET_MONEY, getMoneySaga);
   yield takeEvery(FestivalTypes.GET_ADMIN_BOOL, getAdminBoolSaga);
-  yield takeEvery(FestivalTypes.POST_ADMIN_MONEY_APPROVE, postAdminMoneyApproveSaga);
+  yield takeEvery(
+    FestivalTypes.POST_ADMIN_MONEY_APPROVE,
+    postAdminMoneyApproveSaga,
+  );
+  yield takeEvery(FestivalTypes.GET_SHOP_LIST, getShopListSaga);
+  yield takeEvery(FestivalTypes.POST_SHOP_PURCHASE, postShopPurchaseSaga);
+  yield takeEvery(FestivalTypes.GET_RECEIPT_LIST, getReceiptListSaga);
+  yield takeEvery(FestivalTypes.POST_RECEIPT_CONFIRM, postReceiptConfirmSaga);
 }

@@ -1,11 +1,16 @@
 import * as React from 'react';
 
 import { numberWithComma } from 'lib/functions';
+import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
-import { festivalActions, festivalReducerActions, PayItemType } from 'store';
+import {
+  festivalActions,
+  festivalReducerActions,
+  FSReciptModel,
+  PayItemType,
+} from 'store';
 import styled from 'styled-components';
-import { ExDataBoothType } from '../receipt.component';
 
 const { useState, useEffect } = React;
 
@@ -370,121 +375,115 @@ export interface ReceiptItemProps {
   items: PayItemType[];
 }
 
-const ReceiptItemComponent: React.FC<
-  ExDataBoothType & { userMoney: number }
-> = ({ name, items, type, userMoney, chargedMoney, used }) => {
+const ReceiptItemComponent: React.FC<FSReciptModel & { userMoney: number }> = ({
+  pk,
+  shop_name,
+  moneyAfter,
+  moneyBefore,
+  price,
+  confirm,
+  cancel,
+  receiptItem,
+  createdAt,
+}) => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
 
   const { toggleModal } = festivalActions;
 
   const [toggle, setToggle] = useState<boolean>(false);
-  const [totalPrice, setTotalPrice] = useState<number>(() => {
-    let result: number = 0;
-    items.map(item => {
-      result += item.amount * item.price;
-    });
-    return result;
-  });
 
   const itemList =
-    items.length !== 0
-      ? items.map((item, i) => (
+    receiptItem.length !== 0
+      ? receiptItem.map((item, i) => (
           <article key={i}>
             <h1>{item.name}</h1>
-            <h3>{item.amount}</h3>
-            <h2>{numberWithComma(item.price * item.amount)}</h2>
+            <h3>{item.count}</h3>
+            <h2>{numberWithComma(item.totalPrice)}원</h2>
           </article>
         ))
       : [];
 
-  if (type === 'payment') {
-    return (
-      <Wrapper>
-        <InnerBox>
-          <BoothTitle toggle={toggle}>
-            <span>{name}</span>
-            <p>37초 전</p>
-          </BoothTitle>
-          <h2>
-            {!toggle && <Red>- {numberWithComma(totalPrice)}원</Red>}
-            <BoothPlusBtn toggle={toggle} onClick={() => setToggle(!toggle)} />
-          </h2>
-        </InnerBox>
-        {toggle && (
-          <DetailWrapper>
-            <ContentWrapper>{itemList}</ContentWrapper>
-            <ContentSeperator />
-            <PriceWrapper>
-              <article>
-                <h1>
-                  총 <TotalPrice>{numberWithComma(totalPrice)}원</TotalPrice>
-                </h1>
-              </article>
-              <article>
-                <h1>
-                  구매 후 잔액
-                  <RemainPrice>
-                    {numberWithComma(userMoney - totalPrice)}원
-                  </RemainPrice>
-                </h1>
-              </article>
-            </PriceWrapper>
-            <BtnWrapper used={used !== ''}>
-              {used === 'use' ? (
-                <h1>사용 완료</h1>
-              ) : used === 'refund' ? (
-                <h1>환불 완료</h1>
-              ) : (
-                <>
-                  <AcceptBtn
-                    onClick={() =>
-                      dispatch(
-                        toggleModal({
-                          status: true,
-                          data: {
-                            type: 'use',
-                            content: items,
-                          },
-                        }),
-                      )
-                    }
-                  >
-                    구매 확인
-                  </AcceptBtn>
-                  <RefundBtn
-                    onClick={() =>
-                      dispatch(
-                        toggleModal({
-                          status: true,
-                          data: {
-                            type: 'refund',
-                            content: items,
-                          },
-                        }),
-                      )
-                    }
-                  >
-                    환불
-                  </RefundBtn>
-                </>
-              )}
-            </BtnWrapper>
-          </DetailWrapper>
-        )}
-      </Wrapper>
-    );
-  } else {
-    return (
-      <ChargeItemWrapper>
-        <h1>
-          충전 <p>1시간 전</p>
-        </h1>
+  return (
+    <Wrapper>
+      <InnerBox onClick={() => setToggle(!toggle)}>
+        <BoothTitle toggle={toggle}>
+          <span>{shop_name}</span>
+          <p>{moment(createdAt).format('H : mm : ss')}</p>
+        </BoothTitle>
         <h2>
-          <Blue>+{chargedMoney && numberWithComma(chargedMoney)}원</Blue>
+          {!toggle && (
+            <Red>- {numberWithComma(moneyBefore - moneyAfter)}원</Red>
+          )}
+          <BoothPlusBtn toggle={toggle} onClick={() => setToggle(!toggle)} />
         </h2>
-      </ChargeItemWrapper>
-    );
-  }
+      </InnerBox>
+      {toggle && (
+        <DetailWrapper>
+          <ContentWrapper>{itemList}</ContentWrapper>
+          <ContentSeperator />
+          <PriceWrapper>
+            <article>
+              <h1>
+                총{' '}
+                <TotalPrice>
+                  {numberWithComma(moneyBefore - moneyAfter)}원
+                </TotalPrice>
+              </h1>
+            </article>
+            <article>
+              <h1>
+                구매 후 잔액
+                <RemainPrice>{numberWithComma(moneyAfter)}원</RemainPrice>
+              </h1>
+            </article>
+          </PriceWrapper>
+          <BtnWrapper used={confirm || cancel}>
+            {confirm ? (
+              <h1>사용 완료</h1>
+            ) : cancel ? (
+              <h1>환불 완료</h1>
+            ) : (
+              <>
+                <AcceptBtn
+                  onClick={() =>
+                    dispatch(
+                      toggleModal({
+                        status: true,
+                        data: {
+                          type: 'use',
+                          content: '',
+                          receiptItem: pk,
+                        },
+                      }),
+                    )
+                  }
+                >
+                  구매 확인
+                </AcceptBtn>
+                <RefundBtn
+                  onClick={() =>
+                    // dispatch(
+                    //   toggleModal({
+                    //     status: true,
+                    //     data: {
+                    //       type: 'refund',
+                    //       content: '',
+                    //       receiptItem: pk,
+                    //     },
+                    //   }),
+                    // )
+                    alert('점검 중 입니다.')
+                  }
+                >
+                  환불
+                </RefundBtn>
+              </>
+            )}
+          </BtnWrapper>
+        </DetailWrapper>
+      )}
+    </Wrapper>
+  );
 };
 
 export default ReceiptItemComponent;

@@ -7,13 +7,15 @@ export interface FSStatus {
   getSingerStatus: status;
   getFsTimetableStatus: status;
   getShopPurchaseStatus: status;
+  getAdminMoneyListStatus: status;
+  getMoneyStatus: status;
+  getAdminBoolStatus: status;
+  getReceiptListStatus: status;
 
   postSingerVoteStatus: status;
   postLolVoteStatus: status;
   postAdminMoneyStatus: status;
-  getAdminMoneyListStatus: status;
   postAdminMoneyApproveStatus: status;
-
-  getMoneyStatus: status;
-  getAdminBoolStatus: status;
+  postShopPurchaseStatus: status;
+  postReceiptConfirmStatus: status;
 }
