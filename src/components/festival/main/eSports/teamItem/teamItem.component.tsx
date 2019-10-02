@@ -107,7 +107,7 @@ const TeamItemComponent: React.FC<TeamItemProps> = ({
 
   const openTime =
     132000 <= Number(moment().format('Hmmss')) &&
-    Number(moment().format('Hmmss')) <= 141000;
+    Number(moment().format('Hmmss')) <= 143000;
 
   const voteFunc = () => {
     openTime
