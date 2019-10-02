@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 interface ItemProps {
   today: boolean;
-  year: number;
+  year: string;
   month: string;
   date: number;
   contents: string;
 }
 
-const Wrapper = styled.div<{ today: boolean }>`
+const Wrapper = styled.div`
   width: 100%;
   max-width: 12.5rem;
   height: 16.575rem;
@@ -100,11 +100,11 @@ const DetailCalendarItem: React.FC<ItemProps> = ({
   contents,
 }) => {
   return (
-    <Wrapper today={today}>
+    <Wrapper>
       <ContentsWrapper>
         <DateWrapper>
           {moment({
-            year,
+            year: Number(year),
             month: Number(month) - 1,
             date,
             hour: 23,
