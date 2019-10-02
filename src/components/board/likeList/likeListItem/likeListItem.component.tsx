@@ -1,8 +1,9 @@
 import * as React from 'react';
 
 import { Device } from 'lib/styles';
+import DefaultProfile from 'lib/svg/default-profile-image.svg';
 import LikeImg from 'lib/svg/like.svg';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Wrapper = styled.div`
   width: 100%;
@@ -35,7 +36,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ProfileImg = styled.div`
+const ProfileImg = styled.div<{ image: boolean }>`
   width: 2rem;
 
   padding: 17.5px 0 15.5px 20px;
@@ -50,6 +51,15 @@ const ProfileImg = styled.div`
     width: 100%;
 
     border-radius: 100%;
+
+    ${({ image }) =>
+      !image &&
+      css`
+        margin-bottom: -0.75rem;
+        @media ${Device.mobileL} {
+          margin-bottom: -0.5rem;
+        }
+      `};
   }
 `;
 
@@ -94,8 +104,8 @@ const LikeListItemComponent: React.FC<LikeListItemProps> = ({
 }) => {
   return (
     <Wrapper>
-      <ProfileImg>
-        <img alt="profile" src={user_image} />
+      <ProfileImg image={!!user_image}>
+        <img alt="profile" src={user_image ? user_image : DefaultProfile} />
       </ProfileImg>
       <span>{user_name}</span>
       <LikeWrapper>
