@@ -178,7 +178,9 @@ export interface GetFsTimetableFailure extends Action {
 
 export interface GetPayShopPurchasePayload extends GetLolTeamPayload {}
 
-export interface GetPayShopPurchaseSuccessPayload extends PaySalesModel {}
+export interface GetPayShopPurchaseSuccessPayload extends PaySalesModel{
+  
+}
 
 export interface GetPayShopPurchase extends Action {
   readonly type: FestivalTypes.GET_PAY_SHOP_PURCHASE;
@@ -201,7 +203,9 @@ export interface PostAdminMoneyPayload {
   amount: number;
 }
 
-export interface PostAdminMoneySuccessPayload extends AdminMoneyModel {}
+export interface PostAdminMoneySuccessPayload {
+  charge: AdminMoneyModel;
+}
 
 export interface PostAdminMoney extends Action {
   readonly type: FestivalTypes.POST_ADMIN_MONEY;

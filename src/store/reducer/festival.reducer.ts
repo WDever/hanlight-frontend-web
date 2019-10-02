@@ -10,7 +10,7 @@ const initialState: FestivalModel = {
   fsTimetable: [],
   adminBool: false,
   shopPurchase: {
-    itmes: [],
+    items: [],
     totalPrice: 0,
   },
   adminChargeList: [],
@@ -148,6 +148,7 @@ export const festivalReducer = (
 
       case 'GET_PAY_SHOP_PURCHASE_SUCCESS':
         draft.festivalStatus.getShopPurchaseStatus = 'success';
+        console.log(draft.shopPurchase)
         draft.shopPurchase = action.payload;
         break;
 
@@ -161,7 +162,7 @@ export const festivalReducer = (
 
       case 'POST_ADMIN_MONEY_SUCCESS':
         draft.festivalStatus.postAdminMoneyStatus = 'success';
-        draft.adminChargeList.push(action.payload);
+        draft.adminChargeList.push(action.payload.charge);
         break;
 
       case 'POST_ADMIN_MONEY_FAILURE':

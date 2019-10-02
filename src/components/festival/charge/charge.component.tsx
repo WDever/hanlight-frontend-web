@@ -1,14 +1,29 @@
 import * as React from 'react';
 
 import * as jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
+import { numberWithComma } from 'lib/functions';
+import { usePrevious } from 'lib/hooks';
 import { usePrevious } from 'lib/hooks';
 import DarkLogoSvg from 'lib/png/dark-logo@3x.png';
+import { number } from 'prop-types';
+import QRCode from 'qrcode.react';
 import QRCode from 'qrcode.react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps, withRouter } from 'react-router';
 import { Transition } from 'react-transition-group';
 import { TransitionStatus } from 'react-transition-group/Transition';
 import { Dispatch } from 'redux';
+import { Dispatch } from 'redux';
+import {
+  AppState,
+  festivalActions,
+  FestivalModel,
+  festivalReducerActions,
+  FSStatus,
+  FSUserModel,
+  UserModel,
+} from 'store';
 import {
   AppState,
   festivalActions,
@@ -281,11 +296,15 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
     if (
       prevMoneyStatus === 'pending' &&
       getMoneyStatus === 'success' &&
+      prevMoney !== 0 &&
       prevMoney !== undefined &&
       prevMoney < money
     ) {
       setChargeInfo({ prevMoney, money, approval: lastApproval });
       setPage(PageType.page2);
+      clearInterval(intervalNum);
+
+      console.log(lastApproval);
     }
   }, [money]);
 
@@ -346,20 +365,26 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
                   </h1>
                   <h2>
                     <span>
-                      {(chargeInfo as ChargeInfo).money -
-                        (chargeInfo as ChargeInfo).prevMoney}
-                    </span>
+                      {numberWithComma(
+                        (chargeInfo as ChargeInfo).money -
+                          (chargeInfo as ChargeInfo).prevMoney,
+                      )}
+                      원
+                    </span>{' '}
+                    충전
                   </h2>
                 </ChargerInfo>
                 <MoneyWrapper>
                   <Separator />
                   <article>
                     <h1>충전 전 잔액</h1>
-                    <h2>{(chargeInfo as ChargeInfo).prevMoney}</h2>
+                    <h2>
+                      {numberWithComma((chargeInfo as ChargeInfo).prevMoney)}
+                    </h2>
                   </article>
                   <article>
                     <h1>충전 후 잔액</h1>
-                    <h2>{money}</h2>
+                    <h2>{numberWithComma(money)}</h2>
                   </article>
                 </MoneyWrapper>
                 <CheckBtn onClick={() => setAnimate(false)}>확인</CheckBtn>

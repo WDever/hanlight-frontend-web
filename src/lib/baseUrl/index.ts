@@ -10,6 +10,6 @@ export const instance = axios.create({
 export const payInstance = axios.create({
   baseURL:
     process.env.REACT_APP_CUSTOM_NODE_ENV === 'development'
-      ? 'http://13.125.251.203/'
+      ? 'https://test-pay.hanlight.kr/'
       : 'https://pay.hanlight.kr/',
 });
