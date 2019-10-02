@@ -109,8 +109,8 @@ const FSSingerComponent: React.FC = () => {
   const prevStatus = usePrevious({ postSingerVoteStatus });
 
   const openTime =
-    160000 <= Number(moment().format('Hmmss')) &&
-    Number(moment().format('Hmmss')) <= 163000;
+    154500 <= Number(moment().format('Hmmss')) &&
+    Number(moment().format('Hmmss')) <= 161500;
 
   const voteFunc = (name: string, singerPk: number) =>
     openTime
