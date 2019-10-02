@@ -290,6 +290,10 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
                   pay: true,
                 },
               }}
+              onClick={(e) => {
+                e.preventDefault();
+                alert('결제 오픈은 서버의 안정을 위하여 환전이 어느 정도 진행된 뒤에 오픈됩니다!');
+              }}
               left={true}
             >
               결제
