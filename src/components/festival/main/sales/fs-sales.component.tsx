@@ -143,20 +143,6 @@ const AccessBlockBox = styled.section`
   }
 `;
 
-interface ExDataType {
-  name: string;
-  amount: number;
-  price: number;
-}
-
-const ExData: ExDataType[] = [
-  { name: '고구마', amount: 19, price: 1000 },
-  { name: '감자', amount: 12, price: 1000 },
-  { name: '탄감자', amount: 4, price: 500 },
-];
-
-const ExData2 = { rank: 3, totalAmount: 35 };
-
 const FSSalesComponent: React.FC = () => {
   const dispatch: Dispatch<festivalReducerActions> = useDispatch();
   const { getShopPurchase } = festivalActions;
@@ -165,14 +151,11 @@ const FSSalesComponent: React.FC = () => {
     AppState,
     UserModel
   >(state => state.user);
-  const { message: errorMessage } = useSelector<AppState, ErrorModel>(
-    state => state.error,
-  );
   const { shopPurchase, festivalStatus } = useSelector<AppState, FestivalModel>(
     state => state.festival,
   );
 
-  const itemList = shopPurchase.itmes.map(
+  const itemList =  shopPurchase.items.map(
     (item: PaySalesItemModel, i: number) => (
       <Box key={i}>
         <h1>{item.name}</h1>
@@ -200,7 +183,7 @@ const FSSalesComponent: React.FC = () => {
           {itemList}
           <Separator />
           <TotalSaleBox>
-            <h2>{ExData2.totalAmount}개</h2>
+            <h2>{shopPurchase.items.reduce((prevItem, item) => prevItem + item.count, 0)}개</h2>
             <h3>{numberWithComma(shopPurchase.totalPrice)}원</h3>
           </TotalSaleBox>
         </>

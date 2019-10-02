@@ -13,7 +13,7 @@ import GraphIcon from 'lib/svg/graph-icon.svg';
 import CoinIcon from 'lib/svg/woncoin.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { AppState, UserModel, festivalReducerActions, festivalActions, FestivalModel } from 'store';
+import { AppState, UserModel, festivalReducerActions, festivalActions, FestivalModel, FSUserModel } from 'store';
 import styled from 'styled-components';
 
 import EsportsComponent from './eSports';
@@ -21,6 +21,7 @@ import FSEventComponent from './event';
 import FSSalesComponent from './sales';
 import FSTimetableComponent from './timetable';
 import { Dispatch } from 'redux';
+import { numberWithComma } from 'lib/functions';
 
 const { useState, useMemo } = React;
 
@@ -235,12 +236,14 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
   const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
   const { adminBool } = useSelector<AppState, FestivalModel>(state => state.festival);
 
-  const { getAdminBool } = festivalActions;
+  const { getAdminBool, getMoney } = festivalActions;
 
   const { name } = useSelector<AppState, UserModel>(state => state.user);
+  const { money } = useSelector<AppState, FSUserModel>(state => state.festival.user);
 
   React.useEffect(() => {
     dispatch(getAdminBool({ accessToken }));
+    dispatch(getMoney({ accessToken }));
   }, [])
 
   const BtnList = useMemo(
@@ -277,7 +280,7 @@ const FSMainComponent: React.FC<{ payStatus: boolean }> = ({ payStatus }) => {
         <PayBox>
           <h1>
             <img src={CoinIcon} alt="coin" />
-            <span>30000</span>
+            <span>{numberWithComma(money)}</span>
           </h1>
           <PayBtnWrapper>
             <PayBtn

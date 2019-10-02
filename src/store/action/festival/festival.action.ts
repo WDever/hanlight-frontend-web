@@ -172,7 +172,9 @@ export interface GetFsTimetableFailure extends Action {
 
 export interface GetPayShopPurchasePayload extends GetLolTeamPayload {}
 
-export interface GetPayShopPurchaseSuccessPayload extends PaySalesModel {}
+export interface GetPayShopPurchaseSuccessPayload extends PaySalesModel{
+  
+}
 
 export interface GetPayShopPurchase extends Action {
   readonly type: FestivalTypes.GET_PAY_SHOP_PURCHASE;

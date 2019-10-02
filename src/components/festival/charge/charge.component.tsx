@@ -13,6 +13,7 @@ import { usePrevious } from 'lib/hooks';
 import * as jwt from 'jsonwebtoken';
 import QRCode from 'qrcode.react';
 import { number } from 'prop-types';
+import { numberWithComma } from 'lib/functions';
 
 const { useState, useEffect } = React;
 
@@ -260,9 +261,12 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
   const GetMoney = () => dispatch(getMoney({ accessToken }));
 
   useEffect(() => {
-    if (prevMoneyStatus === 'pending' && getMoneyStatus === 'success' && prevMoney !== undefined && prevMoney < money) {
+    if (prevMoneyStatus === 'pending' && getMoneyStatus === 'success' && prevMoney !== 0 && prevMoney !== undefined && prevMoney < money) {
       setChargeInfo({ prevMoney, money, approval: lastApproval });
       setPage(PageType.page2);
+      clearInterval(intervalNum)
+
+      console.log(lastApproval)
     }
   }, [money]);
 
@@ -315,18 +319,18 @@ const ChargeComponent: React.FC<RouteComponentProps> = ({ history }) => {
                     승인자 <span>{(chargeInfo as ChargeInfo).approval as string}</span> 님이
                   </h1>
                   <h2>
-                    <span>{(chargeInfo as ChargeInfo).money - (chargeInfo as ChargeInfo).prevMoney}</span>
+                    <span>{numberWithComma((chargeInfo as ChargeInfo).money - (chargeInfo as ChargeInfo).prevMoney)}원</span> 충전
                   </h2>
                 </ChargerInfo>
                 <MoneyWrapper>
                   <Separator />
                   <article>
                     <h1>충전 전 잔액</h1>
-                    <h2>{(chargeInfo as ChargeInfo).prevMoney}</h2>
+                    <h2>{numberWithComma((chargeInfo as ChargeInfo).prevMoney)}</h2>
                   </article>
                   <article>
                     <h1>충전 후 잔액</h1>
-                    <h2>{money}</h2>
+                    <h2>{numberWithComma(money)}</h2>
                   </article>
                 </MoneyWrapper>
                 <CheckBtn onClick={() => setAnimate(false)}>확인</CheckBtn>
