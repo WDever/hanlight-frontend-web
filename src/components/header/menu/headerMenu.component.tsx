@@ -11,8 +11,6 @@ import {
 import BambooIcon from 'lib/svg/bamboo-icon.svg';
 import CalendarIcon from 'lib/svg/calendar-icon.svg';
 import DefaultProfileImg from 'lib/svg/default-profile-image.svg';
-import FestivalBat from 'lib/svg/festival-bat.svg';
-import FestivalIcon from 'lib/svg/festival-icon.svg';
 import HanseithonIcon from 'lib/svg/hanseithon-main-title.svg';
 import Circle1 from 'lib/svg/header-menu-circle1.svg';
 import Circle2 from 'lib/svg/header-menu-circle2.svg';
@@ -49,11 +47,10 @@ const Wrapper = styled.div`
   }
 `;
 
-const LeftWrapper = styled.div<{ dark: boolean }>`
+const LeftWrapper = styled.div`
   height: 100%;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
-  background-color: ${({ dark }) => (dark ? '#484848' : '#ffffff')};
-  color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
+  background-color: #ffffff;
 
   @media ${Device.tabletL} {
     width: 70%;
@@ -63,11 +60,11 @@ const LeftWrapper = styled.div<{ dark: boolean }>`
   }
 `;
 
-const Upside = styled.div<{ dark: boolean }>`
+const Upside = styled.div`
   position: relative;
   width: 100%;
   height: 6.5rem;
-  border-bottom: solid 1px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
+  border-bottom: solid 1px #e8e8e8;
 
   display: flex;
   justify-content: center;
@@ -146,7 +143,7 @@ const CircleIcon = styled.img`
   position: absolute;
 `;
 
-const ItemWrapper = styled.div<{ dark: boolean }>`
+const ItemWrapper = styled.div`
   width: 66%;
   margin-top: 1rem;
   position: absolute;
@@ -158,11 +155,6 @@ const ItemWrapper = styled.div<{ dark: boolean }>`
   @media ${Device.mobileL} {
     margin-left: 1.125rem;
   }
-
-  button {
-    border-bottom: solid 0.5px ${({ dark }) => (dark ? '#515151' : '#e8e8e8')};
-    color: ${({ dark }) => (dark ? '#e4e4e4' : '#000000')};
-  }
 `;
 
 const Item = styled.button`
@@ -171,6 +163,7 @@ const Item = styled.button`
   padding: 0;
   margin: 0;
   border: 0;
+  border-bottom: solid 0.5px #e8e8e8;
   background-color: rgba(255, 255, 255, 0);
 
   display: flex;
@@ -207,9 +200,7 @@ const DownSide = styled.div`
 
 const HeaderMenuComponent: React.FC<
   HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
-> = ({ name, image, type, toggleMenu, logout, history, location }) => {
-  const isDark = location.pathname.includes('/festival');
-
+> = ({ name, image, type, toggleMenu, logout, history }) => {
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -238,8 +229,8 @@ const HeaderMenuComponent: React.FC<
 
   return (
     <Wrapper>
-      <LeftWrapper dark={isDark}>
-        <Upside dark={isDark}>
+      <LeftWrapper>
+        <Upside>
           <Profile>
             <ProfileImg
               image={!!image}
@@ -251,25 +242,15 @@ const HeaderMenuComponent: React.FC<
               <UserType>{userType()}</UserType>
             </Info>
           </Profile>
-          {!isDark && (
-            <CircleIcon
-              src={Circle1}
-              style={{ top: '-50%', left: '54%' }}
-              alt=""
-            />
-          )}
           <CircleIcon
-            src={isDark ? FestivalBat : Circle2}
-            style={{ right: '0', bottom: 0 }}
+            src={Circle1}
+            style={{ top: '-50%', left: '54%' }}
             alt=""
           />
+          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt="" />
         </Upside>
         <DownSide>
-          <ItemWrapper dark={isDark}>
-            <Item name="festival" onClick={handleShortCut}>
-              <ItemIcon src={FestivalIcon} alt="" />
-              <ItemSpan>한마당</ItemSpan>
-            </Item>
+          <ItemWrapper>
             <Item name="notice" onClick={handleShortCut}>
               <ItemIcon src={NoticeIcon} alt="" />
               <ItemSpan>공지사항</ItemSpan>
@@ -299,13 +280,11 @@ const HeaderMenuComponent: React.FC<
               <ItemSpan>로그아웃</ItemSpan>
             </Item>
           </ItemWrapper>
-          {!isDark && (
-            <CircleIcon
-              src={Circle3}
-              style={{ width: '100%', bottom: 0 }}
-              alt=""
-            />
-          )}
+          <CircleIcon
+            src={Circle3}
+            style={{ width: '100%', bottom: 0 }}
+            alt=""
+          />
         </DownSide>
       </LeftWrapper>
       <RightWrapper onClick={() => toggleMenu(false)} />

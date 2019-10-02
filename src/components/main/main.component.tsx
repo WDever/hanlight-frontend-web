@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import FestivalComponent from 'components/festival';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
@@ -98,7 +97,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Route path="/festival" component={FestivalComponent} />
         <Redirect to="/error" />
       </Switch>
     </Template>
