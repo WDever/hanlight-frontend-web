@@ -26,7 +26,7 @@ const Empty = styled.div`
   width: 100%;
 `;
 
-const Template = styled.div<{ toggleMenuStatus: boolean; dark: boolean }>`
+const Template = styled.div<{ toggleMenuStatus: boolean }>`
   ${({ toggleMenuStatus }) =>
     toggleMenuStatus &&
     css`
@@ -36,13 +36,7 @@ const Template = styled.div<{ toggleMenuStatus: boolean; dark: boolean }>`
       height: 100%;
     `}
 
-  ${({ dark }) =>
-    dark &&
-    css`
-      background-color: #313131;
-    `}
-
-    overflow: hidden;
+  overflow: hidden;
 `;
 
 const MainComponents = () => (
@@ -71,10 +65,8 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     }
   }, [loginStatus]);
 
-  const isDark = location.pathname.includes('/festival');
-
   return loginStatus === 'success' ? (
-    <Template toggleMenuStatus={toggleMenuStatus} dark={isDark}>
+    <Template toggleMenuStatus={toggleMenuStatus}>
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
