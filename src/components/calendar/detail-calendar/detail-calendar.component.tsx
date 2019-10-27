@@ -104,7 +104,7 @@ const Select = styled.select`
 
 const CalendarWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, 12.5rem);
+  grid-template-columns: repeat(5, 12.5rem);
   grid-column-gap: 0.5rem;
   grid-row-gap: 4.4rem;
   justify-content: space-between;
@@ -115,11 +115,15 @@ const CalendarWrapper = styled.div`
   }
 
   @media ${Device.tabletL} {
-    grid-template-columns: repeat(auto-fit, 11.125rem);
+    grid-template-columns: repeat(4, 11.125rem);
+    grid-column-gap: 1.85rem;
+  }
+  @media ${Device.tabletS} {
+    grid-template-columns: repeat(3, 11.125rem);
     grid-column-gap: 1.85rem;
   }
   @media ${Device.mobileL} {
-    grid-template-columns: repeat(auto-fit, 6rem);
+    grid-template-columns: repeat(3, 6rem);
     grid-column-gap: 0.25rem;
   }
 `;
