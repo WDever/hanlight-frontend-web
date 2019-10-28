@@ -1,6 +1,5 @@
 import * as React from 'react';
 
-import FestivalComponent from 'components/festival';
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
@@ -27,7 +26,7 @@ const Empty = styled.div`
   width: 100%;
 `;
 
-const Template = styled.div<{ toggleMenuStatus: boolean; dark: boolean }>`
+const Template = styled.div<{ toggleMenuStatus: boolean }>`
   ${({ toggleMenuStatus }) =>
     toggleMenuStatus &&
     css`
@@ -37,13 +36,7 @@ const Template = styled.div<{ toggleMenuStatus: boolean; dark: boolean }>`
       height: 100%;
     `}
 
-  ${({ dark }) =>
-    dark &&
-    css`
-      background-color: #313131;
-    `}
-
-    overflow: hidden;
+  overflow: hidden;
 `;
 
 const MainComponents = () => (
@@ -72,10 +65,8 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
     }
   }, [loginStatus]);
 
-  const isDark = location.pathname.includes('/festival');
-
   return loginStatus === 'success' ? (
-    <Template toggleMenuStatus={toggleMenuStatus} dark={isDark}>
+    <Template toggleMenuStatus={toggleMenuStatus}>
       {location.pathname !== '/error' && (
         <>
           <HeaderContainer />
@@ -98,7 +89,6 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
         <Route path="/notice" component={NoticePage} />
         <Route exact={true} path="/board" component={BoardContainer} />
         <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Route path="/festival" component={FestivalComponent} />
         <Redirect to="/error" />
       </Switch>
     </Template>

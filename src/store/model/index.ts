@@ -1,7 +1,6 @@
 import { BoardModel } from './board.model';
 import { CalendarModel } from './calendar.model';
 import { ErrorModel } from './error.model';
-import { FestivalModel } from './festival';
 import { MealModel } from './meal.model';
 import { NoticeModel } from './notice.model';
 import { TimeTableModel } from './timeTable.model';
@@ -17,7 +16,6 @@ export interface AppState {
   error: ErrorModel;
   board: BoardModel;
   util: UtilModel;
-  festival: FestivalModel;
 }
 
 export * from './timeTable.model';
@@ -28,5 +26,4 @@ export * from './meal.model';
 export * from './error.model';
 export * from './board.model';
 export * from './util.model';
-export * from './festival';
 export * from './common';

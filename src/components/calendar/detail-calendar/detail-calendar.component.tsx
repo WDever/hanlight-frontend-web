@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
   margin-bottom: 7rem;
 
   @media ${Device.tabletL} {
@@ -172,11 +172,12 @@ const DetailCalendarComponent: React.FC<
     calendar.length !== 0 ? (
       calendar.map((item, i) => {
         const today =
-          moment().format('M.D') === `${selectedMonth}.${item.date}`;
+          moment().format('Y.M.D') ===
+          `${selectedYear}.${selectedMonth}.${item.date}`;
 
         return (
           <DetailCalendarItem
-            year={moment().get('year')}
+            year={selectedYear}
             month={selectedMonth}
             date={item.date}
             contents={item.detail}

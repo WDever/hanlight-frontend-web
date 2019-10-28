@@ -2,7 +2,6 @@ import { all } from 'redux-saga/effects';
 import { boardSaga } from './board.saga';
 import { calendarSaga } from './calendar.saga';
 import { errorSaga } from './error.saga';
-import { festivalSaga } from './festival';
 import { mealSaga } from './meal.saga';
 import { noticeSaga } from './notice.saga';
 import { timeTableSaga } from './timeTable.saga';
@@ -17,7 +16,6 @@ function* rootSaga() {
     timeTableSaga(),
     boardSaga(),
     errorSaga(),
-    festivalSaga(),
   ]);
 }
 
