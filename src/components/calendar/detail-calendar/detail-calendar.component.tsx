@@ -126,6 +126,9 @@ const CalendarWrapper = styled.div`
     grid-template-columns: repeat(3, 6rem);
     grid-column-gap: 0.25rem;
   }
+  @media ${Device.mobileS} {
+    grid-template-columns: repeat(3, 5rem);
+  }
 `;
 
 const DetailCalendarComponent: React.FC<
