@@ -102,7 +102,7 @@ const Content = styled.div`
 `;
 
 const LunchContent = styled(Content)`
-  left: 7.3rem;
+  left: 7rem;
 
   @media ${Device.tabletL} {
     top: unset;
@@ -199,7 +199,7 @@ const TimerComponent: React.FC = () => {
     <>
       <LunchTimer>
         <Title>점심시간까지 남은시간</Title>
-        <LunchTimerImg src={LunchImgSvg} alt='' />
+        <LunchTimerImg src={LunchImgSvg} alt="" />
         <LunchContent>
           <Time>{lunchHour}</Time>시&emsp;
           <Time>{lunchMin}</Time>분&emsp;
@@ -208,7 +208,7 @@ const TimerComponent: React.FC = () => {
       </LunchTimer>
       <HomeTimer>
         <Title>종례시간까지 남은시간</Title>
-        <HomeTimerImg src={HomeImgSvg} alt='' />
+        <HomeTimerImg src={HomeImgSvg} alt="" />
         <HomeContent>
           <Time>{homeHour}</Time>시&emsp;
           <Time>{homeMin}</Time>분&emsp;
