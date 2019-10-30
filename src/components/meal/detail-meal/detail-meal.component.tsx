@@ -169,7 +169,7 @@ export default class DetailMealComponent extends React.Component<
       JSX.Element[],
       JSX.Element[],
       JSX.Element[],
-      JSX.Element[]
+      JSX.Element[],
     ] = [[], [], [], [], []];
 
     if (getMealMonthStatus === 'success') {
@@ -188,7 +188,9 @@ export default class DetailMealComponent extends React.Component<
             meal.month === mealMoment.month() + 1,
         );
         const dateString = mealMoment.format('MM월 DD일');
-        const todayBool = moment().get('date') === mealMoment.get('date');
+        const todayBool =
+          moment().get('month') === mealMoment.get('month') &&
+          moment().get('date') === mealMoment.get('date');
         const day = days[mealMoment.get('d')];
         const lastMonthCheck: boolean =
           moment().get('month') !== mealMoment.get('month');
