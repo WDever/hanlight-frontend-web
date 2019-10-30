@@ -169,11 +169,11 @@ export default class DetailMealComponent extends React.Component<
       JSX.Element[],
       JSX.Element[],
       JSX.Element[],
-      JSX.Element[]
+      JSX.Element[],
     ] = [[], [], [], [], []];
 
     if (getMealMonthStatus === 'success') {
-      const moments = this.getWeekDayMoments(
+      const moments: moment.Moment[] = this.getWeekDayMoments(
         moment()
           .date(1)
           .startOf('week')
@@ -181,18 +181,20 @@ export default class DetailMealComponent extends React.Component<
         moment().endOf('month'),
       );
 
-      moments.forEach(mealMoment => {
+      moments.forEach((mealMoment: moment.Moment) => {
         const mealIndex = meals.findIndex(
-          meal =>
+          (meal: MealItem) =>
             meal.date === mealMoment.date() &&
             meal.month === mealMoment.month() + 1,
         );
-        const dateString = mealMoment.format('MM월 DD일');
-        const todayBool = moment().get('date') === mealMoment.get('date');
-        const day = days[mealMoment.get('d')];
+        const dateString: string = mealMoment.format('MM월 DD일');
+        const todayBool: boolean =
+          moment().get('month') === mealMoment.get('month') &&
+          moment().get('date') === mealMoment.get('date');
+        const day: string = days[mealMoment.get('d')];
         const lastMonthCheck: boolean =
           moment().get('month') !== mealMoment.get('month');
-        const week = lastMonthCheck
+        const week: number = lastMonthCheck
           ? 0
           : mealMoment.week() -
             moment()
@@ -224,7 +226,7 @@ export default class DetailMealComponent extends React.Component<
         }
       });
 
-      MealList.forEach((list, i, arr) => {
+      MealList.forEach((list: JSX.Element[], i: number, arr) => {
         if (list.length < 5) {
           const items = Array(5 - list.length)
             .fill(null)
