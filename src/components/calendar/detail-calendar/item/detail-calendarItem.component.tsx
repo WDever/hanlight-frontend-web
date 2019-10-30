@@ -41,6 +41,9 @@ const Wrapper = styled.div`
       box-shadow: 0 10px 20px 0 rgba(101, 101, 101, 0.16);
     }
   }
+  @media ${Device.mobileS} {
+    width: 5rem;
+  }
 `;
 
 const ContentsWrapper = styled.div`
@@ -60,6 +63,9 @@ const Title = styled.span`
 
   @media ${Device.mobileL} {
     font-size: 0.69rem;
+  }
+  @media ${Device.mobileS} {
+    font-size: 0.6rem;
   }
 `;
 
