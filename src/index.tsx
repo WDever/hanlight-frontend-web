@@ -1,3 +1,6 @@
+import 'react-app-polyfill/ie11';
+import 'react-app-polyfill/ie9';
+
 import 'index.scss';
 import 'lib/font/font.scss';
 import React from 'react';
