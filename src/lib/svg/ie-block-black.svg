@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="112.074" height="128.669" viewBox="0 0 112.074 128.669">
+    <defs>
+        <style>
+            .cls-1{fill:#2f2e41}.cls-2{fill:#ff476c}.cls-3{fill:#fff}.cls-4{fill:#3efffa;opacity:.8}.cls-5{fill:#3f3d56}
+        </style>
+    </defs>
+    <g id="우는애" transform="translate(-978.419 -951.573)">
+        <circle id="타원_161" cx="37.26" cy="37.26" r="37.26" class="cls-1" data-name="타원 161" transform="translate(995.028 980.968)"/>
+        <path id="사각형_654" d="M399 390.29l-11.24 2-3.52-19.92 11.24-2z" class="cls-1" data-name="사각형 654" transform="translate(658.708 673.568)"/>
+        <path id="사각형_655" d="M376.76 394.32l-11.24 2-3.52-19.94 11.24-2z" class="cls-1" data-name="사각형 655" transform="translate(658.708 673.568)"/>
+        <ellipse id="타원_162" cx="9.45" cy="3.49" class="cls-1" data-name="타원 162" rx="9.45" ry="3.49" transform="rotate(-40 1985.236 -861.589)"/>
+        <ellipse id="타원_163" cx="9.45" cy="3.49" class="cls-1" data-name="타원 163" rx="9.45" ry="3.49" transform="rotate(-40 1990.713 -893.523)"/>
+        <path id="패스_897" d="M403 304.13c.56-13.8-11.33-25.49-26.56-26.1s-28 10.06-28.58 23.85 10 16.94 25.25 17.55 29.33-1.51 29.89-15.3z" class="cls-2" data-name="패스 897" transform="translate(658.708 673.568)"/>
+        <ellipse id="타원_166" cx="5.88" cy="18.62" class="cls-1" data-name="타원 166" rx="5.88" ry="18.62" transform="rotate(-77 1125.96 -108.527)"/>
+        <ellipse id="타원_167" cx="5.88" cy="18.62" class="cls-1" data-name="타원 167" rx="5.88" ry="18.62" transform="rotate(-77 1170.175 -148.424)"/>
+        <path id="패스_898" d="M367.14 365a8.49 8.49 0 1 1 16.671-3.22 1.423 1.423 0 0 1 0 .2c.84 4.61-2.73 6.24-7.35 7.08s-8.52.56-9.36-4.06z" class="cls-3" data-name="패스 898" transform="translate(658.708 673.568)"/>
+        <circle id="타원_164" cx="12.74" cy="12.74" r="12.74" class="cls-3" data-name="타원 164" transform="translate(1017.938 996.378)"/>
+        <path id="패스_2121" d="M381 342.76c-.78-1.54-1.77-2.76-3-2.76s-2.22 1.22-3 2.76c-.78-1.54-1.77-2.76-3-2.76s-2.22 1.22-3 2.76c-.78-1.54-1.77-2.76-3-2.76s-2.22 1.22-3 2.76c-.76-1.52-1.74-2.71-2.94-2.75a12.58 12.58 0 0 0 2.39 4 13 13 0 0 0 1.66 1.57 12.719 12.719 0 0 0 3.25 1.85 12.548 12.548 0 0 0 3.48.82c.37 0 .75.06 1.13.06a7.975 7.975 0 0 0 1.19-.06 12.64 12.64 0 0 0 3.48-.83 12.817 12.817 0 0 0 7.26-7.38c-1.19.05-2.15 1.23-2.9 2.72z" class="cls-4" data-name="패스 2121" transform="translate(658.708 673.568)"/>
+        <circle id="타원_165" cx="4.25" cy="4.25" r="4.25" class="cls-5" data-name="타원 165" transform="translate(1021.198 1000.308)"/>
+    </g>
+</svg>

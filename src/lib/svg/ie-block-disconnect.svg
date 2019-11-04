@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="disconnect" width="119" height="30.743" viewBox="0 0 119 30.743">
+    <defs>
+        <style>
+            .cls-1{fill:#ff476c}
+        </style>
+    </defs>
+    <path id="사각형_1578" d="M0 0h41v6H0z" data-name="사각형 1578" transform="translate(0 11.954)"/>
+    <path id="패스_2123" d="M.074.408L36.454 0l-.074 6.614L0 7.023z" class="cls-1" data-name="패스 2123" transform="rotate(-45 53.245 -40.536)"/>
+    <path id="패스_2122" d="M0 0l36.379.408.074 6.615L.074 6.615z" class="cls-1" data-name="패스 2122" transform="rotate(45 24.611 59.417)"/>
+    <path id="사각형_1579" d="M0 0h41v6H0z" data-name="사각형 1579" transform="translate(78 11.954)"/>
+</svg>

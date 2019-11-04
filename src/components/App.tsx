@@ -1,5 +1,6 @@
 import React from 'react';
 
+import IEBlockComponent from 'components/ie-block';
 import AutoErrorCheckContainer from 'container/auto/autoErrorCheck';
 import AutoLoginContainer from 'container/auto/autoLogin';
 import ErrorContainer from 'container/error';
@@ -19,21 +20,26 @@ const ErrorComponents = () => (
   </>
 );
 
-const App: React.FC = () => (
-  <>
-    <AutoLoginContainer />
-    <AutoErrorCheckContainer />
-    <Switch>
-      <Route path="/user/recovery" component={RecoveryPage} />
-      <Route exact={true} path="/user/phone" component={PhoneCheckPage} />
-      <Route exact={true} path="/user/register" component={RegisterPage} />
-      <Route exact={true} path="/user/login" component={LoginPage} />
-      <Route exact={true} path="/error" component={ErrorComponents} />
-      <Route path="/service" component={servicePage} />
-      <Route path="/" component={MainPage} />
-      <Redirect to="/error" />
-    </Switch>
-  </>
-);
+const App: React.FC = () => {
+  const isIE: boolean = window.navigator.userAgent.indexOf('Trident') !== -1;
 
+  return isIE ? (
+    <IEBlockComponent />
+  ) : (
+    <>
+      <AutoLoginContainer />
+      <AutoErrorCheckContainer />
+      <Switch>
+        <Route path="/user/recovery" component={RecoveryPage} />
+        <Route exact={true} path="/user/phone" component={PhoneCheckPage} />
+        <Route exact={true} path="/user/register" component={RegisterPage} />
+        <Route exact={true} path="/user/login" component={LoginPage} />
+        <Route exact={true} path="/error" component={ErrorComponents} />
+        <Route path="/service" component={servicePage} />
+        <Route path="/" component={MainPage} />
+        <Redirect to="/error" />
+      </Switch>
+    </>
+  );
+};
 export default App;
