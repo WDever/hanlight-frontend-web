@@ -19,6 +19,7 @@
     "qrcode.react": "^0.9.3",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
+    "react-app-polyfill": "^1.0.4",
     "react-dom": "^16.8.6",
     "react-icons": "^3.7.0",
     "react-qr-reader": "^2.2.1",
@@ -47,6 +48,7 @@
       "not op_mini all"
     ],
     "development": [
+      ">0.2%",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

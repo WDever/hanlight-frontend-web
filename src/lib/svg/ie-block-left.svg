@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="453.146" height="680.657" viewBox="0 0 453.146 680.657">
+    <defs>
+        <style>
+            .cls-1{fill:url(#linear-gradient)}
+        </style>
+        <linearGradient id="linear-gradient" x1=".5" x2=".5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#ff8da4"/>
+            <stop offset="1" stop-color="#f1002f"/>
+        </linearGradient>
+    </defs>
+    <path id="왼쪽" d="M-609.941 744.578s137.667-31.627 160.188 198.4 269.659 157.376 292.181 381.273-452.37 0-452.37 0z" class="cls-1" transform="translate(609.942 -743.107)"/>
+</svg>
