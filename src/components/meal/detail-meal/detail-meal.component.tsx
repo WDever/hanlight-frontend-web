@@ -146,6 +146,25 @@ export default class DetailMealComponent extends React.Component<
     }
   }
 
+  public weekOfMonth(date: moment.Moment): number {
+    const weekInYearIndex =
+      date.year() !== date.weekYear()
+        ? date
+            .clone()
+            .subtract(1, 'week')
+            .week() + 1
+        : date.week();
+
+    return (
+      weekInYearIndex -
+      moment(date)
+        .startOf('month')
+        .week() +
+      1
+    );
+  }
+
+  // 토요일과 일요일을 제외한 moment 배열을 리턴하는 콜백 함수.
   public getWeekDayMoments = (
     start: moment.Moment,
     end: moment.Moment,
@@ -161,9 +180,10 @@ export default class DetailMealComponent extends React.Component<
   };
 
   public render() {
-    const { meals } = this.state;
+    const { meals } = this.state; // 리덕스의 mealList와 같음. cdu 참고.
     const { getMealMonthStatus } = this.props;
 
+    // mealList(meals)를 렌더링 하기 위한 배열. 한달의 주 수와 같은 5줄을 렌더링 한다.
     const MealList: [
       JSX.Element[],
       JSX.Element[],
@@ -173,16 +193,15 @@ export default class DetailMealComponent extends React.Component<
     ] = [[], [], [], [], []];
 
     if (getMealMonthStatus === 'success') {
+      // 토요일과 일요일을 제외한 momnet 배열.
       const moments: moment.Moment[] = this.getWeekDayMoments(
-        moment()
-          .date(1)
-          .startOf('week')
-          .day(1),
+        moment().date(1),
         moment().endOf('month'),
       );
 
       moments.forEach((mealMoment: moment.Moment) => {
-        const mealIndex = meals.findIndex(
+        // meals에서 순서에 맞는 급식 정보를 찾기 위한 인덱스 변수.
+        const mealIndex: number = meals.findIndex(
           (meal: MealItem) =>
             meal.date === mealMoment.date() &&
             meal.month === mealMoment.month() + 1,
@@ -191,16 +210,12 @@ export default class DetailMealComponent extends React.Component<
         const todayBool: boolean =
           moment().get('month') === mealMoment.get('month') &&
           moment().get('date') === mealMoment.get('date');
+        // 요일
         const day: string = days[mealMoment.get('d')];
-        const lastMonthCheck: boolean =
-          moment().get('month') !== mealMoment.get('month');
-        const week: number = lastMonthCheck
-          ? 0
-          : mealMoment.week() -
-            moment()
-              .date(1)
-              .startOf('week')
-              .week();
+        // get week number as index of MealList
+        // 지금이 몇번째 주인지 얻고, MealList의 인덱스로 활용하는 변수. 
+        const week: number = this.weekOfMonth(mealMoment) - 1;
+
         if (mealIndex >= 0) {
           MealList[week].push(
             <DetailMealItem
@@ -226,6 +241,7 @@ export default class DetailMealComponent extends React.Component<
         }
       });
 
+      // 5개의 아이템이 차지 않은 MealList 요소를 빈 아이템으로 채움.
       MealList.forEach((list: JSX.Element[], i: number, arr) => {
         if (list.length < 5) {
           const items = Array(5 - list.length)
@@ -246,7 +262,11 @@ export default class DetailMealComponent extends React.Component<
               />
             ));
 
-          arr[i] = list.concat(items);
+          if (i === 0) {
+            arr[i] = list.concat(items).reverse();
+          } else {
+            arr[i] = list.concat(items);
+          }
         }
       });
 
