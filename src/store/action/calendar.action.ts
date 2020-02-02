@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { CalendarItem, CalendarRecentItem } from 'store';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const GET_CALENDAR = 'GET_CALENDAR';
 export const GET_CALENDAR_SUCCESS = 'GET_CALENDAR_SUCCESS';
@@ -62,8 +62,8 @@ export class GetCalendarRecentFailure implements Action {
 }
 
 export const calendarActions = {
-  getCalendar: createStandardAction(GET_CALENDAR)<GetCalendarParams>(),
-  getCalendarRecent: createStandardAction(GET_CALENDAR_RECENT)<string>(),
+  getCalendar: createAction(GET_CALENDAR)<GetCalendarParams>(),
+  getCalendarRecent: createAction(GET_CALENDAR_RECENT)<string>(),
 };
 
 export type calendarReducerActions =

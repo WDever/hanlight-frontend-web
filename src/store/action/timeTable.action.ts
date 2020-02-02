@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const GET_TIMETABLE = 'GET_TIMETABLE';
 export const GET_TIMETABLE_SUCCESS = 'GET_TIMETABLE_SUCCESS';
@@ -35,7 +35,7 @@ export class GetTimetableFailure implements Action {
 }
 
 export const timeTableActions = {
-  getTimeTable: createStandardAction(GET_TIMETABLE)<string>(),
+  getTimeTable: createAction(GET_TIMETABLE)<string>(),
 };
 
 export type timeTableReducerActions =

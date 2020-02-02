@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 const TOGGLE_MENU = 'TOGGLE_MENU';
 
@@ -10,7 +10,7 @@ export class ToggleMenu implements Action {
 }
 
 export const utilActions = {
-  toggleMenu: createStandardAction(TOGGLE_MENU)<boolean>(),
+  toggleMenu: createAction(TOGGLE_MENU)<boolean>(),
 };
 
 export type utilReducerActions = ToggleMenu;
