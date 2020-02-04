@@ -7,7 +7,7 @@ import {
   LikeListModel,
   OptionData,
 } from 'store/model';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const GET_BOARD = 'GET_BOARD';
 export const GET_BOARD_SUCCESS = 'GET_BOARD_SUCCESS';
@@ -445,35 +445,29 @@ export class ResetBoard implements Action {
 }
 
 export const boardActions = {
-  getBoard: createStandardAction(GET_BOARD)<GetBoardParams>(),
-  postBoard: createStandardAction(POST_BOARD)<PostBoardParams>(),
-  patchBoard: createStandardAction(PATCH_BOARD)<PatchBoardParams>(),
-  editBoardToggle: createStandardAction(EDIT_BOARD_TOGGLE)<boolean>(),
-  deleteBoard: createStandardAction(DELETE_BOARD)<DeleteBoardParams>(),
-  getBoardCommemnt: createStandardAction(GET_BOARD_COMMENT)<
-    GetBoardCommentParams
-  >(),
-  postBoardCommemnt: createStandardAction(POST_BOARD_COMMENT)<
-    PostBoardCommentParams
-  >(),
-  patchBoardCommemnt: createStandardAction(PATCH_BOARD_COMMENT)<
+  getBoard: createAction(GET_BOARD)<GetBoardParams>(),
+  postBoard: createAction(POST_BOARD)<PostBoardParams>(),
+  patchBoard: createAction(PATCH_BOARD)<PatchBoardParams>(),
+  editBoardToggle: createAction(EDIT_BOARD_TOGGLE)<boolean>(),
+  deleteBoard: createAction(DELETE_BOARD)<DeleteBoardParams>(),
+  getBoardCommemnt: createAction(GET_BOARD_COMMENT)<GetBoardCommentParams>(),
+  postBoardCommemnt: createAction(POST_BOARD_COMMENT)<PostBoardCommentParams>(),
+  patchBoardCommemnt: createAction(PATCH_BOARD_COMMENT)<
     PatchBoardCommentParams
   >(),
-  editCommentToggle: createStandardAction(EDIT_COMMENT_TOGGLE)<boolean>(),
-  deleteBoardComment: createStandardAction(DELETE_BOARD_COMMENT)<
+  editCommentToggle: createAction(EDIT_COMMENT_TOGGLE)<boolean>(),
+  deleteBoardComment: createAction(DELETE_BOARD_COMMENT)<
     DeleteBoardCommentParams
   >(),
-  report: createStandardAction(REPORT)<ReportParams>(),
-  activeReport: createStandardAction(ACTIVE_REPORT)<boolean>(),
-  like: createStandardAction(LIKE)<LikeParams>(),
-  getLikeList: createStandardAction(GET_LIKE_LIST)<LikeParams>(),
-  likeListToggle: createStandardAction(LIKE_LIST_TOGGLE)<boolean>(),
-  photoDetailToggle: createStandardAction(PHOTO_DETAIL_TOGGLE)<
-    PhotoDetailParams
-  >(),
-  optionToggle: createStandardAction(OPTION_TOGGLE)<OptionData>(),
-  deemBoard: createStandardAction(DEEM_BOARD)<boolean>(),
-  resetBoard: createStandardAction(RESET_BOARD)(),
+  report: createAction(REPORT)<ReportParams>(),
+  activeReport: createAction(ACTIVE_REPORT)<boolean>(),
+  like: createAction(LIKE)<LikeParams>(),
+  getLikeList: createAction(GET_LIKE_LIST)<LikeParams>(),
+  likeListToggle: createAction(LIKE_LIST_TOGGLE)<boolean>(),
+  photoDetailToggle: createAction(PHOTO_DETAIL_TOGGLE)<PhotoDetailParams>(),
+  optionToggle: createAction(OPTION_TOGGLE)<OptionData>(),
+  deemBoard: createAction(DEEM_BOARD)<boolean>(),
+  resetBoard: createAction(RESET_BOARD)(),
 };
 
 export type boardReducerActions =

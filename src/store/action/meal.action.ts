@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { MealItem } from 'store';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const GET_MEAL = 'GET_MEAL';
 export const GET_MEAL_WEEK_SUCCESS = 'GET_MEAL_WEEK_SUCCESS';
@@ -78,8 +78,8 @@ export class GetMealOrderFailure implements Action {
 }
 
 export const mealActions = {
-  getMeal: createStandardAction(GET_MEAL)<GetMealParams>(),
-  getMealOrder: createStandardAction(GET_MEAL_ORDER)<GetMealOrderParams>(),
+  getMeal: createAction(GET_MEAL)<GetMealParams>(),
+  getMealOrder: createAction(GET_MEAL_ORDER)<GetMealOrderParams>(),
 };
 
 export type mealReducerActions =

@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { Action } from 'redux';
 import { ErrorResponse } from 'store/model';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const SET_ERROR = 'SET_ERROR';
 
@@ -18,8 +18,8 @@ export class ResetError implements Action {
 }
 
 export const errorActions = {
-  setError: createStandardAction(SET_ERROR)<ErrorResponse>(),
-  resetError: createStandardAction(RESET_ERROR)(),
+  setError: createAction(SET_ERROR)<ErrorResponse>(),
+  resetError: createAction(RESET_ERROR)(),
 };
 
 export type errorReducerActions = SetError | ResetError;

@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { ErrorResponse } from 'store/model';
-import { createStandardAction } from 'typesafe-actions';
+import { createAction } from 'typesafe-actions';
 
 export const LOGIN = 'LOGIN';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -331,20 +331,20 @@ export class PostUserImgFailure implements Action {
 }
 
 export const userActions = {
-  login: createStandardAction(LOGIN)<LoginParam>(),
-  idRecovery: createStandardAction(ID_RECOVERY)<IdRecoveryParam>(),
-  pwRecovery: createStandardAction(PW_RECOVERY)<PwRecoveryParam>(),
-  idExist: createStandardAction(ID_EXIST)<ExistParam>(),
-  verifyPhone: createStandardAction(VERIFY_PHONE)<VerifyPhoneParam>(),
-  register: createStandardAction(REGISTER)<RegisterParam>(),
-  setSignKey: createStandardAction(SET_SIGN_KEY)<string>(),
-  resetUser: createStandardAction(RESET_USER)(),
-  setFbCode: createStandardAction(SET_FB_CODE)<string>(),
-  setId: createStandardAction(SET_ID)<string>(),
-  getUser: createStandardAction(GET_USER)<string>(),
-  patchPassword: createStandardAction(PATCH_PASSWORD)<PatchPwParam>(),
-  patchPhone: createStandardAction(PATCH_PHONE)<PatchPhoneParam>(),
-  postUserImg: createStandardAction(POST_USER_IMG)<PostUserImgParmas>(),
+  login: createAction(LOGIN)<LoginParam>(),
+  idRecovery: createAction(ID_RECOVERY)<IdRecoveryParam>(),
+  pwRecovery: createAction(PW_RECOVERY)<PwRecoveryParam>(),
+  idExist: createAction(ID_EXIST)<ExistParam>(),
+  verifyPhone: createAction(VERIFY_PHONE)<VerifyPhoneParam>(),
+  register: createAction(REGISTER)<RegisterParam>(),
+  setSignKey: createAction(SET_SIGN_KEY)<string>(),
+  resetUser: createAction(RESET_USER)(),
+  setFbCode: createAction(SET_FB_CODE)<string>(),
+  setId: createAction(SET_ID)<string>(),
+  getUser: createAction(GET_USER)<string>(),
+  patchPassword: createAction(PATCH_PASSWORD)<PatchPwParam>(),
+  patchPhone: createAction(PATCH_PHONE)<PatchPhoneParam>(),
+  postUserImg: createAction(POST_USER_IMG)<PostUserImgParmas>(),
 };
 
 export type userReducerActions =
