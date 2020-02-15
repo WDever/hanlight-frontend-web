@@ -53,21 +53,15 @@ const CommentAllBtn = styled.button`
   }
 `;
 
-const BoardCommentComponent: React.FC<
-  BoardCommentProps & BoardCommentMethod & BoardCommentOwnProps
-> = props => {
+const BoardCommentComponent: React.FC<BoardCommentProps &
+  BoardCommentMethod &
+  BoardCommentOwnProps> = props => {
   const SelectedBoardPk = React.useRef<number>(0);
   const prevProps = usePrevious(props);
 
-  const {
-    boardApiStatus,
-    board_pk,
-    optionToggle,
-  } = props;
+  const { boardApiStatus, board_pk, optionToggle } = props;
 
-  const {
-    deleteBoardCommentStatus,
-  } = boardApiStatus;
+  const { deleteBoardCommentStatus } = boardApiStatus;
 
   React.useEffect(() => {
     if (prevProps && board_pk === SelectedBoardPk.current) {

@@ -379,15 +379,14 @@ export default class NoticeListComponent extends React.Component<
               </TdCreatedAt>
             </Tr>
           );
-        } else {
-          return (
-            <Tr key={i}>
-              <td />
-              <td />
-              <td />
-            </Tr>
-          );
         }
+        return (
+          <Tr key={i}>
+            <td />
+            <td />
+            <td />
+          </Tr>
+        );
       });
     const phazeCount = Math.ceil(Math.ceil(noticeCount / 10) / 9);
     const phaze =
@@ -420,7 +419,7 @@ export default class NoticeListComponent extends React.Component<
               <DateCol />
             </colgroup>
             <thead>
-              <Tr head={true}>
+              <Tr head>
                 <th>글번호</th>
                 <th>제목</th>
                 <th>작성일</th>
@@ -433,10 +432,9 @@ export default class NoticeListComponent extends React.Component<
               {phaze > 1 && (
                 <Page
                   current={false}
-                  to={
-                    `/notice?page=${page - 1}` +
-                    (title ? `&title=${title}` : '')
-                  }
+                  to={`/notice?page=${page - 1}${
+                    title ? `&title=${title}` : ''
+                  }`}
                 >
                   {'<이전'}
                 </Page>
@@ -450,9 +448,7 @@ export default class NoticeListComponent extends React.Component<
                     <Page
                       key={i}
                       current={to === page}
-                      to={
-                        `/notice?page=${to}` + (title ? `&title=${title}` : '')
-                      }
+                      to={`/notice?page=${to}${title ? `&title=${title}` : ''}`}
                     >
                       {to}
                     </Page>
@@ -462,10 +458,9 @@ export default class NoticeListComponent extends React.Component<
                 <Page
                   current={false}
                   style={{ marginRight: 0 }}
-                  to={
-                    `/notice?page=${Math.ceil(page / 10) * 10}` +
-                    (title ? `&title=${title}` : '')
-                  }
+                  to={`/notice?page=${Math.ceil(page / 10) * 10}${
+                    title ? `&title=${title}` : ''
+                  }`}
                 >
                   다음>
                 </Page>

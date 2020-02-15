@@ -365,20 +365,20 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
           <ProfileImg
             image={!!userImage}
             src={userImage || DefaultProfileImage}
-            alt=""
+            alt=''
           />
           <CommentContentWrapper>
             {editCommentToggleStatus && optionData.comment_pk === comment_pk ? (
               <Form onSubmit={submitEdit}>
                 <input
-                  type="text"
+                  type='text'
                   value={editedContent}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     if (e.currentTarget.value.length <= 300) {
                       setEditedContent(e);
                     }
                   }}
-                  autoFocus={true}
+                  autoFocus
                 />
               </Form>
             ) : (
@@ -397,9 +397,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
                     }
                   }}
                 >
-                  <CommentName>
-                    {user_name ? user_name : '글 작성자'}
-                  </CommentName>
+                  <CommentName>{user_name || '글 작성자'}</CommentName>
                   {content}
                 </CommentContent>
                 <CommentLikeWrapper
@@ -415,7 +413,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
                     }
                   }}
                 >
-                  <img src={LikeIcon} alt="" />
+                  <img src={LikeIcon} alt='' />
                   <CommetLikeCount>{likeCount}</CommetLikeCount>
                 </CommentLikeWrapper>
               </CommentBody>
@@ -445,7 +443,7 @@ const CommentItem: React.FC<CommentItemProps & CommentItemMethod> = ({
         </CommentLeftWrapper>
         <OptionBtn
           src={Dotdotdot}
-          alt="comment option"
+          alt='comment option'
           onClick={() =>
             optionToggle({
               type: 'comment',

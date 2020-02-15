@@ -146,7 +146,9 @@ const LikeListComponent: React.FC = () => {
 
   const { likeListToggle } = boardActions;
 
-  const LikeList = likeList.map((item, i) => (
+  const test: (str: string) => void = (str: string): string => str;
+
+  const LikeList: JSX.Element[] = likeList.map((item, i) => (
     <LikeListItemComponent
       key={i}
       user_image={item.user_image}
@@ -165,7 +167,7 @@ const LikeListComponent: React.FC = () => {
       <Hidden onClick={() => dispatch(likeListToggle(false))} />
       <ListBox>
         <ListHeader>
-          <img src={LikeImg} alt="like" />
+          <img src={LikeImg} alt='like' />
           <p>좋아요 {likeList.length}개</p>
           <FeedXButton onClick={() => dispatch(likeListToggle(false))} />
         </ListHeader>

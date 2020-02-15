@@ -80,14 +80,14 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
       )}
 
       <Switch>
-        <Route exact={true} path="/" component={MainComponents} />
-        <Route exact={true} path="/calendar" component={CalendarPage} />
-        <Route exact={true} path="/meal" component={MealPage} />
-        <Route exact={true} path="/timetable" component={TimeTablePage} />
-        <Route path="/notice" component={NoticePage} />
-        <Route exact={true} path="/board" component={BoardContainer} />
-        <Route exact={true} path="/profile" component={ProfileContainer} />
-        <Redirect to="/error" />
+        <Route exact path='/' component={MainComponents} />
+        <Route exact path='/calendar' component={CalendarPage} />
+        <Route exact path='/meal' component={MealPage} />
+        <Route exact path='/timetable' component={TimeTablePage} />
+        <Route path='/notice' component={NoticePage} />
+        <Route exact path='/board' component={BoardContainer} />
+        <Route exact path='/profile' component={ProfileContainer} />
+        <Redirect to='/error' />
       </Switch>
     </Template>
   ) : (

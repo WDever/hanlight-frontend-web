@@ -175,16 +175,15 @@ class MainNoticeComponent extends React.Component<
               onClick={() => this.props.history.push(`/notice/${item.pk}`)}
             />
           );
-        } else {
-          return <NoticeItem read={false} key={i} />;
         }
+        return <NoticeItem read={false} key={i} />;
       });
     return (
       <NoticeWrapper>
         <Separator>
           <TitleWrapper>
             <Title>공지사항</Title>
-            <MobileBtn to="/notice">전체보기 ></MobileBtn>
+            <MobileBtn to='/notice'>전체보기 ></MobileBtn>
           </TitleWrapper>
           <NoticeListWrapper>
             <InnerWrapper length={NoticeList.length}>
@@ -193,8 +192,8 @@ class MainNoticeComponent extends React.Component<
           </NoticeListWrapper>
         </Separator>
         <BtnWrapper>
-          <BtnBackGroundImg src={NoticeIllustSvg} alt="Notice Background Img" />
-          <MoreBtn to="/notice">공지사항 전체보기</MoreBtn>
+          <BtnBackGroundImg src={NoticeIllustSvg} alt='Notice Background Img' />
+          <MoreBtn to='/notice'>공지사항 전체보기</MoreBtn>
         </BtnWrapper>
       </NoticeWrapper>
     );

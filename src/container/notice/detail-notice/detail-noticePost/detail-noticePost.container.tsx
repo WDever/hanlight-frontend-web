@@ -23,9 +23,9 @@ export interface NoticePostMethod {
   getNoticePost: ({ accessToken, post_pk }: GetNoticePostParams) => void;
 }
 
-const NoticePostContainer: React.FC<
-  NoticePostProps & NoticePostMethod & RouteComponentProps<{ post_pk: string }>
-> = ({
+const NoticePostContainer: React.FC<NoticePostProps &
+  NoticePostMethod &
+  RouteComponentProps<{ post_pk: string }>> = ({
   history,
   location,
   match,

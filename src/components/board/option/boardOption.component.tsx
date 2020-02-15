@@ -1,15 +1,14 @@
 import * as React from 'react';
 
-import BoardReportComponent from '../report';
-import CommentOptionComponent from './comment';
-import FeedOptionComponent from './feed';
-import FeedEditComponent from './feed/edit';
-
 import { Deem, Device } from 'lib/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Dispatch } from 'redux';
 import { AppState, boardActions, BoardModel, boardReducerActions } from 'store';
 import styled from 'styled-components';
+import FeedEditComponent from './feed/edit';
+import FeedOptionComponent from './feed';
+import CommentOptionComponent from './comment';
+import BoardReportComponent from '../report';
 
 const Wrapper = Deem;
 

@@ -96,7 +96,7 @@ const ModalRecovery: React.FC<ModalRecoveryProps> = ({ id, click, type }) => {
   return (
     <Wrapper>
       <Modal>
-        <Img src={CheckBoxSvg} alt="" />
+        <Img src={CheckBoxSvg} alt='' />
         <>
           {type === 'id' ? (
             <TextWrapper>
@@ -112,7 +112,7 @@ const ModalRecovery: React.FC<ModalRecoveryProps> = ({ id, click, type }) => {
             </TextWrapper>
           )}
         </>
-        <ConfirmBtn onClick={click} active={true}>
+        <ConfirmBtn onClick={click} active>
           확인
         </ConfirmBtn>
       </Modal>

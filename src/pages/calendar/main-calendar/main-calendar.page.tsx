@@ -96,7 +96,7 @@ const MainCalendarPage: React.FC = () => (
   <Template>
     <TitleWrapper>
       <Title>학사일정</Title>
-      <AllViewBtn to="/calendar">전체보기</AllViewBtn>
+      <AllViewBtn to='/calendar'>전체보기</AllViewBtn>
     </TitleWrapper>
     <Wrapper>
       <CalendarContainer />

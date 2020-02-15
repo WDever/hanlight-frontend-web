@@ -31,10 +31,7 @@ const mapDispatchToProps = (
 });
 
 const HeaderContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(HeaderComponent),
+  connect(mapStateToProps, mapDispatchToProps)(HeaderComponent),
 );
 
 export default HeaderContainer;

@@ -32,9 +32,9 @@ export interface PhoneCheckMethod {
   resetError(): void;
 }
 
-const PhoneCheckContainer: React.SFC<
-  PhoneCheckProps & PhoneCheckMethod & RouteComponentProps
-> = ({
+const PhoneCheckContainer: React.SFC<PhoneCheckProps &
+  PhoneCheckMethod &
+  RouteComponentProps> = ({
   verifyPhone,
   verifyPhoneStatus,
   history,
@@ -91,8 +91,5 @@ const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(PhoneCheckContainer),
+  connect(mapStateToProps, mapDispatchToProps)(PhoneCheckContainer),
 );

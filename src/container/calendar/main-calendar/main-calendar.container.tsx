@@ -19,7 +19,8 @@ export interface MainCalendarMethod {
   getCalendarRecent(params: string | null): void;
 }
 
-const MainCalendarContainer: React.FC<MainCalendarProps & MainCalendarMethod> = ({
+const MainCalendarContainer: React.FC<MainCalendarProps &
+  MainCalendarMethod> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,

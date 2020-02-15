@@ -109,7 +109,7 @@ const MainTimeTablePage: React.FC = () => {
           <TitleDay>{days[today]}요일 &nbsp;</TitleDay>
           <span>시간표</span>
         </div>
-        <AllViewBtn to="/timetable">전체보기</AllViewBtn>
+        <AllViewBtn to='/timetable'>전체보기</AllViewBtn>
       </TitleWrapper>
 
       <ListWrapper>

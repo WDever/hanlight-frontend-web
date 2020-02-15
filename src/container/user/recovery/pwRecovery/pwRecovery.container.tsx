@@ -16,9 +16,9 @@ export interface PwRecoveryMethod {
   resetUser(): void;
 }
 
-const PwRecoveryContainer: React.FC<
-  PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
-> = ({
+const PwRecoveryContainer: React.FC<PwRecoveryProps &
+  PwRecoveryMethod &
+  RouteComponentProps> = ({
   match,
   history,
   location,
@@ -49,8 +49,5 @@ const maptDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    maptDispatchToProps,
-  )(PwRecoveryContainer),
+  connect(mapStateToProps, maptDispatchToProps)(PwRecoveryContainer),
 );

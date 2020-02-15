@@ -93,9 +93,9 @@ const hour = 3600;
 const minute = 60;
 const days = ['월', '화', '수', '목', '금'];
 
-const DetailTimeTableComponent: React.FC<
-  DetailTimeTableProps & DetailTimeTableMethod & RouteComponentProps
-> = ({
+const DetailTimeTableComponent: React.FC<DetailTimeTableProps &
+  DetailTimeTableMethod &
+  RouteComponentProps> = ({
   timeTableList,
   getTimetable,
   getTimetableStatus,
@@ -116,19 +116,23 @@ const DetailTimeTableComponent: React.FC<
   const period = (): number => {
     if (sum >= 15 * hour + 10 * minute) {
       return 7;
-    } else if (sum >= 14 * hour + 0 * minute) {
-      return 6;
-    } else if (sum >= 12 * hour + 20 * minute) {
-      return 5;
-    } else if (sum >= 11 * hour + 30 * minute) {
-      return 4;
-    } else if (sum >= 10 * hour + 30 * minute) {
-      return 3;
-    } else if (sum >= 9 * hour + 30 * minute) {
-      return 2;
-    } else {
-      return 1;
     }
+    if (sum >= 14 * hour + 0 * minute) {
+      return 6;
+    }
+    if (sum >= 12 * hour + 20 * minute) {
+      return 5;
+    }
+    if (sum >= 11 * hour + 30 * minute) {
+      return 4;
+    }
+    if (sum >= 10 * hour + 30 * minute) {
+      return 3;
+    }
+    if (sum >= 9 * hour + 30 * minute) {
+      return 2;
+    }
+    return 1;
   };
 
   const timeArr = [
@@ -170,11 +174,7 @@ const DetailTimeTableComponent: React.FC<
             ))
           : Array(5)
               .fill(null)
-              .map((_, i) => (
-                <Td key={i} now={false}>
-                  {''}
-                </Td>
-              ))}
+              .map((_, i) => <Td key={i} now={false} />)}
       </tr>
     ));
 
@@ -189,7 +189,7 @@ const DetailTimeTableComponent: React.FC<
         <thead>
           <tr>
             <Th now={false}>
-              <Img src={LogoSvg} alt="logo" />
+              <Img src={LogoSvg} alt='logo' />
             </Th>
             {days.map((day, j) => (
               <Th key={j} now={moment().get('d') === j + 1}>

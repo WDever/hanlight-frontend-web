@@ -60,7 +60,4 @@ const mapDispatchToProps = (dispatch: Dispatch<mealReducerActions>) => ({
   getMealOrder: bindActionCreators(mealActions.getMealOrder, dispatch),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(MainMealContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(MainMealContainer);

@@ -12,9 +12,7 @@ const Template = styled.div`
 `;
 
 const MainPage: React.FC = () => {
-  return (
-      <MainContainer />
-  );
+  return <MainContainer />;
 };
 
 export default MainPage;

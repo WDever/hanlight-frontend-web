@@ -13,9 +13,9 @@ export interface LoginMethod {
   login(data: LoginParam): void;
 }
 
-const LoginContainer: React.SFC<
-  LoginProps & LoginMethod & RouteComponentProps
-> = ({ login, history, match, location, loginStatus }) => (
+const LoginContainer: React.SFC<LoginProps &
+  LoginMethod &
+  RouteComponentProps> = ({ login, history, match, location, loginStatus }) => (
   <LoginComponent
     login={login}
     loginStatus={loginStatus}
@@ -34,8 +34,5 @@ const mapDispathToProps = (dispatch: Dispatch<userReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispathToProps,
-  )(LoginContainer),
+  connect(mapStateToProps, mapDispathToProps)(LoginContainer),
 );

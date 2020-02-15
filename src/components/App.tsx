@@ -30,16 +30,17 @@ const App: React.FC = () => {
       <AutoLoginContainer />
       <AutoErrorCheckContainer />
       <Switch>
-        <Route path="/user/recovery" component={RecoveryPage} />
-        <Route exact={true} path="/user/phone" component={PhoneCheckPage} />
-        <Route exact={true} path="/user/register" component={RegisterPage} />
-        <Route exact={true} path="/user/login" component={LoginPage} />
-        <Route exact={true} path="/error" component={ErrorComponents} />
-        <Route path="/service" component={servicePage} />
-        <Route path="/" component={MainPage} />
-        <Redirect to="/error" />
+        <Route path='/user/recovery' component={RecoveryPage} />
+        <Route exact path='/user/phone' component={PhoneCheckPage} />
+        <Route exact path='/user/register' component={RegisterPage} />
+        <Route exact path='/user/login' component={LoginPage} />
+        <Route exact path='/error' component={ErrorComponents} />
+        <Route path='/service' component={servicePage} />
+        <Route path='/' component={MainPage} />
+        <Redirect to='/error' />
       </Switch>
     </>
   );
 };
+
 export default App;

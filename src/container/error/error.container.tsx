@@ -33,10 +33,7 @@ const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions>) => ({
 });
 
 const ErrorContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(ErrorComponent),
+  connect(mapStateToProps, mapDispatchToProps)(ErrorComponent),
 );
 
 export default ErrorContainer;

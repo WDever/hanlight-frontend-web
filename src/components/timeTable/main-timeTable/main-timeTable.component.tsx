@@ -71,39 +71,42 @@ export default class MainTimeTableComponent extends React.Component<
       .map((value, index) => {
         if (!timeTableList[today].length || !timeTableList[today][index]) {
           return <NoBox key={index} />;
-        } else {
-          const sum =
-            moment().get('hour') * hour +
-            moment().get('minute') * minute +
-            moment().get('second');
-
-          const period = (): number => {
-            if (sum >= 15 * hour + 10 * minute) {
-              return 7;
-            } else if (sum >= 14 * hour + 0 * minute) {
-              return 6;
-            } else if (sum >= 12 * hour + 20 * minute) {
-              return 5;
-            } else if (sum >= 11 * hour + 30 * minute) {
-              return 4;
-            } else if (sum >= 10 * hour + 30 * minute) {
-              return 3;
-            } else if (sum >= 9 * hour + 30 * minute) {
-              return 2;
-            } else {
-              return 1;
-            }
-          };
-
-          return (
-            <TimeTableItem
-              index={index + 1}
-              sub={timeTableList[today][index]}
-              active={index + 1 === period()}
-              key={index}
-            />
-          );
         }
+        const sum =
+          moment().get('hour') * hour +
+          moment().get('minute') * minute +
+          moment().get('second');
+
+        const period = (): number => {
+          if (sum >= 15 * hour + 10 * minute) {
+            return 7;
+          }
+          if (sum >= 14 * hour + 0 * minute) {
+            return 6;
+          }
+          if (sum >= 12 * hour + 20 * minute) {
+            return 5;
+          }
+          if (sum >= 11 * hour + 30 * minute) {
+            return 4;
+          }
+          if (sum >= 10 * hour + 30 * minute) {
+            return 3;
+          }
+          if (sum >= 9 * hour + 30 * minute) {
+            return 2;
+          }
+          return 1;
+        };
+
+        return (
+          <TimeTableItem
+            index={index + 1}
+            sub={timeTableList[today][index]}
+            active={index + 1 === period()}
+            key={index}
+          />
+        );
       });
 
     return <TimeTable>{TimeTableList}</TimeTable>;

@@ -7,6 +7,6 @@ export interface TimeTableModel {
     string[],
     string[],
     string[],
-    string[]
+    string[],
   ];
 }

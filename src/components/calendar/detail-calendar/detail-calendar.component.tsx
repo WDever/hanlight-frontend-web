@@ -131,9 +131,13 @@ const CalendarWrapper = styled.div`
   }
 `;
 
-const DetailCalendarComponent: React.FC<
-  DetailCalendarMethod & DetailCalendarProps
-> = ({ getCalendar, getCalendarStatus, accessToken, calendar }) => {
+const DetailCalendarComponent: React.FC<DetailCalendarMethod &
+  DetailCalendarProps> = ({
+  getCalendar,
+  getCalendarStatus,
+  accessToken,
+  calendar,
+}) => {
   const [selectedMonth, setSelecetedMonth] = useState<string>(
     moment().format('M'),
   );

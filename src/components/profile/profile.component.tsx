@@ -265,9 +265,9 @@ const ValueBtn = styled.button`
   }
 `;
 
-const ProfileComponent: React.FC<
-  ProfileProps & ProfileMethod & RouteComponentProps
-> = ({
+const ProfileComponent: React.FC<ProfileProps &
+  ProfileMethod &
+  RouteComponentProps> = ({
   accessToken,
   id,
   name,
@@ -382,13 +382,13 @@ const ProfileComponent: React.FC<
         <Profile>
           <TopWrapper>
             <Top>
-              <TopImg image={!!image} src={image || DefaultProfileImg} alt="" />
+              <TopImg image={!!image} src={image || DefaultProfileImg} alt='' />
               <ProfileBtn>
                 사진 변경
                 <input
-                  type="file"
+                  type='file'
                   onChange={submitProfileImg}
-                  accept="image/*"
+                  accept='image/*'
                 />
               </ProfileBtn>
               <TopName>{name}</TopName>
@@ -415,9 +415,9 @@ const ProfileComponent: React.FC<
               <ValueInputWrapper>
                 <form onSubmit={PatchPassword}>
                   <ValueInput
-                    type="password"
-                    autoComplete="false"
-                    placeholder="변경할 비밀번호를 입력해주세요."
+                    type='password'
+                    autoComplete='false'
+                    placeholder='변경할 비밀번호를 입력해주세요.'
                     onChange={setPassword}
                     value={password}
                     wrong={new RegExp(passwordRegExp).test(password)}
@@ -432,17 +432,17 @@ const ProfileComponent: React.FC<
                 <ValueInput
                   value={tp}
                   onChange={setTp}
-                  placeholder="예) 01012345678"
+                  placeholder='예) 01012345678'
                   wrong={new RegExp(tpRegExp).test(tp)}
                 />
                 <AccountKit
-                  appId="265056484381541"
+                  appId='265056484381541'
                   csrf={uuid.v4()}
-                  debug={true}
-                  version="v1.1"
+                  debug
+                  version='v1.1'
                   phoneNumber={tp}
                   onResponse={FbResponseHandle}
-                  language="ko_KR"
+                  language='ko_KR'
                   validation={() =>
                     patchPasswordStatus !== 'pending' &&
                     new RegExp(tpRegExp).test(tp)

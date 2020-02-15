@@ -37,10 +37,7 @@ const mapDispatchToProps = (
 });
 
 const HeaderMenuContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(HeaderMenuComponent),
+  connect(mapStateToProps, mapDispatchToProps)(HeaderMenuComponent),
 );
 
 export default HeaderMenuContainer;

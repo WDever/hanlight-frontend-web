@@ -108,9 +108,9 @@ const Form = styled.form`
   }
 `;
 
-const CommentFormComponent: React.FC<
-  CommentFormProps & CommentFormOwnProps & CommentFormMethod
-> = ({
+const CommentFormComponent: React.FC<CommentFormProps &
+  CommentFormOwnProps &
+  CommentFormMethod> = ({
   board_pk,
   board_userName,
   board_write,
@@ -135,7 +135,7 @@ const CommentFormComponent: React.FC<
       <ProfileImg
         image={!!userImage && !anonymous}
         src={anonymous ? DefaultProfileImage : userImage || DefaultProfileImage}
-        alt="Profile"
+        alt='Profile'
       />
       <Form>
         <input
@@ -145,7 +145,7 @@ const CommentFormComponent: React.FC<
               setContent(e);
             }
           }}
-          type="text"
+          type='text'
         />
         <button onClick={PostComment}>입력</button>
       </Form>

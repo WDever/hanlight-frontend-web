@@ -200,6 +200,7 @@ class PhoneCheckComponent extends React.Component<
   };
 
   public codeRef = '';
+
   public getCodeStatus: GetCodeStatus = 'none';
 
   public componentDidMount() {
@@ -240,12 +241,14 @@ class PhoneCheckComponent extends React.Component<
   }
 
   public signKeyCheck = (str: string) => new RegExp(signKeyRegExp).test(str);
+
   public tpCheck = (str: string) => new RegExp(tpRegExp).test(str);
+
   public idCheck = (str: string) => new RegExp(idRegExp).test(str);
 
   public handleInputs = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name = e.target.name;
-    const value = e.target.value;
+    const { name } = e.target;
+    const { value } = e.target;
 
     if (name === 'id' || name === 'tp' || name === 'signKey') {
       this.setState({
@@ -287,13 +290,14 @@ class PhoneCheckComponent extends React.Component<
 
     if (type === 'register') {
       return tpCheckResult && signKeyCheckResult;
-    } else if (type === 'recovery' && key === 'id') {
-      return tpCheckResult;
-    } else if (type === 'recovery' && key === 'password') {
-      return tpCheckResult && idCheckResult;
-    } else {
-      return false;
     }
+    if (type === 'recovery' && key === 'id') {
+      return tpCheckResult;
+    }
+    if (type === 'recovery' && key === 'password') {
+      return tpCheckResult && idCheckResult;
+    }
+    return false;
   };
 
   public pendingCheck = (): boolean => {
@@ -309,19 +313,20 @@ class PhoneCheckComponent extends React.Component<
   };
 
   public typingCheck = (): boolean => {
-    const type = this.state.query.type;
-    const key = this.state.query.key;
+    const { type } = this.state.query;
+    const { key } = this.state.query;
     const { id, tp, signKey } = this.state.inputs;
 
     if (type === 'register') {
       return !!tp.value.length && !!signKey.value.length;
-    } else if (type === 'recovery' && key === 'id') {
-      return !!tp.value.length;
-    } else if (type === 'recovery' && key === 'password') {
-      return !!id.value.length && !!tp.value.length;
-    } else {
-      return false;
     }
+    if (type === 'recovery' && key === 'id') {
+      return !!tp.value.length;
+    }
+    if (type === 'recovery' && key === 'password') {
+      return !!id.value.length && !!tp.value.length;
+    }
+    return false;
   };
 
   public handleFbResponse = (res: FbAccountKitResType) => {
@@ -372,17 +377,17 @@ class PhoneCheckComponent extends React.Component<
       errorMessage,
     } = this.props;
     const { query, inputs } = this.state;
-    const signKey = inputs.signKey;
-    const id = inputs.id;
-    const tp = inputs.tp;
-    const type = query.type;
-    const key = query.key;
+    const { signKey } = inputs;
+    const { id } = inputs;
+    const { tp } = inputs;
+    const { type } = query;
+    const { key } = query;
 
     return (
-      <React.Fragment>
+      <>
         {idRecoveryStatus === 'success' && (
           <ModalRecovery
-            type={'id'}
+            type='id'
             id={recoveryId}
             click={() => {
               this.props.resetUser();
@@ -436,10 +441,10 @@ class PhoneCheckComponent extends React.Component<
                     <Input
                       wrong={!signKey.checked}
                       value={signKey.value}
-                      type="text"
-                      placeholder="제공된 핀 번호를 입력해주세요"
-                      name="signKey"
-                      autoComplete="off"
+                      type='text'
+                      placeholder='제공된 핀 번호를 입력해주세요'
+                      name='signKey'
+                      autoComplete='off'
                       onChange={handleInputs}
                     />
                     <WrongMessageWrapper>
@@ -448,7 +453,7 @@ class PhoneCheckComponent extends React.Component<
                     </WrongMessageWrapper>
                   </InputGroup>
                 ) : (
-                  <React.Fragment />
+                  <></>
                 )}
                 {type === 'recovery' && key === 'password' ? (
                   <InputGroup>
@@ -456,10 +461,10 @@ class PhoneCheckComponent extends React.Component<
                     <Input
                       wrong={!id.checked}
                       value={id.value}
-                      name="id"
+                      name='id'
                       onChange={handleInputs}
-                      placeholder="아이디"
-                      autoComplete="off"
+                      placeholder='아이디'
+                      autoComplete='off'
                     />
                     <WrongMessageWrapper>
                       {!id.checked &&
@@ -467,17 +472,17 @@ class PhoneCheckComponent extends React.Component<
                     </WrongMessageWrapper>
                   </InputGroup>
                 ) : (
-                  <React.Fragment />
+                  <></>
                 )}
                 <InputGroup>
                   <InputName>전화번호</InputName>
                   <Input
                     wrong={!tp.checked}
                     value={tp.value}
-                    type="tel"
-                    name="tp"
-                    autoComplete="off"
-                    placeholder="휴대폰 번호를 - 빼고 입력해주세요."
+                    type='tel'
+                    name='tp'
+                    autoComplete='off'
+                    placeholder='휴대폰 번호를 - 빼고 입력해주세요.'
                     onChange={handleInputs}
                   />
                   <WrongMessageWrapper>
@@ -488,13 +493,13 @@ class PhoneCheckComponent extends React.Component<
               <TermsBtnWrapper>
                 {typingCheck() ? (
                   <AccountKit
-                    appId="265056484381541"
+                    appId='265056484381541'
                     csrf={uuid.v4()}
                     debug={false}
-                    version="v1.1"
+                    version='v1.1'
                     phoneNumber={tp.value}
                     onResponse={handleFbResponse}
-                    language="ko_KR"
+                    language='ko_KR'
                     validation={() =>
                       query.validation && pendingCheck() && handleChecked()
                     }
@@ -518,11 +523,11 @@ class PhoneCheckComponent extends React.Component<
                 {type === 'register' && (
                   <TermWrapper>
                     <span>전화번호 인증 시&nbsp;</span>
-                    <TermShortCut to="/service/termsofuse">
+                    <TermShortCut to='/service/termsofuse'>
                       이용 약관
                     </TermShortCut>
                     과&nbsp;
-                    <TermShortCut to="/service/privacypolicy">
+                    <TermShortCut to='/service/privacypolicy'>
                       개인정보처리방침
                     </TermShortCut>
                     <span>에 동의하게 됩니다.</span>
@@ -532,9 +537,9 @@ class PhoneCheckComponent extends React.Component<
             </Form>
           </PhoneCheckWrapper>
         ) : (
-          <React.Fragment />
+          <></>
         )}
-      </React.Fragment>
+      </>
     );
   }
 }

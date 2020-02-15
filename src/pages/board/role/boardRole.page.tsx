@@ -64,7 +64,7 @@ const RoleContentString = styled.span`
 const BoardRolePage: React.FC = () => (
   <Wrapper>
     <Role>
-      <RoleImg src={Role1} alt="" />
+      <RoleImg src={Role1} alt='' />
       <RoleContent>
         <RoleContentStep>
           <span>STEP 1.</span>
@@ -77,7 +77,7 @@ const BoardRolePage: React.FC = () => (
       </RoleContent>
     </Role>
     <Role>
-      <RoleImg src={Role2} alt="" />
+      <RoleImg src={Role2} alt='' />
       <RoleContent>
         <RoleContentStep>
           <span>STEP 2.</span>
@@ -90,7 +90,7 @@ const BoardRolePage: React.FC = () => (
       </RoleContent>
     </Role>
     <Role>
-      <RoleImg src={Role3} alt="" />
+      <RoleImg src={Role3} alt='' />
       <RoleContent>
         <RoleContentStep>
           <span>STEP 3.</span>

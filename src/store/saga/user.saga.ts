@@ -53,6 +53,8 @@ import {
   VERIFY_PHONE_SUCCESS,
   VerifyPhone,
   VerifyPhoneParam,
+  IdRecoveryParam,
+  IdRecoverySuccess,
 } from '../action';
 
 const loginApi = (data: LoginParam) =>
@@ -78,9 +80,11 @@ function* loginApiSaga(action: Login) {
   }
 }
 
-const idRecoveryApi = ({ code }: { code: string }) =>
+const idRecoveryApi: (
+  data: IdRecoveryParam,
+) => Promise<AxiosResponse<IdRecoverySuccess>> = ({ code }) =>
   instance
-    .post('/api/user/recovery/id', {
+    .post<AxiosResponse<IdRecoverySuccess>>('/api/user/recovery/id', {
       code,
     })
     .then(res => res.data);

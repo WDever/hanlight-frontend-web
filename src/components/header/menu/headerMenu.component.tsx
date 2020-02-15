@@ -198,9 +198,17 @@ const DownSide = styled.div`
   height: calc(100% - 6.5rem);
 `;
 
-const HeaderMenuComponent: React.FC<
-  HeaderMenuProps & HeaderMenuMethod & HeaderMenuOwnProps & RouteComponentProps
-> = ({ name, image, type, toggleMenu, logout, history }) => {
+const HeaderMenuComponent: React.FC<HeaderMenuProps &
+  HeaderMenuMethod &
+  HeaderMenuOwnProps &
+  RouteComponentProps> = ({
+  name,
+  image,
+  type,
+  toggleMenu,
+  logout,
+  history,
+}) => {
   const handleShortCut = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -216,15 +224,17 @@ const HeaderMenuComponent: React.FC<
   const userType = (): string => {
     if (type === 'student') {
       return '학생';
-    } else if (type === 'teacher') {
-      return '선생님';
-    } else if (type === 'graduate') {
-      return '졸업생';
-    } else if (type === 'parent') {
-      return '부모님';
-    } else {
-      return '';
     }
+    if (type === 'teacher') {
+      return '선생님';
+    }
+    if (type === 'graduate') {
+      return '졸업생';
+    }
+    if (type === 'parent') {
+      return '부모님';
+    }
+    return '';
   };
 
   return (
@@ -235,7 +245,7 @@ const HeaderMenuComponent: React.FC<
             <ProfileImg
               image={!!image}
               src={image || DefaultProfileImg}
-              alt=""
+              alt=''
             />
             <Info>
               <Name>{name}님, 안녕하세요 ✨</Name>
@@ -245,45 +255,45 @@ const HeaderMenuComponent: React.FC<
           <CircleIcon
             src={Circle1}
             style={{ top: '-50%', left: '54%' }}
-            alt=""
+            alt=''
           />
-          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt="" />
+          <CircleIcon src={Circle2} style={{ right: '0', bottom: 0 }} alt='' />
         </Upside>
         <DownSide>
           <ItemWrapper>
-            <Item name="notice" onClick={handleShortCut}>
-              <ItemIcon src={NoticeIcon} alt="" />
+            <Item name='notice' onClick={handleShortCut}>
+              <ItemIcon src={NoticeIcon} alt='' />
               <ItemSpan>공지사항</ItemSpan>
             </Item>
-            <Item name="timetable" onClick={handleShortCut}>
-              <ItemIcon src={TimetableIcon} alt="" />
+            <Item name='timetable' onClick={handleShortCut}>
+              <ItemIcon src={TimetableIcon} alt='' />
               <ItemSpan>시간표</ItemSpan>
             </Item>
-            <Item name="calendar" onClick={handleShortCut}>
-              <ItemIcon src={CalendarIcon} alt="" />
+            <Item name='calendar' onClick={handleShortCut}>
+              <ItemIcon src={CalendarIcon} alt='' />
               <ItemSpan>학사일정</ItemSpan>
             </Item>
-            <Item name="board" onClick={handleShortCut}>
-              <ItemIcon src={BambooIcon} alt="" />
+            <Item name='board' onClick={handleShortCut}>
+              <ItemIcon src={BambooIcon} alt='' />
               <ItemSpan>대나무숲</ItemSpan>
             </Item>
-            <Item name="meal" onClick={handleShortCut}>
-              <ItemIcon src={MealIcon} alt="" />
+            <Item name='meal' onClick={handleShortCut}>
+              <ItemIcon src={MealIcon} alt='' />
               <ItemSpan>급식표</ItemSpan>
             </Item>
-            <Item name="profile" onClick={handleShortCut}>
-              <ItemIcon src={InfoEditIcon} alt="" />
+            <Item name='profile' onClick={handleShortCut}>
+              <ItemIcon src={InfoEditIcon} alt='' />
               <ItemSpan>정보수정</ItemSpan>
             </Item>
-            <Item name="logout" onClick={handleShortCut}>
-              <ItemIcon src={LogoutIcon} alt="" />
+            <Item name='logout' onClick={handleShortCut}>
+              <ItemIcon src={LogoutIcon} alt='' />
               <ItemSpan>로그아웃</ItemSpan>
             </Item>
           </ItemWrapper>
           <CircleIcon
             src={Circle3}
             style={{ width: '100%', bottom: 0 }}
-            alt=""
+            alt=''
           />
         </DownSide>
       </LeftWrapper>

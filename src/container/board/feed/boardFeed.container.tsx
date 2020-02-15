@@ -73,7 +73,10 @@ const mapDispatchToProps = (dispatch: Dispatch<boardReducerActions>) => ({
   optionToggle: bindActionCreators(boardActions.optionToggle, dispatch),
   likeListToggle: bindActionCreators(boardActions.likeListToggle, dispatch),
   getLikeList: bindActionCreators(boardActions.getLikeList, dispatch),
-  photoDetailToggle: bindActionCreators(boardActions.photoDetailToggle, dispatch),
+  photoDetailToggle: bindActionCreators(
+    boardActions.photoDetailToggle,
+    dispatch,
+  ),
 });
 
 const BoardFeedContainer = connect(

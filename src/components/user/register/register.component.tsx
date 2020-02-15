@@ -105,9 +105,9 @@ const InputName = styled.span`
   }
 `;
 
-const RegisterComponent: React.FC<
-  RegisterProps & RegisterMethod & RouteComponentProps
-> = ({
+const RegisterComponent: React.FC<RegisterProps &
+  RegisterMethod &
+  RouteComponentProps> = ({
   registerStatus,
   signKey,
   register,
@@ -190,10 +190,10 @@ const RegisterComponent: React.FC<
   );
 
   return (
-    <React.Fragment>
+    <>
       {registerStatus === 'success' && (
         <ModalPhoneCheck
-          message="회원가입 성공"
+          message='회원가입 성공'
           click={() => {
             resetUser();
             history.push('/user/login');
@@ -203,7 +203,7 @@ const RegisterComponent: React.FC<
 
       <RegisterWrapper>
         <GreetingDiv>
-          <HanlightLogoImg src={HanlightLogo} alt="" />
+          <HanlightLogoImg src={HanlightLogo} alt='' />
           <Title>회원가입</Title>
         </GreetingDiv>
         <Form onSubmit={registerSubmit}>
@@ -213,10 +213,10 @@ const RegisterComponent: React.FC<
               <IdInput
                 wrong={!idValidation || idExistStatus === 'success-true'}
                 value={id}
-                type="text"
-                placeholder="5~20자의 영문 소문자, 숫자와 특수기호 _ , /만 사용가능"
-                name="id"
-                autoComplete="off"
+                type='text'
+                placeholder='5~20자의 영문 소문자, 숫자와 특수기호 _ , /만 사용가능'
+                name='id'
+                autoComplete='off'
                 onChange={inputsChange}
               />
               <WrongMessageWrapper>
@@ -232,10 +232,10 @@ const RegisterComponent: React.FC<
               <PwInput
                 wrong={!pwValidation}
                 value={password}
-                type="password"
-                name="password"
-                autoComplete="off"
-                placeholder="8~16자의 영문 대소문자, 숫자나 특수문자(키보드 1~0)"
+                type='password'
+                name='password'
+                autoComplete='off'
+                placeholder='8~16자의 영문 대소문자, 숫자나 특수문자(키보드 1~0)'
                 onChange={inputsChange}
               />
               <WrongMessageWrapper>
@@ -248,10 +248,10 @@ const RegisterComponent: React.FC<
               <RePwInput
                 wrong={!rpwValidation}
                 value={rePassword}
-                name="rePassword"
-                autoComplete="off"
-                placeholder="**********"
-                type="password"
+                name='rePassword'
+                autoComplete='off'
+                placeholder='**********'
+                type='password'
                 onChange={inputsChange}
               />
               <WrongMessageWrapper>
@@ -268,7 +268,7 @@ const RegisterComponent: React.FC<
           </Button>
         </Form>
       </RegisterWrapper>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ import {
   BoardModel,
   boardReducerActions,
   ErrorModel,
-  UserModel,
+  UserState,
 } from 'store';
 import styled from 'styled-components';
 
@@ -165,7 +165,7 @@ const Form = styled.form`
 const BoardReportComponent: React.FC = () => {
   const dispatch: Dispatch<boardReducerActions> = useDispatch();
 
-  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { accessToken } = useSelector<AppState, UserState>(state => state.user);
   const { optionData } = useSelector<AppState, BoardModel>(
     state => state.board,
   );
@@ -241,8 +241,8 @@ const BoardReportComponent: React.FC = () => {
         <textarea
           minLength={1}
           maxLength={300}
-          autoFocus={true}
-          placeholder="신고사유를 작성해주세요. (최대 300자)  ex)풍기문란, 욕설, 성희롱"
+          autoFocus
+          placeholder='신고사유를 작성해주세요. (최대 300자)  ex)풍기문란, 욕설, 성희롱'
           onChange={setContent}
         />
         <button>신고하기</button>

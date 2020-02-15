@@ -13,7 +13,7 @@ export interface DetailTimeTableProps {
     string[],
     string[],
     string[],
-    string[]
+    string[],
   ];
   getTimetableStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
@@ -26,9 +26,9 @@ export interface DetailTimeTableMethod {
   getTimetable(param: string | null): void;
 }
 
-const DetailTimeTableContainer: React.FC<
-  DetailTimeTableProps & DetailTimeTableMethod & RouteComponentProps
-> = ({
+const DetailTimeTableContainer: React.FC<DetailTimeTableProps &
+  DetailTimeTableMethod &
+  RouteComponentProps> = ({
   timeTableList,
   getTimetable,
   getTimetableStatus,
@@ -70,8 +70,5 @@ const mapDispatchToProps = (dispatch: Dispatch<timeTableReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(DetailTimeTableContainer),
+  connect(mapStateToProps, mapDispatchToProps)(DetailTimeTableContainer),
 );

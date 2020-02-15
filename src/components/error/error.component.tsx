@@ -103,9 +103,16 @@ const Button = styled.button`
   }
 `;
 
-const ErrorComponent: React.FC<
-  ErrorProps & ErrorMethod & RouteComponentProps
-> = ({ onError, code, name, message, history, resetError }) => {
+const ErrorComponent: React.FC<ErrorProps &
+  ErrorMethod &
+  RouteComponentProps> = ({
+  onError,
+  code,
+  name,
+  message,
+  history,
+  resetError,
+}) => {
   const toPrevious = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     history.go(-2);
@@ -129,7 +136,7 @@ const ErrorComponent: React.FC<
           </Content>
           <Button onClick={toPrevious}>이전으로</Button>
         </LeftWrapper>
-        <ErrorImg src={Illust} alt="" />
+        <ErrorImg src={Illust} alt='' />
       </Center>
     </Wrapper>
   );

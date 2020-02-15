@@ -7,7 +7,7 @@ import {
   boardActions,
   boardReducerActions,
   OptionData,
-  UserModel,
+  UserState,
 } from 'store';
 import { BlueTxt, OptionBox, RedTxt } from '../boardOption.component';
 
@@ -18,11 +18,16 @@ interface FeedOptionProps {
 const FeedOptionComponent: React.FC<FeedOptionProps> = ({ optionData }) => {
   const dispatch: Dispatch<boardReducerActions> = useDispatch();
 
-  const { accessToken } = useSelector<AppState, UserModel>(state => state.user);
+  const { accessToken } = useSelector<AppState, UserState>(state => state.user);
 
   const { board_pk, write } = optionData;
 
-  const { optionToggle, activeReport, editBoardToggle, deleteBoard } = boardActions;
+  const {
+    optionToggle,
+    activeReport,
+    editBoardToggle,
+    deleteBoard,
+  } = boardActions;
 
   const deleteFeed = () => {
     dispatch(

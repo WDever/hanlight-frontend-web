@@ -88,9 +88,9 @@ const ModalPhoneCheck: React.FC<{ message?: string; click(): void }> = ({
   return (
     <Wrapper>
       <Modal>
-        <Img src={phoneCheckSuccessSvg} alt="" />
+        <Img src={phoneCheckSuccessSvg} alt='' />
         <TextWrapper>{message || '인증 성공'}</TextWrapper>
-        <ConfirmBtn onClick={click} active={true}>
+        <ConfirmBtn onClick={click} active>
           확인
         </ConfirmBtn>
       </Modal>

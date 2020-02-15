@@ -37,10 +37,7 @@ const mapDispatchToProps = (dispatch: Dispatch<errorReducerActions>) => ({
 });
 
 const AutoErrorCheckContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(AutoErrorCheckComponent),
+  connect(mapStateToProps, mapDispatchToProps)(AutoErrorCheckComponent),
 );
 
 export default AutoErrorCheckContainer;

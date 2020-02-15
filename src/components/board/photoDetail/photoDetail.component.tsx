@@ -103,16 +103,16 @@ const PhotoDetailComponent: React.FC = () => {
         }
       />
       <FeedXButton
-        color={'#ffffff'}
+        color='#ffffff'
         onClick={() =>
           dispatch(photoDetailToggle({ status: false, board_pk: 0, idx: 0 }))
         }
       />
-      <FeedImgToggle src={boardFiles[index]} alt="" />
+      <FeedImgToggle src={boardFiles[index]} alt='' />
       {boardFiles[index - 1] && (
         <FeedImgToggleArrow
           src={LeftArrow}
-          alt="arrow button"
+          alt='arrow button'
           style={{
             left: 0,
             marginLeft: '1rem',
@@ -123,7 +123,7 @@ const PhotoDetailComponent: React.FC = () => {
       {boardFiles[index + 1] && (
         <FeedImgToggleArrow
           src={RightArrow}
-          alt=""
+          alt=''
           style={{
             right: 0,
             marginRight: '1rem',

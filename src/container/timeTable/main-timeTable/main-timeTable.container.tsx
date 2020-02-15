@@ -12,7 +12,7 @@ export interface MainTimeTableProps {
     string[],
     string[],
     string[],
-    string[]
+    string[],
   ];
   getTimetableStatus: 'none' | 'pending' | 'success' | 'failure';
   accessToken: string;
@@ -22,9 +22,13 @@ export interface MainTimeTableMethod {
   getTimetableApi(param: string | null): void;
 }
 
-const MainTimeTableContainer: React.FC<
-  MainTimeTableProps & MainTimeTableMethod
-> = ({ timeTableList, getTimetableStatus, getTimetableApi, accessToken }) => (
+const MainTimeTableContainer: React.FC<MainTimeTableProps &
+  MainTimeTableMethod> = ({
+  timeTableList,
+  getTimetableStatus,
+  getTimetableApi,
+  accessToken,
+}) => (
   <TimeTableComponent
     timeTableList={timeTableList}
     getTimetableStatus={getTimetableStatus}
