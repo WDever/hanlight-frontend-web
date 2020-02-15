@@ -81,14 +81,13 @@ function* loginApiSaga(action: Login) {
 }
 
 const idRecoveryApi: (
-  data: IdRecoveryParam
-) => Promise<AxiosResponse<IdRecoverySuccess>> = ({
-  code
-}) => instance
-  .post<AxiosResponse<IdRecoverySuccess>>('/api/user/recovery/id', {
-    code,
-  })
-  .then(res => res.data);
+  data: IdRecoveryParam,
+) => Promise<AxiosResponse<IdRecoverySuccess>> = ({ code }) =>
+  instance
+    .post<AxiosResponse<IdRecoverySuccess>>('/api/user/recovery/id', {
+      code,
+    })
+    .then(res => res.data);
 
 function* idRecoverySaga(action: IdRecovery) {
   if (action.type) {

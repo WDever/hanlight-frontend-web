@@ -18,30 +18,9 @@ export default class BoardFeedComponent extends React.Component<
     page: 1,
   };
 
-  public infiniteScroll = () => {
-    if (
-      this.props.boardApiStatus.getBoardStatus !== 'none' &&
-      this.props.boardApiStatus.getBoardStatus !== 'pending' &&
-      document.body.scrollHeight -
-        window.innerHeight -
-        (document.documentElement.scrollTop || document.body.scrollTop) <
-        100 &&
-      Math.ceil(this.props.boardCount / 10) !== this.state.page
-    ) {
-      this.setState({
-        page: this.state.page + 1,
-      });
-    }
-  };
-
   public componentDidMount() {
     this.props.getBoard({ accessToken: this.props.accessToken, page: 1 });
     window.addEventListener('scroll', this.infiniteScroll, true);
-  }
-
-  public componentWillUnmount() {
-    window.removeEventListener('scroll', this.infiniteScroll);
-    this.props.resetBoard();
   }
 
   public componentDidUpdate(
@@ -61,6 +40,29 @@ export default class BoardFeedComponent extends React.Component<
       });
     }
   }
+
+  public componentWillUnmount() {
+    window.removeEventListener('scroll', this.infiniteScroll);
+    this.props.resetBoard();
+  }
+
+  public infiniteScroll: () => void = (): void => {
+    if (
+      this.props.boardApiStatus.getBoardStatus !== 'none' &&
+      this.props.boardApiStatus.getBoardStatus !== 'pending' &&
+      document.body.scrollHeight -
+        window.innerHeight -
+        (document.documentElement.scrollTop || document.body.scrollTop) <
+        100 &&
+      Math.ceil(this.props.boardCount / 10) !== this.state.page
+    ) {
+      this.setState((state: BoardFeedState) => ({
+        page: state.page + 1,
+      }));
+    }
+  };
+
+  public test: (str: string) => string = (str: string): string => str;
 
   public getBoardComments = ({
     board_pk,

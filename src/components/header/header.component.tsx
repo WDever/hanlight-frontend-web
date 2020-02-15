@@ -128,9 +128,15 @@ const New = styled.div`
   font-weight: bold;
 `;
 
-const HeaderComponent: React.FC<
-  HeaderProps & HeaderMethod & RouteComponentProps
-> = ({ name, history, location, resetUser, toggleMenu }) => {
+const HeaderComponent: React.FC<HeaderProps &
+  HeaderMethod &
+  RouteComponentProps> = ({
+  name,
+  history,
+  location,
+  resetUser,
+  toggleMenu,
+}) => {
   const logout = () => {
     resetUser();
     history.push('/user/login');
@@ -147,40 +153,40 @@ const HeaderComponent: React.FC<
         <LogoImg
           onClick={() => history.push('/')}
           src={LogoSvg}
-          alt="Hanlight Logo"
+          alt='Hanlight Logo'
         />
         <BtnsWrapper>
           <StyledNavLink
-            exact={true}
-            to="/notice"
+            exact
+            to='/notice'
             active={location.pathname.includes('/notice')}
           >
             공지사항
           </StyledNavLink>
           <StyledNavLink
-            exact={true}
-            to="/meal"
+            exact
+            to='/meal'
             active={location.pathname.includes('/meal')}
           >
             급식
           </StyledNavLink>
           <StyledNavLink
-            exact={true}
-            to="/timetable"
+            exact
+            to='/timetable'
             active={location.pathname.includes('/timetable')}
           >
             시간표
           </StyledNavLink>
           <StyledNavLink
-            exact={true}
-            to="/calendar"
+            exact
+            to='/calendar'
             active={location.pathname.includes('/calendar')}
           >
             학사일정
           </StyledNavLink>
           <StyledNavLink
-            exact={true}
-            to="/board"
+            exact
+            to='/board'
             active={location.pathname.includes('/board')}
           >
             대나무숲
@@ -192,8 +198,8 @@ const HeaderComponent: React.FC<
           </SpanWrapper>
           <SpanWrapper>
             <StyledNavLink
-              exact={true}
-              to="/profile"
+              exact
+              to='/profile'
               active={location.pathname.includes('/user/profile')}
             >
               정보 수정

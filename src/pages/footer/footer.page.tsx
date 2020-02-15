@@ -135,26 +135,26 @@ const FooterPage: React.FC = () => {
             <span>한세사이버보안고등학교 총학생회 한울</span>
             <Email>E-Mail : stucon.hansei@gmail.com</Email>
             <RulesWrapper>
-              <Rules to="/service/termsofuse">[이용약관]</Rules>
-              <Rules to="/service/privacypolicy">[개인정보처리방침]</Rules>
+              <Rules to='/service/termsofuse'>[이용약관]</Rules>
+              <Rules to='/service/privacypolicy'>[개인정보처리방침]</Rules>
             </RulesWrapper>
           </TextWrapper>
           <LinksWrapper>
             <LinkBtn
               src={FbLogoSvg}
-              alt="facebook logo"
+              alt='facebook logo'
               onClick={() =>
                 window.open('https://web.facebook.com/한빛-176560256619015/')
               }
             />
             <LinkBtn
               src={HatLogoSvg}
-              alt="Hat logo"
+              alt='Hat logo'
               onClick={() => window.open('https://github.com/hanlight')}
             />
             <LinkBtn
               src={SchoolLogoSvg}
-              alt="School logo"
+              alt='School logo'
               onClick={() => window.open('http://hansei.org/index.do')}
             />
           </LinksWrapper>

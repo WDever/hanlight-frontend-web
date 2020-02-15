@@ -74,7 +74,7 @@ export const boardReducer = (
           comment: [],
           write: true,
         });
-        draft.boardCount = draft.boardCount + 1;
+        draft.boardCount += 1;
         break;
       case 'POST_BOARD_FAILURE':
         draft.postBoardStatus = 'failure';

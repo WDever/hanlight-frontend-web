@@ -25,8 +25,8 @@ const RecoveryPage: React.FC = () => (
   <Template>
     <Switch>
       <Route
-        exact={true}
-        path="/user/recovery/password"
+        exact
+        path='/user/recovery/password'
         component={pwRecoveryContainer}
       />
     </Switch>

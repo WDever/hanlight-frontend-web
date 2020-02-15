@@ -105,11 +105,11 @@ const LikeListItemComponent: React.FC<LikeListItemProps> = ({
   return (
     <Wrapper>
       <ProfileImg image={!!user_image}>
-        <img alt="profile" src={user_image ? user_image : DefaultProfile} />
+        <img alt='profile' src={user_image || DefaultProfile} />
       </ProfileImg>
       <span>{user_name}</span>
       <LikeWrapper>
-        <img src={LikeImg} alt="like icon" />
+        <img src={LikeImg} alt='like icon' />
         좋아요
       </LikeWrapper>
     </Wrapper>

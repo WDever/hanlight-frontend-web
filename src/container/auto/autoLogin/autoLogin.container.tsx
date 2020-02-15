@@ -13,9 +13,15 @@ export interface AutoLoginMethod {
   getUser(data: string): void;
 }
 
-const AutoLoginContainer: React.FC<
-  AutoLoginProps & AutoLoginMethod & RouteComponentProps
-> = ({ history, match, location, getUser, getUserStatus }) => (
+const AutoLoginContainer: React.FC<AutoLoginProps &
+  AutoLoginMethod &
+  RouteComponentProps> = ({
+  history,
+  match,
+  location,
+  getUser,
+  getUserStatus,
+}) => (
   <AutoLoginComponent
     history={history}
     match={match}
@@ -34,8 +40,5 @@ const mapDispathToProps = (dispatch: Dispatch<userReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispathToProps,
-  )(AutoLoginContainer),
+  connect(mapStateToProps, mapDispathToProps)(AutoLoginContainer),
 );

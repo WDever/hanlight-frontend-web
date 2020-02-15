@@ -22,7 +22,12 @@ const FeedOptionComponent: React.FC<FeedOptionProps> = ({ optionData }) => {
 
   const { board_pk, write } = optionData;
 
-  const { optionToggle, activeReport, editBoardToggle, deleteBoard } = boardActions;
+  const {
+    optionToggle,
+    activeReport,
+    editBoardToggle,
+    deleteBoard,
+  } = boardActions;
 
   const deleteFeed = () => {
     dispatch(

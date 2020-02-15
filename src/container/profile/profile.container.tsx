@@ -64,10 +64,7 @@ const mapDispatchToProps = (
 });
 
 const ProfileContainer = withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(ProfileComponent),
+  connect(mapStateToProps, mapDispatchToProps)(ProfileComponent),
 );
 
 export default ProfileContainer;

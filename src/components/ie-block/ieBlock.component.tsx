@@ -129,9 +129,9 @@ const IEBlockComponent: React.FC = () => {
     <Wrapper>
       <InfoBox>
         <ImgWrapper>
-          <img src={HanlightLogo} alt="hanlight" />
-          <img src={DisconnectImg} alt="disconnect" />
-          <img src={IEImg} alt="IE internet explorer" />
+          <img src={HanlightLogo} alt='hanlight' />
+          <img src={DisconnectImg} alt='disconnect' />
+          <img src={IEImg} alt='IE internet explorer' />
         </ImgWrapper>
         <p>
           <p> 인터넷 익스플로러 Internet Explorer</p>
@@ -148,10 +148,10 @@ const IEBlockComponent: React.FC = () => {
           <p>기존 사용자분들께 구글 크롬(Chrome) 사용을 권장합니다.</p>
         </Message>
         <button onClick={openChromePage}>
-          <img src={ChromeImg} alt="Chrome" />
+          <img src={ChromeImg} alt='Chrome' />
           Chrome 다운로드
         </button>
-        <CharIllust src={CharImg} alt="character" />
+        <CharIllust src={CharImg} alt='character' />
       </MessageBox>
     </Wrapper>
   );

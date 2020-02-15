@@ -408,7 +408,7 @@ export default class BoardFormComponent extends React.Component<
   };
 
   public handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.currentTarget.files;
+    const { files } = e.currentTarget;
 
     if (files && files.length > 5) {
       alert('사진은 최대 5장까지 가능합니다.');
@@ -488,13 +488,12 @@ export default class BoardFormComponent extends React.Component<
               <FormPreviewButton onClick={() => this.removeImage(i)} />
             </FormPreviewWrapper>
           );
-        } else {
-          return (
-            <FormImageEmpty htmlFor="files" key={i}>
-              <FormImageEmptyPlus />
-            </FormImageEmpty>
-          );
         }
+        return (
+          <FormImageEmpty htmlFor='files' key={i}>
+            <FormImageEmptyPlus />
+          </FormImageEmpty>
+        );
       });
 
     return (
@@ -508,7 +507,7 @@ export default class BoardFormComponent extends React.Component<
                 <span>익명</span>
                 <img
                   src={this.state.type ? BlueCheck : GrayCheck}
-                  alt="form type"
+                  alt='form type'
                 />
               </FormType>
             </FormTitle>
@@ -521,13 +520,13 @@ export default class BoardFormComponent extends React.Component<
                       ? this.props.userImage || DefaultProfileImage
                       : DefaultProfileImage
                   }
-                  alt=""
+                  alt=''
                 />
                 <FormBodyText
                   onChange={this.handleContent}
                   value={this.state.content}
                   height={this.state.textAreaHeight}
-                  placeholder="대나무숲에 글을 남겨보세요!"
+                  placeholder='대나무숲에 글을 남겨보세요!'
                 />
                 <FormTypeMobile
                   onClick={this.handleFormType}
@@ -536,21 +535,21 @@ export default class BoardFormComponent extends React.Component<
                   <span>익명</span>
                   <img
                     src={this.state.type ? BlueCheck : GrayCheck}
-                    alt="form type"
+                    alt='form type'
                   />
                 </FormTypeMobile>
               </FormBody>
               <FormImageWrapper>{FormPreviews}</FormImageWrapper>
               <FormButtonWrapper>
                 <div>
-                  <FormImgLabel htmlFor="files">사진 추가</FormImgLabel>
+                  <FormImgLabel htmlFor='files'>사진 추가</FormImgLabel>
                   <input
-                    id="files"
-                    multiple={true}
-                    type="file"
+                    id='files'
+                    multiple
+                    type='file'
                     style={{ display: 'none' }}
                     onChange={this.handleFile}
-                    accept="image/jpeg,image/x-png"
+                    accept='image/jpeg,image/x-png'
                   />
                 </div>
                 <FormSubmitButton

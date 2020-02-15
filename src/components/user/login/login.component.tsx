@@ -136,9 +136,9 @@ const FindBtn = styled(NavLinkDiv)`
   }
 `;
 
-const LoginComponent: React.FC<
-  LoginProps & LoginMethod & RouteComponentProps
-> = ({ login, history, loginStatus }) => {
+const LoginComponent: React.FC<LoginProps &
+  LoginMethod &
+  RouteComponentProps> = ({ login, history, loginStatus }) => {
   const [inputs, inputsChange] = useInputs<LoginState>({
     id: '',
     password: '',
@@ -163,27 +163,27 @@ const LoginComponent: React.FC<
   return (
     <LoginWrapper>
       <GreetingDiv>
-        <LoginImg src={LogoSvg} alt="" />
+        <LoginImg src={LogoSvg} alt='' />
       </GreetingDiv>
       <LoginForm onSubmit={submitLogin}>
         <LoginInputWrapper>
           <LoginInputId
-            type="id"
-            placeholder="아이디"
+            type='id'
+            placeholder='아이디'
             onChange={inputsChange}
-            name="id"
+            name='id'
             value={id}
             wrong={loginStatus === 'failure'}
-            autoComplete="off"
+            autoComplete='off'
           />
           <LoginInputPw
-            type="password"
-            placeholder="비밀번호"
+            type='password'
+            placeholder='비밀번호'
             onChange={inputsChange}
-            name="password"
+            name='password'
             value={password}
             wrong={loginStatus === 'failure'}
-            autoComplete="off"
+            autoComplete='off'
           />
         </LoginInputWrapper>
         <ErrorMessage>
@@ -200,17 +200,17 @@ const LoginComponent: React.FC<
         </LoginBtn>
       </LoginForm>
       <FindBtnsWrapper>
-        <FindBtn to="/user/phone?type=recovery&key=id">ID 찾기</FindBtn>
+        <FindBtn to='/user/phone?type=recovery&key=id'>ID 찾기</FindBtn>
         <FindBtn
           style={{
             borderLeft: 'solid 1px #e1e1e1',
             borderRight: 'solid 1px #e1e1e1',
           }}
-          to="/user/phone?type=recovery&key=password"
+          to='/user/phone?type=recovery&key=password'
         >
           비밀번호 찾기
         </FindBtn>
-        <FindBtn to="/user/phone?type=register">회원가입</FindBtn>
+        <FindBtn to='/user/phone?type=register'>회원가입</FindBtn>
       </FindBtnsWrapper>
     </LoginWrapper>
   );

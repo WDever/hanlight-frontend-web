@@ -222,7 +222,7 @@ const FeedEditComponent: React.FC = () => {
     const selectedBoard = board.find(item => item.pk === board_pk);
     if (selectedBoard) {
       console.log(selectedBoard);
-      return selectedBoard.user_name ? false : true;
+      return !selectedBoard.user_name;
     }
   }, []);
 
@@ -268,7 +268,7 @@ const FeedEditComponent: React.FC = () => {
 
   return (
     <EditWrapper>
-      <FeedXButton color={'#9B9B9B'} onClick={close} />
+      <FeedXButton color='#9B9B9B' onClick={close} />
       <EditTitleWrapper>
         <EditTitle>글 수정하기</EditTitle>
       </EditTitleWrapper>
@@ -278,7 +278,7 @@ const FeedEditComponent: React.FC = () => {
             image={!!image}
             isAnonymous={!!isAnonymous}
             src={image && !isAnonymous ? image : DefaultProfileImage}
-            alt=""
+            alt=''
           />
         </EditImgWrapper>
         <EditContentText

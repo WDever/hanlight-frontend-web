@@ -96,7 +96,7 @@ const MainMealPage: React.FC = () => {
     <Template>
       <TitleWrapper>
         <Title>급식 정보</Title>
-        <AllViewBtn to="/meal">전체보기</AllViewBtn>
+        <AllViewBtn to='/meal'>전체보기</AllViewBtn>
       </TitleWrapper>
 
       <ListWrapper>

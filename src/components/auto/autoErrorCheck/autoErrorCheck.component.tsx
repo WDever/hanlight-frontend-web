@@ -4,19 +4,18 @@ import {
   AutoErrorCheckMethod,
   AutoErrorCheckProps,
 } from 'container/auto/autoErrorCheck/autoErrorCheck.container';
-import { RouteComponentProps } from 'react-router';
+import { RouteComponentProps } from 'react-router-dom';
 
 const { useEffect } = React;
 
-const AutoErrorCheckComponent: React.FC<
-  AutoErrorCheckProps & AutoErrorCheckMethod & RouteComponentProps
-> = ({
+const AutoErrorCheckComponent: React.FC<AutoErrorCheckProps &
+  AutoErrorCheckMethod &
+  RouteComponentProps> = ({
   history,
   location,
   onError,
   code,
   message,
-  time,
   setError,
   resetUser,
 }) => {

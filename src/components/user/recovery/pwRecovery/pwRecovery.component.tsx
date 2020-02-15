@@ -98,9 +98,9 @@ const InputName = styled.span`
   }
 `;
 
-const PwRecoveryComponent: React.FC<
-  PwRecoveryProps & PwRecoveryMethod & RouteComponentProps
-> = ({
+const PwRecoveryComponent: React.FC<PwRecoveryProps &
+  PwRecoveryMethod &
+  RouteComponentProps> = ({
   match,
   history,
   location,
@@ -157,10 +157,10 @@ const PwRecoveryComponent: React.FC<
   );
 
   return (
-    <React.Fragment>
+    <>
       {patchPasswordStatus === 'success' && (
         <ModalRecovery
-          type="password"
+          type='password'
           click={() => {
             resetUser();
             history.push('/user/login');
@@ -170,7 +170,7 @@ const PwRecoveryComponent: React.FC<
 
       <PwRecoveryWrapper>
         <GreetingDiv>
-          <HanlightLogoImg src={HanlightLogo} alt="" />
+          <HanlightLogoImg src={HanlightLogo} alt='' />
           <Title>비밀번호 재설정</Title>
         </GreetingDiv>
 
@@ -179,12 +179,12 @@ const PwRecoveryComponent: React.FC<
             <InputGroup>
               <InputName>비밀번호</InputName>
               <Input
-                type="password"
+                type='password'
                 wrong={!pwValidation}
                 value={password}
-                name="password"
+                name='password'
                 onChange={setInputs}
-                placeholder="8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)"
+                placeholder='8~16자의 영문 대소문자, 숫자 및 특수문자(키보드 1~0)'
               />
               <WrongMessageWrapper>
                 {!pwValidation &&
@@ -195,12 +195,12 @@ const PwRecoveryComponent: React.FC<
               <InputName>비밀번호 확인</InputName>
 
               <Input
-                type="password"
+                type='password'
                 wrong={!rpwValidation}
                 value={rePassword}
-                name="rePassword"
+                name='rePassword'
                 onChange={setInputs}
-                placeholder="확인"
+                placeholder='확인'
               />
               <WrongMessageWrapper>
                 {!rpwValidation && '비밀번호가 일치하지 않습니다.'}
@@ -217,7 +217,7 @@ const PwRecoveryComponent: React.FC<
           </Button>
         </Form>
       </PwRecoveryWrapper>
-    </React.Fragment>
+    </>
   );
 };
 

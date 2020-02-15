@@ -28,9 +28,9 @@ export interface RegisterMethod {
   idExist({ id }: { id: string }): void;
 }
 
-const RegisterContainer: React.SFC<
-  RegisterProps & RegisterMethod & RouteComponentProps
-> = ({
+const RegisterContainer: React.SFC<RegisterProps &
+  RegisterMethod &
+  RouteComponentProps> = ({
   registerStatus,
   idExist,
   signKey,
@@ -67,8 +67,5 @@ const mapDispatchToProps = (dispatch: Dispatch<userReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(RegisterContainer),
+  connect(mapStateToProps, mapDispatchToProps)(RegisterContainer),
 );

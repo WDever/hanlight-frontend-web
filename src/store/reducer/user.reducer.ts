@@ -1,7 +1,7 @@
 import { produce } from 'immer';
+import { APIStatus, APIStatusWithBoolean } from 'lib/types';
 import { userReducerActions } from '../action';
 import { UserState, UserType } from '../model/user.model';
-import { APIStatus, APIStatusWithBoolean } from 'lib/types';
 
 declare global {
   interface Window {

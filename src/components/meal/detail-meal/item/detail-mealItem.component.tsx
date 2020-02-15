@@ -135,7 +135,7 @@ const DetailMealItem: React.FC<{
   _ref?(ref: HTMLDivElement | null): void;
 }> = ({ _ref, item, date, day, today }) => {
   return item instanceof Array ? (
-    <ItemWrapper ref={_ref} item={true} today={today}>
+    <ItemWrapper ref={_ref} item today={today}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (

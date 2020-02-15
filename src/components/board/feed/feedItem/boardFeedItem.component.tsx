@@ -417,7 +417,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
             <ProfileImg
               image={!!board.user_image}
               src={board.user_image || DefaultProfileImage}
-              alt="profile"
+              alt='profile'
             />
             <FeedHeadLeftString>
               <FeedHeadName>
@@ -433,7 +433,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
           <div>
             <FeedHeadOptionBtn
               src={Dotdotdot}
-              alt=""
+              alt=''
               onClick={() => {
                 optionToggle({
                   type: 'board',
@@ -471,36 +471,35 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                         </FeedMoreImgSpan>
                       </FeedMoreImg>
                     );
-                  } else {
-                    return (
-                      <FeedImg
-                        rows={Math.min(4, board.files.length)}
-                        style={
-                          Math.min(4, board.files.length) % 2 === 1 && i === 0
-                            ? {
-                                gridColumn: '1/3',
-                              }
-                            : {}
-                        }
-                        key={i}
-                        src={file}
-                        onClick={() => {
-                          photoDetailToggle({
-                            status: true,
-                            board_pk: board.pk,
-                            idx: i,
-                          });
-                        }}
-                      />
-                    );
                   }
+                  return (
+                    <FeedImg
+                      rows={Math.min(4, board.files.length)}
+                      style={
+                        Math.min(4, board.files.length) % 2 === 1 && i === 0
+                          ? {
+                              gridColumn: '1/3',
+                            }
+                          : {}
+                      }
+                      key={i}
+                      src={file}
+                      onClick={() => {
+                        photoDetailToggle({
+                          status: true,
+                          board_pk: board.pk,
+                          idx: i,
+                        });
+                      }}
+                    />
+                  );
                 })}
               </FeedImgWrapper>
             </FeedImgContainer>
           )}
           <LikeWrapper>
             <LikeView>
-              <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt="" />
+              <img src={LikeIcon} style={{ marginRight: '0.25rem' }} alt='' />
               <span
                 onClick={() => {
                   if (board.likeCount !== 0) {
@@ -529,7 +528,7 @@ const FeedItemComponent: React.FC<FeedItemProps & FeedItemMethod> = ({
                 <img
                   src={board.isLiked ? LikeIcon : EmptyLikeIcon}
                   style={{ marginRight: '0.375rem' }}
-                  alt=""
+                  alt=''
                 />
                 좋아요
               </LikeBtn>

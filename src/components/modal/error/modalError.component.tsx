@@ -85,9 +85,9 @@ const ModalError: React.FC<{ message: string; click(): void }> = ({
   return (
     <Wrapper>
       <Modal>
-        <Img src={phoneCheckFailureSvg} alt="" />
+        <Img src={phoneCheckFailureSvg} alt='' />
         <TextWrapper>{message || '인증 실패'}</TextWrapper>
-        <ConfirmBtn active={true} onClick={click}>
+        <ConfirmBtn active onClick={click}>
           확인
         </ConfirmBtn>
       </Modal>

@@ -18,11 +18,11 @@ const MainNoticeTemplate = styled.div`
 
 const MainNoticePage: React.FC = () => {
   return (
-    <React.Fragment>
+    <>
       <MainNoticeTemplate>
         <MainNoticeContainer />
       </MainNoticeTemplate>
-    </React.Fragment>
+    </>
   );
 };
 

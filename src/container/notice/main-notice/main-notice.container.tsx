@@ -22,9 +22,9 @@ export interface MainNoticeMethod {
   getNoticeList(params: GetNoticeListParams): void;
 }
 
-const MainNoticeContainer: React.FC<
-  MainNoticeProps & MainNoticeMethod & RouteComponentProps<any>
-> = ({
+const MainNoticeContainer: React.FC<MainNoticeProps &
+  MainNoticeMethod &
+  RouteComponentProps<any>> = ({
   name,
   getNoticeList,
   noticeList,
@@ -58,8 +58,5 @@ const mapDispatchToProps = (dispatch: Dispatch<noticeReducerActions>) => ({
 });
 
 export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps,
-  )(MainNoticeContainer),
+  connect(mapStateToProps, mapDispatchToProps)(MainNoticeContainer),
 );

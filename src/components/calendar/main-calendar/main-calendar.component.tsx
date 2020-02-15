@@ -23,9 +23,8 @@ const CalendarWrapper = styled.div`
   }
 `;
 
-const MainCalendarComponent: React.FC<
-  MainCalendarProps & MainCalendarMethod
-> = ({
+const MainCalendarComponent: React.FC<MainCalendarProps &
+  MainCalendarMethod> = ({
   getCalendarRecent,
   calendarList,
   getCalendarRecentStatus,

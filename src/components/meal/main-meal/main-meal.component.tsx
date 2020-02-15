@@ -132,18 +132,17 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
                 today={todayBool}
               />
             );
-          } else {
-            return (
-              <MainMealItem
-                style={{ order: index }}
-                item={meal.detail.split(',')}
-                date={dateString}
-                key={index}
-                day={days[dayIndex]}
-                today={todayBool}
-              />
-            );
           }
+          return (
+            <MainMealItem
+              style={{ order: index }}
+              item={meal.detail.split(',')}
+              date={dateString}
+              key={index}
+              day={days[dayIndex]}
+              today={todayBool}
+            />
+          );
         })
       : [
           <MoreBox style={{ order: 0 }} key={1} />,
@@ -174,21 +173,21 @@ const MainMealComponent: React.FC<MainMealProps & MainMealMethod> = ({
                           &nbsp;-> &nbsp;
                         </>
                       );
-                    } else if (i === 1) {
+                    }
+                    if (i === 1) {
                       return (
                         <>
                           <span key={i}>{order}</span>&nbsp;->&nbsp;
                         </>
                       );
-                    } else {
-                      return <span key={i}>{order}</span>;
                     }
+                    return <span key={i}>{order}</span>;
                   })}
                 </Order>
               </>
             )}
           </OrderWrapper>
-          <OrderImg src={MealOrderIllust} alt="" />
+          <OrderImg src={MealOrderIllust} alt='' />
         </>
       </MoreBox>
     </ListWrapper>

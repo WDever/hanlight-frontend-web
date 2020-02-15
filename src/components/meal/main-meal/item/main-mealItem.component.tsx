@@ -134,7 +134,7 @@ const MainMealItem: React.FC<{
   style: React.CSSProperties;
 }> = ({ today, item, date, day, style }) => {
   return item instanceof Array ? (
-    <ItemWrapper style={style} item={true} today={today}>
+    <ItemWrapper style={style} item today={today}>
       <Day>{day}</Day>
       <Items>
         {item.map((meal, i) => (

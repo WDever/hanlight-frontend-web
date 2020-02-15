@@ -23,9 +23,9 @@ export interface NoticeListMethod {
   getNoticeList: (payload: GetNoticeListParams) => void;
 }
 
-const NoticeListContainer: React.FC<
-  NoticeListProps & NoticeListMethod & RouteComponentProps
-> = ({
+const NoticeListContainer: React.FC<NoticeListProps &
+  NoticeListMethod &
+  RouteComponentProps> = ({
   accessToken,
   noticeList,
   noticeCount,

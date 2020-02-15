@@ -7,12 +7,8 @@ import { Route, Switch } from 'react-router-dom';
 const DetailNoticePage: React.FC = () => {
   return (
     <Switch>
-      <Route exact={true} path="/notice" component={NoticeListContainer} />
-      <Route
-        exact={true}
-        path="/notice/:post_pk"
-        component={NoticePostContainer}
-      />
+      <Route exact path='/notice' component={NoticeListContainer} />
+      <Route exact path='/notice/:post_pk' component={NoticePostContainer} />
     </Switch>
   );
 };

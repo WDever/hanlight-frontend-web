@@ -8,16 +8,12 @@ const servicePage = () => {
   return (
     <Switch>
       <Route
-        exact={true}
-        path="/service/privacypolicy"
+        exact
+        path='/service/privacypolicy'
         component={PrivacyPolicyPage}
       />
-      <Route
-        exact={true}
-        path="/service/termsofuse"
-        component={TermsOfUsePage}
-      />
-      <Redirect to="/error" />
+      <Route exact path='/service/termsofuse' component={TermsOfUsePage} />
+      <Redirect to='/error' />
     </Switch>
   );
 };
