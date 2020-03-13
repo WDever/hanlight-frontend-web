@@ -6,3 +6,4 @@ export { ErrorText, ErrorImg } from './Error';
 export { Device } from './Device';
 export { Deem } from './Deem';
 export * from './BoxOpacity';
+export * from './theme';
