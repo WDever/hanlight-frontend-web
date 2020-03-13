@@ -17,7 +17,6 @@ import NoticeItem from './noticeItem';
 const NoticeWrapper = styled(MainCardWrapper)`
   .title {
     margin-bottom: 0.875rem;
-    margin-top: 1.75rem;
   }
 `;
 
