@@ -67,6 +67,7 @@ const Title = styled.h1`
   font-family: 'Noto Sans KR';
   font-size: 17px;
   font-weight: normal;
+  color: ${({ theme }): string => theme.mainCard.defaultFontColor};
 
   overflow: hidden;
   white-space: nowrap;
@@ -88,7 +89,7 @@ const Content = styled.h2`
   font-family: 'Noto Sans KR';
   font-size: 15px;
   font-weight: normal;
-  color: #b6b8cc;
+  color: ${({ theme }): string => theme.mainCard.notice.excerptFontColor};
 
   overflow: hidden;
   white-space: nowrap;
@@ -104,6 +105,7 @@ const Date = styled.h3`
   font-family: 'Noto Sans KR';
   font-size: 15px;
   font-weight: normal;
+  color: ${({ theme }): string => theme.mainCard.defaultFontColor};
 
   margin: 0;
 

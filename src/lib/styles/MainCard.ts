@@ -13,16 +13,16 @@ export const MainCardWrapper = styled.section`
   padding: 1.75rem 2.25rem;
   padding-bottom: 0;
 
-  background-color: #fff;
+  background-color: ${({ theme }): string => theme.mainCard.bgColor};
 
   border-radius: 0.75rem;
 
-  box-shadow: 0 6px 30px 0 #ededed;
+  box-shadow: ${({ theme }): string => theme.mainCard.cardShadow};
 
   .title {
     font-family: 'Noto Sans KR';
     font-size: 1.5rem;
-    color: #222;
+    color: ${({ theme }): string => theme.mainCard.defaultFontColor};
   }
 `;
 

@@ -12,6 +12,8 @@ import FooterPage from 'pages/footer';
 import MainPage from 'pages/main';
 import servicePage from 'pages/service';
 import { Redirect, Route, Switch } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+import { LightTheme, DarkTheme } from 'lib/styles';
 
 const ErrorComponents = () => (
   <>
@@ -26,7 +28,7 @@ const App: React.FC = () => {
   return isIE ? (
     <IEBlockComponent />
   ) : (
-    <>
+    <ThemeProvider theme={LightTheme}>
       <AutoLoginContainer />
       <AutoErrorCheckContainer />
       <Switch>
@@ -39,7 +41,7 @@ const App: React.FC = () => {
         <Route path='/' component={MainPage} />
         <Redirect to='/error' />
       </Switch>
-    </>
+    </ThemeProvider>
   );
 };
 

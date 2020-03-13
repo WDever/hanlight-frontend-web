@@ -17,7 +17,12 @@ import MainTimePage from 'pages/timer';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
 import MainTimeTablePage from 'pages/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
-import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
+import styled, {
+  css,
+  FlattenInterpolation,
+  ThemeProps,
+  DefaultTheme,
+} from 'styled-components';
 
 /* eslint-disable @typescript-eslint/typedef */
 
@@ -27,7 +32,7 @@ const Empty = styled.div`
 `;
 
 const Template = styled.div<{ toggleMenuStatus: boolean }>`
-  ${({ toggleMenuStatus }): string | FlattenSimpleInterpolation =>
+  ${({ toggleMenuStatus }): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
     toggleMenuStatus
       ? css`
           overflow: hidden;
@@ -35,7 +40,9 @@ const Template = styled.div<{ toggleMenuStatus: boolean }>`
           width: 100%;
           height: 100%;
         `
-      : ''}
+      : css`
+          background-color: ${({ theme }): string => theme.common.bgColor};
+        `}
 `;
 
 /* eslint-enable @typescript-eslint/typedef */
