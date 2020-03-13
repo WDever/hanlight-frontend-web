@@ -1,11 +1,8 @@
-import styled, { StyledComponent } from 'styled-components';
+import styled from 'styled-components';
 
-export const MainComponentWrapper: StyledComponent<
-  'section',
-  any,
-  {},
-  never
-> = styled.section`
+/* eslint-disable @typescript-eslint/typedef */
+
+export const MainCardWrapper = styled.section`
   max-width: 43.75rem;
   width: 43.75rem;
   height: 26.25rem;
@@ -22,9 +19,11 @@ export const MainComponentWrapper: StyledComponent<
 
   box-shadow: 0 6px 30px 0 #ededed;
 
-  h1 {
+  .title {
     font-family: 'Noto Sans KR';
     font-size: 1.5rem;
     color: #222;
   }
 `;
+
+/* eslint-enable @typescript-eslint/typedef */

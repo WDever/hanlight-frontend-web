@@ -1,6 +1,6 @@
 import { Device } from 'lib/styles';
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 interface NoticeItemProps {
   title?: string;
@@ -9,43 +9,71 @@ interface NoticeItemProps {
   onClick?: () => void;
 }
 
-const ItemBox = styled.div<{ read: boolean }>`
+/* eslint-disable @typescript-eslint/typedef */
+
+const Wrapper = styled.article<{ read: boolean }>`
   display: inline-flex;
   justify-content: space-between;
   align-items: center;
+
+  position: relative;
+
   width: 100%;
-  height: 3.4rem;
-  border-radius: 1rem;
+  height: 3.75rem;
+
+  margin-bottom: 1rem;
+
   cursor: pointer;
-  box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.16);
-  background: linear-gradient(
-    90deg,
-    ${props => (props.read ? '#ff5677' : '#4470ff')} 0.92rem,
-    #ffffff 0%
-  );
+
+  ::before {
+    ${({ read }): string | FlattenSimpleInterpolation =>
+      read === false
+        ? css`
+            position: absolute;
+
+            content: ' ';
+
+            width: 0.375rem;
+            height: 0.375rem;
+
+            border-radius: 50%;
+
+            top: 0;
+            left: -0.5rem;
+
+            background-color: #ff5555;
+          `
+        : ''}
+  }
+
+  div {
+    display: flex;
+    flex-direction: column;
+  }
 
   @media ${Device.tabletL} {
     height: 3rem;
     border-radius: 0.75rem;
-    background: linear-gradient(
-      90deg,
-      ${props => (props.read ? '#ff5677' : '#4470ff')} 0.76rem,
-      #ffffff 0%
-    );
   }
+
   @media ${Device.mobileL} {
     height: 2.25rem;
   }
 `;
 
-const TitleBox = styled.span`
-  width: 100%;
-  font-family: 'Spoqa Han Sans';
-  font-size: 1rem;
-  margin-left: 2rem;
+const Title = styled.h1`
+  max-width: 31.25rem;
+
+  font-family: 'Noto Sans KR';
+  font-size: 17px;
+  font-weight: normal;
+
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+
+  margin: 0;
+  margin-bottom: 0.25rem;
 
   @media ${Device.mobileL} {
     width: 70%;
@@ -54,14 +82,30 @@ const TitleBox = styled.span`
   }
 `;
 
-const Date = styled.span`
+const Content = styled.h2`
+  max-width: 31.25rem;
+
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: normal;
+  color: #b6b8cc;
+
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+  margin: 0;
+`;
+
+const Date = styled.h3`
   display: flex;
   justify-content: flex-end;
-  font-family: 'Spoqa Han Sans';
-  font-size: 0.875rem;
-  font-weight: 300;
-  margin-right: 1rem;
-  width: 16.6%;
+
+  font-family: 'Noto Sans KR';
+  font-size: 15px;
+  font-weight: normal;
+
+  margin: 0;
 
   @media ${Device.tabletL} {
     font-size: 0.82rem;
@@ -71,16 +115,24 @@ const Date = styled.span`
   }
 `;
 
+/* eslint-enable @typescript-eslint/typedef */
+
 const NoticeItem: React.FC<NoticeItemProps> = ({
   onClick,
   title,
   date,
   read,
-}) => (
-  <ItemBox read={read} onClick={onClick}>
-    <TitleBox>{title}</TitleBox>
+}: NoticeItemProps) => (
+  <Wrapper read={read} onClick={onClick}>
+    <div>
+      <Title>{title}</Title>
+      <Content>
+        한빛 업데이트 2.0에대한 업데이트 소식 및 한빛 플랫폼 확장에 대해
+        안내드립니다.
+      </Content>
+    </div>
     <Date>{date}</Date>
-  </ItemBox>
+  </Wrapper>
 );
 
 export default NoticeItem;

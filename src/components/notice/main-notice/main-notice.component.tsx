@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect, ReactNodeArray } from 'react';
 
 import {
   MainNoticeMethod,
@@ -9,15 +9,19 @@ import NoticeIllustSvg from 'lib/svg/notice-illust.svg';
 import moment from 'moment';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Notice } from 'store';
-import styled from 'styled-components';
+import styled, { StyledComponent } from 'styled-components';
+import { MainCardWrapper } from 'lib/styles/MainCard';
 import NoticeItem from './noticeItem';
 
-const NoticeWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 81rem;
-  width: 90%;
+// item width 628px
+
+/* eslint-disable @typescript-eslint/typedef */
+
+const NoticeWrapper = styled(MainCardWrapper)`
+  .title {
+    margin-bottom: 0.875rem;
+    margin-top: 1.75rem;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -140,64 +144,68 @@ const MoreBtn = styled(Link)`
   background-color: #ffffff;
 `;
 
-class MainNoticeComponent extends React.Component<
-  MainNoticeProps & MainNoticeMethod & RouteComponentProps<any>
-> {
-  public state: { noticeList: Notice[] } = {
-    noticeList: [],
-  };
+/* eslint-enable @typescript-eslint/typedef */
 
-  public componentDidMount() {
-    this.props.getNoticeList({ accessToken: this.props.accessToken });
-  }
+const MainNoticeComponent: React.FC<MainNoticeProps &
+  MainNoticeMethod &
+  RouteComponentProps> = ({
+  getNoticeList,
+  accessToken,
+  noticeList,
+  history,
+}: MainNoticeProps & MainNoticeMethod & RouteComponentProps) => {
+  // const [noticeList, setNoticeList]: [
+  //   Notice[],
+  //   React.Dispatch<React.SetStateAction<Notice[]>>,
+  // ] = useState<Notice[]>([]);
 
-  public render() {
-    const NoticeList = Array(5)
-      .fill(null)
-      .map((_, i) => {
-        if (this.props.noticeList[i]) {
-          const item = this.props.noticeList[i];
-          const date =
-            moment(item.createdAt).format('l') === moment().format('l')
-              ? moment(item.createdAt).get('hour') === moment().get('hour')
-                ? `${moment().get('minute') -
-                    moment(item.createdAt).get('minute')}분전`
-                : `${moment().get('hour') -
-                    moment(item.createdAt).get('hour')}시간전`
-              : moment(item.createdAt).format('l');
+  useEffect(() => {
+    getNoticeList({ accessToken });
+  }, []);
 
-          return (
-            <NoticeItem
-              title={item.title}
-              date={date}
-              read={!!item.read}
-              key={i}
-              onClick={() => this.props.history.push(`/notice/${item.pk}`)}
-            />
-          );
-        }
+  const NoticeList: ReactNodeArray = Array(4)
+    .fill(null)
+    .map((_: null, i: number) => {
+      if (typeof noticeList[i] === 'undefined') {
         return <NoticeItem read={false} key={i} />;
-      });
-    return (
-      <NoticeWrapper>
-        <Separator>
-          <TitleWrapper>
-            <Title>공지사항</Title>
-            <MobileBtn to='/notice'>전체보기 ></MobileBtn>
-          </TitleWrapper>
-          <NoticeListWrapper>
-            <InnerWrapper length={NoticeList.length}>
-              {this.props.getNoticeListStatus === 'success' && NoticeList}
-            </InnerWrapper>
-          </NoticeListWrapper>
-        </Separator>
-        <BtnWrapper>
-          <BtnBackGroundImg src={NoticeIllustSvg} alt='Notice Background Img' />
-          <MoreBtn to='/notice'>공지사항 전체보기</MoreBtn>
-        </BtnWrapper>
-      </NoticeWrapper>
-    );
-  }
-}
+      }
+
+      const item: Notice = noticeList[i];
+      let date: string;
+
+      if (moment(item.createdAt).format('l') === moment().format('l')) {
+        if (moment(item.createdAt).get('hour') === moment().get('hour')) {
+          date = `${moment().get('minute') -
+            moment(item.createdAt).get('minute')}분전`;
+        } else {
+          date = `${moment().get('hour') -
+            moment(item.createdAt).get('hour')}시간전`;
+        }
+      } else {
+        date = moment(item.createdAt).format('l');
+      }
+
+      const handleClick: () => void = () => {
+        history.push(`/notice/${item.pk}`);
+      };
+
+      return (
+        <NoticeItem
+          title={item.title}
+          date={date}
+          read={typeof item.read !== 'undefined' && item.read}
+          key={i}
+          onClick={handleClick}
+        />
+      );
+    });
+
+  return (
+    <NoticeWrapper>
+      <h1 className='title'>공지사항</h1>
+      {NoticeList}
+    </NoticeWrapper>
+  );
+};
 
 export default MainNoticeComponent;

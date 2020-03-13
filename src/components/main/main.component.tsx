@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 
 import BoardContainer from 'container/board/board.container';
 import HeaderContainer from 'container/header';
@@ -17,9 +17,9 @@ import MainTimePage from 'pages/timer';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
 import MainTimeTablePage from 'pages/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
-import styled, { css } from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
-const { useEffect } = React;
+/* eslint-disable @typescript-eslint/typedef */
 
 const Empty = styled.div`
   height: 3.75rem;
@@ -27,24 +27,27 @@ const Empty = styled.div`
 `;
 
 const Template = styled.div<{ toggleMenuStatus: boolean }>`
-  ${({ toggleMenuStatus }) =>
-    toggleMenuStatus &&
-    css`
-      overflow: hidden;
-      position: fixed;
-      width: 100%;
-      height: 100%;
-    `}
+  ${({ toggleMenuStatus }): string | FlattenSimpleInterpolation =>
+    toggleMenuStatus
+      ? css`
+          overflow: hidden;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+        `
+      : ''}
 `;
+
+/* eslint-enable @typescript-eslint/typedef */
 
 const MainComponents = () => (
   <>
     <MainNoticePage />
-    <MainTimePage />
+    {/* <MainTimePage />
     <MainMealPage />
     <MainTimeTablePage />
     <MainCalendarPage />
-    <FooterPage />
+    <FooterPage /> */}
   </>
 );
 
