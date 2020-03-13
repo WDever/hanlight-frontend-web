@@ -1,4 +1,4 @@
-import BoardCommentComponent from 'components/board/comment';
+import BoardCommentComponent from 'components/board/detail-board/comment';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {

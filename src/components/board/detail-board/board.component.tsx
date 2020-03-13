@@ -1,7 +1,7 @@
 import * as React from 'react';
 
-import LikeListComponent from 'components/board/likeList';
-import BoradOptionComponent from 'components/board/option';
+import LikeListComponent from 'components/board/detail-board/likeList';
+import BoradOptionComponent from 'components/board/detail-board/option';
 import { BoardMethod, BoardProps } from 'container/board';
 import BoardFeedContainer from 'container/board/feed';
 import BoardFormContainer from 'container/board/form';

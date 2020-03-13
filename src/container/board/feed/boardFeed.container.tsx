@@ -1,4 +1,4 @@
-import BoardFeedComponent from 'components/board/feed';
+import BoardFeedComponent from 'components/board/detail-board/feed';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {

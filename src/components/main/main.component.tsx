@@ -23,6 +23,7 @@ import styled, {
   ThemeProps,
   DefaultTheme,
 } from 'styled-components';
+import MainBoardPage from 'pages/board/main-board';
 
 /* eslint-disable @typescript-eslint/typedef */
 
@@ -50,6 +51,7 @@ const Template = styled.div<{ toggleMenuStatus: boolean }>`
 const MainComponents = () => (
   <>
     <MainNoticePage />
+    <MainBoardPage />
     {/* <MainTimePage />
     <MainMealPage />
     <MainTimeTablePage />

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BoardFormComponent from 'components/board/form';
+import BoardFormComponent from 'components/board/detail-board/form';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {

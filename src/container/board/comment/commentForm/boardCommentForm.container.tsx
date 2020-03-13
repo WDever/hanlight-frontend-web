@@ -1,5 +1,5 @@
-import BoardCommentComponent from 'components/board/comment';
-import CommentFormComponent from 'components/board/comment/commentForm';
+import BoardCommentComponent from 'components/board/detail-board/comment';
+import CommentFormComponent from 'components/board/detail-board/comment/commentForm';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import {

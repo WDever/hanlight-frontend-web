@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import BoardComponent from 'components/board';
+import BoardComponent from 'components/board/detail-board';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import { bindActionCreators, Dispatch } from 'redux';
