@@ -46,10 +46,24 @@ const Template = styled.div<{ toggleMenuStatus: boolean }>`
         `}
 `;
 
+const MainWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+
+  padding-left: 20.625rem;
+  padding-top: 8.625rem;
+
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: repeat(2, 43.75rem);
+  grid-gap: 3.125rem;
+`;
+
 /* eslint-enable @typescript-eslint/typedef */
 
 const MainComponents = () => (
-  <>
+  <MainWrapper>
     <MainNoticePage />
     <MainBoardPage />
     {/* <MainTimePage />
@@ -57,7 +71,7 @@ const MainComponents = () => (
     <MainTimeTablePage />
     <MainCalendarPage />
     <FooterPage /> */}
-  </>
+  </MainWrapper>
 );
 
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
