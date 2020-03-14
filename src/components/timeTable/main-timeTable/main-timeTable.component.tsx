@@ -4,29 +4,35 @@ import {
 } from 'container/timeTable/main-timeTable';
 import { Device } from 'lib/styles';
 import moment from 'moment';
-import * as React from 'react';
+import React, { useEffect, ReactNodeArray } from 'react';
 import styled from 'styled-components';
+import { MainCardWrapper } from 'lib/styles/MainCard';
 import TimeTableItem from './timeTableItem';
 
-const TimeTable = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+/* eslint-disable @typescript-eslint/typedef */
 
-  @media ${Device.tabletL} {
-    width: unset;
-    height: 100%;
+const TimeTableWrapper = styled(MainCardWrapper)`
+  .title {
+    margin-bottom: 1.5625rem;
   }
 `;
 
-const NoBox = styled.div`
-  width: 8.8rem;
-  max-width: 8.8rem;
-  height: 10.55rem;
-  border-radius: 2rem;
-  background-color: #ffffff;
-  border: solid 1px #b1b1b1;
+const ListWrapper = styled.div`
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 1.75rem 2.25rem;
+`;
+
+const EmptyItem = styled.div`
+  width: 8.125rem;
+  height: 8.125rem;
+
+  border-radius: 1rem;
+
+  background-color: ${({ theme }): string =>
+    theme.mainCard.timetable.inactiveItemColor};
 
   @media ${Device.laptopS} {
     width: 13%;
@@ -44,71 +50,77 @@ const NoBox = styled.div`
   }
 `;
 
-const hour = 3600;
-const minute = 60;
+/* eslint-enable @typescript-eslint/typedef */
 
-export default class MainTimeTableComponent extends React.Component<
-  MainTimeTableProps & MainTimeTableMethod
-> {
-  public state: {
-    timeTableList: string[];
-  } = {
-    timeTableList: [],
-  };
+const hour: number = 3600;
+const minute: number = 60;
 
-  public today: number = moment().get('day');
+const MainTimeTableComponent: React.FC<MainTimeTableProps &
+  MainTimeTableMethod> = ({
+  getTimetableApi,
+  accessToken,
+  timeTableList,
+}: MainTimeTableProps & MainTimeTableMethod) => {
+  // const today: number = moment().get('day');
+  const today: number = 5;
 
-  public componentDidMount() {
-    this.props.getTimetableApi(this.props.accessToken);
-  }
+  useEffect(() => {
+    getTimetableApi(accessToken);
+  }, []);
 
-  public render() {
-    const { timeTableList } = this.props;
-    const { today } = this;
+  const TimeTableList: ReactNodeArray = [...Array(8)].map(
+    (value: null, index: number) => {
+      if (
+        timeTableList[today].length === 0 ||
+        timeTableList[today][index] === undefined
+      ) {
+        return <EmptyItem key={index} />;
+      }
 
-    const TimeTableList = Array(7)
-      .fill(null)
-      .map((value, index) => {
-        if (!timeTableList[today].length || !timeTableList[today][index]) {
-          return <NoBox key={index} />;
+      const sum: number =
+        moment().get('hour') * hour +
+        moment().get('minute') * minute +
+        moment().get('second');
+
+      const period: () => number = (): number => {
+        if (sum >= 15 * hour + 10 * minute) {
+          return 7;
         }
-        const sum =
-          moment().get('hour') * hour +
-          moment().get('minute') * minute +
-          moment().get('second');
+        if (sum >= 14 * hour + 0 * minute) {
+          return 6;
+        }
+        if (sum >= 12 * hour + 20 * minute) {
+          return 5;
+        }
+        if (sum >= 11 * hour + 30 * minute) {
+          return 4;
+        }
+        if (sum >= 10 * hour + 30 * minute) {
+          return 3;
+        }
+        if (sum >= 9 * hour + 30 * minute) {
+          return 2;
+        }
+        return 1;
+      };
 
-        const period = (): number => {
-          if (sum >= 15 * hour + 10 * minute) {
-            return 7;
-          }
-          if (sum >= 14 * hour + 0 * minute) {
-            return 6;
-          }
-          if (sum >= 12 * hour + 20 * minute) {
-            return 5;
-          }
-          if (sum >= 11 * hour + 30 * minute) {
-            return 4;
-          }
-          if (sum >= 10 * hour + 30 * minute) {
-            return 3;
-          }
-          if (sum >= 9 * hour + 30 * minute) {
-            return 2;
-          }
-          return 1;
-        };
+      return (
+        <TimeTableItem
+          sub={timeTableList[today][index]}
+          // active={index + 1 === period()}
+          active
+          key={index}
+        />
+      );
+    },
+  );
 
-        return (
-          <TimeTableItem
-            index={index + 1}
-            sub={timeTableList[today][index]}
-            active={index + 1 === period()}
-            key={index}
-          />
-        );
-      });
+  return (
+    <TimeTableWrapper>
+      <h1 className='title'>이민혁님의 시간표</h1>
+      <ListWrapper>{TimeTableList}</ListWrapper>
+    </TimeTableWrapper>
+  );
+};
 
-    return <TimeTable>{TimeTableList}</TimeTable>;
-  }
-}
+export default MainTimeTableComponent;

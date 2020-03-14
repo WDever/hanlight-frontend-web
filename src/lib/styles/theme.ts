@@ -13,6 +13,13 @@ export const LightTheme: DefaultTheme = {
       itemColor: '#fff',
       excerptFontColor: '#b6b8cc',
     },
+    timetable: {
+      inactiveItemColor: '#f2f2f2',
+      inactiveItemFontColor: '#aaa',
+      activeItemColor: 'linear-gradient(137deg, #4658f2 0%, #8a3bf0 97%)',
+      activeItemFontColor: '#fff',
+      activeItemShadow: '0 10px 30px 0 rgba(115, 69, 241, 0.24)',
+    },
   },
 };
 
@@ -28,6 +35,13 @@ export const DarkTheme: DefaultTheme = {
     notice: {
       itemColor: '',
       excerptFontColor: '',
+    },
+    timetable: {
+      inactiveItemColor: '',
+      inactiveItemFontColor: '',
+      activeItemColor: '',
+      activeItemFontColor: '',
+      activeItemShadow: '',
     },
   },
 };

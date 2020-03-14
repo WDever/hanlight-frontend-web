@@ -15,7 +15,7 @@ import NoticePage from 'pages/notice/detail-notice';
 import MainNoticePage from 'pages/notice/main-notice';
 import MainTimePage from 'pages/timer';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
-import MainTimeTablePage from 'pages/timeTable/main-timeTable';
+import MainTimeTableContainer from 'container/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled, {
   css,
@@ -24,6 +24,7 @@ import styled, {
   DefaultTheme,
 } from 'styled-components';
 import MainBoardPage from 'pages/board/main-board';
+import MainTimeTableComponent from 'components/timeTable/main-timeTable';
 
 /* eslint-disable @typescript-eslint/typedef */
 
@@ -66,6 +67,7 @@ const MainComponents = () => (
   <MainWrapper>
     <MainNoticePage />
     <MainBoardPage />
+    <MainTimeTableContainer />
     {/* <MainTimePage />
     <MainMealPage />
     <MainTimeTablePage />
@@ -101,7 +103,7 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
               }}
             />
           )}
-          <Empty />
+          {/* <Empty /> */}
         </>
       )}
 

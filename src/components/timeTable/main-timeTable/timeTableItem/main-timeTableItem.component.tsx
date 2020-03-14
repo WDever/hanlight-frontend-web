@@ -1,6 +1,6 @@
 import { Device } from 'lib/styles';
 import * as React from 'react';
-import styled from 'styled-components';
+import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
 interface BoxProps {
   active: boolean;
@@ -11,21 +11,36 @@ interface TextProps {
 }
 
 interface Props extends BoxProps, TextProps {
-  index: number;
   sub: string;
 }
 
-const ItemBox = styled.div<BoxProps>`
-  width: 8.8rem;
-  max-width: 8.8rem;
-  height: 10.55rem;
-  border-radius: 2rem;
-  background-color: ${props => (props.active ? '#4470ff' : '#ffffff')};
-  border: ${props => !props.active && 'solid 1px #b1b1b1'};
-  box-shadow: ${props =>
-    props.active && '0 6px 25px 0 rgba(68, 112, 255, 0.4)'};
-  color: ${props => (props.active ? 'black' : 'white')};
-  font-family: 'Spoqa Han Sans';
+/* eslint-disable @typescript-eslint/typedef */
+
+const ItemWrapper = styled.article<BoxProps>`
+  width: 8.125rem;
+  height: 8.125rem;
+
+  border-radius: 1rem;
+
+${({ theme, active }): FlattenSimpleInterpolation =>
+  active
+    ? css`
+        background-image: ${theme.mainCard.timetable.activeItemColor};
+      `
+    : css`
+        background-color: ${theme.mainCard.timetable.inactiveItemColor};
+      `}
+
+  box-shadow: ${({ theme, active }): string | undefined =>
+    active ? theme.mainCard.timetable.activeItemShadow : undefined};
+
+  color: ${({ theme, active }): string =>
+    active
+      ? theme.mainCard.timetable.activeItemFontColor
+      : theme.mainCard.timetable.inactiveItemFontColor};
+
+  font-family: 'Noto Sans KR';
+
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -48,11 +63,12 @@ const ItemBox = styled.div<BoxProps>`
   }
 `;
 
-const Title = styled.span<{ active: boolean }>`
-  color: ${props => (props.active ? '#ffffff' : '#000000')};
+const Subject = styled.h1`
   font-family: inherit;
-  font-weight: normal;
-  font-size: 1.125rem;
+  font-weight: 900;
+  font-size: 1.25rem;
+
+  margin: 0;
 
   @media ${Device.tabletL} {
     font-size: 0.875rem;
@@ -61,11 +77,13 @@ const Title = styled.span<{ active: boolean }>`
     font-size: 0.68rem;
   }
 `;
-const Content = styled.span<{ active: boolean }>`
-  color: ${props => (props.active ? '#ffffff' : '#000000')};
+
+const Teacher = styled.h2`
   font-family: inherit;
-  font-weight: bold;
-  font-size: 1.75rem;
+  font-weight: 500;
+  font-size: 15px;
+
+  margin: 0;
 
   @media ${Device.tabletL} {
     font-size: 1.25rem;
@@ -75,11 +93,13 @@ const Content = styled.span<{ active: boolean }>`
   }
 `;
 
-const TimeTableItem: React.FC<Props> = ({ active, index, sub }) => (
-  <ItemBox active={active}>
-    <Title active={active}>{index}교시</Title>
-    <Content active={active}>{sub}</Content>
-  </ItemBox>
+/* eslint-enable @typescript-eslint/typedef */
+
+const TimeTableItem: React.FC<Props> = ({ active, sub }: Props) => (
+  <ItemWrapper active={active}>
+    <Subject>{sub}</Subject>
+    <Teacher>{sub}</Teacher>
+  </ItemWrapper>
 );
 
 export default TimeTableItem;

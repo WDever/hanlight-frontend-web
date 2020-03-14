@@ -19,6 +19,13 @@ interface Colors {
       itemColor: string;
       excerptFontColor: string;
     };
+    timetable: {
+      inactiveItemColor: string;
+      inactiveItemFontColor: string;
+      activeItemColor: string;
+      activeItemFontColor: string;
+      activeItemShadow: string;
+    };
   };
 }
 
