@@ -4,6 +4,7 @@ import MainNoticeContainer from 'container/notice/main-notice';
 import styled from 'styled-components';
 import MainBoardComponent from 'components/board/main-board';
 import MainTimeTableContainer from 'container/timeTable/main-timeTable';
+import MainMusicComponent from 'components/music/main';
 
 /* eslint-disable @typescript-eslint/typedef */
 
@@ -29,6 +30,7 @@ const MainPage: React.FC = () => {
       <MainNoticeContainer />
       <MainBoardComponent />
       <MainTimeTableContainer />
+      <MainMusicComponent />
     </Template>
   );
 };

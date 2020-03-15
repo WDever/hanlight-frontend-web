@@ -13,7 +13,7 @@ export const MainCardWrapper = styled.section`
   padding: 1.75rem 2.25rem;
   padding-bottom: 0;
 
-  background-color: ${({ theme }): string => theme.mainCard.bgColor};
+  background-color: ${({ theme }): string => theme.mainCard.bg};
 
   border-radius: 0.75rem;
 
@@ -22,7 +22,7 @@ export const MainCardWrapper = styled.section`
   .title {
     font-family: 'Noto Sans KR';
     font-size: 1.5rem;
-    color: ${({ theme }): string => theme.mainCard.defaultFontColor};
+    color: ${({ theme }): string => theme.mainCard.defaultFont};
 
     margin: 0;
   }

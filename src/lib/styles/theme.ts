@@ -22,6 +22,11 @@ export const LightTheme: DefaultTheme = {
       swtichItemColor: '#2c3cff',
       switchFontColor: '#fff',
     },
+    music: {
+      item: '#fff',
+      itemDefaultFont: '#222',
+      itmeSubFont: '#888',
+    },
   },
 };
 
@@ -46,6 +51,11 @@ export const DarkTheme: DefaultTheme = {
       activeItemShadow: '',
       swtichItemColor: '',
       switchFontColor: '',
+    },
+    music: {
+      item: '',
+      itemDefaultFont: '',
+      itmeSubFont: '',
     },
   },
 };
