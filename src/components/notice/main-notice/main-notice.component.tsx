@@ -30,11 +30,6 @@ const MainNoticeComponent: React.FC<MainNoticeProps &
   noticeList,
   history,
 }: MainNoticeProps & MainNoticeMethod & RouteComponentProps) => {
-  // const [noticeList, setNoticeList]: [
-  //   Notice[],
-  //   React.Dispatch<React.SetStateAction<Notice[]>>,
-  // ] = useState<Notice[]>([]);
-
   useEffect(() => {
     getNoticeList({ accessToken });
   }, []);
