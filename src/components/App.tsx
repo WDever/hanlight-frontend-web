@@ -4,12 +4,12 @@ import IEBlockComponent from 'components/ie-block';
 import AutoErrorCheckContainer from 'container/auto/autoErrorCheck';
 import AutoLoginContainer from 'container/auto/autoLogin';
 import ErrorContainer from 'container/error';
+import MainCotainer from 'container/main';
 import LoginPage from 'pages/auth/login';
 import PhoneCheckPage from 'pages/auth/phoneCheck';
 import RecoveryPage from 'pages/auth/recovery';
 import RegisterPage from 'pages/auth/register';
 import FooterPage from 'pages/footer';
-import MainPage from 'pages/main';
 import servicePage from 'pages/service';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         <Route exact path='/user/login' component={LoginPage} />
         <Route exact path='/error' component={ErrorComponents} />
         <Route path='/service' component={servicePage} />
-        <Route path='/' component={MainPage} />
+        <Route path='/' component={MainCotainer} />
         <Redirect to='/error' />
       </Switch>
     </ThemeProvider>

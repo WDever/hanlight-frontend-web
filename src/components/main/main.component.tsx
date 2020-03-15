@@ -5,33 +5,20 @@ import HeaderContainer from 'container/header';
 import HeaderMenuContainer from 'container/header/menu';
 import { MainMethod, MainProps } from 'container/main';
 import ProfileContainer from 'container/profile';
-import { Device } from 'lib/styles';
 import CalendarPage from 'pages/calendar/detail-calendar';
-import MainCalendarPage from 'pages/calendar/main-calendar';
-import FooterPage from 'pages/footer';
 import MealPage from 'pages/meal/detail-meal';
-import MainMealPage from 'pages/meal/main-meal';
 import NoticePage from 'pages/notice/detail-notice';
-import MainNoticePage from 'pages/notice/main-notice';
-import MainTimePage from 'pages/timer';
 import TimeTablePage from 'pages/timeTable/detail-timeTable';
-import MainTimeTableContainer from 'container/timeTable/main-timeTable';
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 import styled, {
   css,
-  FlattenInterpolation,
   ThemeProps,
   DefaultTheme,
+  FlattenInterpolation,
 } from 'styled-components';
-import MainBoardPage from 'pages/board/main-board';
-import MainTimeTableComponent from 'components/timeTable/main-timeTable';
+import MainPage from 'pages/main';
 
 /* eslint-disable @typescript-eslint/typedef */
-
-const Empty = styled.div`
-  height: 3.75rem;
-  width: 100%;
-`;
 
 const Template = styled.div<{ toggleMenuStatus: boolean }>`
   ${({ toggleMenuStatus }): FlattenInterpolation<ThemeProps<DefaultTheme>> =>
@@ -47,34 +34,7 @@ const Template = styled.div<{ toggleMenuStatus: boolean }>`
         `}
 `;
 
-const MainWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-
-  display: grid;
-
-  padding-left: 20.625rem;
-  padding-top: 8.625rem;
-
-  grid-template-rows: repeat(2, auto);
-  grid-template-columns: repeat(2, 43.75rem);
-  grid-gap: 3.125rem;
-`;
-
 /* eslint-enable @typescript-eslint/typedef */
-
-const MainComponents = () => (
-  <MainWrapper>
-    <MainNoticePage />
-    <MainBoardPage />
-    <MainTimeTableContainer />
-    {/* <MainTimePage />
-    <MainMealPage />
-    <MainTimeTablePage />
-    <MainCalendarPage />
-    <FooterPage /> */}
-  </MainWrapper>
-);
 
 const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
   history,
@@ -103,12 +63,11 @@ const MainComponent: React.FC<MainProps & MainMethod & RouteComponentProps> = ({
               }}
             />
           )}
-          {/* <Empty /> */}
         </>
       )}
 
       <Switch>
-        <Route exact path='/' component={MainComponents} />
+        <Route exact path='/' component={MainPage} />
         <Route exact path='/calendar' component={CalendarPage} />
         <Route exact path='/meal' component={MealPage} />
         <Route exact path='/timetable' component={TimeTablePage} />

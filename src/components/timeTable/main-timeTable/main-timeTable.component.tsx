@@ -95,8 +95,7 @@ const MainTimeTableComponent: React.FC<MainTimeTableProps &
       return (
         <TimeTableItem
           sub={timeTableList[today][index]}
-          // active={index + 1 === period()}
-          active
+          active={index + 1 === period()}
           key={index}
         />
       );
