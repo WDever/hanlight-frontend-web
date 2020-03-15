@@ -19,6 +19,8 @@ export const LightTheme: DefaultTheme = {
       activeItemColor: 'linear-gradient(137deg, #4658f2 0%, #8a3bf0 97%)',
       activeItemFontColor: '#fff',
       activeItemShadow: '0 10px 30px 0 rgba(115, 69, 241, 0.24)',
+      swtichItemColor: '#2c3cff',
+      switchFontColor: '#fff',
     },
   },
 };
@@ -42,6 +44,8 @@ export const DarkTheme: DefaultTheme = {
       activeItemColor: '',
       activeItemFontColor: '',
       activeItemShadow: '',
+      swtichItemColor: '',
+      switchFontColor: '',
     },
   },
 };

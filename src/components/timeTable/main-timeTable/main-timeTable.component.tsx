@@ -2,18 +2,21 @@ import {
   MainTimeTableMethod,
   MainTimeTableProps,
 } from 'container/timeTable/main-timeTable';
-import { Device } from 'lib/styles';
 import moment from 'moment';
-import React, { useEffect, ReactNodeArray } from 'react';
+import React, { useEffect, ReactNodeArray, useState } from 'react';
 import styled from 'styled-components';
 import { MainCardWrapper } from 'lib/styles/MainCard';
 import TimeTableItem from './timeTableItem';
+import TimetableSwitchComponent from './timetable-switch';
 
 /* eslint-disable @typescript-eslint/typedef */
 
 const TimeTableWrapper = styled(MainCardWrapper)`
   .title {
     margin-bottom: 1.5625rem;
+
+    display: flex;
+    justify-content: space-between;
   }
 `;
 
@@ -33,21 +36,6 @@ const EmptyItem = styled.div`
 
   background-color: ${({ theme }): string =>
     theme.mainCard.timetable.inactiveItemColor};
-
-  @media ${Device.laptopS} {
-    width: 13%;
-    height: 10rem;
-  }
-  @media ${Device.tabletL} {
-    width: 7.05rem;
-    height: 8.45rem;
-    margin-right: 1.07rem;
-    border-radius: 1rem;
-  }
-  @media ${Device.mobileL} {
-    width: 5.1rem;
-    height: 6.12rem;
-  }
 `;
 
 /* eslint-enable @typescript-eslint/typedef */
@@ -61,12 +49,12 @@ const MainTimeTableComponent: React.FC<MainTimeTableProps &
   accessToken,
   timeTableList,
 }: MainTimeTableProps & MainTimeTableMethod) => {
+  const [isChecked, setIsChecked]: [
+    boolean,
+    React.Dispatch<React.SetStateAction<boolean>>,
+  ] = useState<boolean>(false);
   // const today: number = moment().get('day');
   const today: number = 5;
-
-  useEffect(() => {
-    getTimetableApi(accessToken);
-  }, []);
 
   const TimeTableList: ReactNodeArray = [...Array(8)].map(
     (value: null, index: number) => {
@@ -115,9 +103,24 @@ const MainTimeTableComponent: React.FC<MainTimeTableProps &
     },
   );
 
+  const handleSwitch: () => void = (): void => {
+    setIsChecked(!isChecked);
+  };
+
+  useEffect(() => {
+    getTimetableApi(accessToken);
+  }, []);
+
   return (
     <TimeTableWrapper>
-      <h1 className='title'>이민혁님의 시간표</h1>
+      <h1 className='title'>
+        이민혁님의 시간표{' '}
+        <TimetableSwitchComponent
+          isChanged={false}
+          isChecked={isChecked}
+          handleSwitch={handleSwitch}
+        />
+      </h1>
       <ListWrapper>{TimeTableList}</ListWrapper>
     </TimeTableWrapper>
   );

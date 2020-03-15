@@ -1,4 +1,3 @@
-import { Device } from 'lib/styles';
 import * as React from 'react';
 import styled, { css, FlattenSimpleInterpolation } from 'styled-components';
 
@@ -45,22 +44,6 @@ ${({ theme, active }): FlattenSimpleInterpolation =>
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  @media ${Device.laptopS} {
-    width: 13%;
-    height: 10rem;
-  }
-  @media ${Device.tabletL} {
-    width: 7.05rem;
-    height: 8.45rem;
-    margin-right: 1.07rem;
-    box-shadow: none;
-    border-radius: 1rem;
-  }
-  @media ${Device.mobileL} {
-    width: 5.1rem;
-    height: 6.12rem;
-  }
 `;
 
 const Subject = styled.h1`
@@ -69,13 +52,6 @@ const Subject = styled.h1`
   font-size: 1.25rem;
 
   margin: 0;
-
-  @media ${Device.tabletL} {
-    font-size: 0.875rem;
-  }
-  @media ${Device.mobileL} {
-    font-size: 0.68rem;
-  }
 `;
 
 const Teacher = styled.h2`
@@ -84,13 +60,6 @@ const Teacher = styled.h2`
   font-size: 15px;
 
   margin: 0;
-
-  @media ${Device.tabletL} {
-    font-size: 1.25rem;
-  }
-  @media ${Device.mobileL} {
-    font-size: 0.875rem;
-  }
 `;
 
 /* eslint-enable @typescript-eslint/typedef */

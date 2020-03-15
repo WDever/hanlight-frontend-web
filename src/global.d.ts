@@ -25,6 +25,8 @@ interface Colors {
       activeItemColor: string;
       activeItemFontColor: string;
       activeItemShadow: string;
+      swtichItemColor: string;
+      switchFontColor: string;
     };
   };
 }
