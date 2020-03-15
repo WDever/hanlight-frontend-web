@@ -28,11 +28,11 @@ const SwitchWrapper = styled.form<{ isChanged: boolean; isChecked: boolean }>`
   align-items: center;
 
   background-color: ${({ theme }): string =>
-    theme.mainCard.timetable.swtichItemColor};
+    theme.mainCard.timetable.swtichItem};
 
   font-family: 'Noto Sans KR';
   font-size: 15px;
-  color: ${({ theme }): string => theme.mainCard.timetable.switchFontColor};
+  color: ${({ theme }): string => theme.mainCard.timetable.switchFont};
 
   border-radius: 6.25rem;
 
@@ -90,7 +90,7 @@ const SwitchWrapper = styled.form<{ isChanged: boolean; isChecked: boolean }>`
     border-radius: 50%;
 
     background-color: ${({ theme }): string =>
-      theme.mainCard.timetable.switchFontColor};
+      theme.mainCard.timetable.switchFont};
   }
 `;
 

@@ -24,10 +24,10 @@ const ItemWrapper = styled.article<BoxProps>`
 ${({ theme, active }): FlattenSimpleInterpolation =>
   active
     ? css`
-        background-image: ${theme.mainCard.timetable.activeItemColor};
+        background-image: ${theme.mainCard.timetable.activeItem};
       `
     : css`
-        background-color: ${theme.mainCard.timetable.inactiveItemColor};
+        background-color: ${theme.mainCard.timetable.inactiveItem};
       `}
 
   box-shadow: ${({ theme, active }): string | undefined =>
@@ -35,8 +35,8 @@ ${({ theme, active }): FlattenSimpleInterpolation =>
 
   color: ${({ theme, active }): string =>
     active
-      ? theme.mainCard.timetable.activeItemFontColor
-      : theme.mainCard.timetable.inactiveItemFontColor};
+      ? theme.mainCard.timetable.activeItemFont
+      : theme.mainCard.timetable.inactiveItemFont};
 
   font-family: 'Noto Sans KR';
 

@@ -8,25 +8,30 @@ declare module 'react-facebook-account-kit';
 
 interface Colors {
   common: {
-    bgColor: string;
-    headerColor: string;
+    bg: string;
+    header: string;
   };
   mainCard: {
-    bgColor: string;
+    bg: string;
     cardShadow: string;
-    defaultFontColor: string;
+    defaultFont: string;
     notice: {
-      itemColor: string;
-      excerptFontColor: string;
+      item: string;
+      excerptFont: string;
     };
     timetable: {
-      inactiveItemColor: string;
-      inactiveItemFontColor: string;
-      activeItemColor: string;
-      activeItemFontColor: string;
+      inactiveItem: string;
+      inactiveItemFont: string;
+      activeItem: string;
+      activeItemFont: string;
       activeItemShadow: string;
-      swtichItemColor: string;
-      switchFontColor: string;
+      swtichItem: string;
+      switchFont: string;
+    };
+    music: {
+      item: string;
+      itemDefaultFont: string;
+      itmeSubFont: string;
     };
   };
 }

@@ -2,25 +2,25 @@ import { DefaultTheme } from 'styled-components';
 
 export const LightTheme: DefaultTheme = {
   common: {
-    bgColor: '#f8f8f8',
-    headerColor: '#fff',
+    bg: '#f8f8f8',
+    header: '#fff',
   },
   mainCard: {
-    bgColor: '#fff',
+    bg: '#fff',
     cardShadow: '0 6px 30px 0 #ededed',
-    defaultFontColor: '#222',
+    defaultFont: '#222',
     notice: {
-      itemColor: '#fff',
-      excerptFontColor: '#b6b8cc',
+      item: '#fff',
+      excerptFont: '#b6b8cc',
     },
     timetable: {
-      inactiveItemColor: '#f2f2f2',
-      inactiveItemFontColor: '#aaa',
-      activeItemColor: 'linear-gradient(137deg, #4658f2 0%, #8a3bf0 97%)',
-      activeItemFontColor: '#fff',
+      inactiveItem: '#f2f2f2',
+      inactiveItemFont: '#aaa',
+      activeItem: 'linear-gradient(137deg, #4658f2 0%, #8a3bf0 97%)',
+      activeItemFont: '#fff',
       activeItemShadow: '0 10px 30px 0 rgba(115, 69, 241, 0.24)',
-      swtichItemColor: '#2c3cff',
-      switchFontColor: '#fff',
+      swtichItem: '#2c3cff',
+      switchFont: '#fff',
     },
     music: {
       item: '#fff',
@@ -32,25 +32,25 @@ export const LightTheme: DefaultTheme = {
 
 export const DarkTheme: DefaultTheme = {
   common: {
-    bgColor: '',
-    headerColor: '',
+    bg: '',
+    header: '',
   },
   mainCard: {
-    bgColor: '',
+    bg: '',
     cardShadow: '',
-    defaultFontColor: '',
+    defaultFont: '',
     notice: {
-      itemColor: '',
-      excerptFontColor: '',
+      item: '',
+      excerptFont: '',
     },
     timetable: {
-      inactiveItemColor: '',
-      inactiveItemFontColor: '',
-      activeItemColor: '',
-      activeItemFontColor: '',
+      inactiveItem: '',
+      inactiveItemFont: '',
+      activeItem: '',
+      activeItemFont: '',
       activeItemShadow: '',
-      swtichItemColor: '',
-      switchFontColor: '',
+      swtichItem: '',
+      switchFont: '',
     },
     music: {
       item: '',

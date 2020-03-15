@@ -35,7 +35,7 @@ const EmptyItem = styled.div`
   border-radius: 1rem;
 
   background-color: ${({ theme }): string =>
-    theme.mainCard.timetable.inactiveItemColor};
+    theme.mainCard.timetable.inactiveItem};
 `;
 
 /* eslint-enable @typescript-eslint/typedef */
