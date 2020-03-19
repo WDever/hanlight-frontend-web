@@ -8,7 +8,8 @@ declare module 'react-facebook-account-kit';
 
 interface Colors {
   common: {
-    bg: string;
+    mainBg: string;
+    detailBg: string;
     header: string;
   };
   mainCard: {
@@ -32,6 +33,15 @@ interface Colors {
       item: string;
       itemDefaultFont: string;
       itmeSubFont: string;
+    };
+  };
+  detail: {
+    defaultFont: string;
+    meal: {
+      inActiveItem: string;
+      activeItem: string;
+      activeFont: string;
+      activeItemShadow: string;
     };
   };
 }

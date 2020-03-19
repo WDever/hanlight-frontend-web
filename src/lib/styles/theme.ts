@@ -2,7 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 export const LightTheme: DefaultTheme = {
   common: {
-    bg: '#f8f8f8',
+    mainBg: '#f8f8f8',
+    detailBg: '#ffffff',
     header: '#fff',
   },
   mainCard: {
@@ -28,11 +29,21 @@ export const LightTheme: DefaultTheme = {
       itmeSubFont: '#888',
     },
   },
+  detail: {
+    defaultFont: '#222',
+    meal: {
+      inActiveItem: '#f5f5f5',
+      activeItem: 'linear-gradient(140deg, #4658f2 3%, #8b3bf0 103%);',
+      activeFont: '#fff',
+      activeItemShadow: '0 20px 30px 0 #dee1ff;',
+    },
+  },
 };
 
 export const DarkTheme: DefaultTheme = {
   common: {
-    bg: '',
+    mainBg: '',
+    detailBg: '',
     header: '',
   },
   mainCard: {
@@ -56,6 +67,15 @@ export const DarkTheme: DefaultTheme = {
       item: '',
       itemDefaultFont: '',
       itmeSubFont: '',
+    },
+  },
+  detail: {
+    defaultFont: '',
+    meal: {
+      inActiveItem: '',
+      activeItem: '',
+      activeFont: '',
+      activeItemShadow: '',
     },
   },
 };
