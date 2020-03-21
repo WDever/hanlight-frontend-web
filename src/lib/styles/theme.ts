@@ -3,7 +3,7 @@ import { DefaultTheme } from 'styled-components';
 export const LightTheme: DefaultTheme = {
   common: {
     mainBg: '#f8f8f8',
-    detailBg: '#ffffff',
+    detailBg: '#fff',
     header: '#fff',
   },
   mainCard: {

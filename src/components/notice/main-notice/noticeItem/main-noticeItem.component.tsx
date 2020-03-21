@@ -21,7 +21,7 @@ const Wrapper = styled.article<{ read: boolean }>`
   width: 100%;
   height: 3.75rem;
 
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 
   cursor: pointer;
 

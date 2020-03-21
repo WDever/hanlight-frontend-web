@@ -16,8 +16,8 @@ interface Props extends BoxProps, TextProps {
 /* eslint-disable @typescript-eslint/typedef */
 
 const ItemWrapper = styled.article<BoxProps>`
-  width: 8.125rem;
-  height: 8.125rem;
+  width: 8rem;
+  height: 8rem;
 
   border-radius: 1rem;
 

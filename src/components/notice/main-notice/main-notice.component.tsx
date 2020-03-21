@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ReactNodeArray } from 'react';
+import React, { useEffect, ReactNodeArray } from 'react';
 
 import {
   MainNoticeMethod,
@@ -15,9 +15,6 @@ import NoticeItem from './noticeItem';
 /* eslint-disable @typescript-eslint/typedef */
 
 const NoticeWrapper = styled(MainCardWrapper)`
-  .title {
-    margin-bottom: 0.875rem;
-  }
 `;
 
 /* eslint-enable @typescript-eslint/typedef */

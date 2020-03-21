@@ -13,8 +13,6 @@ import TimetableSwitchComponent from './timetable-switch';
 
 const TimeTableWrapper = styled(MainCardWrapper)`
   .title {
-    margin-bottom: 1.5625rem;
-
     display: flex;
     justify-content: space-between;
   }
@@ -25,12 +23,12 @@ const ListWrapper = styled.div`
 
   display: grid;
   grid-template-columns: repeat(4, auto);
-  grid-gap: 1.75rem 2.25rem;
+  grid-gap: 1rem 2.5rem;
 `;
 
 const EmptyItem = styled.div`
-  width: 8.125rem;
-  height: 8.125rem;
+  width: 8rem;
+  height: 8rem;
 
   border-radius: 1rem;
 
