@@ -2,7 +2,8 @@ import { DefaultTheme } from 'styled-components';
 
 export const LightTheme: DefaultTheme = {
   common: {
-    bg: '#f8f8f8',
+    mainBg: '#f8f8f8',
+    detailBg: '#fff',
     header: '#fff',
   },
   mainCard: {
@@ -32,7 +33,8 @@ export const LightTheme: DefaultTheme = {
 
 export const DarkTheme: DefaultTheme = {
   common: {
-    bg: '',
+    mainBg: '',
+    detailBg: '',
     header: '',
   },
   mainCard: {

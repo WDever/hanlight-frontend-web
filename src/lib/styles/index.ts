@@ -7,3 +7,4 @@ export { Device } from './Device';
 export { Deem } from './Deem';
 export * from './BoxOpacity';
 export * from './theme';
+export * from './media';

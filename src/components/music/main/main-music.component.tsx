@@ -6,11 +6,7 @@ import MainMusicItemComponent from './musicItem';
 
 /* eslint-disable @typescript-eslint/typedef */
 
-const MusicWrapper = styled(MainCardWrapper)`
-  .title {
-    margin-bottom: 1.25rem;
-  }
-`;
+const MusicWrapper = styled(MainCardWrapper)``;
 
 /* eslint-enable @typescript-eslint/typedef */
 

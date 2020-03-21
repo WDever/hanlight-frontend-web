@@ -4,13 +4,15 @@ import styled from 'styled-components';
 
 export const MainCardWrapper = styled.section`
   max-width: 43.75rem;
-  width: calc(43.75rem - 2.25rem * 2);
-  height: calc(26.25rem - 1.75rem);
+  width: 43.75rem;
+  height: 24rem;
 
   display: flex;
   flex-direction: column;
 
-  padding: 1.75rem 2.25rem;
+  box-sizing: border-box;
+
+  padding: 1.5rem 2.25rem;
   padding-bottom: 0;
 
   background-color: ${({ theme }): string => theme.mainCard.bg};
@@ -25,6 +27,7 @@ export const MainCardWrapper = styled.section`
     color: ${({ theme }): string => theme.mainCard.defaultFont};
 
     margin: 0;
+    margin-bottom: 1rem;
   }
 `;
 

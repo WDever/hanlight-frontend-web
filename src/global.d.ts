@@ -8,7 +8,8 @@ declare module 'react-facebook-account-kit';
 
 interface Colors {
   common: {
-    bg: string;
+    mainBg: string;
+    detailBg: string;
     header: string;
   };
   mainCard: {

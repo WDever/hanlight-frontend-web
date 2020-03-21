@@ -9,7 +9,7 @@ const MusicItemWrapper = styled.article`
   width: 100%;
   height: 2.25rem;
 
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.375rem;
 
   background-color: ${({ theme }): string => theme.mainCard.bg};
 

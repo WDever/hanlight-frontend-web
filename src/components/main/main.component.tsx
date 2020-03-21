@@ -30,7 +30,14 @@ const Template = styled.div<{ toggleMenuStatus: boolean }>`
           height: 100%;
         `
       : css`
-          background-color: ${({ theme }): string => theme.common.bg};
+          width: 100%;
+          height: 100%;
+
+          padding-top:  5.3125rem;
+
+          box-sizing: border-box;
+
+          background-color: ${({ theme }): string => theme.common.mainBg};
         `}
 `;
 
